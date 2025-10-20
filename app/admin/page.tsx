@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { Users, Download, Filter, Search, Eye, RefreshCw, CheckSquare, Square } from 'lucide-react'
 import { getRegistrations } from '@/lib/supabase'
 import type { Registration } from '@/lib/supabase'
+import Link from 'next/link'
 
 interface ExportColumn {
   key: string
@@ -220,14 +221,7 @@ export default function AdminDashboard() {
                   >
             <RefreshCw size={16} className={`mr-2 ${refreshing ? 'animate-spin' : ''}`} />
             {refreshing ? 'Refreshing...' : 'Refresh'}
-                  </button>
-                  <a
-                      href="/spl02/players"
-                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center disabled:opacity-50"
-                  >
-                      <Users size={16} />
-                      <span>View Players</span>
-                  </a>
+          </button>
         </div>
 
         {/* Stats Cards - Enhanced with gender breakdown */}
