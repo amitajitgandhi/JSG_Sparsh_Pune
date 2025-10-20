@@ -170,13 +170,13 @@ export default function SPL02() {
                                     <span>Register Now</span>
                                 </a>
                                 
-                                <a
+                                {/*<a
                                     href="/spl02/players"
                                     className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold hover:from-green-700 hover:to-teal-700 hover:scale-110 transition-all duration-300 shadow-lg text-base sm:text-lg group/button"
                                 >
                                     <Users size={20} className="sm:w-6 sm:h-6 group-hover/button:animate-bounce" />
                                     <span>View Players</span>
-                                </a>
+                                </a>*/}
                             </div>
                         </div>
                     </div>
