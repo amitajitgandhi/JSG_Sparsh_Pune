@@ -322,21 +322,69 @@ export default function SPL02Players() {
             const isExpanded = expandedCategories[category]
             const categoryColor = categoryColors[category as keyof typeof categoryColors] || 'from-blue-500 to-blue-600'
             
+            // Extract color classes for text based on gradient
+            const getTextColor = (gradientColor: string) => {
+              if (gradientColor.includes('purple')) return 'text-purple-700'
+              if (gradientColor.includes('yellow')) return 'text-yellow-700'
+              if (gradientColor.includes('red')) return 'text-red-700'
+              if (gradientColor.includes('gray')) return 'text-gray-700'
+              if (gradientColor.includes('green')) return 'text-green-700'
+              if (gradientColor.includes('orange')) return 'text-orange-700'
+              return 'text-blue-700'
+            }
+
+            const getBackgroundColor = (gradientColor: string) => {
+              if (gradientColor.includes('purple')) return 'bg-purple-50/80'
+              if (gradientColor.includes('yellow')) return 'bg-yellow-50/80'
+              if (gradientColor.includes('red')) return 'bg-red-50/80'
+              if (gradientColor.includes('gray')) return 'bg-gray-50/80'
+              if (gradientColor.includes('green')) return 'bg-green-50/80'
+              if (gradientColor.includes('orange')) return 'bg-orange-50/80'
+              return 'bg-blue-50/80'
+            }
+
+            const getHoverColor = (gradientColor: string) => {
+              if (gradientColor.includes('purple')) return 'hover:bg-purple-100/60'
+              if (gradientColor.includes('yellow')) return 'hover:bg-yellow-100/60'
+              if (gradientColor.includes('red')) return 'hover:bg-red-100/60'
+              if (gradientColor.includes('gray')) return 'hover:bg-gray-100/60'
+              if (gradientColor.includes('green')) return 'hover:bg-green-100/60'
+              if (gradientColor.includes('orange')) return 'hover:bg-orange-100/60'
+              return 'hover:bg-blue-100/60'
+            }
+
+            const textColor = getTextColor(categoryColor)
+            const backgroundColor = getBackgroundColor(categoryColor)
+            const hoverColor = getHoverColor(categoryColor)
+            
             return (
-              <div key={category} className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-                {/* Category Header - Mobile Optimized */}
+              <div key={category} className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300">
+                {/* Category Header - Improved Design */}
                 <button
                   onClick={() => toggleCategory(category)}
-                  className={`w-full bg-gradient-to-r ${categoryColor} text-white p-4 sm:p-5 md:p-6 flex items-center justify-between hover:opacity-90 transition-opacity active:scale-95`}
+                  className={`w-full ${backgroundColor} backdrop-blur-sm ${textColor} ${hoverColor} p-4 sm:p-5 md:p-6 flex items-center justify-between hover:shadow-md transition-all duration-300 active:scale-95 relative overflow-hidden group border-l-4 ${
+                    categoryColor.includes('purple') ? 'border-l-purple-500' :
+                    categoryColor.includes('yellow') ? 'border-l-yellow-500' :
+                    categoryColor.includes('red') ? 'border-l-red-500' :
+                    categoryColor.includes('gray') ? 'border-l-gray-500' :
+                    categoryColor.includes('green') ? 'border-l-green-500' :
+                    categoryColor.includes('orange') ? 'border-l-orange-500' :
+                    'border-l-blue-500'
+                  }`}
                 >
-                  <div className="flex items-center space-x-3 sm:space-x-4">
-                    <Trophy size={20} className="sm:w-6 sm:h-6" />
+                  {/* Enhanced gradient background overlay on hover */}
+                  <div className={`absolute inset-0 bg-gradient-to-r ${categoryColor} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
+                  
+                  <div className="flex items-center space-x-3 sm:space-x-4 relative z-10">
+                    <div className={`p-2 rounded-lg bg-gradient-to-r ${categoryColor} text-white shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                      <Trophy size={20} className="sm:w-6 sm:h-6" />
+                    </div>
                     <div className="text-left">
-                      <h2 className="text-lg sm:text-xl md:text-2xl font-bold leading-tight">{category}</h2>
-                      <p className="text-white/90 text-xs sm:text-sm">{players.length} players</p>
+                      <h2 className={`text-lg sm:text-xl md:text-2xl font-bold leading-tight ${textColor}`}>{category}</h2>
+                      <p className={`${textColor} opacity-70 text-xs sm:text-sm`}>{players.length} players</p>
                     </div>
                   </div>
-                  <div className="flex-shrink-0">
+                  <div className={`flex-shrink-0 relative z-10 ${textColor} p-1 rounded-full group-hover:bg-white/20 transition-colors duration-300`}>
                     {isExpanded ? <ChevronUp size={20} className="sm:w-6 sm:h-6" /> : <ChevronDown size={20} className="sm:w-6 sm:h-6" />}
                   </div>
                 </button>
