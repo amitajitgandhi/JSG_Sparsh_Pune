@@ -160,8 +160,8 @@ export default function SPL02() {
                                 🥎 15 & 16 November 2025 🥎
                             </div>
 
-                            {/* Register Now Button */}
-                            <div className="pt-4">
+                            {/* Action Buttons */}
+                            <div className="pt-4 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <a
                                     href="/register-now"
                                     className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold hover:from-blue-700 hover:to-purple-700 hover:scale-110 transition-all duration-300 shadow-lg text-base sm:text-lg group/button"
@@ -169,6 +169,14 @@ export default function SPL02() {
                                     <Trophy size={20} className="sm:w-6 sm:h-6 group-hover/button:animate-bounce" />
                                     <span>Register Now</span>
                                 </a>
+                                
+                                {/* <a
+                                    href="/spl02/players"
+                                    className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold hover:from-green-700 hover:to-teal-700 hover:scale-110 transition-all duration-300 shadow-lg text-base sm:text-lg group/button"
+                                >
+                                    <Users size={20} className="sm:w-6 sm:h-6 group-hover/button:animate-bounce" />
+                                    <span>View Players</span>
+                                </a> */}
                             </div>
                         </div>
                     </div>
