@@ -290,6 +290,13 @@ export default function SPL02Players() {
           </div>
         </div>
 
+        {/* Instruction text for users */}
+        <div className="text-center mb-4 sm:mb-6 px-4">
+          <p className="text-sm sm:text-base md:text-lg text-gray-600 font-medium">
+                      👇 Click on any tournament category below to check out players 👇
+          </p>
+        </div>
+
         {/* Enhanced Tab Navigation - Mobile Optimized */}
         <div className="flex justify-center mb-6 sm:mb-8 px-2">
           <div className="bg-white rounded-2xl sm:rounded-3xl p-2 sm:p-3 shadow-xl border border-gray-200 w-full max-w-md sm:max-w-none">
