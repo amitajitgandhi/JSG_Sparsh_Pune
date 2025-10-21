@@ -155,9 +155,9 @@ export default function SPL02Players() {
     const categoryColor = categoryColors[player.CATEGORY as keyof typeof categoryColors] || 'from-blue-500 to-blue-600'
     
     return (
-      <div className="bg-white rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:scale-105 active:scale-95">
+      <div className="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/30 transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 hover:scale-105 active:scale-95">
         {/* Player Photo */}
-        <div className="aspect-square relative overflow-hidden bg-gray-100">
+        <div className="aspect-square relative overflow-hidden bg-gray-100 dark:bg-gray-700">
           {player['Photo URL'] ? (
             <img
               src={player['Photo URL']}
@@ -172,22 +172,22 @@ export default function SPL02Players() {
           ) : null}
           
           {/* Fallback placeholder */}
-          <div className={`${player['Photo URL'] ? 'hidden' : ''} w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300`}>
-            <Users size={32} className="sm:w-12 sm:h-12 text-gray-500" />
+          <div className={`${player['Photo URL'] ? 'hidden' : ''} w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-700`}>
+            <Users size={32} className="sm:w-12 sm:h-12 text-gray-500 dark:text-gray-400" />
           </div>
           
           {/* Category Badge */}
           {player.CATEGORY && (
-            <div className={`absolute top-1.5 sm:top-2 left-1.5 sm:left-2 bg-gradient-to-r ${categoryColor} text-white px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-xs font-bold`}>
+            <div className={`absolute top-1.5 sm:top-2 left-1.5 sm:left-2 bg-gradient-to-r ${categoryColor} text-white px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-xs font-bold shadow-lg`}>
               {player.CATEGORY}
             </div>
           )}
         </div>
 
         {/* Player Info - Mobile Optimized */}
-        <div className="p-3 sm:p-4 space-y-2 sm:space-y-3">
+        <div className="p-3 sm:p-4 space-y-2 sm:space-y-3 bg-white dark:bg-gray-800">
           <div>
-            <h3 className="font-bold text-sm sm:text-base md:text-lg text-gray-800 mb-1 leading-tight line-clamp-2">
+            <h3 className="font-bold text-sm sm:text-base md:text-lg text-gray-900 dark:text-white mb-1 leading-tight line-clamp-2">
               {player['Full Name']}
             </h3>
           </div>
@@ -196,25 +196,25 @@ export default function SPL02Players() {
           <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
             {player.Age && (
               <div className="flex justify-between items-center">
-                <span className="text-gray-600 dark:text-gray-300">Age:</span>
-                <span className="font-semibold text-gray-800 dark:text-gray-100">{player.Age} years</span>
+                <span className="text-gray-600 dark:text-gray-400">Age:</span>
+                <span className="font-semibold text-gray-900 dark:text-white">{player.Age} years</span>
               </div>
             )}
             
             {player.Skillset && (
               <div className="flex justify-between items-start">
-                <span className="text-gray-600 dark:text-gray-300 flex-shrink-0">Skillset:</span>
-                <span className="font-semibold text-right ml-2 line-clamp-2 text-gray-800 dark:text-gray-100">{player.Skillset}</span>
+                <span className="text-gray-600 dark:text-gray-400 flex-shrink-0">Skillset:</span>
+                <span className="font-semibold text-right ml-2 line-clamp-2 text-gray-900 dark:text-white">{player.Skillset}</span>
               </div>
             )}
             
             <div className="flex justify-between items-center">
-              <span className="text-gray-600 dark:text-gray-300">Mobile:</span>
+              <span className="text-gray-600 dark:text-gray-400">Mobile:</span>
               <a 
                 href={`tel:${player['Mobile Number']}`}
-                className="font-semibold hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center space-x-1 active:scale-95 text-gray-800 dark:text-gray-100"
+                className="font-semibold hover:text-blue-600 dark:hover:text-blue-300 transition-colors flex items-center space-x-1 active:scale-95 text-gray-900 dark:text-white"
               >
-                <Phone size={12} className="sm:w-3.5 sm:h-3.5" />
+                <Phone size={12} className="sm:w-3.5 sm:h-3.5 text-gray-700 dark:text-gray-300" />
                 <span className="text-xs sm:text-sm">{player['Mobile Number']}</span>
               </a>
             </div>
@@ -226,7 +226,7 @@ export default function SPL02Players() {
               href={player['Cric Heroes Link']}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center space-x-1.5 sm:space-x-2 bg-gradient-to-r from-green-500 to-green-600 text-white py-2 sm:py-2.5 px-3 sm:px-4 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 text-xs sm:text-sm font-medium active:scale-95"
+              className="flex items-center justify-center space-x-1.5 sm:space-x-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-2 sm:py-2.5 px-3 sm:px-4 rounded-lg transition-all duration-300 text-xs sm:text-sm font-medium active:scale-95 shadow-md hover:shadow-lg"
             >
               <span>CricHeroes</span>
               <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5" />
