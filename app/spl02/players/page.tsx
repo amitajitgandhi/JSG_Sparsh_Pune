@@ -115,6 +115,22 @@ export default function SPL02Players() {
         return {}
       } else {
         // If not expanded, collapse all others and expand this one
+        // Use setTimeout to ensure the category expands first, then scroll
+        setTimeout(() => {
+          const categoryElement = document.getElementById(`category-${category}`)
+          if (categoryElement) {
+            // Scroll to the category header with some offset
+            const headerOffset = 100 // Adjust this value as needed
+            const elementPosition = categoryElement.getBoundingClientRect().top
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            })
+          }
+        }, 100) // Small delay to ensure DOM updates
+        
         return { [category]: true }
       }
     })
@@ -180,23 +196,23 @@ export default function SPL02Players() {
           <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
             {player.Age && (
               <div className="flex justify-between items-center">
-                <span className="text-gray-600">Age:</span>
-                <span className="font-semibold">{player.Age} years</span>
+                <span className="text-gray-600 dark:text-gray-300">Age:</span>
+                <span className="font-semibold text-gray-800 dark:text-gray-100">{player.Age} years</span>
               </div>
             )}
             
             {player.Skillset && (
               <div className="flex justify-between items-start">
-                <span className="text-gray-600 flex-shrink-0">Skillset:</span>
-                <span className="font-semibold text-right ml-2 line-clamp-2">{player.Skillset}</span>
+                <span className="text-gray-600 dark:text-gray-300 flex-shrink-0">Skillset:</span>
+                <span className="font-semibold text-right ml-2 line-clamp-2 text-gray-800 dark:text-gray-100">{player.Skillset}</span>
               </div>
             )}
             
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Mobile:</span>
+              <span className="text-gray-600 dark:text-gray-300">Mobile:</span>
               <a 
                 href={`tel:${player['Mobile Number']}`}
-                className="font-semibold hover:text-blue-600 transition-colors flex items-center space-x-1 active:scale-95"
+                className="font-semibold hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center space-x-1 active:scale-95 text-gray-800 dark:text-gray-100"
               >
                 <Phone size={12} className="sm:w-3.5 sm:h-3.5" />
                 <span className="text-xs sm:text-sm">{player['Mobile Number']}</span>
@@ -365,7 +381,7 @@ export default function SPL02Players() {
             const hoverColor = getHoverColor(categoryColor)
             
             return (
-              <div key={category} className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300">
+              <div key={category} id={`category-${category}`} className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300">
                 {/* Category Header - Improved Design */}
                 <button
                   onClick={() => toggleCategory(category)}
