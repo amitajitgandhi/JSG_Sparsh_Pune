@@ -306,6 +306,18 @@ export default function SPL02Players() {
           </div>
         </div>
 
+              {/* Navigation Links */}
+              <div className="text-center mb-6 sm:mb-8">
+                  <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+                      <Link
+                          href="/spl02"
+                          className="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors shadow-md text-sm sm:text-base font-medium"
+                      >
+                          ← Back to SPL-02
+                      </Link>
+                  </div>
+              </div>
+
         {/* Instruction text for users */}
         <div className="text-center mb-4 sm:mb-6 px-4">
           <p className="text-sm sm:text-base md:text-lg text-gray-600 font-medium">

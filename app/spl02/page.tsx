@@ -1,8 +1,12 @@
 'use client'
 
-import { Calendar, MapPin, Clock, Users, Trophy, Star, Target, Award, Phone, Mail, Zap, Heart, Gift } from 'lucide-react'
+import { useState } from 'react'
+import { Calendar, MapPin, Clock, Users, Trophy, Star, Target, Award, Phone, Mail, Zap, Heart, Gift, X, AlertCircle } from 'lucide-react'
+import Link from 'next/link'
 
 export default function SPL02() {
+    const [showRegistrationPopup, setShowRegistrationPopup] = useState(false)
+
     const tournamentInfo = {
         title: "SPARSH PREMIER LEAGUE",
         season: "Season 2",
@@ -98,9 +102,59 @@ export default function SPL02() {
         document.body.removeChild(link)
     }
 
+    const handleRegistrationClick = (e: React.MouseEvent) => {
+        e.preventDefault()
+        setShowRegistrationPopup(true)
+    }
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-yellow-50 py-6 sm:py-12 animate-fade-in">
             <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+
+                {/* Registration Closed Popup */}
+                {showRegistrationPopup && (
+                    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                        <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 max-w-md w-full mx-auto shadow-2xl border border-gray-200 animate-scale-in relative">
+                            {/* Close Button */}
+                            <button
+                                onClick={() => setShowRegistrationPopup(false)}
+                                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                            >
+                                <X size={24} />
+                            </button>
+
+                            {/* Icon */}
+                            <div className="text-center mb-6">
+                                <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <AlertCircle className="w-8 h-8 text-red-600" />
+                                </div>
+                                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
+                                    Registration Closed
+                                </h3>
+                                <p className="text-gray-600 mb-6 leading-relaxed">
+                                    Registration for SPL-02 are now closed.
+                                </p>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="space-y-3">
+                                <Link
+                                    href="/committee"
+                                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 text-center block shadow-lg hover:shadow-xl"
+                                    onClick={() => setShowRegistrationPopup(false)}
+                                >
+                                    Contact Committee
+                                </Link>
+                                <button
+                                    onClick={() => setShowRegistrationPopup(false)}
+                                    className="w-full bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* Title Sponsor Section - Naturally Integrated */}
                 <div className="text-center mb-8 sm:mb-12 animate-slide-up">
@@ -162,13 +216,13 @@ export default function SPL02() {
 
                             {/* Action Buttons */}
                             <div className="pt-4 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                                <a
-                                    href="/register-now"
+                                <button
+                                    onClick={handleRegistrationClick}
                                     className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold hover:from-blue-700 hover:to-purple-700 hover:scale-110 transition-all duration-300 shadow-lg text-base sm:text-lg group/button"
                                 >
                                     <Trophy size={20} className="sm:w-6 sm:h-6 group-hover/button:animate-bounce" />
                                     <span>Register Now</span>
-                                </a>
+                                </button>
                                 
                                 {/*<a
                                     href="/spl02/players"
