@@ -148,15 +148,19 @@ export default function SPL02AuctionRules() {
                         <div className="space-y-3">
                             <div className="flex justify-between items-center p-2 bg-purple-100 rounded text-gray-700 dark:text-gray-600">
                                 <span><strong>Icon Players:</strong></span>
-                                <span>Base: ₹15 Lacs | Total: 22 Players (2 per team)</span>
+                                <span>Base: ₹20 Lacs | Total: 11 Players (1 per team)</span>
                             </div>
                             <div className="flex justify-between items-center p-2 bg-gray-100 rounded text-gray-700 dark:text-gray-600">
                                 <span><strong>Platinum Players:</strong></span>
-                                <span>Base: ₹8 Lacs | Total: 44 Players (4 per team)</span>
+                                <span>Base: ₹10 Lacs | Total: 22 Players (2 per team)</span>
                             </div>
                             <div className="flex justify-between items-center p-2 bg-yellow-100 rounded text-gray-700 dark:text-gray-600">
                                 <span><strong>Gold Players:</strong></span>
-                                <span>Base: ₹5 Lacs | Total: 22 Players (2 per team)</span>
+                                <span>Base: ₹5 Lacs | Total: 33 Players (3 per team)</span>
+                            </div>
+                            <div className="flex justify-between items-center p-2 bg-green-100 rounded text-gray-700 dark:text-gray-600">
+                                <span><strong>Silver Players:</strong></span>
+                                <span>Base: ₹3 Lacs | Total: 22 Players (2 per team)</span>
                             </div>
                         </div>
                     </div>
