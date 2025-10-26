@@ -1,19 +1,6 @@
 [
   {
     "CATEGORY": "Icon",
-    "Full Name": "Amit Gandhi",
-    "Mobile Number": 7276319578,
-    "Age": 34,
-    "Skillset": "All Rounder",
-    "Bowling Arm": "Left Arm",
-    "Cric Heroes Link": "https://cricheroes.in/player-profile/5594432/Amit-Gandhi",
-    "Jersey Name": "Amit",
-    "Jersey Number": 24,
-    "Jersey Size": "XXL",
-    "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1759542834772-xijnd6ywg-photo-1759542834773.jpeg"
-  },
-  {
-    "CATEGORY": "Icon",
     "Full Name": "Chinmay Barmecha",
     "Mobile Number": 8888899779,
     "Age": 29,
@@ -89,6 +76,19 @@
     "Jersey Number": 25,
     "Jersey Size": "XL",
     "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1759498059662-6hsuqqgtp-photo-1759498059663.jpg"
+  },
+  {
+    "CATEGORY": "Icon",
+    "Full Name": "Amit Gandhi",
+    "Mobile Number": 7276319578,
+    "Age": 34,
+    "Skillset": "All Rounder",
+    "Bowling Arm": "Left Arm",
+    "Cric Heroes Link": "https://cricheroes.in/player-profile/5594432/Amit-Gandhi",
+    "Jersey Name": "Amit",
+    "Jersey Number": 24,
+    "Jersey Size": "XXL",
+    "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1759542834772-xijnd6ywg-photo-1759542834773.jpeg"
   },
   {
     "CATEGORY": "Platinum",
