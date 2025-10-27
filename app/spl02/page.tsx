@@ -111,6 +111,19 @@ export default function SPL02() {
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-yellow-50 py-6 sm:py-12 animate-fade-in">
             <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
 
+                {/* SPL02 Banner Image - Added at the top */}
+                <div className="mb-6 sm:mb-8 md:mb-12">
+                    <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group">
+                        <img 
+                            src="/images/SPL02_Banner.jpeg" 
+                            alt="SPL02 - Sparsh Premier League Season 2 Banner" 
+                            className="w-full h-auto object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                        />
+                        {/* Optional overlay for better text readability if needed */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                </div>
+
                 {/* Registration Closed Popup */}
                 {showRegistrationPopup && (
                     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -164,73 +177,69 @@ export default function SPL02() {
                             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-800 hover:text-blue-600 transition-colors duration-300 leading-tight">
                                 JSG Pune Sparsh
                             </h1>
-                            
-                            <p className="text-lg sm:text-xl text-gray-600 font-medium leading-tight">
+
+                            <p className="text-lg sm:text-sm text-gray-600 font-medium leading-tight">
                                 in proud association with
                             </p>
-                            
-                            {/* Naturally Integrated Title Sponsor Logo */}
-                            <div className="flex justify-center py-6 relative">
-                                {/* Floating Elements Around Logo */}
-                                <div className="absolute inset-0 pointer-events-none">
-                                </div>
 
-                                <div className="group/logo relative">
-                                    {/* Natural Integration Container - No frames or borders */}
-                                    <div className="relative transform group-hover/logo:scale-105 transition-all duration-500">
-                                        {/* Subtle Glow Behind Logo */}
-                                        <div className="absolute inset-0 bg-gradient-to-r from-blue-100/50 via-transparent to-yellow-100/50 blur-2xl opacity-0 group-hover/logo:opacity-60 transition-all duration-700"></div>
-                                        
-                                        {/* Logo - Naturally integrated */}
-                                        <img
-                                            src="/images/TitleSponsor.png"
-                                            alt="Title Sponsor"
-                                            className="relative max-h-32 sm:max-h-40 md:max-h-52 lg:max-h-64 xl:max-h-72 w-auto object-contain transition-all duration-500 group-hover/logo:brightness-110 group-hover/logo:contrast-105"
-                                            style={{ 
-                                                filter: 'brightness(1.02) contrast(1.02) saturate(1.05)',
-                                            }}
-                                        />
-                                        
-                                        {/* Subtle highlight overlay for natural integration */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/20 opacity-0 group-hover/logo:opacity-30 transition-opacity duration-500 pointer-events-none"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <p className="text-lg sm:text-xl text-gray-600 font-medium leading-tight">
+                            <h2 className="text-2xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-red-600 via-red-600 to-yellow-600 bg-clip-text text-transparent leading-tight">
+                                SG Promoters & Real Estate Consultant
+                            </h2>
+
+                            <p className="text-lg sm:text-sm text-gray-600 font-medium leading-tight">
                                 presents
                             </p>
                             
-                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-yellow-600 bg-clip-text text-transparent leading-tight">
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-yellow-600 bg-clip-text text-transparent leading-tight pb-2 animate-pulse">
                                 Sparsh Premier League
                             </h2>
                             
-                            <h3 className="text-xl sm:text-xl md:text-2xl font-bold text-yellow-600 hover:text-yellow-500 transition-colors duration-300 leading-tight">
+                            <h3 className="text-xl sm:text-xl md:text-2xl font-bold text-gray-500 hover:text-gray-500 transition-colors duration-300 leading-tight">
                                 Season 02
                             </h3>
 
                             {/* Date */}
-                            <div className="text-xl sm:text-xl md:text-2xl font-bold text-blue-600 animate-pulse pt-4">
+                            <div className="text-xl sm:text-xl md:text-2xl font-bold text-green-600">
                                 🥎 15 & 16 November 2025 🥎
                             </div>
 
-                            {/* Action Buttons */}
-                            <div className="pt-4 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                                <button
-                                    onClick={handleRegistrationClick}
-                                    className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold hover:from-blue-700 hover:to-purple-700 hover:scale-110 transition-all duration-300 shadow-lg text-base sm:text-lg group/button"
-                                >
-                                    <Trophy size={20} className="sm:w-6 sm:h-6 group-hover/button:animate-bounce" />
-                                    <span>Register Now</span>
-                                </button>
-                                
-                                {/*<a
-                                    href="/spl02/players"
-                                    className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold hover:from-green-700 hover:to-teal-700 hover:scale-110 transition-all duration-300 shadow-lg text-base sm:text-lg group/button"
-                                >
-                                    <Users size={20} className="sm:w-6 sm:h-6 group-hover/button:animate-bounce" />
-                                    <span>View Players</span>
-                                </a>*/}
+                            {/* Action Buttons - Enhanced Tab Navigation Style with Unique Colors */}
+                            <div className="pt-6 flex justify-center">
+                                <div className="bg-white rounded-2xl sm:rounded-3xl p-2 sm:p-3 shadow-xl border border-gray-200 w-full max-w-4xl">
+                                    <div className="grid grid-cols-2 sm:flex sm:flex-row gap-2 sm:gap-2">
+                                        <button
+                                            onClick={handleRegistrationClick}
+                                            className="group relative inline-flex items-center justify-center space-x-2 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 overflow-hidden flex-1 text-blue-600 hover:text-blue-700 hover:bg-blue-50 hover:shadow-md whitespace-nowrap"
+                                        >
+                                            <Trophy size={18} className="sm:w-5 sm:h-5 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
+                                            <span className="relative z-10">Register Now</span>
+                                        </button>
+                                        
+                                        <Link
+                                            href="/spl02/players"
+                                            className="group relative inline-flex items-center justify-center space-x-2 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 overflow-hidden flex-1 text-red-600 hover:text-red-700 hover:bg-red-50 hover:shadow-md whitespace-nowrap"
+                                        >
+                                            <Users size={18} className="sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300 flex-shrink-0" />
+                                            <span className="relative z-10">View Players</span>
+                                        </Link>
+
+                                        <Link
+                                            href="/spl02/tournament-rules"
+                                            className="group relative inline-flex items-center justify-center space-x-2 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 overflow-hidden flex-1 text-purple-600 hover:text-purple-700 hover:bg-purple-50 hover:shadow-md whitespace-nowrap"
+                                        >
+                                            <Award size={18} className="sm:w-5 sm:h-5 group-hover:bounce transition-transform duration-300 flex-shrink-0" />
+                                            <span className="relative z-10">Match Rules</span>
+                                        </Link>
+
+                                        <Link
+                                            href="/spl02/auction-rules"
+                                            className="group relative inline-flex items-center justify-center space-x-2 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 overflow-hidden flex-1 text-green-600 hover:text-green-700 hover:bg-green-50 hover:shadow-md whitespace-nowrap"
+                                        >
+                                            <Target size={18} className="sm:w-5 sm:h-5 group-hover:rotate-180 transition-transform duration-500 flex-shrink-0" />
+                                            <span className="relative z-10">Auction Rules</span>
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -279,7 +288,7 @@ export default function SPL02() {
                             return (
                                 <div 
                                     key={index} 
-                                    className="bg-white/90 backdrop-blur-sm rounded-3xl p-4 sm:p-8 shadow-large hover:shadow-glow-lg transition-all duration-500 border border-white/50 group hover:scale-105 hover:-translate-y-2"
+                                    className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 sm:p-8 shadow-large hover:shadow-glow-lg transition-all duration-500 border border-white/50 group hover:scale-105 hover:-translate-y-2"
                                     style={{
                                         animationDelay: `${index * 200}ms`,
                                         animation: 'slideUp 0.8s ease-out forwards'
