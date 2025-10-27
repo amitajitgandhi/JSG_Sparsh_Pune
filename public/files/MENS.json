@@ -1184,5 +1184,18 @@
     "Jersey Number": 7,
     "Jersey Size": "XXS",
     "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1760078809478-zepwvn8nx-photo-1760078809479.jpg"
+  },
+  {
+    "CATEGORY": "Waiting",
+    "Full Name": "Manoj Oswal",
+    "Mobile Number": 8087549644,
+    "Age": 48,
+    "Skillset": "All Rounder",
+    "Bowling Arm": "Right Arm",
+    "Cric Heroes Link": "https://cricheroes.com/player-profile/1814696/Manoj-Oswal",
+    "Jersey Name": "Manoj",
+    "Jersey Number": 24,
+    "Jersey Size": "Xl",
+    "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1761574030796-z45w4yzix-photo-1761574030797.jpeg"
   }
 ]
