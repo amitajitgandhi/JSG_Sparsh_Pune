@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import SharadbhaiTribute from './SharadbhaiTribute'
 
 export default function AboutSection() {
   const [mounted, setMounted] = useState(false)
@@ -51,7 +52,7 @@ export default function AboutSection() {
         </div>
 
         {/* JSG Federation Section */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-lg border border-blue-200">
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-lg border border-blue-200 mb-12 sm:mb-16">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8">
             <div className="flex-1 text-center lg:text-left">
               <div className="flex items-center justify-center lg:justify-start mb-4 sm:mb-6">
@@ -88,7 +89,7 @@ export default function AboutSection() {
             </div>
             
             <div className="flex-shrink-0 order-first lg:order-last">
-              <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-gray-100">
+              <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl hover:shadow-2xl transition-all duration-300">
                 <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 mx-auto">
                   <img 
                     src="/images/JSG_Federation.jpeg" 
@@ -100,6 +101,9 @@ export default function AboutSection() {
             </div>
           </div>
         </div>
+
+        {/* Shri Sharadbhai Shah Tribute Section */}
+        <SharadbhaiTribute />
 
       </div>
     </section>
