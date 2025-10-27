@@ -211,7 +211,7 @@ export default function SPL02() {
                                             onClick={handleRegistrationClick}
                                             className="group relative inline-flex items-center justify-center space-x-2 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 overflow-hidden flex-1 text-blue-600 hover:text-blue-700 hover:bg-blue-50 hover:shadow-md whitespace-nowrap"
                                         >
-                                            <Trophy size={18} className="sm:w-5 sm:h-5 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
+                                            <Trophy size={18} className="sm:w-5 sm:h-5 flex-shrink-0" />
                                             <span className="relative z-10">Register Now</span>
                                         </button>
                                         
@@ -219,7 +219,7 @@ export default function SPL02() {
                                             href="/spl02/players"
                                             className="group relative inline-flex items-center justify-center space-x-2 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 overflow-hidden flex-1 text-red-600 hover:text-red-700 hover:bg-red-50 hover:shadow-md whitespace-nowrap"
                                         >
-                                            <Users size={18} className="sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300 flex-shrink-0" />
+                                            <Users size={18} className="sm:w-5 sm:h-5 flex-shrink-0" />
                                             <span className="relative z-10">View Players</span>
                                         </Link>
 
@@ -227,7 +227,7 @@ export default function SPL02() {
                                             href="/spl02/tournament-rules"
                                             className="group relative inline-flex items-center justify-center space-x-2 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 overflow-hidden flex-1 text-purple-600 hover:text-purple-700 hover:bg-purple-50 hover:shadow-md whitespace-nowrap"
                                         >
-                                            <Award size={18} className="sm:w-5 sm:h-5 group-hover:bounce transition-transform duration-300 flex-shrink-0" />
+                                            <Award size={18} className="sm:w-5 sm:h-5 flex-shrink-0" />
                                             <span className="relative z-10">Match Rules</span>
                                         </Link>
 
@@ -235,7 +235,7 @@ export default function SPL02() {
                                             href="/spl02/auction-rules"
                                             className="group relative inline-flex items-center justify-center space-x-2 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 overflow-hidden flex-1 text-green-600 hover:text-green-700 hover:bg-green-50 hover:shadow-md whitespace-nowrap"
                                         >
-                                            <Target size={18} className="sm:w-5 sm:h-5 group-hover:rotate-180 transition-transform duration-500 flex-shrink-0" />
+                                            <Target size={18} className="sm:w-5 sm:h-5 flex-shrink-0" />
                                             <span className="relative z-10">Auction Rules</span>
                                         </Link>
                                     </div>
