@@ -404,5 +404,19 @@
     "Jersey Number": 23,
     "Jersey Size": "XXS",
     "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1759857116235-q77b8etik-photo-1759857116236.jpg"
+  },
+  {
+    "CATEGORY": "Waiting",
+    "Sr. No.": 30,
+    "Full Name": "Kalp Amol Shah",
+    "Mobile Number": 9834404338,
+    "Age": 7,
+    "Skillset": "Batsman",
+    "Bowling Arm": "Right Arm",
+    "Cric Heroes Link": "https://cricheroes.com/player-profile/43548781/Kalp-Shah",
+    "Jersey Name": "Kalp",
+    "Jersey Number": 27,
+    "Jersey Size": "XXS",
+    "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1761657642268-grm09w82w-photo-1761657642269.jpg"
   }
 ]
