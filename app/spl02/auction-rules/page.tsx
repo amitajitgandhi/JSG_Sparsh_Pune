@@ -115,7 +115,7 @@ export default function SPL02AuctionRules() {
                             <li>• Unsold players will be <strong>re-auctioned</strong> at their base price.</li>
                             <li>• If multiple players remain unsold post re-auction, they will be <strong>randomly distributed</strong> using a spin wheel at their respective category base price <strong>except ICON Category</strong>.</li>
                             <li>• If only one team is left to purchase the last player, the player will be assigned at the <strong>category base price except ICON Category</strong>.</li>
-                            <li>• <strong>In the Icon Category</strong>, unsold players / if only one team is left to purchase the last player, such player(s) will be assigned at a price equal to the <strong>average of all sold Icon player's prices</strong>.</li>
+                            <li>• <strong>In the Icon Category</strong>, unsold players / if only one team is left to purchase the last player, such player(s) will be assigned at a price equal to the <strong>average of the top five sold Icon player's prices</strong>.</li>
                         </ul>
                     </div>
 
