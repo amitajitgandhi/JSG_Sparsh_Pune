@@ -702,7 +702,7 @@
     "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1759503996245-8kz4lgi09-photo-1759503996245.jpg"
   },
   {
-    "CATEGORY": "Gold",
+    "CATEGORY": "Waiting",
     "Full Name": "Sachin Punamiya",
     "Mobile Number": 9822014999,
     "Age": 49,
@@ -1165,7 +1165,7 @@
     "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1760115713331-1pgsl91ef-photo-1760115713331.jpg"
   },
   {
-    "CATEGORY": "Waiting",
+    "CATEGORY": "Gold",
     "Full Name": "Rishi Jain",
     "Mobile Number": 7888163651,
     "Age": 13,
