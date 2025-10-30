@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Users, Phone, Trophy, ExternalLink, ChevronDown, ChevronUp, Loader2, ArrowLeft, Share2, Download, Check } from 'lucide-react'
+import { Users, Phone, Trophy, ExternalLink, ChevronDown, ChevronUp, Loader2, ArrowLeft, Copy, Download, Check } from 'lucide-react'
 import Link from 'next/link'
 
 // Define the squad member interface
@@ -31,13 +31,6 @@ const teamColors = [
   'from-cyan-500 to-cyan-600',
 ]
 
-// Hardcoded squad counts
-const squadCounts = {
-  MENS: 88,
-  WOMENS: 36,
-  KIDS: 28
-}
-
 export default function SPL02Squad() {
   const [mensSquad, setMensSquad] = useState<SquadMember[]>([])
   const [womensSquad, setWomensSquad] = useState<SquadMember[]>([])
@@ -47,6 +40,7 @@ export default function SPL02Squad() {
   const [activeTab, setActiveTab] = useState<'MENS' | 'WOMENS' | 'KIDS'>('MENS')
   const [expandedTeams, setExpandedTeams] = useState<{[key: string]: boolean}>({})
   const [copiedTeam, setCopiedTeam] = useState<string | null>(null)
+  const [exportingTeam, setExportingTeam] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchSquads = async () => {
@@ -137,29 +131,15 @@ export default function SPL02Squad() {
     return teamColors[index % teamColors.length]
   }
 
-  // Share team function
-  const shareTeam = async (teamName: string, members: SquadMember[]) => {
-    const teamText = `?? ${teamName} - SPL-02 Squad\n\n` +
+  // Copy team function with new format (no emojis, Player Name - Mobile Number format)
+  const copyTeam = async (teamName: string, members: SquadMember[]) => {
+    const teamText = `${teamName} - SPL-02 Squad\n\n` +
       members.map((member, index) => 
-        `${index + 1}. ${member['Player Name']}${member['Jersey Number'] ? ` (#${member['Jersey Number']})` : ''}${member.Age ? ` - ${member.Age}y` : ''}`
+        `${index + 1}. ${member['Player Name']} - ${member['Mobile Number']}`
       ).join('\n') +
-      `\n\n?? Total Players: ${members.length}\n\n#SPL02 #SparshPremierLeague #Cricket`
+      `\n\nTotal Players: ${members.length}\n\n#SPL02 #SparshPremierLeague #Cricket`
 
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: `${teamName} - SPL-02 Squad`,
-          text: teamText,
-          url: window.location.href
-        })
-      } catch (err) {
-        // Fallback to clipboard
-        copyToClipboard(teamText, teamName)
-      }
-    } else {
-      // Fallback to clipboard
-      copyToClipboard(teamText, teamName)
-    }
+    copyToClipboard(teamText, teamName)
   }
 
   // Copy to clipboard function
@@ -181,7 +161,7 @@ export default function SPL02Squad() {
     }
   }
 
-  // Export team to CSV
+  // Export team to CSV with mobile app compatibility
   const exportTeamToCSV = (teamName: string, members: SquadMember[]) => {
     const headers = ['Player Name', 'Mobile Number', 'Jersey Name', 'Jersey Number', 'Jersey Size', 'CricHeroes Link']
     if (members.some(m => m.Age)) headers.splice(2, 0, 'Age')
@@ -202,15 +182,157 @@ export default function SPL02Squad() {
       })
     ].join('\n')
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-    const link = document.createElement('a')
-    const url = URL.createObjectURL(blob)
-    link.setAttribute('href', url)
-    link.setAttribute('download', `${teamName.replace(/[^a-z0-9]/gi, '_')}_Squad_SPL02.csv`)
-    link.style.visibility = 'hidden'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+    const fileName = `${teamName.replace(/[^a-z0-9]/gi, '_')}_Squad_SPL02.csv`
+
+    // Check if we're in a mobile app or have restricted environment
+    const isMobileApp = /Mobile|Android|iOS|iPhone|iPad/.test(navigator.userAgent) || 
+                       window.navigator.userAgent.includes('wv') || // WebView
+                       !window.document.createElement('a').download // No download support
+
+    if (isMobileApp || !window.URL || !window.URL.createObjectURL) {
+      // Mobile app fallback: Use Web Share API or copy to clipboard
+      if (navigator.share) {
+        // Try to share as text file
+        const file = new File([csvContent], fileName, { type: 'text/csv' })
+        navigator.share({
+          files: [file],
+          title: `${teamName} Squad - SPL-02`
+        }).catch(() => {
+          // If file sharing fails, share as text
+          navigator.share({
+            title: `${teamName} Squad - SPL-02`,
+            text: csvContent
+          }).catch(() => {
+            // Final fallback: copy to clipboard
+            copyToClipboard(csvContent, teamName + ' (CSV Data)')
+          })
+        })
+      } else {
+        // No share API, copy CSV data to clipboard
+        copyToClipboard(csvContent, teamName + ' (CSV Data)')
+        alert('CSV data copied to clipboard. You can paste it into a spreadsheet app.')
+      }
+    } else {
+      // Desktop/browser with full download support
+      try {
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+        const link = document.createElement('a')
+        
+        // Use createObjectURL if available
+        if (window.URL && window.URL.createObjectURL) {
+          const url = window.URL.createObjectURL(blob)
+          link.setAttribute('href', url)
+          link.setAttribute('download', fileName)
+          link.style.visibility = 'hidden'
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+          
+          // Clean up the URL object
+          setTimeout(() => window.URL.revokeObjectURL(url), 100)
+        } else {
+          // Fallback for browsers without createObjectURL
+          const dataUrl = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent)
+          link.setAttribute('href', dataUrl)
+          link.setAttribute('download', fileName)
+          link.style.visibility = 'hidden'
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        }
+      } catch (error) {
+        console.error('Export failed:', error)
+        // Final fallback: copy to clipboard
+        copyToClipboard(csvContent, teamName + ' (CSV Data)')
+        alert('Direct download failed. CSV data copied to clipboard instead.')
+
+      }
+    }
+  }
+
+  // Export team to TXT format (mobile-friendly)
+  const exportTeamToTXT = (teamName: string, members: SquadMember[]) => {
+    const txtContent = `${teamName} - SPL-02 Squad\n` +
+      `${'='.repeat(50)}\n\n` +
+      members.map((member, index) => {
+        let memberInfo = `${index + 1}. ${member['Player Name']}\n`
+        memberInfo += `   Mobile: ${member['Mobile Number']}\n`
+        if (member['Jersey Name']) memberInfo += `   Jersey Name: ${member['Jersey Name']}\n`
+        if (member['Jersey Number']) memberInfo += `   Jersey Number: ${member['Jersey Number']}\n`
+        if (member['Jersey Size']) memberInfo += `   Jersey Size: ${member['Jersey Size']}\n`
+        if (member.Age) memberInfo += `   Age: ${member.Age} years\n`
+        if (member['Cric Heroes Link']) memberInfo += `   CricHeroes: ${member['Cric Heroes Link']}\n`
+        return memberInfo + '\n'
+      }).join('') +
+      `Total Players: ${members.length}\n\n` +
+      `Generated from SPL-02 Team Management System\n` +
+      `#SPL02 #SparshPremierLeague #Cricket`
+
+    const fileName = `${teamName.replace(/[^a-z0-9]/gi, '_')}_Squad_SPL02.txt`
+
+    // Check if we're in a mobile app or have restricted environment
+    const isMobileApp = /Mobile|Android|iOS|iPhone|iPad/.test(navigator.userAgent) || 
+                       window.navigator.userAgent.includes('wv') || // WebView
+                       !window.document.createElement('a').download // No download support
+
+    if (isMobileApp || !window.URL || !window.URL.createObjectURL) {
+      // Mobile app fallback: Use Web Share API or copy to clipboard
+      if (navigator.share) {
+        // Try to share as text file
+        const file = new File([txtContent], fileName, { type: 'text/plain' })
+        navigator.share({
+          files: [file],
+          title: `${teamName} Squad - SPL-02`
+        }).catch(() => {
+          // If file sharing fails, share as text
+          navigator.share({
+            title: `${teamName} Squad - SPL-02`,
+            text: txtContent
+          }).catch(() => {
+            // Final fallback: copy to clipboard
+            copyToClipboard(txtContent, teamName + ' (TXT)')
+          })
+        })
+      } else {
+        // No share API, copy TXT data to clipboard
+        copyToClipboard(txtContent, teamName + ' (TXT)')
+        alert('Team data copied to clipboard as text format.')
+      }
+    } else {
+      // Desktop/browser with full download support
+      try {
+        const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8;' })
+        const link = document.createElement('a')
+        
+        // Use createObjectURL if available
+        if (window.URL && window.URL.createObjectURL) {
+          const url = window.URL.createObjectURL(blob)
+          link.setAttribute('href', url)
+          link.setAttribute('download', fileName)
+          link.style.visibility = 'hidden'
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+          
+          // Clean up the URL object
+          setTimeout(() => window.URL.revokeObjectURL(url), 100)
+        } else {
+          // Fallback for browsers without createObjectURL
+          const dataUrl = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txtContent)
+          link.setAttribute('href', dataUrl)
+          link.setAttribute('download', fileName)
+          link.style.visibility = 'hidden'
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        }
+      } catch (error) {
+        console.error('Export failed:', error)
+        // Final fallback: copy to clipboard
+        copyToClipboard(txtContent, teamName + ' (TXT)')
+        alert('Direct download failed. Team data copied to clipboard instead.')
+      }
+    }
   }
 
   // Squad table component
@@ -464,34 +586,38 @@ export default function SPL02Squad() {
 
                   {/* Action Buttons */}
                   <div className="flex items-center space-x-2 sm:space-x-3 relative z-10">
-                    {/* Share Button */}
+                    {/* Copy Button */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation()
-                        shareTeam(teamName, members)
+                        copyTeam(teamName, members)
                       }}
                       className={`p-2 rounded-lg ${textColor} hover:bg-white/20 transition-all duration-300 hover:scale-110 flex items-center space-x-1 text-xs sm:text-sm font-medium`}
-                      title="Share team"
+                      title="Copy team list"
                     >
-                      {copiedTeam === teamName ? <Check size={16} /> : <Share2 size={16} />}
+                      {copiedTeam === teamName ? <Check size={16} /> : <Copy size={16} />}
                       <span className="hidden sm:inline">
-                        {copiedTeam === teamName ? 'Copied!' : 'Share'}
+                        {copiedTeam === teamName ? 'Copied!' : 'Copy'}
                       </span>
                     </button>
 
-                    {/* Export Button */}
+                    {/* Export Button - TXT Format Only */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation()
-                        exportTeamToCSV(teamName, members)
+                        setExportingTeam(teamName)
+                        exportTeamToTXT(teamName, members)
+                        setTimeout(() => setExportingTeam(null), 2000)
                       }}
                       className={`p-2 rounded-lg ${textColor} hover:bg-white/20 transition-all duration-300 hover:scale-110 flex items-center space-x-1 text-xs sm:text-sm font-medium`}
-                      title="Export to CSV"
+                      title="Export as TXT file"
                     >
-                      <Download size={16} />
-                      <span className="hidden sm:inline">Export</span>
+                      {exportingTeam === teamName ? <Check size={16} /> : <Download size={16} />}
+                      <span className="hidden sm:inline">
+                        {exportingTeam === teamName ? 'Exported!' : 'Export'}
+                      </span>
                     </button>
-
+                  
                     {/* Expand/Collapse Button */}
                     <button
                       onClick={() => toggleTeam(teamName)}
