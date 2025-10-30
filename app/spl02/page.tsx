@@ -203,8 +203,23 @@ export default function SPL02() {
                                 🥎 15 & 16 November 2025 🥎
                             </div>
 
+                            {/* FINAL SQUAD Button - Big and Prominent */}
+                            <div className="pt-6 pb-4">
+                                <Link
+                                    href="/spl02/squad"
+                                    className="group relative inline-block"
+                                >
+                                    <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-500 rounded-2xl sm:rounded-3xl blur-md opacity-75 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <button className="relative bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-8 sm:px-12 md:px-16 py-4 sm:py-5 md:py-6 rounded-2xl sm:rounded-3xl font-bold text-lg sm:text-xl md:text-2xl transition-all duration-300 shadow-2xl hover:scale-105 hover:shadow-glow-lg flex items-center space-x-3 sm:space-x-4 animate-pulse">
+                                        <Users size={24} className="sm:w-7 sm:h-7 md:w-8 md:h-8 group-hover:animate-bounce" />
+                                        <span className="relative z-10 whitespace-nowrap">FINAL SQUAD</span>
+                                        <Trophy size={24} className="sm:w-7 sm:h-7 md:w-8 md:h-8 group-hover:animate-bounce" />
+                                    </button>
+                                </Link>
+                            </div>
+
                             {/* Action Buttons - Enhanced Tab Navigation Style with Unique Colors */}
-                            <div className="pt-6 flex justify-center">
+                            <div className="pt-2 flex justify-center">
                                 <div className="bg-white rounded-2xl sm:rounded-3xl p-2 sm:p-3 shadow-xl border border-gray-200 w-full max-w-4xl">
                                     <div className="grid grid-cols-2 sm:flex sm:flex-row gap-2 sm:gap-2">
                                         <button
