@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Users, Phone, Trophy, ExternalLink, ChevronDown, ChevronUp, Loader2, ArrowLeft } from 'lucide-react'
+import { Users, Phone, Trophy, ExternalLink, ChevronDown, ChevronUp, Loader2, ArrowLeft, Share2, Download, Check } from 'lucide-react'
 import Link from 'next/link'
 
 // Define the squad member interface
@@ -46,6 +46,7 @@ export default function SPL02Squad() {
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'MENS' | 'WOMENS' | 'KIDS'>('MENS')
   const [expandedTeams, setExpandedTeams] = useState<{[key: string]: boolean}>({})
+  const [copiedTeam, setCopiedTeam] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchSquads = async () => {
@@ -134,6 +135,82 @@ export default function SPL02Squad() {
   // Get team color based on index
   const getTeamColor = (index: number) => {
     return teamColors[index % teamColors.length]
+  }
+
+  // Share team function
+  const shareTeam = async (teamName: string, members: SquadMember[]) => {
+    const teamText = `?? ${teamName} - SPL-02 Squad\n\n` +
+      members.map((member, index) => 
+        `${index + 1}. ${member['Player Name']}${member['Jersey Number'] ? ` (#${member['Jersey Number']})` : ''}${member.Age ? ` - ${member.Age}y` : ''}`
+      ).join('\n') +
+      `\n\n?? Total Players: ${members.length}\n\n#SPL02 #SparshPremierLeague #Cricket`
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `${teamName} - SPL-02 Squad`,
+          text: teamText,
+          url: window.location.href
+        })
+      } catch (err) {
+        // Fallback to clipboard
+        copyToClipboard(teamText, teamName)
+      }
+    } else {
+      // Fallback to clipboard
+      copyToClipboard(teamText, teamName)
+    }
+  }
+
+  // Copy to clipboard function
+  const copyToClipboard = async (text: string, teamName: string) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopiedTeam(teamName)
+      setTimeout(() => setCopiedTeam(null), 2000)
+    } catch (err) {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea')
+      textArea.value = text
+      document.body.appendChild(textArea)
+      textArea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textArea)
+      setCopiedTeam(teamName)
+      setTimeout(() => setCopiedTeam(null), 2000)
+    }
+  }
+
+  // Export team to CSV
+  const exportTeamToCSV = (teamName: string, members: SquadMember[]) => {
+    const headers = ['Player Name', 'Mobile Number', 'Jersey Name', 'Jersey Number', 'Jersey Size', 'CricHeroes Link']
+    if (members.some(m => m.Age)) headers.splice(2, 0, 'Age')
+
+    const csvContent = [
+      headers.join(','),
+      ...members.map(member => {
+        const row = [
+          `"${member['Player Name']}"`,
+          `"${member['Mobile Number']}"`,
+          ...(members.some(m => m.Age) ? [`"${member.Age || ''}"`] : []),
+          `"${member['Jersey Name'] || ''}"`,
+          `"${member['Jersey Number'] || ''}"`,
+          `"${member['Jersey Size'] || ''}"`,
+          `"${member['Cric Heroes Link'] || ''}"`
+        ]
+        return row.join(',')
+      })
+    ].join('\n')
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    const url = URL.createObjectURL(blob)
+    link.setAttribute('href', url)
+    link.setAttribute('download', `${teamName.replace(/[^a-z0-9]/gi, '_')}_Squad_SPL02.csv`)
+    link.style.visibility = 'hidden'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
   }
 
   // Squad table component
@@ -368,12 +445,14 @@ export default function SPL02Squad() {
             
             return (
               <div key={teamName} id={`team-${teamName.replace(/\s+/g, '-')}`} className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300">
-                <button
-                  onClick={() => toggleTeam(teamName)}
-                  className={`w-full ${backgroundColor} backdrop-blur-sm ${textColor} ${hoverColor} p-4 sm:p-5 md:p-6 flex items-center justify-between hover:shadow-md transition-all duration-300 active:scale-95 relative overflow-hidden group border-l-4 ${borderColor}`}
-                >
+                <div className={`w-full ${backgroundColor} backdrop-blur-sm ${textColor} ${hoverColor} p-4 sm:p-5 md:p-6 flex items-center justify-between hover:shadow-md transition-all duration-300 relative overflow-hidden group border-l-4 ${borderColor}`}>
                   <div className={`absolute inset-0 bg-gradient-to-r ${teamColor} opacity-0 group-hover:opacity-20 transition-opacity duration-300`} />
-                  <div className="flex items-center space-x-3 sm:space-x-4 relative z-10">
+                  
+                  {/* Team Info - Clickable Area */}
+                  <button
+                    onClick={() => toggleTeam(teamName)}
+                    className="flex items-center space-x-3 sm:space-x-4 relative z-10 flex-1 text-left active:scale-95 transition-transform duration-200"
+                  >
                     <div className={`p-2 rounded-lg bg-gradient-to-r ${teamColor} text-white shadow-md group-hover:scale-110 transition-transform duration-300`}>
                       <Users size={20} className="sm:w-6 sm:h-6" />
                     </div>
@@ -381,11 +460,47 @@ export default function SPL02Squad() {
                       <h2 className={`text-lg sm:text-xl md:text-2xl font-bold leading-tight ${textColor}`}>{teamName}</h2>
                       <p className={`${textColor} opacity-70 text-xs sm:text-sm`}>{members.length} players</p>
                     </div>
+                  </button>
+
+                  {/* Action Buttons */}
+                  <div className="flex items-center space-x-2 sm:space-x-3 relative z-10">
+                    {/* Share Button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        shareTeam(teamName, members)
+                      }}
+                      className={`p-2 rounded-lg ${textColor} hover:bg-white/20 transition-all duration-300 hover:scale-110 flex items-center space-x-1 text-xs sm:text-sm font-medium`}
+                      title="Share team"
+                    >
+                      {copiedTeam === teamName ? <Check size={16} /> : <Share2 size={16} />}
+                      <span className="hidden sm:inline">
+                        {copiedTeam === teamName ? 'Copied!' : 'Share'}
+                      </span>
+                    </button>
+
+                    {/* Export Button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        exportTeamToCSV(teamName, members)
+                      }}
+                      className={`p-2 rounded-lg ${textColor} hover:bg-white/20 transition-all duration-300 hover:scale-110 flex items-center space-x-1 text-xs sm:text-sm font-medium`}
+                      title="Export to CSV"
+                    >
+                      <Download size={16} />
+                      <span className="hidden sm:inline">Export</span>
+                    </button>
+
+                    {/* Expand/Collapse Button */}
+                    <button
+                      onClick={() => toggleTeam(teamName)}
+                      className={`p-1 rounded-full ${textColor} hover:bg-white/20 transition-colors duration-300`}
+                    >
+                      {isExpanded ? <ChevronUp size={20} className="sm:w-6 sm:h-6" /> : <ChevronDown size={20} className="sm:w-6 sm:h-6" />}
+                    </button>
                   </div>
-                  <div className={`flex-shrink-0 relative z-10 ${textColor} p-1 rounded-full group-hover:bg-white/20 transition-colors duration-300`}>
-                    {isExpanded ? <ChevronUp size={20} className="sm:w-6 sm:h-6" /> : <ChevronDown size={20} className="sm:w-6 sm:h-6" />}
-                  </div>
-                </button>
+                </div>
                 {isExpanded && (
                   <div className="p-3 sm:p-4 md:p-6">
                     <SquadTable members={members} />
