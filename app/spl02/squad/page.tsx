@@ -387,9 +387,9 @@ export default function SPL02Squad() {
     const isMobileApp = /mobile|android|ios|iphone|ipad/.test(userAgent) || 
                        isWebView || 
                        !window.document.createElement('a').download ||
-                       window.ReactNativeWebView !== undefined || // React Native
-                       window.flutter_inappwebview !== undefined || // Flutter
-                       window.webkit?.messageHandlers !== undefined // iOS WebView
+                       (window as any).ReactNativeWebView !== undefined || // React Native
+                       (window as any).flutter_inappwebview !== undefined || // Flutter
+                       (window as any).webkit?.messageHandlers !== undefined // iOS WebView
 
     console.log('Export Debug:', { isAndroid, isWebView, isMobileApp, userAgent })
 
@@ -445,10 +445,10 @@ export default function SPL02Squad() {
       }
 
       // 2. Try Android Intent (if available)
-      if (isAndroid && window.Android) {
+      if (isAndroid && (window as any).Android) {
         console.log('Trying Android interface')
         try {
-          window.Android.saveFile(fileName, txtContent)
+          (window as any).Android.saveFile(fileName, txtContent)
           return
         } catch (error) {
           console.log('Android interface failed:', error)
