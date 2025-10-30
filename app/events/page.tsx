@@ -19,7 +19,7 @@ export default function Events() {
       description: 'A memorable Holi celebration with record-breaking participation of 275 members! Featured breakfast, adventure activities, vibrant Holi party with colors, foam, rain dance, and concluded with AGM presentation.',
       attendees: 275,
       highlights: ['Adventure Activities', 'Rain Dance', 'DJ & Dancing', 'AGM Presentation'],
-      galleryUrl: 'https://www.facebook.com/media/set/?set=a.122184039338263798&type=3'
+          galleryUrl: 'https://www.facebook.com/share/p/17YNJaTyoV/'
     },
     {
       id: 2,
@@ -30,7 +30,7 @@ export default function Events() {
       description: 'Vibrant celebration of India\'s cultural heritage with committee installation. Members dressed in traditional attire representing diverse Indian cultures, with dance performances and oath-taking ceremony.',
       attendees: 200,
       highlights: ['Committee Installation', 'Cultural Performances', 'Traditional Attire', 'Award Ceremony'],
-      galleryUrl: 'https://www.facebook.com/media/set/?set=a.122192890292263798&type=3'
+        galleryUrl: 'https://www.facebook.com/share/p/1JzCcPrGx5/'
     }
     ,
     {
@@ -42,7 +42,7 @@ export default function Events() {
       description: 'Unforgettable splash of fun at Aqua Imagica! Started with Darshan at Kalash Mandir, followed by thrilling water rides, wave pools, lunch at the park, and dinner at Zalawadi.',
       attendees: 150,
       highlights: ['Water Rides', 'Wave Pools', 'Temple Darshan', 'Full Day Fun'],
-      galleryUrl: 'https://www.facebook.com/media/set/?set=a.122196499868263798&type=3'
+        galleryUrl: 'https://www.facebook.com/share/p/17W5ri8BCV/'
     },
     {
       id: 4,
@@ -53,7 +53,7 @@ export default function Events() {
       description: 'Glam & Glitter edition with Masti Mania, live band musical tambola by Abhishek Parekh, and high-energy Bachata-Bollywood fusion by actress Aiyli Giya. Dance floor alive till the end!',
       attendees: 180,
       highlights: ['Live Band Tambola', 'Bachata', 'Celebrity Performance', 'DJ Night'],
-      galleryUrl: 'https://www.facebook.com/media/set/?set=a.122202233348263798&type=3'
+        galleryUrl: 'https://www.facebook.com/share/p/17UaNPMcHd/'
     }
   ]
 
