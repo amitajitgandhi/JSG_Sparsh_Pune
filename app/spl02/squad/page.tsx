@@ -142,22 +142,132 @@ export default function SPL02Squad() {
     copyToClipboard(teamText, teamName)
   }
 
-  // Copy to clipboard function
+  // Copy to clipboard function with Android optimizations
   const copyToClipboard = async (text: string, teamName: string) => {
+    console.log('Starting clipboard copy for:', teamName)
+    
     try {
-      await navigator.clipboard.writeText(text)
-      setCopiedTeam(teamName)
-      setTimeout(() => setCopiedTeam(null), 2000)
+      // Modern clipboard API (preferred method)
+      if (navigator.clipboard && window.isSecureContext) {
+        console.log('Using modern clipboard API')
+        await navigator.clipboard.writeText(text)
+        setCopiedTeam(teamName)
+        setTimeout(() => setCopiedTeam(null), 3000)
+        console.log('Modern clipboard copy successful')
+        return
+      }
     } catch (err) {
-      // Fallback for older browsers
+      console.warn('Modern clipboard failed:', err)
+    }
+
+    // Android-specific clipboard handling
+    const isAndroid = navigator.userAgent.toLowerCase().includes('android')
+    
+    try {
+      // Enhanced fallback method for Android
       const textArea = document.createElement('textarea')
       textArea.value = text
+      
+      // Android-specific styling to ensure visibility
+      textArea.style.position = 'fixed'
+      textArea.style.left = '-9999px'
+      textArea.style.top = '-9999px'
+      textArea.style.width = '1px'
+      textArea.style.height = '1px'
+      textArea.style.opacity = '0'
+      textArea.style.pointerEvents = 'none'
+      textArea.setAttribute('readonly', '')
+      textArea.setAttribute('contenteditable', 'true')
+      
       document.body.appendChild(textArea)
+      
+      // Android requires focus before selection
+      textArea.focus()
       textArea.select()
-      document.execCommand('copy')
+      textArea.setSelectionRange(0, text.length)
+      
+      // Multiple attempts for Android compatibility
+      let successful = false
+      
+      // Try modern execCommand
+      if (document.execCommand) {
+        successful = document.execCommand('copy')
+        console.log('execCommand result:', successful)
+      }
+      
+      // Alternative for some Android versions
+      if (!successful && isAndroid) {
+        try {
+          // Try triggering Android's native copy
+          const selection = window.getSelection()
+          if (selection) {
+            selection.removeAllRanges()
+            const range = document.createRange()
+            range.selectNodeContents(textArea)
+            selection.addRange(range)
+            successful = document.execCommand('copy')
+            selection.removeAllRanges()
+          }
+        } catch (selectionError) {
+          console.log('Selection method failed:', selectionError)
+        }
+      }
+      
       document.body.removeChild(textArea)
-      setCopiedTeam(teamName)
-      setTimeout(() => setCopiedTeam(null), 2000)
+      
+      if (successful) {
+        setCopiedTeam(teamName)
+        setTimeout(() => setCopiedTeam(null), 3000)
+        console.log('Fallback clipboard copy successful')
+      } else {
+        throw new Error('All copy methods failed')
+      }
+    } catch (err) {
+      console.error('All clipboard methods failed:', err)
+      
+      // Final fallback - show the text for manual copy
+      if (isAndroid) {
+        // Android-specific fallback with better UX
+        const modal = document.createElement('div')
+        modal.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0,0,0,0.8);
+          color: white;
+          padding: 20px;
+          z-index: 99999;
+          overflow: auto;
+          font-family: monospace;
+          font-size: 14px;
+          line-height: 1.4;
+        `
+        
+        modal.innerHTML = `
+          <div style="max-width: 600px; margin: 0 auto;">
+            <h3 style="margin-bottom: 20px;">Copy Team Data</h3>
+            <p style="margin-bottom: 15px;">Long press the text below and select "Copy":</p>
+            <textarea readonly style="width: 100%; height: 300px; background: #333; color: white; border: 1px solid #666; padding: 10px; font-family: inherit;">${text}</textarea>
+            <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 15px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px;">Close</button>
+          </div>
+        `
+        
+        document.body.appendChild(modal)
+        
+        // Auto-select the textarea content
+        setTimeout(() => {
+          const textarea = modal.querySelector('textarea')
+          if (textarea) {
+            textarea.focus()
+            textarea.select()
+          }
+        }, 100)
+      } else {
+        // Standard alert for other platforms
+        alert(`Copy failed. Please manually select and copy:\n\n${text.substring(0, 200)}...`)
+      }
     }
   }
 
@@ -250,7 +360,7 @@ export default function SPL02Squad() {
     }
   }
 
-  // Export team to TXT format (mobile-friendly)
+  // Export team to TXT format (Android app optimized)
   const exportTeamToTXT = (teamName: string, members: SquadMember[]) => {
     const txtContent = `${teamName} - SPL-02 Squad\n` +
       `${'='.repeat(50)}\n\n` +
@@ -270,68 +380,132 @@ export default function SPL02Squad() {
 
     const fileName = `${teamName.replace(/[^a-z0-9]/gi, '_')}_Squad_SPL02.txt`
 
-    // Check if we're in a mobile app or have restricted environment
-    const isMobileApp = /Mobile|Android|iOS|iPhone|iPad/.test(navigator.userAgent) || 
-                       window.navigator.userAgent.includes('wv') || // WebView
-                       !window.document.createElement('a').download // No download support
+    // Enhanced Android/Mobile detection
+    const userAgent = navigator.userAgent.toLowerCase()
+    const isAndroid = userAgent.includes('android')
+    const isWebView = userAgent.includes('wv') || userAgent.includes('webview')
+    const isMobileApp = /mobile|android|ios|iphone|ipad/.test(userAgent) || 
+                       isWebView || 
+                       !window.document.createElement('a').download ||
+                       window.ReactNativeWebView !== undefined || // React Native
+                       window.flutter_inappwebview !== undefined || // Flutter
+                       window.webkit?.messageHandlers !== undefined // iOS WebView
 
-    if (isMobileApp || !window.URL || !window.URL.createObjectURL) {
-      // Mobile app fallback: Use Web Share API or copy to clipboard
+    console.log('Export Debug:', { isAndroid, isWebView, isMobileApp, userAgent })
+
+    // Android/Mobile App specific handling
+    if (isMobileApp || isAndroid) {
+      console.log('Using mobile export strategy')
+      
+      // Try multiple mobile-friendly approaches
+      
+      // 1. Try Web Share API (modern Android)
       if (navigator.share) {
-        // Try to share as text file
-        const file = new File([txtContent], fileName, { type: 'text/plain' })
-        navigator.share({
-          files: [file],
-          title: `${teamName} Squad - SPL-02`
-        }).catch(() => {
-          // If file sharing fails, share as text
-          navigator.share({
-            title: `${teamName} Squad - SPL-02`,
-            text: txtContent
-          }).catch(() => {
-            // Final fallback: copy to clipboard
-            copyToClipboard(txtContent, teamName + ' (TXT)')
-          })
-        })
-      } else {
-        // No share API, copy TXT data to clipboard
-        copyToClipboard(txtContent, teamName + ' (TXT)')
-        alert('Team data copied to clipboard as text format.')
-      }
-    } else {
-      // Desktop/browser with full download support
-      try {
-        const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8;' })
-        const link = document.createElement('a')
-        
-        // Use createObjectURL if available
-        if (window.URL && window.URL.createObjectURL) {
-          const url = window.URL.createObjectURL(blob)
-          link.setAttribute('href', url)
-          link.setAttribute('download', fileName)
-          link.style.visibility = 'hidden'
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
-          
-          // Clean up the URL object
-          setTimeout(() => window.URL.revokeObjectURL(url), 100)
-        } else {
-          // Fallback for browsers without createObjectURL
-          const dataUrl = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txtContent)
-          link.setAttribute('href', dataUrl)
-          link.setAttribute('download', fileName)
-          link.style.visibility = 'hidden'
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
+        console.log('Attempting Web Share API')
+        try {
+          // Try sharing as file first (if supported)
+          if (navigator.canShare && navigator.canShare({ files: [new File([txtContent], fileName, { type: 'text/plain' })] })) {
+            const file = new File([txtContent], fileName, { type: 'text/plain' })
+            navigator.share({
+              files: [file],
+              title: `${teamName} Squad - SPL-02`,
+              text: 'Team squad information from SPL-02'
+            }).then(() => {
+              console.log('File share successful')
+            }).catch((error) => {
+              console.log('File share failed, trying text share:', error)
+              // Fallback to text sharing
+              navigator.share({
+                title: `${teamName} Squad - SPL-02`,
+                text: txtContent
+              }).catch((error) => {
+                console.log('Text share failed, using clipboard:', error)
+                copyToClipboard(txtContent, teamName + ' (TXT)')
+                alert('Team data copied to clipboard. You can paste it in any app.')
+              })
+            })
+            return
+          } else {
+            // Share as text if file sharing not supported
+            navigator.share({
+              title: `${teamName} Squad - SPL-02`,
+              text: txtContent
+            }).then(() => {
+              console.log('Text share successful')
+            }).catch((error) => {
+              console.log('Text share failed:', error)
+              copyToClipboard(txtContent, teamName + ' (TXT)')
+              alert('Team data copied to clipboard. You can paste it in any app.')
+            })
+            return
+          }
+        } catch (error) {
+          console.log('Web Share API error:', error)
         }
-      } catch (error) {
-        console.error('Export failed:', error)
-        // Final fallback: copy to clipboard
-        copyToClipboard(txtContent, teamName + ' (TXT)')
-        alert('Direct download failed. Team data copied to clipboard instead.')
       }
+
+      // 2. Try Android Intent (if available)
+      if (isAndroid && window.Android) {
+        console.log('Trying Android interface')
+        try {
+          window.Android.saveFile(fileName, txtContent)
+          return
+        } catch (error) {
+          console.log('Android interface failed:', error)
+        }
+      }
+
+      // 3. Clipboard fallback with user guidance
+      console.log('Using clipboard fallback for mobile')
+      copyToClipboard(txtContent, teamName + ' (TXT)')
+      
+      // Show mobile-specific instructions
+      const instructions = isAndroid 
+        ? 'Team data copied to clipboard!\n\nYou can now:\n• Open any text editor or notes app\n• Long press and select "Paste"\n• Save the file\n\nOr share directly from clipboard in WhatsApp, Email, etc.'
+        : 'Team data copied to clipboard!\n\nYou can paste it in:\n• Notes app\n• Text editor\n• WhatsApp\n• Email\n• Any messaging app'
+      
+      alert(instructions)
+      return
+    }
+
+    // Desktop browser handling (original logic)
+    console.log('Using desktop export strategy')
+    try {
+      const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8;' })
+      const link = document.createElement('a')
+      
+      if (window.URL && window.URL.createObjectURL) {
+        const url = window.URL.createObjectURL(blob)
+        link.setAttribute('href', url)
+        link.setAttribute('download', fileName)
+        link.style.visibility = 'hidden'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        
+        // Clean up the URL object
+        setTimeout(() => {
+          try {
+            window.URL.revokeObjectURL(url)
+          } catch (e) {
+            console.log('URL cleanup failed:', e)
+          }
+        }, 100)
+      } else {
+        // Fallback for browsers without createObjectURL
+        const dataUrl = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txtContent)
+        link.setAttribute('href', dataUrl)
+        link.setAttribute('download', fileName)
+        link.style.visibility = 'hidden'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      }
+    } catch (error) {
+      console.error('Desktop export failed:', error)
+      // Final fallback: copy to clipboard
+      copyToClipboard(txtContent, teamName + ' (TXT)')
+      alert('Direct download failed. Team data copied to clipboard instead.')
     }
   }
 
