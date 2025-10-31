@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 interface SquadMember {
   'Player Name': string
   'Mobile Number': number | string
@@ -19,9 +22,54 @@ interface AddSquadMemberRequest {
   newMember: SquadMember
 }
 
+const getPrimaryFilePath = (category: string) => path.join(process.cwd(), 'public', 'files', 'SQUAD', `${category}.json`)
+const getTempFilePath = (category: string) => path.join('/tmp', `${category}-squad.json`)
+
+function readSquad(category: string): SquadMember[] {
+  const tempPath = getTempFilePath(category)
+  if (fs.existsSync(tempPath)) {
+    try {
+      return JSON.parse(fs.readFileSync(tempPath, 'utf8'))
+    } catch (e) {
+      console.warn('[add-squad-member] Failed parsing temp file, falling back to public:', e)
+    }
+  }
+  const primary = getPrimaryFilePath(category)
+  if (!fs.existsSync(primary)) {
+    throw new Error(`Squad file for category ${category} not found`)
+  }
+  return JSON.parse(fs.readFileSync(primary, 'utf8'))
+}
+
+function writeSquad(category: string, data: SquadMember[]) {
+  const primary = getPrimaryFilePath(category)
+  try {
+    fs.writeFileSync(primary, JSON.stringify(data, null, 2), 'utf8')
+    return 'primary'
+  } catch (e) {
+    console.warn('[add-squad-member] Primary write failed, attempting temp fallback:', e)
+    const tempPath = getTempFilePath(category)
+    try {
+      fs.writeFileSync(tempPath, JSON.stringify(data, null, 2), 'utf8')
+      return 'temp'
+    } catch (tmpErr) {
+      console.error('[add-squad-member] Temp write failed:', tmpErr)
+      throw new Error('Filesystem write failed (read-only environment)')
+    }
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const body: AddSquadMemberRequest = await request.json()
+    const raw = await request.text()
+    let body: AddSquadMemberRequest
+    try {
+      body = JSON.parse(raw)
+    } catch (e) {
+      console.error('[add-squad-member] Invalid JSON body:', raw)
+      return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
+    }
+
     const { category, newMember } = body
 
     if (!category || !newMember) {
@@ -43,18 +91,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Valid Age is required for KIDS category' }, { status: 400 })
     }
 
-    const filePath = path.join(process.cwd(), 'public', 'files', 'SQUAD', `${category}.json`)
-
-    if (!fs.existsSync(filePath)) {
-      return NextResponse.json({ error: `Squad file for category ${category} not found` }, { status: 404 })
-    }
-
-    const fileContent = fs.readFileSync(filePath, 'utf8')
     let squadData: SquadMember[]
     try {
-      squadData = JSON.parse(fileContent)
-    } catch (e) {
-      return NextResponse.json({ error: 'Invalid JSON format in squad file' }, { status: 500 })
+      squadData = readSquad(category)
+    } catch (e: any) {
+      return NextResponse.json({ error: e.message || 'Failed reading squad file' }, { status: 404 })
     }
 
     // Check for duplicate (same player name + mobile + team)
@@ -81,13 +122,18 @@ export async function POST(request: NextRequest) {
 
     squadData.push(memberToAdd)
 
-    fs.writeFileSync(filePath, JSON.stringify(squadData, null, 2), 'utf8')
+    let target: string
+    try {
+      target = writeSquad(category, squadData)
+    } catch (e: any) {
+      return NextResponse.json({ error: e.message || 'Write failed' }, { status: 500 })
+    }
 
-    console.log(`Added new member to ${category}: ${memberToAdd['Player Name']} (${memberToAdd['Team Name']})`)
+    console.log(`Added new member to ${category} (${target} storage): ${memberToAdd['Player Name']} (${memberToAdd['Team Name']})`)
 
-    return NextResponse.json({ success: true, newMember: memberToAdd })
+    return NextResponse.json({ success: true, newMember: memberToAdd, storage: target })
   } catch (error) {
-    console.error('Error adding squad member:', error)
+    console.error('Error adding squad member (unhandled):', error)
     return NextResponse.json({ error: 'Internal server error while adding squad member' }, { status: 500 })
   }
 }
