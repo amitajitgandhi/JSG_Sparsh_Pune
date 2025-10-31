@@ -100,26 +100,40 @@ export default function SPL02Squad() {
     const fetchSquads = async () => {
       try {
         setLoading(true)
-        // Fetch static local JSON files from SQUAD folder
-        const [mensResponse, womensResponse, kidsResponse] = await Promise.all([
-          fetch('/files/SQUAD/MENS.json'),
-          fetch('/files/SQUAD/WOMENS.json'), 
-          fetch('/files/SQUAD/KIDS.json')
-        ])
-
-        if (!mensResponse.ok || !womensResponse.ok || !kidsResponse.ok) {
-          throw new Error('Failed to fetch squad data')
+        // Try dynamic API first (reflects edits), fall back to static JSON if fails
+        let apiData: any = null
+        try {
+          const apiRes = await fetch('/api/get-squads', { cache: 'no-store' })
+          if (apiRes.ok) {
+            apiData = await apiRes.json()
+          }
+        } catch (e) {
+          console.warn('Dynamic API fetch failed, falling back to static JSON', e)
         }
 
-        const [mensData, womensData, kidsData] = await Promise.all([
-          mensResponse.json(),
-          womensResponse.json(),
-          kidsResponse.json()
-        ])
+        if (apiData) {
+          setMensSquad(apiData.MENS || [])
+          setWomensSquad(apiData.WOMENS || [])
+          setKidsSquad(apiData.KIDS || [])
+        } else {
+          const [mensResponse, womensResponse, kidsResponse] = await Promise.all([
+            fetch('/files/SQUAD/MENS.json'),
+            fetch('/files/SQUAD/WOMENS.json'),
+            fetch('/files/SQUAD/KIDS.json')
+          ])
 
-        setMensSquad(mensData)
-        setWomensSquad(womensData)
-        setKidsSquad(kidsData)
+          if (!mensResponse.ok || !womensResponse.ok || !kidsResponse.ok) {
+            throw new Error('Failed to fetch squad data')
+          }
+
+          const [mensData, womensData, kidsData] = await Promise.all([
+            mensResponse.json(), womensResponse.json(), kidsResponse.json()
+          ])
+
+          setMensSquad(mensData)
+          setWomensSquad(womensData)
+          setKidsSquad(kidsData)
+        }
         setExpandedTeams({})
       } catch (err) {
         setError('Failed to load squad data. Please try again later.')

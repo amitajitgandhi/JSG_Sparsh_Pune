@@ -77,6 +77,16 @@
     "JERSEY COLOR": "FLORSCENT GREEN"
   },
   {
+    "Mobile Number": 9420277778,
+    "Age": 40,
+    "Player Name": "Mukesh Jain",
+    "Jersey Name": "TEAM OWNER",
+    "Jersey Number": 23,
+    "Jersey Size": "L (40)",
+    "Team Name": "DJ Dorimons",
+    "JERSEY COLOR": "FLORSCENT GREEN"
+  },
+  {
     "Cric Heroes Link": "https://cricheroes.in/player-profile/33821202/Hridhan-Rathod:",
     "Mobile Number": 8434853434,
     "Age": 10,
@@ -151,6 +161,16 @@
     "Jersey Number": 37,
     "Jersey Size": "S (36)",
     "Team Name": "Rathod Royals",
+    "JERSEY COLOR": "FLORSCENT BLUE"
+  },
+  {
+    "Mobile Number": 9820369920,
+    "Age": 40,
+    "Player Name": "Arun Rathod",
+    "Jersey Name": "TEAM OWNER",
+    "Jersey Number": 7,
+    "Jersey Size": "L (40)",
+    "Team Name": "DJ Dorimons",
     "JERSEY COLOR": "FLORSCENT BLUE"
   },
   {
@@ -231,6 +251,16 @@
     "JERSEY COLOR": "FLORSCENT ORANGE/RED"
   },
   {
+    "Mobile Number": 9822519391,
+    "Age": 40,
+    "Player Name": "Jitendra Jain",
+    "Jersey Name": "TEAM OWNER",
+    "Jersey Number": 7,
+    "Jersey Size": "XL (42)",
+    "Team Name": "Unique Chargers",
+    "JERSEY COLOR": "FLORSCENT ORANGE/RED"
+  },
+  {
     "Cric Heroes Link": "https://cricheroes.in/player-profile/5904600/Viaan-Gandhi",
     "Mobile Number": 7276319578,
     "Age": 8,
@@ -239,7 +269,7 @@
     "Jersey Number": 84,
     "Jersey Size": 28,
     "Team Name": "Viaan Warriors",
-    "JERSEY COLOR": "FLORSCENT ORANGE/RED"
+    "JERSEY COLOR": "FLORSCENT YELLOW"
   },
   {
     "Cric Heroes Link": "https://cricheroes.com/player-profile/30875665/Veer-Desarda",
@@ -258,7 +288,7 @@
     "Age": 11,
     "Player Name": "Kavya Sanghavi",
     "Jersey Name": "Virat Kavya",
-    "Jersey Number": "18",
+    "Jersey Number": 18,
     "Jersey Size": "S (36)",
     "Team Name": "Viaan Warriors",
     "JERSEY COLOR": "FLORSCENT YELLOW"
@@ -280,8 +310,8 @@
     "Age": 8,
     "Player Name": "Henik Umesh Porwal",
     "Jersey Name": "Henik",
-    "Jersey Number": "8",
-    "Jersey Size": "30",
+    "Jersey Number": 8,
+    "Jersey Size": 30,
     "Team Name": "Viaan Warriors",
     "JERSEY COLOR": "FLORSCENT YELLOW"
   },
@@ -308,12 +338,23 @@
     "JERSEY COLOR": "FLORSCENT YELLOW"
   },
   {
-    "Player Name": "Amit Gandhi",
-    "Mobile Number": "7276319578",
-    "Team Name": "Viaan Warriors",
+    "Mobile Number": 7276319578,
+    "Age": 3,
+    "Player Name": "Yuvaan Gandhi",
     "Jersey Name": "YUVI",
-    "Jersey Number": "08",
-    "Jersey Size": "24",
-    "Age": 35
+    "Jersey Number": 8,
+    "Jersey Size": 24,
+    "Team Name": "Viaan Warriors",
+    "JERSEY COLOR": "FLORSCENT YELLOW"
+  },
+  {
+    "Mobile Number": 7276319578,
+    "Age": 34,
+    "Player Name": "Amit Gandhi",
+    "Jersey Name": "TEAM OWNER",
+    "Jersey Number": 24,
+    "Jersey Size": "2XL (44)",
+    "Team Name": "Viaan Warriors",
+    "JERSEY COLOR": "FLORSCENT YELLOW"
   }
 ]
