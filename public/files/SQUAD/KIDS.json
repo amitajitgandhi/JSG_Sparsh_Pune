@@ -77,6 +77,7 @@
     "JERSEY COLOR": "FLORSCENT GREEN"
   },
   {
+    "Cric Heroes Link": "TEAM OWNER",
     "Mobile Number": 9420277778,
     "Age": 40,
     "Player Name": "Mukesh Jain",
@@ -93,7 +94,7 @@
     "Player Name": "Hridhan Arun Rathod",
     "Jersey Name": "H R",
     "Jersey Number": 29,
-    "Jersey Size": "M (38)",
+    "Jersey Size": 30,
     "Team Name": "Rathod Royals",
     "JERSEY COLOR": "FLORSCENT BLUE"
   },
@@ -126,7 +127,7 @@
     "Player Name": "Yuvaan Mehta",
     "Jersey Name": "Yuvaan",
     "Jersey Number": 7,
-    "Jersey Size": "S (36)",
+    "Jersey Size": 28,
     "Team Name": "Rathod Royals",
     "JERSEY COLOR": "FLORSCENT BLUE"
   },
@@ -164,13 +165,14 @@
     "JERSEY COLOR": "FLORSCENT BLUE"
   },
   {
+    "Cric Heroes Link": "TEAM OWNER",
     "Mobile Number": 9820369920,
     "Age": 40,
-    "Player Name": "Arun Rathod",
+    "Player Name": "Aksh Rathod",
     "Jersey Name": "TEAM OWNER",
-    "Jersey Number": 7,
-    "Jersey Size": "L (40)",
-    "Team Name": "DJ Dorimons",
+    "Jersey Number": 20,
+    "Jersey Size": "M (38)",
+    "Team Name": "Rathod Royals",
     "JERSEY COLOR": "FLORSCENT BLUE"
   },
   {
@@ -191,7 +193,7 @@
     "Player Name": "Vandit Sunil Patni",
     "Jersey Name": "Vandit",
     "Jersey Number": 18,
-    "Jersey Size": 32,
+    "Jersey Size": "S (36)",
     "Team Name": "Unique Chargers",
     "JERSEY COLOR": "FLORSCENT ORANGE/RED"
   },
@@ -202,7 +204,7 @@
     "Player Name": "Sanay Shah",
     "Jersey Name": "Sanay",
     "Jersey Number": 33,
-    "Jersey Size": 26,
+    "Jersey Size": 28,
     "Team Name": "Unique Chargers",
     "JERSEY COLOR": "FLORSCENT ORANGE/RED"
   },
@@ -224,7 +226,7 @@
     "Player Name": "Kriya Hitesh Medtia",
     "Jersey Name": "Kriya",
     "Jersey Number": 18,
-    "Jersey Size": 26,
+    "Jersey Size": 28,
     "Team Name": "Unique Chargers",
     "JERSEY COLOR": "FLORSCENT ORANGE/RED"
   },
@@ -235,7 +237,7 @@
     "Player Name": "Moksha Dipal Shah",
     "Jersey Name": "Moksha",
     "Jersey Number": 21,
-    "Jersey Size": 32,
+    "Jersey Size": "SX (34)",
     "Team Name": "Unique Chargers",
     "JERSEY COLOR": "FLORSCENT ORANGE/RED"
   },
@@ -246,11 +248,12 @@
     "Player Name": "Aarav Kamlesh Shah",
     "Jersey Name": "Aarav",
     "Jersey Number": 60,
-    "Jersey Size": 28,
+    "Jersey Size": "SX (34)",
     "Team Name": "Unique Chargers",
     "JERSEY COLOR": "FLORSCENT ORANGE/RED"
   },
   {
+    "Cric Heroes Link": "TEAM OWNER",
     "Mobile Number": 9822519391,
     "Age": 40,
     "Player Name": "Jitendra Jain",
@@ -278,7 +281,7 @@
     "Player Name": "Veer Mangesh Desarda",
     "Jersey Name": "VEER",
     "Jersey Number": 7,
-    "Jersey Size": 26,
+    "Jersey Size": 30,
     "Team Name": "Viaan Warriors",
     "JERSEY COLOR": "FLORSCENT YELLOW"
   },
@@ -322,7 +325,7 @@
     "Player Name": "Jinisha Dipal Shah",
     "Jersey Name": "Jinisha",
     "Jersey Number": 9,
-    "Jersey Size": 28,
+    "Jersey Size": "S (36)",
     "Team Name": "Viaan Warriors",
     "JERSEY COLOR": "FLORSCENT YELLOW"
   },
@@ -338,6 +341,7 @@
     "JERSEY COLOR": "FLORSCENT YELLOW"
   },
   {
+    "Cric Heroes Link": "Extra Jersey",
     "Mobile Number": 7276319578,
     "Age": 3,
     "Player Name": "Yuvaan Gandhi",
@@ -348,6 +352,7 @@
     "JERSEY COLOR": "FLORSCENT YELLOW"
   },
   {
+    "Cric Heroes Link": "TEAM OWNER",
     "Mobile Number": 7276319578,
     "Age": 34,
     "Player Name": "Amit Gandhi",

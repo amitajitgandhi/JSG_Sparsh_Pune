@@ -155,7 +155,27 @@
     "Player Name": "Vihaan Kothari",
     "Jersey Name": "Vihaan",
     "Jersey Number": 77,
-    "Jersey Size": 32,
+    "Jersey Size": "SX (34)",
+    "Team Name": "Arihaan Royals",
+    "JERSEY COLOR": "A707 Primrose Yellow"
+  },
+  {
+    "Cric Heroes Link": "Extra Jersey",
+    "Mobile Number": 9422313106,
+    "Player Name": "Kiran Soniwal",
+    "Jersey Name": "Kiran",
+    "Jersey Number": 11,
+    "Jersey Size": "L (40)",
+    "Team Name": "Arihaan Royals",
+    "JERSEY COLOR": "A707 Primrose Yellow"
+  },
+  {
+    "Cric Heroes Link": "Extra Jersey",
+    "Mobile Number": 9422313106,
+    "Player Name": "Chaitanya Sinnarkar",
+    "Jersey Name": "Chaitanya",
+    "Jersey Number": 16,
+    "Jersey Size": "L (40)",
     "Team Name": "Arihaan Royals",
     "JERSEY COLOR": "A707 Primrose Yellow"
   },
@@ -236,6 +256,26 @@
     "Jersey Name": "Nittyam",
     "Jersey Number": 18,
     "Jersey Size": "S (36)",
+    "Team Name": "GK Energizer",
+    "JERSEY COLOR": "A777 Purple"
+  },
+  {
+    "Cric Heroes Link": "Extra Jersey",
+    "Mobile Number": 9158858777,
+    "Player Name": "Khyati Bhavik Shah",
+    "Jersey Name": "Khyati",
+    "Jersey Number": "01",
+    "Jersey Size": "XL (42)",
+    "Team Name": "GK Energizer",
+    "JERSEY COLOR": "A777 Purple"
+  },
+  {
+    "Cric Heroes Link": "Extra Jersey",
+    "Mobile Number": 9158858777,
+    "Player Name": "Hiya Bhavik Shah",
+    "Jersey Name": "Hiya",
+    "Jersey Number": "07",
+    "Jersey Size": 26,
     "Team Name": "GK Energizer",
     "JERSEY COLOR": "A777 Purple"
   },
@@ -445,7 +485,7 @@
     "Player Name": "Dipal Shah",
     "Jersey Name": "Dee",
     "Jersey Number": 80,
-    "Jersey Size": "L (40)",
+    "Jersey Size": "XL (42)",
     "Team Name": "Meet Maestros",
     "JERSEY COLOR": "A754 ROYAL BLUE"
   },
