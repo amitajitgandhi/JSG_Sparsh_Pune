@@ -236,10 +236,6 @@ export default function Events() {
 
             {/* Modal Content */}
             <div className="p-6 space-y-4">
-              <p className="text-gray-700 leading-relaxed">
-                Choose how you'd like to view the event gallery:
-              </p>
-              
               <div className="bg-gray-50 p-4 rounded-lg border">
                 <p className="text-sm text-gray-600 mb-2 font-medium">Gallery URL:</p>
                 <p className="text-xs text-blue-600 break-all font-mono bg-white p-2 rounded border">
@@ -248,16 +244,6 @@ export default function Events() {
               </div>
 
               <div className="flex flex-col gap-3 pt-2">
-                <button 
-                  onClick={() => {
-                    // Try to open directly
-                    window.open(modalUrl, '_blank', 'noopener,noreferrer');
-                    setShowModal(false);
-                  }}
-                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  Open Gallery Now
-                </button>
                 <button 
                   onClick={copyToClipboard}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 shadow-lg hover:shadow-xl"

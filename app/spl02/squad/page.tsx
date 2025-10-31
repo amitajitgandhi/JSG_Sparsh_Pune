@@ -1,8 +1,9 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Users, Phone, Trophy, ExternalLink, ChevronDown, ChevronUp, Loader2, ArrowLeft, Copy, Download, Check } from 'lucide-react'
+import { Users, Phone, Trophy, ExternalLink, ChevronDown, ChevronUp, Loader2, ArrowLeft, Copy, Download, Check, FileSpreadsheet, Edit3, Save, X, Plus, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
+import AdminAuthModal from '@/app/components/AdminAuthModal'
 
 // Define the squad member interface
 interface SquadMember {
@@ -11,8 +12,9 @@ interface SquadMember {
   'Jersey Size'?: string
   'Jersey Number'?: number | string
   'Jersey Name'?: string
-  'Cric Heroes Link'?: string
+  'Cric Heroes Link'?: string  
   'Team Name': string
+  'JERSEY COLOR'?: string
   Age?: number // KIDS squad has age field
 }
 
@@ -41,6 +43,58 @@ export default function SPL02Squad() {
   const [expandedTeams, setExpandedTeams] = useState<{[key: string]: boolean}>({})
   const [copiedTeam, setCopiedTeam] = useState<string | null>(null)
   const [exportingTeam, setExportingTeam] = useState<string | null>(null)
+  
+  // Admin authentication state
+  const [showAdminAuth, setShowAdminAuth] = useState(false)
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false)
+  const [pendingEditMember, setPendingEditMember] = useState<SquadMember | null>(null)
+  
+  // Inline edit state
+  const [editingMember, setEditingMember] = useState<string | null>(null) // Using unique key for member
+  const [editValues, setEditValues] = useState<{
+    'Jersey Name': string
+    'Jersey Number': string
+    'Jersey Size': string
+  }>({
+    'Jersey Name': '',
+    'Jersey Number': '',
+    'Jersey Size': ''
+  })
+  const [savingMember, setSavingMember] = useState<string | null>(null)
+
+  // Add new player state
+  const [addingPlayerTeam, setAddingPlayerTeam] = useState<string | null>(null)
+  const [newPlayer, setNewPlayer] = useState<{
+    'Player Name': string
+    'Mobile Number': string
+    Age?: string
+    'Jersey Name': string
+    'Jersey Number': string
+    'Jersey Size': string
+    'Cric Heroes Link': string
+  }>({
+    'Player Name': '',
+    'Mobile Number': '',
+    Age: '',
+    'Jersey Name': '',
+    'Jersey Number': '',
+    'Jersey Size': '',
+    'Cric Heroes Link': ''
+  })
+  const [adding, setAdding] = useState(false)
+  const [addError, setAddError] = useState<string | null>(null)
+
+  // Jersey size options (updated list with measurements)
+  const jerseySizeOptions = [
+    '22', '24', '26', '28', '30', '32',
+    'SX (34)', 'S (36)', 'M (38)', 'L (40)', 'XL (42)',
+    '2XL (44)', '3XL (46)', '4XL (48)', '5XL (50)'
+  ]
+
+  // Generate unique key for member
+  const getMemberKey = (member: SquadMember) => {
+    return `${member['Player Name']}-${member['Mobile Number']}-${member['Team Name']}`
+  }
 
   useEffect(() => {
     const fetchSquads = async () => {
@@ -81,6 +135,19 @@ export default function SPL02Squad() {
   // Reset expanded teams when switching tabs
   useEffect(() => {
     setExpandedTeams({})
+    // Cancel any ongoing edits when switching tabs
+    setEditingMember(null)
+    // Reset add player state
+    setAddingPlayerTeam(null)
+    setNewPlayer({
+      'Player Name': '',
+      'Mobile Number': '',
+      Age: '',
+      'Jersey Name': '',
+      'Jersey Number': '',
+      'Jersey Size': '',
+      'Cric Heroes Link': ''
+    })
   }, [activeTab])
 
   // Group squad members by team
@@ -123,6 +190,223 @@ export default function SPL02Squad() {
       case 'WOMENS': return womensSquad
       case 'KIDS': return kidsSquad
       default: return []
+    }
+  }
+
+  // Handle edit button click
+  const handleEditClick = (member: SquadMember) => {
+    if (isAdminAuthenticated) {
+      startEditing(member)
+    } else {
+      setPendingEditMember(member)
+      setShowAdminAuth(true)
+    }
+  }
+
+  // Start inline editing
+  const startEditing = (member: SquadMember) => {
+    const memberKey = getMemberKey(member)
+    setEditingMember(memberKey)
+    setEditValues({
+      'Jersey Name': member['Jersey Name'] || '',
+      'Jersey Number': member['Jersey Number']?.toString() || '',
+      'Jersey Size': member['Jersey Size'] || ''
+    })
+  }
+
+  // Cancel editing
+  const cancelEditing = () => {
+    setEditingMember(null)
+    setEditValues({
+      'Jersey Name': '',
+      'Jersey Number': '',
+      'Jersey Size': ''
+    })
+  }
+
+  // Handle admin authentication success
+  const handleAdminAuthenticated = () => {
+    setIsAdminAuthenticated(true)
+    setShowAdminAuth(false)
+    
+    if (pendingEditMember) {
+      startEditing(pendingEditMember)
+      setPendingEditMember(null)
+    }
+  }
+
+  // Handle admin authentication modal close
+  const handleAdminAuthClose = () => {
+    setShowAdminAuth(false)
+    setPendingEditMember(null)
+  }
+
+  // Handle input changes (edit existing member)
+  const handleInputChange = (field: 'Jersey Name' | 'Jersey Number' | 'Jersey Size', value: string) => {
+    setEditValues(prev => ({
+      ...prev,
+      [field]: value
+    }))
+  }
+
+  // Save changes
+  const handleSave = async (member: SquadMember) => {
+    const memberKey = getMemberKey(member)
+    
+    // Validation
+    if (!editValues['Jersey Name'].trim()) {
+      alert('Jersey Name is required')
+      return
+    }
+    if (!editValues['Jersey Number']) {
+      alert('Jersey Number is required')
+      return
+    }
+    if (!editValues['Jersey Size']) {
+      alert('Jersey Size is required')
+      return
+    }
+
+    setSavingMember(memberKey)
+
+    try {
+      const updatedMember: SquadMember = {
+        ...member,
+        'Jersey Name': editValues['Jersey Name'].trim(),
+        'Jersey Number': editValues['Jersey Number'],
+        'Jersey Size': editValues['Jersey Size']
+      }
+
+      const response = await fetch('/api/update-squad', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          category: activeTab,
+          originalMember: member,
+          updatedMember: updatedMember
+        })
+      })
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        // Update the local state
+        const updateSquadData = (squad: SquadMember[]) => {
+          return squad.map(m => {
+            if (getMemberKey(m) === memberKey) {
+              return result.updatedMember
+            }
+            return m
+          })
+        }
+
+        switch (activeTab) {
+          case 'MENS':
+            setMensSquad(updateSquadData)
+            break
+          case 'WOMENS':
+            setWomensSquad(updateSquadData)
+            break
+          case 'KIDS':
+            setKidsSquad(updateSquadData)
+            break
+        }
+
+        // Exit edit mode
+        cancelEditing()
+      } else {
+        alert('Failed to update squad member: ' + (result.error || 'Unknown error'))
+      }
+    } catch (error) {
+      console.error('Error updating squad member:', error)
+      alert('Error updating squad member. Please try again.')
+    } finally {
+      setSavingMember(null)
+    }
+  }
+
+  // Handle new player input change
+  const handleNewPlayerChange = (field: keyof typeof newPlayer, value: string) => {
+    setNewPlayer(prev => ({ ...prev, [field]: value }))
+  }
+
+  // Start adding player
+  const startAddingPlayer = (teamName: string) => {
+    if (!isAdminAuthenticated) {
+      setShowAdminAuth(true)
+      return
+    }
+    setAddingPlayerTeam(teamName)
+    setNewPlayer({
+      'Player Name': '',
+      'Mobile Number': '',
+      Age: '',
+      'Jersey Name': '',
+      'Jersey Number': '',
+      'Jersey Size': '',
+      'Cric Heroes Link': ''
+    })
+    setAddError(null)
+  }
+
+  // Cancel adding player
+  const cancelAddingPlayer = () => {
+    setAddingPlayerTeam(null)
+    setAddError(null)
+  }
+
+  // Validate and add player
+  const handleAddPlayer = async (teamName: string) => {
+    // Required fields
+    if (!newPlayer['Player Name'].trim()) { setAddError('Player Name is required'); return }
+    if (!newPlayer['Mobile Number'].trim()) { setAddError('Mobile Number is required'); return }
+    if (activeTab === 'KIDS' && !newPlayer.Age?.trim()) { setAddError('Age is required for KIDS category'); return }
+
+    setAdding(true)
+    setAddError(null)
+
+    const payload: SquadMember = {
+      'Player Name': newPlayer['Player Name'].trim(),
+      'Mobile Number': newPlayer['Mobile Number'].trim(),
+      'Team Name': teamName,
+      'Jersey Name': newPlayer['Jersey Name'].trim() || undefined,
+      'Jersey Number': newPlayer['Jersey Number'].trim() || undefined,
+      'Jersey Size': newPlayer['Jersey Size'].trim() || undefined,
+      'Cric Heroes Link': newPlayer['Cric Heroes Link'].trim() || undefined,
+      Age: activeTab === 'KIDS' ? Number(newPlayer.Age) || undefined : undefined
+    }
+
+    try {
+      const res = await fetch('/api/add-squad-member', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ category: activeTab, newMember: payload })
+      })
+      const result = await res.json()
+      if (!res.ok || !result.success) {
+        setAddError(result.error || 'Failed to add player')
+      } else {
+        // Update local state
+        switch (activeTab) {
+          case 'MENS':
+            setMensSquad(prev => [...prev, result.newMember])
+            break
+          case 'WOMENS':
+            setWomensSquad(prev => [...prev, result.newMember])
+            break
+          case 'KIDS':
+            setKidsSquad(prev => [...prev, result.newMember])
+            break
+        }
+        cancelAddingPlayer()
+      }
+    } catch (e) {
+      console.error(e)
+      setAddError('Error adding player. Please try again.')
+    } finally {
+      setAdding(false)
     }
   }
 
@@ -260,102 +544,13 @@ export default function SPL02Squad() {
         setTimeout(() => {
           const textarea = modal.querySelector('textarea')
           if (textarea) {
-            textarea.focus()
-            textarea.select()
+            (textarea as HTMLTextAreaElement).focus()
+            ;(textarea as HTMLTextAreaElement).select()
           }
         }, 100)
       } else {
         // Standard alert for other platforms
         alert(`Copy failed. Please manually select and copy:\n\n${text.substring(0, 200)}...`)
-      }
-    }
-  }
-
-  // Export team to CSV with mobile app compatibility
-  const exportTeamToCSV = (teamName: string, members: SquadMember[]) => {
-    const headers = ['Player Name', 'Mobile Number', 'Jersey Name', 'Jersey Number', 'Jersey Size', 'CricHeroes Link']
-    if (members.some(m => m.Age)) headers.splice(2, 0, 'Age')
-
-    const csvContent = [
-      headers.join(','),
-      ...members.map(member => {
-        const row = [
-          `"${member['Player Name']}"`,
-          `"${member['Mobile Number']}"`,
-          ...(members.some(m => m.Age) ? [`"${member.Age || ''}"`] : []),
-          `"${member['Jersey Name'] || ''}"`,
-          `"${member['Jersey Number'] || ''}"`,
-          `"${member['Jersey Size'] || ''}"`,
-          `"${member['Cric Heroes Link'] || ''}"`
-        ]
-        return row.join(',')
-      })
-    ].join('\n')
-
-    const fileName = `${teamName.replace(/[^a-z0-9]/gi, '_')}_Squad_SPL02.csv`
-
-    // Check if we're in a mobile app or have restricted environment
-    const isMobileApp = /Mobile|Android|iOS|iPhone|iPad/.test(navigator.userAgent) || 
-                       window.navigator.userAgent.includes('wv') || // WebView
-                       !window.document.createElement('a').download // No download support
-
-    if (isMobileApp || !window.URL || !window.URL.createObjectURL) {
-      // Mobile app fallback: Use Web Share API or copy to clipboard
-      if (navigator.share) {
-        // Try to share as text file
-        const file = new File([csvContent], fileName, { type: 'text/csv' })
-        navigator.share({
-          files: [file],
-          title: `${teamName} Squad - SPL-02`
-        }).catch(() => {
-          // If file sharing fails, share as text
-          navigator.share({
-            title: `${teamName} Squad - SPL-02`,
-            text: csvContent
-          }).catch(() => {
-            // Final fallback: copy to clipboard
-            copyToClipboard(csvContent, teamName + ' (CSV Data)')
-          })
-        })
-      } else {
-        // No share API, copy CSV data to clipboard
-        copyToClipboard(csvContent, teamName + ' (CSV Data)')
-        alert('CSV data copied to clipboard. You can paste it into a spreadsheet app.')
-      }
-    } else {
-      // Desktop/browser with full download support
-      try {
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-        const link = document.createElement('a')
-        
-        // Use createObjectURL if available
-        if (window.URL && window.URL.createObjectURL) {
-          const url = window.URL.createObjectURL(blob)
-          link.setAttribute('href', url)
-          link.setAttribute('download', fileName)
-          link.style.visibility = 'hidden'
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
-          
-          // Clean up the URL object
-          setTimeout(() => window.URL.revokeObjectURL(url), 100)
-        } else {
-          // Fallback for browsers without createObjectURL
-          const dataUrl = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent)
-          link.setAttribute('href', dataUrl)
-          link.setAttribute('download', fileName)
-          link.style.visibility = 'hidden'
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
-        }
-      } catch (error) {
-        console.error('Export failed:', error)
-        // Final fallback: copy to clipboard
-        copyToClipboard(csvContent, teamName + ' (CSV Data)')
-        alert('Direct download failed. CSV data copied to clipboard instead.')
-
       }
     }
   }
@@ -397,9 +592,7 @@ export default function SPL02Squad() {
     if (isMobileApp || isAndroid) {
       console.log('Using mobile export strategy')
       
-      // Try multiple mobile-friendly approaches
-      
-      // 1. Try Web Share API (modern Android)
+      // Try Web Share API (modern Android)
       if (navigator.share) {
         console.log('Attempting Web Share API')
         try {
@@ -509,7 +702,165 @@ export default function SPL02Squad() {
     }
   }
 
-  // Squad table component
+  // Export team to Excel format (XLSX) - Direct download optimized
+  const exportTeamToExcel = (teamName: string, members: SquadMember[]) => {
+    // Create CSV content that can be imported to Excel
+    const headers = ['Player Name', 'Mobile Number', 'Jersey Name', 'Jersey Number', 'Jersey Size', 'Jersey Color', 'CricHeroes Link']
+    if (members.some(m => m.Age)) headers.splice(2, 0, 'Age')
+
+    const csvContent = [
+      headers.join(','),
+      ...members.map(member => {
+        const row = [
+          `"${member['Player Name']}"`,
+          `"${member['Mobile Number']}"`,
+          ...(members.some(m => m.Age) ? [`"${member.Age || ''}"`] : []),
+          `"${member['Jersey Name'] || ''}"`,
+            `"${member['Jersey Number'] || ''}"`,
+          `"${member['Jersey Size'] || ''}"`,
+          `"${member['JERSEY COLOR'] || ''}"`,
+          `"${member['Cric Heroes Link'] || ''}"`
+        ]
+        return row.join(',')
+      })
+    ].join('\n')
+
+    const fileName = `${teamName.replace(/[^a-z0-9]/gi, '_')}_Squad_SPL02.csv`
+
+    // Desktop-first approach for direct download
+    try {
+      // Add BOM for proper Excel UTF-8 handling
+      const BOM = '\uFEFF'
+      const blob = new Blob([BOM + csvContent], { 
+        type: 'text/csv;charset=utf-8;' 
+      })
+      const link = document.createElement('a')
+      
+      if (window.URL && window.URL.createObjectURL) {
+        const url = window.URL.createObjectURL(blob)
+        link.setAttribute('href', url)
+        link.setAttribute('download', fileName)
+        link.style.visibility = 'hidden'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        
+        // Clean up the URL object
+        setTimeout(() => {
+          try {
+            window.URL.revokeObjectURL(url)
+          } catch (e) {
+            console.log('URL cleanup failed:', e)
+          }
+        }, 100)
+      } else {
+        // Fallback for browsers without createObjectURL
+        const dataUrl = 'data:text/csv;charset=utf-8,' + encodeURIComponent(BOM + csvContent)
+        link.setAttribute('href', dataUrl)
+        link.setAttribute('download', fileName)
+        link.style.visibility = 'hidden'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      }
+    } catch (error) {
+      console.error('Direct Excel download failed:', error)
+      // Fallback: copy to clipboard
+      copyToClipboard(csvContent, teamName + ' (Excel Data)')
+      alert('Direct download failed. Excel data copied to clipboard instead. You can paste it into Excel or any spreadsheet app.')
+    }
+  }
+
+  // Export all category data to Excel - Direct download optimized
+  const exportCategoryToExcel = (category: 'MENS' | 'WOMENS' | 'KIDS') => {
+    let squadData: SquadMember[] = []
+    
+    switch (category) {
+      case 'MENS':
+        squadData = mensSquad
+        break
+      case 'WOMENS':
+        squadData = womensSquad
+        break
+      case 'KIDS':
+        squadData = kidsSquad
+        break
+    }
+
+    if (squadData.length === 0) {
+      alert(`No ${category} squad data available to export.`)
+      return
+    }
+
+    // Create comprehensive CSV content
+    const headers = ['Team Name', 'Jersey Color', 'Player Name', 'Mobile Number', 'Jersey Name', 'Jersey Number', 'Jersey Size', 'CricHeroes Link']
+    if (squadData.some(m => m.Age)) headers.splice(4, 0, 'Age')
+
+    const csvContent = [
+      headers.join(','),
+      ...squadData.map(member => {
+        const row = [
+          `"${member['Team Name'] || ''}"`,
+          `"${member['JERSEY COLOR'] || ''}"`,
+          `"${member['Player Name']}"`,
+          `"${member['Mobile Number']}"`,
+          ...(squadData.some(m => m.Age) ? [`"${member.Age || ''}"`] : []),
+          `"${member['Jersey Name'] || ''}"`,
+          `"${member['Jersey Number'] || ''}"`,
+          `"${member['Jersey Size'] || ''}"`,
+          `"${member['Cric Heroes Link'] || ''}"`
+        ]
+        return row.join(',')
+      })
+    ].join('\n')
+
+    const fileName = `SPL02_${category}_Complete_Squad.csv`
+
+    // Desktop-first approach for direct download
+    try {
+      // Add BOM for proper Excel UTF-8 handling
+      const BOM = '\uFEFF'
+      const blob = new Blob([BOM + csvContent], { 
+        type: 'text/csv;charset=utf-8;' 
+      })
+      const link = document.createElement('a')
+      
+      if (window.URL && window.URL.createObjectURL) {
+        const url = window.URL.createObjectURL(blob)
+        link.setAttribute('href', url)
+        link.setAttribute('download', fileName)
+        link.style.visibility = 'hidden'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        
+        // Clean up the URL object
+        setTimeout(() => {
+          try {
+            window.URL.revokeObjectURL(url)
+          } catch (e) {
+            console.log('URL cleanup failed:', e)
+          }
+        }, 100)
+      } else {
+        // Fallback for browsers without createObjectURL
+        const dataUrl = 'data:text/csv;charset=utf-8,' + encodeURIComponent(BOM + csvContent)
+        link.setAttribute('href', dataUrl)
+        link.setAttribute('download', fileName)
+        link.style.visibility = 'hidden'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      }
+    } catch (error) {
+      console.error('Direct category Excel download failed:', error)
+      // Fallback: copy to clipboard
+      copyToClipboard(csvContent, `${category} Complete Squad (Excel Data)`)
+      alert(`Direct download failed. ${category} squad Excel data copied to clipboard instead.`)
+    }
+  }
+
+  // Squad table component with inline edit functionality
   const SquadTable = ({ members }: { members: SquadMember[] }) => {
     return (
       <div className="overflow-x-auto">
@@ -534,56 +885,145 @@ export default function SPL02Squad() {
               <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                 CricHeroes
               </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
-            {members.map((member, index) => (
-              <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                <td className="px-4 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900 dark:text-white">
-                    {member['Player Name']}
-                  </div>
-                  {member.Age && (
-                    <div className="text-xs text-gray-500 dark:text-gray-400">
-                      Age: {member.Age} years
+            {members.map((member, index) => {
+              const memberKey = getMemberKey(member)
+              const isEditing = editingMember === memberKey
+              const isSaving = savingMember === memberKey
+
+              return (
+                <tr key={index} className={`transition-colors ${isEditing ? 'bg-blue-50 dark:bg-blue-900/20' : 'hover:bg-gray-50 dark:hover:bg-gray-700'}`}>
+                  <td className="px-4 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-900 dark:text-white">
+                      {member['Player Name']}
                     </div>
-                  )}
-                </td>
-                <td className="px-4 py-4 whitespace-nowrap">
-                  <a 
-                    href={`tel:${member['Mobile Number']}`}
-                    className="text-sm text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-300 transition-colors flex items-center space-x-1"
-                  >
-                    <Phone size={14} className="text-gray-500 dark:text-gray-400" />
-                    <span>{member['Mobile Number']}</span>
-                  </a>
-                </td>
-                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                  {member['Jersey Name'] || '-'}
-                </td>
-                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                  {member['Jersey Number'] || '-'}
-                </td>
-                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                  {member['Jersey Size'] || '-'}
-                </td>
-                <td className="px-4 py-4 whitespace-nowrap text-sm">
-                  {member['Cric Heroes Link'] ? (
-                    <a
-                      href={member['Cric Heroes Link']}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-1 bg-green-100 hover:bg-green-200 text-green-800 px-2 py-1 rounded-md transition-colors text-xs"
+                    {member.Age && (
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                        Age: {member.Age} years
+                      </div>
+                    )}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap">
+                    <a 
+                      href={`tel:${member['Mobile Number']}`}
+                      className="text-sm text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-300 transition-colors flex items-center space-x-1"
                     >
-                      <span>View Profile</span>
-                      <ExternalLink size={12} />
+                      <Phone size={14} className="text-gray-500 dark:text-gray-400" />
+                      <span>{member['Mobile Number']}</span>
                     </a>
-                  ) : (
-                    <span className="text-gray-400 dark:text-gray-500">-</span>
-                  )}
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  
+                  {/* Jersey Name - Editable */}
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        value={editValues['Jersey Name']}
+                        onChange={(e) => handleInputChange('Jersey Name', e.target.value)}
+                        className="w-full px-2 py-1 text-sm border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Jersey Name"
+                        maxLength={20}
+                        disabled={isSaving}
+                      />
+                    ) : (
+                      member['Jersey Name'] || '-'
+                    )}
+                  </td>
+                  
+                  {/* Jersey Number - Editable */}
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                    {isEditing ? (
+                      <input
+                        type="number"
+                        value={editValues['Jersey Number']}
+                        onChange={(e) => handleInputChange('Jersey Number', e.target.value)}
+                        className="w-full px-2 py-1 text-sm border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Number"
+                        min="0"
+                        max="999"
+                        disabled={isSaving}
+                      />
+                    ) : (
+                      member['Jersey Number'] || '-'
+                    )}
+                  </td>
+                  
+                  {/* Jersey Size - Editable */}
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                    {isEditing ? (
+                      <select
+                        value={editValues['Jersey Size']}
+                        onChange={(e) => handleInputChange('Jersey Size', e.target.value)}
+                        className="w-full px-2 py-1 text-sm border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        disabled={isSaving}
+                      >
+                        <option value="">Select Size</option>
+                        {jerseySizeOptions.map(size => (
+                          <option key={size} value={size}>{size}</option>
+                        ))}
+                      </select>
+                    ) : (
+                      member['Jersey Size'] || '-'
+                    )}
+                  </td>
+                  
+                  <td className="px-4 py-4 whitespace-nowrap text-sm">
+                    {member['Cric Heroes Link'] ? (
+                      <a
+                        href={member['Cric Heroes Link']}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1 bg-green-100 hover:bg-green-200 text-green-800 px-2 py-1 rounded-md transition-colors text-xs"
+                      >
+                        <span>View Profile</span>
+                        <ExternalLink size={12} />
+                      </a>
+                    ) : (
+                      <span className="text-gray-400 dark:text-gray-500">-</span>
+                    )}
+                  </td>
+                  
+                  <td className="px-4 py-4 whitespace-nowrap text-sm">
+                    {isEditing ? (
+                      <div className="flex items-center space-x-1">
+                        <button
+                          onClick={() => handleSave(member)}
+                          disabled={isSaving}
+                          className="inline-flex items-center space-x-1 bg-green-100 hover:bg-green-200 text-green-800 px-2 py-1 rounded-md transition-colors text-xs font-medium disabled:opacity-50"
+                          title="Save changes"
+                        >
+                          {isSaving ? <Loader2 size={12} className="animate-spin" /> : <Save size={12} />}
+                          <span>{isSaving ? 'Saving...' : 'Save'}</span>
+                        </button>
+                        <button
+                          onClick={cancelEditing}
+                          disabled={isSaving}
+                          className="inline-flex items-center space-x-1 bg-red-100 hover:bg-red-200 text-red-800 px-2 py-1 rounded-md transition-colors text-xs font-medium disabled:opacity-50"
+                          title="Cancel editing"
+                        >
+                          <X size={12} />
+                          <span>Cancel</span>
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => handleEditClick(member)}
+                        className="inline-flex items-center space-x-1 bg-blue-100 hover:bg-blue-200 text-blue-800 px-2 py-1 rounded-md transition-colors text-xs font-medium"
+                        title="Edit jersey details"
+                      >
+                        <Edit3 size={12} />
+                        <span>Edit</span>
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>
@@ -624,7 +1064,7 @@ export default function SPL02Squad() {
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
         <div className="text-center mb-6 sm:mb-8 md:mb-12">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-yellow-600 mb-3 sm:mb-4 px-2">SPL-02 Team Squads</h1>
-          <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-3xl mx-auto mb-6 sm:mb-8 px-4 leading-relaxed">Explore the complete team squads for Sparsh Premier League Season 2.</p>
+          <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-3xl mx-auto mb-6 sm:mb-8 px-4 leading-relaxed">Explore the complete team squads for Sparsh Premier League Season 2. Click Edit to update jersey details inline (admin access required). Use Add Player to append new players to a team.</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-6 max-w-4xl mx-auto px-2">
             <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-3 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-1">11</div>
@@ -677,6 +1117,7 @@ export default function SPL02Squad() {
             </div>
           </div>
         </div>
+
         <div className="space-y-4 sm:space-y-6 md:space-y-8 px-2 sm:px-0">
           {Object.entries(groupedSquad).map(([teamName, members], index) => {
             const isExpanded = expandedTeams[teamName]
@@ -753,7 +1194,14 @@ export default function SPL02Squad() {
                       <Users size={20} className="sm:w-6 sm:h-6" />
                     </div>
                     <div className="text-left">
-                      <h2 className={`text-lg sm:text-xl md:text-2xl font-bold leading-tight ${textColor}`}>{teamName}</h2>
+                      <h2 className={`text-lg sm:text-xl md:text-2xl font-bold leading-tight ${textColor}`}>
+                        {teamName}
+                        {members[0]?.['JERSEY COLOR'] && (
+                          <span className="text-sm font-normal opacity-80 ml-2">
+                            ({members[0]['JERSEY COLOR']})
+                          </span>
+                        )}
+                      </h2>
                       <p className={`${textColor} opacity-70 text-xs sm:text-sm`}>{members.length} players</p>
                     </div>
                   </button>
@@ -775,20 +1223,37 @@ export default function SPL02Squad() {
                       </span>
                     </button>
 
-                    {/* Export Button - TXT Format Only */}
+                    {/* Excel Export Button */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation()
                         setExportingTeam(teamName)
+                        exportTeamToExcel(teamName, members)
+                        setTimeout(() => setExportingTeam(null), 2000)
+                      }}
+                      className={`p-2 rounded-lg ${textColor} hover:bg-white/20 transition-all duration-300 hover:scale-110 flex items-center space-x-1 text-xs sm:text-sm font-medium`}
+                      title="Export as Excel file"
+                    >
+                      {exportingTeam === teamName ? <Check size={16} /> : <FileSpreadsheet size={16} />}
+                      <span className="hidden sm:inline">
+                        {exportingTeam === teamName ? 'Exported!' : 'Excel'}
+                      </span>
+                    </button>
+
+                    {/* TXT Export Button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setExportingTeam(teamName + '_TXT')
                         exportTeamToTXT(teamName, members)
                         setTimeout(() => setExportingTeam(null), 2000)
                       }}
                       className={`p-2 rounded-lg ${textColor} hover:bg-white/20 transition-all duration-300 hover:scale-110 flex items-center space-x-1 text-xs sm:text-sm font-medium`}
                       title="Export as TXT file"
                     >
-                      {exportingTeam === teamName ? <Check size={16} /> : <Download size={16} />}
+                      {exportingTeam === teamName + '_TXT' ? <Check size={16} /> : <Download size={16} />}
                       <span className="hidden sm:inline">
-                        {exportingTeam === teamName ? 'Exported!' : 'Export'}
+                        {exportingTeam === teamName + '_TXT' ? 'Exported!' : 'TXT'}
                       </span>
                     </button>
                   
@@ -802,14 +1267,128 @@ export default function SPL02Squad() {
                   </div>
                 </div>
                 {isExpanded && (
-                  <div className="p-3 sm:p-4 md:p-6">
+                  <div className="p-3 sm:p-4 md:p-6 space-y-6">
+                    {/* Add Player Form */}
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                      {addingPlayerTeam === teamName ? (
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between">
+                            <h3 className="text-sm font-semibold text-gray-700 flex items-center"><Plus className="w-4 h-4 mr-1" /> Add New Player</h3>
+                            <button onClick={cancelAddingPlayer} className="text-xs text-red-600 hover:underline" disabled={adding}>Cancel</button>
+                          </div>
+                          {addError && (
+                            <div className="p-2 bg-red-50 border border-red-200 text-red-600 text-xs rounded flex items-center"><AlertCircle className="w-3 h-3 mr-1" /> {addError}</div>
+                          )}
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div>
+                              <label className="block text-xs font-medium text-gray-500 mb-1">Player Name *</label>
+                              <input value={newPlayer['Player Name']} onChange={e => handleNewPlayerChange('Player Name', e.target.value)} className="w-full px-2 py-1 border rounded text-sm" maxLength={50} disabled={adding} />
+                            </div>
+                            <div>
+                              <label className="block text-xs font-medium text-gray-500 mb-1">Mobile Number *</label>
+                              <input value={newPlayer['Mobile Number']} onChange={e => handleNewPlayerChange('Mobile Number', e.target.value)} className="w-full px-2 py-1 border rounded text-sm" maxLength={15} disabled={adding} />
+                            </div>
+                            {activeTab === 'KIDS' && (
+                              <div>
+                                <label className="block text-xs font-medium text-gray-500 mb-1">Age *</label>
+                                <input value={newPlayer.Age} onChange={e => handleNewPlayerChange('Age', e.target.value)} className="w-full px-2 py-1 border rounded text-sm" maxLength={3} disabled={adding} />
+                              </div>
+                            )}
+                            <div>
+                              <label className="block text-xs font-medium text-gray-500 mb-1">Jersey Name</label>
+                              <input value={newPlayer['Jersey Name']} onChange={e => handleNewPlayerChange('Jersey Name', e.target.value)} className="w-full px-2 py-1 border rounded text-sm" maxLength={20} disabled={adding} />
+                            </div>
+                            <div>
+                              <label className="block text-xs font-medium text-gray-500 mb-1">Jersey Number</label>
+                              <input value={newPlayer['Jersey Number']} onChange={e => handleNewPlayerChange('Jersey Number', e.target.value)} className="w-full px-2 py-1 border rounded text-sm" maxLength={3} disabled={adding} />
+                            </div>
+                            <div>
+                              <label className="block text-xs font-medium text-gray-500 mb-1">Jersey Size</label>
+                              <select value={newPlayer['Jersey Size']} onChange={e => handleNewPlayerChange('Jersey Size', e.target.value)} className="w-full px-2 py-1 border rounded text-sm" disabled={adding}>
+                                <option value="">Select Size</option>
+                                {jerseySizeOptions.map(size => <option key={size} value={size}>{size}</option>)}
+                              </select>
+                            </div>
+                            <div className="md:col-span-3">
+                              <label className="block text-xs font-medium text-gray-500 mb-1">CricHeroes Link</label>
+                              <input value={newPlayer['Cric Heroes Link']} onChange={e => handleNewPlayerChange('Cric Heroes Link', e.target.value)} className="w-full px-2 py-1 border rounded text-sm" disabled={adding} />
+                            </div>
+                          </div>
+                          <div className="flex justify-end space-x-2">
+                            <button onClick={() => handleAddPlayer(teamName)} disabled={adding} className="px-4 py-2 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 flex items-center">
+                              {adding ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
+                              {adding ? 'Adding...' : 'Add Player'}
+                            </button>
+                          </div>
+                          <p className="text-[10px] text-gray-500">* Required fields. Jersey details optional until available.</p>
+                        </div>
+                      ) : (
+                        <div className="flex justify-between items-center">
+                          <p className="text-xs text-gray-600">Add new player to this team (admin only)</p>
+                          <button onClick={() => startAddingPlayer(teamName)} className="inline-flex items-center space-x-1 bg-blue-100 hover:bg-blue-200 text-blue-700 px-2 py-1 rounded text-xs font-medium"><Plus className="w-3 h-3" /><span>Add Player</span></button>
+                        </div>
+                      )}
+                    </div>
                     <SquadTable members={members} />
                   </div>
                 )}
               </div>
             )
           })}
+
+          {/* Floating Action Button for Add Player - Desktop */}
+          {isAdminAuthenticated && activeTab !== 'KIDS' && (
+            <div className="hidden sm:block fixed bottom-8 right-8">
+              <button
+                onClick={() => startAddingPlayer('')}
+                className="bg-blue-600 text-white p-3 rounded-full shadow-md hover:bg-blue-700 transition-colors"
+                title="Add New Player (Admin)"
+              >
+                <Plus className="w-5 h-5" />
+              </button>
+            </div>
+          )}
         </div>
+
+        {/* Admin Category Export Section - Moved to bottom */}
+        <div className="mt-12 sm:mt-16 text-center">
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 sm:p-6 max-w-2xl mx-auto">
+            <h4 className="text-sm font-semibold text-gray-700 mb-2">Admin Export Tools</h4>
+            <p className="text-xs text-gray-500 mb-4">Direct download complete category data in Excel format</p>
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
+              <button
+                onClick={() => exportCategoryToExcel('MENS')}
+                className="group inline-flex items-center justify-center space-x-1 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md"
+              >
+                <FileSpreadsheet size={14} />
+                <span>MENS Excel</span>
+              </button>
+              <button
+                onClick={() => exportCategoryToExcel('WOMENS')}
+                className="group inline-flex items-center justify-center space-x-1 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 bg-pink-600 text-white hover:bg-pink-700 shadow-sm hover:shadow-md"
+              >
+                <FileSpreadsheet size={14} />
+                <span>WOMENS Excel</span>
+              </button>
+              <button
+                onClick={() => exportCategoryToExcel('KIDS')}
+                className="group inline-flex items-center justify-center space-x-1 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 bg-green-600 text-white hover:bg-green-700 shadow-sm hover:shadow-md"
+              >
+                <FileSpreadsheet size={14} />
+                <span>KIDS Excel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Admin Auth Modal */}
+        <AdminAuthModal
+          isOpen={showAdminAuth}
+          onClose={handleAdminAuthClose}
+          onAuthenticated={handleAdminAuthenticated}
+          title="Admin Authentication Required"
+          message="Please enter admin credentials to edit squad member details."
+        />
       </div>
     </div>
   )

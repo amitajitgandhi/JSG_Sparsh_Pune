@@ -1,8 +1,13 @@
 [
   {
     "Player Name": "Rohan Shah",
+    "Cric Heroes Link": "https://cricheroes.com/player-profile/42143806/rohan-vilas-shah",
     "Mobile Number": 9823162182,
-    "Team Name": "Aarohi Rockers - Rohan Shah"
+    "Jersey Name": "Rohan",
+    "Jersey Number": 24,
+    "Jersey Size": "L (40)",
+    "Team Name": "Aarohi Rockers",
+    "JERSEY COLOR": "A720-01 Stone Grey"
   },
   {
     "Player Name": "Sujal Bora",
@@ -10,8 +15,9 @@
     "Mobile Number": 7875083737,
     "Jersey Name": "SUJAL B",
     "Jersey Number": 19,
-    "Jersey Size": "XL",
-    "Team Name": "Aarohi Rockers - Rohan Shah"
+    "Jersey Size": "XL (42)",
+    "Team Name": "Aarohi Rockers",
+    "JERSEY COLOR": "A720-01 Stone Grey"
   },
   {
     "Player Name": "Dhruv Oswal",
@@ -19,8 +25,9 @@
     "Mobile Number": 9112211123,
     "Jersey Name": "Dhruv",
     "Jersey Number": 29,
-    "Jersey Size": "XL",
-    "Team Name": "Aarohi Rockers - Rohan Shah"
+    "Jersey Size": "XL (42)",
+    "Team Name": "Aarohi Rockers",
+    "JERSEY COLOR": "A720-01 Stone Grey"
   },
   {
     "Player Name": "Ketan Jain",
@@ -28,8 +35,9 @@
     "Mobile Number": 9922001198,
     "Jersey Name": "KJ",
     "Jersey Number": 17,
-    "Jersey Size": "XXXL",
-    "Team Name": "Aarohi Rockers - Rohan Shah"
+    "Jersey Size": "3XL (46)",
+    "Team Name": "Aarohi Rockers",
+    "JERSEY COLOR": "A720-01 Stone Grey"
   },
   {
     "Player Name": "Parv Shah",
@@ -37,8 +45,9 @@
     "Mobile Number": 8888114455,
     "Jersey Name": "Parv",
     "Jersey Number": 12,
-    "Jersey Size": "M",
-    "Team Name": "Aarohi Rockers - Rohan Shah"
+    "Jersey Size": "M (38)",
+    "Team Name": "Aarohi Rockers",
+    "JERSEY COLOR": "A720-01 Stone Grey"
   },
   {
     "Player Name": "Santosh Oswal",
@@ -46,8 +55,9 @@
     "Mobile Number": 9822554664,
     "Jersey Name": "Santosh",
     "Jersey Number": 91,
-    "Jersey Size": "L",
-    "Team Name": "Aarohi Rockers - Rohan Shah"
+    "Jersey Size": "L (40)",
+    "Team Name": "Aarohi Rockers",
+    "JERSEY COLOR": "A720-01 Stone Grey"
   },
   {
     "Player Name": "Dhaval Rathod",
@@ -55,8 +65,9 @@
     "Mobile Number": 9028080202,
     "Jersey Name": "Nivansh",
     "Jersey Number": 16,
-    "Jersey Size": "M",
-    "Team Name": "Aarohi Rockers - Rohan Shah"
+    "Jersey Size": "M (38)",
+    "Team Name": "Aarohi Rockers",
+    "JERSEY COLOR": "A720-01 Stone Grey"
   },
   {
     "Player Name": "Harsh Mehta",
@@ -64,8 +75,9 @@
     "Mobile Number": 9975633205,
     "Jersey Name": "HARSH",
     "Jersey Number": 17,
-    "Jersey Size": "XXXL",
-    "Team Name": "Aarohi Rockers - Rohan Shah"
+    "Jersey Size": "3XL (46)",
+    "Team Name": "Aarohi Rockers",
+    "JERSEY COLOR": "A720-01 Stone Grey"
   },
   {
     "Player Name": "Timmeer Sanghavi",
@@ -73,8 +85,9 @@
     "Mobile Number": 9422313106,
     "Jersey Name": "RAJ",
     "Jersey Number": 21,
-    "Jersey Size": "XXL",
-    "Team Name": "Arihaan Royals - Chaitanya S & Kiran S"
+    "Jersey Size": "3XL (46)",
+    "Team Name": "Arihaan Royals",
+    "JERSEY COLOR": "A707 Primrose Yellow"
   },
   {
     "Player Name": "Chinmay Barmecha",
@@ -82,8 +95,9 @@
     "Mobile Number": 8888899779,
     "Jersey Name": "Meena",
     "Jersey Number": 15,
-    "Jersey Size": "XL",
-    "Team Name": "Arihaan Royals - Chaitanya S & Kiran S"
+    "Jersey Size": "XL (42)",
+    "Team Name": "Arihaan Royals",
+    "JERSEY COLOR": "A707 Primrose Yellow"
   },
   {
     "Player Name": "Arun Rathod",
@@ -91,8 +105,9 @@
     "Mobile Number": 9820369920,
     "Jersey Name": "Rathod",
     "Jersey Number": 7,
-    "Jersey Size": "M",
-    "Team Name": "Arihaan Royals - Chaitanya S & Kiran S"
+    "Jersey Size": "L (40)",
+    "Team Name": "Arihaan Royals",
+    "JERSEY COLOR": "A707 Primrose Yellow"
   },
   {
     "Player Name": "Hitesh Medtia",
@@ -100,8 +115,9 @@
     "Mobile Number": 8766422772,
     "Jersey Name": "Hitesh",
     "Jersey Number": 24,
-    "Jersey Size": "XL",
-    "Team Name": "Arihaan Royals - Chaitanya S & Kiran S"
+    "Jersey Size": "XL (42)",
+    "Team Name": "Arihaan Royals",
+    "JERSEY COLOR": "A707 Primrose Yellow"
   },
   {
     "Player Name": "Kalpesh Dhoka",
@@ -109,17 +125,19 @@
     "Mobile Number": 9850787196,
     "Jersey Name": "Kalpesh",
     "Jersey Number": 6,
-    "Jersey Size": "XXL",
-    "Team Name": "Arihaan Royals - Chaitanya S & Kiran S"
+    "Jersey Size": "3XL (46)",
+    "Team Name": "Arihaan Royals",
+    "JERSEY COLOR": "A707 Primrose Yellow"
   },
   {
     "Player Name": "Sandeep Jain",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/1456915/SANDEEP-JAIN",
     "Mobile Number": 9960299804,
-    "Jersey Name": "S.j.",
+    "Jersey Name": "SJ",
     "Jersey Number": 9,
-    "Jersey Size": "L",
-    "Team Name": "Arihaan Royals - Chaitanya S & Kiran S"
+    "Jersey Size": "L (40)",
+    "Team Name": "Arihaan Royals",
+    "JERSEY COLOR": "A707 Primrose Yellow"
   },
   {
     "Player Name": "Vidhan Patni",
@@ -127,8 +145,9 @@
     "Mobile Number": 9049057671,
     "Jersey Name": "Vidhan",
     "Jersey Number": 5,
-    "Jersey Size": "XS",
-    "Team Name": "Arihaan Royals - Chaitanya S & Kiran S"
+    "Jersey Size": "SX (34)",
+    "Team Name": "Arihaan Royals",
+    "JERSEY COLOR": "A707 Primrose Yellow"
   },
   {
     "Player Name": "Vihaan Kothari",
@@ -136,8 +155,9 @@
     "Mobile Number": 9326092425,
     "Jersey Name": "Vihaan",
     "Jersey Number": 77,
-    "Jersey Size": "XXS",
-    "Team Name": "Arihaan Royals - Chaitanya S & Kiran S"
+    "Jersey Size": 32,
+    "Team Name": "Arihaan Royals",
+    "JERSEY COLOR": "A707 Primrose Yellow"
   },
   {
     "Player Name": "Bhavik Shah",
@@ -145,8 +165,9 @@
     "Mobile Number": 9158858777,
     "Jersey Name": "Big B",
     "Jersey Number": 30,
-    "Jersey Size": "XL",
-    "Team Name": "GK Energizer - Mehul Shah"
+    "Jersey Size": "XL (42)",
+    "Team Name": "GK Energizer",
+    "JERSEY COLOR": "A777 Purple"
   },
   {
     "Player Name": "Manthan Jain",
@@ -154,8 +175,9 @@
     "Mobile Number": 9359600730,
     "Jersey Name": "Manthan jain",
     "Jersey Number": 7,
-    "Jersey Size": "L",
-    "Team Name": "GK Energizer - Mehul Shah"
+    "Jersey Size": "L (40)",
+    "Team Name": "GK Energizer",
+    "JERSEY COLOR": "A777 Purple"
   },
   {
     "Player Name": "Megh Shah",
@@ -163,8 +185,9 @@
     "Mobile Number": 9096010400,
     "Jersey Name": "MS",
     "Jersey Number": 7,
-    "Jersey Size": "L",
-    "Team Name": "GK Energizer - Mehul Shah"
+    "Jersey Size": "L (40)",
+    "Team Name": "GK Energizer",
+    "JERSEY COLOR": "A777 Purple"
   },
   {
     "Player Name": "Dhiraj Shah",
@@ -172,8 +195,9 @@
     "Mobile Number": 8975797500,
     "Jersey Name": "DHIRAJ",
     "Jersey Number": 18,
-    "Jersey Size": "XL",
-    "Team Name": "GK Energizer - Mehul Shah"
+    "Jersey Size": "XL (42)",
+    "Team Name": "GK Energizer",
+    "JERSEY COLOR": "A777 Purple"
   },
   {
     "Player Name": "Khush Jain",
@@ -181,8 +205,9 @@
     "Mobile Number": 9028661666,
     "Jersey Name": "jiaanjayveer",
     "Jersey Number": 1,
-    "Jersey Size": "M",
-    "Team Name": "GK Energizer - Mehul Shah"
+    "Jersey Size": "L (40)",
+    "Team Name": "GK Energizer",
+    "JERSEY COLOR": "A777 Purple"
   },
   {
     "Player Name": "Saumil Shah",
@@ -190,8 +215,9 @@
     "Mobile Number": 9094250250,
     "Jersey Name": "saumil",
     "Jersey Number": 34,
-    "Jersey Size": "XL",
-    "Team Name": "GK Energizer - Mehul Shah"
+    "Jersey Size": "XL (42)",
+    "Team Name": "GK Energizer",
+    "JERSEY COLOR": "A777 Purple"
   },
   {
     "Player Name": "Mukul Shah",
@@ -199,8 +225,9 @@
     "Mobile Number": 9623018449,
     "Jersey Name": "MUKUL",
     "Jersey Number": 7,
-    "Jersey Size": "XXXL",
-    "Team Name": "GK Energizer - Mehul Shah"
+    "Jersey Size": "3XL (46)",
+    "Team Name": "GK Energizer",
+    "JERSEY COLOR": "A777 Purple"
   },
   {
     "Player Name": "Nittyam Mutha",
@@ -208,8 +235,9 @@
     "Mobile Number": 9405022291,
     "Jersey Name": "Nittyam",
     "Jersey Number": 18,
-    "Jersey Size": "S",
-    "Team Name": "GK Energizer - Mehul Shah"
+    "Jersey Size": "S (36)",
+    "Team Name": "GK Energizer",
+    "JERSEY COLOR": "A777 Purple"
   },
   {
     "Player Name": "Mokshit Oswal",
@@ -217,8 +245,9 @@
     "Mobile Number": 9423450123,
     "Jersey Name": "Mokshit",
     "Jersey Number": 10,
-    "Jersey Size": "L",
-    "Team Name": "Jainam Fighters - Jayesh Oswal"
+    "Jersey Size": "L (40)",
+    "Team Name": "Jainam Fighters",
+    "JERSEY COLOR": "A729 MINT"
   },
   {
     "Player Name": "Yash Mehta",
@@ -226,8 +255,9 @@
     "Mobile Number": 9975633105,
     "Jersey Name": "Yash",
     "Jersey Number": 95,
-    "Jersey Size": "L",
-    "Team Name": "Jainam Fighters - Jayesh Oswal"
+    "Jersey Size": "XL (42)",
+    "Team Name": "Jainam Fighters",
+    "JERSEY COLOR": "A729 MINT"
   },
   {
     "Player Name": "Sayyam Oswal",
@@ -235,8 +265,9 @@
     "Mobile Number": 9158529012,
     "Jersey Name": "Sayyam",
     "Jersey Number": 6,
-    "Jersey Size": "M",
-    "Team Name": "Jainam Fighters - Jayesh Oswal"
+    "Jersey Size": "L (40)",
+    "Team Name": "Jainam Fighters",
+    "JERSEY COLOR": "A729 MINT"
   },
   {
     "Player Name": "Hitesh Oswal",
@@ -244,8 +275,9 @@
     "Mobile Number": 8668533098,
     "Jersey Name": "Hitesh",
     "Jersey Number": 99,
-    "Jersey Size": "L",
-    "Team Name": "Jainam Fighters - Jayesh Oswal"
+    "Jersey Size": "L (40)",
+    "Team Name": "Jainam Fighters",
+    "JERSEY COLOR": "A729 MINT"
   },
   {
     "Player Name": "Manoj Oswal",
@@ -253,8 +285,9 @@
     "Mobile Number": 8087549644,
     "Jersey Name": "Manoj",
     "Jersey Number": 24,
-    "Jersey Size": "XL",
-    "Team Name": "Jainam Fighters - Jayesh Oswal"
+    "Jersey Size": "XL (42)",
+    "Team Name": "Jainam Fighters",
+    "JERSEY COLOR": "A729 MINT"
   },
   {
     "Player Name": "Sandeep Mehta",
@@ -262,8 +295,9 @@
     "Mobile Number": 9921356606,
     "Jersey Name": "Sandeep",
     "Jersey Number": 5,
-    "Jersey Size": "M",
-    "Team Name": "Jainam Fighters - Jayesh Oswal"
+    "Jersey Size": "M (38)",
+    "Team Name": "Jainam Fighters",
+    "JERSEY COLOR": "A729 MINT"
   },
   {
     "Player Name": "Jayesh Oswal",
@@ -271,8 +305,9 @@
     "Mobile Number": 9822211123,
     "Jersey Name": "Jay",
     "Jersey Number": 11,
-    "Jersey Size": "XL",
-    "Team Name": "Jainam Fighters - Jayesh Oswal"
+    "Jersey Size": "XL (42)",
+    "Team Name": "Jainam Fighters",
+    "JERSEY COLOR": "A729 MINT"
   },
   {
     "Player Name": "Jigar Bafna",
@@ -280,8 +315,9 @@
     "Mobile Number": 9822212275,
     "Jersey Name": "JB",
     "Jersey Number": 16,
-    "Jersey Size": "M",
-    "Team Name": "Jainam Fighters - Jayesh Oswal"
+    "Jersey Size": "M (38)",
+    "Team Name": "Jainam Fighters",
+    "JERSEY COLOR": "A729 MINT"
   },
   {
     "Player Name": "Vipul Lunkad",
@@ -289,8 +325,9 @@
     "Mobile Number": 7020629707,
     "Jersey Name": "Vipul",
     "Jersey Number": 9,
-    "Jersey Size": "L",
-    "Team Name": "Lunkad Lions - Vipul Lunkad"
+    "Jersey Size": "L (40)",
+    "Team Name": "Lunkad Lions",
+    "JERSEY COLOR": "A737 Bright Red"
   },
   {
     "Player Name": "Nilesh Bora",
@@ -298,8 +335,9 @@
     "Mobile Number": 9326243737,
     "Jersey Name": "NILESH B.",
     "Jersey Number": 24,
-    "Jersey Size": "XL",
-    "Team Name": "Lunkad Lions - Vipul Lunkad"
+    "Jersey Size": "XL (42)",
+    "Team Name": "Lunkad Lions",
+    "JERSEY COLOR": "A737 Bright Red"
   },
   {
     "Player Name": "Nishith Sanghavi",
@@ -307,8 +345,9 @@
     "Mobile Number": 9850140222,
     "Jersey Name": "Nishith",
     "Jersey Number": 8,
-    "Jersey Size": "L",
-    "Team Name": "Lunkad Lions - Vipul Lunkad"
+    "Jersey Size": "L (40)",
+    "Team Name": "Lunkad Lions",
+    "JERSEY COLOR": "A737 Bright Red"
   },
   {
     "Player Name": "Vikaram Oswal",
@@ -316,8 +355,9 @@
     "Mobile Number": 9890124140,
     "Jersey Name": "Vicky",
     "Jersey Number": 5,
-    "Jersey Size": "M",
-    "Team Name": "Lunkad Lions - Vipul Lunkad"
+    "Jersey Size": "M (38)",
+    "Team Name": "Lunkad Lions",
+    "JERSEY COLOR": "A737 Bright Red"
   },
   {
     "Player Name": "Bharat Oswal",
@@ -325,8 +365,9 @@
     "Mobile Number": 9890061489,
     "Jersey Name": "Bharat",
     "Jersey Number": 7,
-    "Jersey Size": "S",
-    "Team Name": "Lunkad Lions - Vipul Lunkad"
+    "Jersey Size": "S (36)",
+    "Team Name": "Lunkad Lions",
+    "JERSEY COLOR": "A737 Bright Red"
   },
   {
     "Player Name": "Jitendra Jain",
@@ -334,8 +375,9 @@
     "Mobile Number": 9822519391,
     "Jersey Name": "JITENDRA",
     "Jersey Number": 7,
-    "Jersey Size": "XL",
-    "Team Name": "Lunkad Lions - Vipul Lunkad"
+    "Jersey Size": "XL (42)",
+    "Team Name": "Lunkad Lions",
+    "JERSEY COLOR": "A737 Bright Red"
   },
   {
     "Player Name": "Aditya Parekh",
@@ -343,8 +385,9 @@
     "Mobile Number": 9175952954,
     "Jersey Name": "Aditya",
     "Jersey Number": 18,
-    "Jersey Size": "XS",
-    "Team Name": "Lunkad Lions - Vipul Lunkad"
+    "Jersey Size": "SX (34)",
+    "Team Name": "Lunkad Lions",
+    "JERSEY COLOR": "A737 Bright Red"
   },
   {
     "Player Name": "Divam Jain",
@@ -352,8 +395,9 @@
     "Mobile Number": 9673748667,
     "Jersey Name": "Divam",
     "Jersey Number": 7,
-    "Jersey Size": "S",
-    "Team Name": "Lunkad Lions - Vipul Lunkad"
+    "Jersey Size": "S (36)",
+    "Team Name": "Lunkad Lions",
+    "JERSEY COLOR": "A737 Bright Red"
   },
   {
     "Player Name": "Nikhil Sanghvi",
@@ -361,8 +405,9 @@
     "Mobile Number": 9028968741,
     "Jersey Name": "Niks",
     "Jersey Number": 25,
-    "Jersey Size": "XL",
-    "Team Name": "Meet Maestros - Sachin Punmiya"
+    "Jersey Size": "XL (42)",
+    "Team Name": "Meet Maestros",
+    "JERSEY COLOR": "A754 ROYAL BLUE"
   },
   {
     "Player Name": "Amol Shah",
@@ -370,8 +415,9 @@
     "Mobile Number": 9561154494,
     "Jersey Name": "Amol",
     "Jersey Number": 8,
-    "Jersey Size": "L",
-    "Team Name": "Meet Maestros - Sachin Punmiya"
+    "Jersey Size": "L (40)",
+    "Team Name": "Meet Maestros",
+    "JERSEY COLOR": "A754 ROYAL BLUE"
   },
   {
     "Player Name": "Rahul Bhansali",
@@ -379,8 +425,9 @@
     "Mobile Number": 9423208303,
     "Jersey Name": "RAHUL",
     "Jersey Number": 1,
-    "Jersey Size": "L",
-    "Team Name": "Meet Maestros - Sachin Punmiya"
+    "Jersey Size": "L (40)",
+    "Team Name": "Meet Maestros",
+    "JERSEY COLOR": "A754 ROYAL BLUE"
   },
   {
     "Player Name": "Aksh Rathod",
@@ -388,8 +435,9 @@
     "Mobile Number": 7480097480,
     "Jersey Name": "Aksh",
     "Jersey Number": 20,
-    "Jersey Size": "S",
-    "Team Name": "Meet Maestros - Sachin Punmiya"
+    "Jersey Size": "S (36)",
+    "Team Name": "Meet Maestros",
+    "JERSEY COLOR": "A754 ROYAL BLUE"
   },
   {
     "Player Name": "Dipal Shah",
@@ -397,8 +445,9 @@
     "Mobile Number": 7709015299,
     "Jersey Name": "Dee",
     "Jersey Number": 80,
-    "Jersey Size": "L",
-    "Team Name": "Meet Maestros - Sachin Punmiya"
+    "Jersey Size": "L (40)",
+    "Team Name": "Meet Maestros",
+    "JERSEY COLOR": "A754 ROYAL BLUE"
   },
   {
     "Player Name": "Kavya Kuwad",
@@ -406,8 +455,9 @@
     "Mobile Number": 9209233038,
     "Jersey Name": "KK",
     "Jersey Number": 18,
-    "Jersey Size": "S",
-    "Team Name": "Meet Maestros - Sachin Punmiya"
+    "Jersey Size": "S (36)",
+    "Team Name": "Meet Maestros",
+    "JERSEY COLOR": "A754 ROYAL BLUE"
   },
   {
     "Player Name": "Amit Parakh",
@@ -415,8 +465,9 @@
     "Mobile Number": 9763301729,
     "Jersey Name": "Amit Parakh",
     "Jersey Number": 7,
-    "Jersey Size": "XL",
-    "Team Name": "Meet Maestros - Sachin Punmiya"
+    "Jersey Size": "XL (42)",
+    "Team Name": "Meet Maestros",
+    "JERSEY COLOR": "A754 ROYAL BLUE"
   },
   {
     "Player Name": "Eklavya Shah",
@@ -424,8 +475,9 @@
     "Mobile Number": 9225506100,
     "Jersey Name": "EKLAVYA",
     "Jersey Number": 4,
-    "Jersey Size": "XS",
-    "Team Name": "Meet Maestros - Sachin Punmiya"
+    "Jersey Size": "SX (34)",
+    "Team Name": "Meet Maestros",
+    "JERSEY COLOR": "A754 ROYAL BLUE"
   },
   {
     "Player Name": "Pawan Oswal",
@@ -433,8 +485,9 @@
     "Mobile Number": 9623633888,
     "Jersey Name": "MAYA",
     "Jersey Number": 22,
-    "Jersey Size": "XL",
-    "Team Name": "Oswal Smashers - Pawan Oswal"
+    "Jersey Size": "XL (42)",
+    "Team Name": "Oswal Smashers",
+    "JERSEY COLOR": "A719-01 Cream"
   },
   {
     "Player Name": "Mitesh Shah",
@@ -442,8 +495,9 @@
     "Mobile Number": 8073005510,
     "Jersey Name": "Mickey",
     "Jersey Number": 1,
-    "Jersey Size": "M",
-    "Team Name": "Oswal Smashers - Pawan Oswal"
+    "Jersey Size": "M (38)",
+    "Team Name": "Oswal Smashers",
+    "JERSEY COLOR": "A719-01 Cream"
   },
   {
     "Player Name": "Jeetu Oswal",
@@ -451,8 +505,9 @@
     "Mobile Number": 9822094100,
     "Jersey Name": "Jk",
     "Jersey Number": 10,
-    "Jersey Size": "L",
-    "Team Name": "Oswal Smashers - Pawan Oswal"
+    "Jersey Size": "L (40)",
+    "Team Name": "Oswal Smashers",
+    "JERSEY COLOR": "A719-01 Cream"
   },
   {
     "Player Name": "Rinesh Parekh",
@@ -460,8 +515,9 @@
     "Mobile Number": 9373002007,
     "Jersey Name": "R P",
     "Jersey Number": 28,
-    "Jersey Size": "L",
-    "Team Name": "Oswal Smashers - Pawan Oswal"
+    "Jersey Size": "L (40)",
+    "Team Name": "Oswal Smashers",
+    "JERSEY COLOR": "A719-01 Cream"
   },
   {
     "Player Name": "Pranil Shah",
@@ -469,8 +525,9 @@
     "Mobile Number": 9822251329,
     "Jersey Name": "Pranil",
     "Jersey Number": 9,
-    "Jersey Size": "L",
-    "Team Name": "Oswal Smashers - Pawan Oswal"
+    "Jersey Size": "L (40)",
+    "Team Name": "Oswal Smashers",
+    "JERSEY COLOR": "A719-01 Cream"
   },
   {
     "Player Name": "Rishi Jain",
@@ -478,8 +535,9 @@
     "Mobile Number": 7888163651,
     "Jersey Name": "Rishi",
     "Jersey Number": 7,
-    "Jersey Size": "XXS",
-    "Team Name": "Oswal Smashers - Pawan Oswal"
+    "Jersey Size": 32,
+    "Team Name": "Oswal Smashers",
+    "JERSEY COLOR": "A719-01 Cream"
   },
   {
     "Player Name": "Bharat Porwal",
@@ -487,8 +545,9 @@
     "Mobile Number": 9850059291,
     "Jersey Name": "Bharat",
     "Jersey Number": 3,
-    "Jersey Size": "M",
-    "Team Name": "Oswal Smashers - Pawan Oswal"
+    "Jersey Size": "M (38)",
+    "Team Name": "Oswal Smashers",
+    "JERSEY COLOR": "A719-01 Cream"
   },
   {
     "Player Name": "Bhavya Jain",
@@ -496,8 +555,9 @@
     "Mobile Number": 9370069687,
     "Jersey Name": "Bhavya",
     "Jersey Number": 18,
-    "Jersey Size": "XS",
-    "Team Name": "Oswal Smashers - Pawan Oswal"
+    "Jersey Size": "SX (34)",
+    "Team Name": "Oswal Smashers",
+    "JERSEY COLOR": "A719-01 Cream"
   },
   {
     "Player Name": "Rakesh Oswal",
@@ -505,8 +565,9 @@
     "Mobile Number": 9561111039,
     "Jersey Name": "Rk",
     "Jersey Number": 11,
-    "Jersey Size": "M",
-    "Team Name": "R K Dominators - Rakesh Oswal"
+    "Jersey Size": "M (38)",
+    "Team Name": "R K Dominators",
+    "JERSEY COLOR": "A755-01 Bright Green"
   },
   {
     "Player Name": "Divesh Oswal",
@@ -514,8 +575,9 @@
     "Mobile Number": 9960960456,
     "Jersey Name": "J& J",
     "Jersey Number": 31,
-    "Jersey Size": "XL",
-    "Team Name": "R K Dominators - Rakesh Oswal"
+    "Jersey Size": "XL (42)",
+    "Team Name": "R K Dominators",
+    "JERSEY COLOR": "A755-01 Bright Green"
   },
   {
     "Player Name": "Ankit Punmiya",
@@ -523,8 +585,9 @@
     "Mobile Number": 9766490160,
     "Jersey Name": "Ankit",
     "Jersey Number": 22,
-    "Jersey Size": "L",
-    "Team Name": "R K Dominators - Rakesh Oswal"
+    "Jersey Size": "L (40)",
+    "Team Name": "R K Dominators",
+    "JERSEY COLOR": "A755-01 Bright Green"
   },
   {
     "Player Name": "Krish Oswal",
@@ -532,8 +595,9 @@
     "Mobile Number": 8999253353,
     "Jersey Name": "Krish",
     "Jersey Number": 18,
-    "Jersey Size": "S",
-    "Team Name": "R K Dominators - Rakesh Oswal"
+    "Jersey Size": "S (36)",
+    "Team Name": "R K Dominators",
+    "JERSEY COLOR": "A755-01 Bright Green"
   },
   {
     "Player Name": "Daksh A Shah",
@@ -541,8 +605,9 @@
     "Mobile Number": 8767213297,
     "Jersey Name": "Daksh",
     "Jersey Number": 15,
-    "Jersey Size": "L",
-    "Team Name": "R K Dominators - Rakesh Oswal"
+    "Jersey Size": "L (40)",
+    "Team Name": "R K Dominators",
+    "JERSEY COLOR": "A755-01 Bright Green"
   },
   {
     "Player Name": "Darshan Shah",
@@ -550,8 +615,9 @@
     "Mobile Number": 8793108002,
     "Jersey Name": "DARSH",
     "Jersey Number": 14,
-    "Jersey Size": "L",
-    "Team Name": "R K Dominators - Rakesh Oswal"
+    "Jersey Size": "XL (42)",
+    "Team Name": "R K Dominators",
+    "JERSEY COLOR": "A755-01 Bright Green"
   },
   {
     "Player Name": "Khush Bafna",
@@ -559,8 +625,9 @@
     "Mobile Number": 9822212275,
     "Jersey Name": "Khush",
     "Jersey Number": 2,
-    "Jersey Size": "XS",
-    "Team Name": "R K Dominators - Rakesh Oswal"
+    "Jersey Size": "SX (34)",
+    "Team Name": "R K Dominators",
+    "JERSEY COLOR": "A755-01 Bright Green"
   },
   {
     "Player Name": "Vishal Bhurat",
@@ -568,8 +635,9 @@
     "Mobile Number": 7666786915,
     "Jersey Name": "Visshal",
     "Jersey Number": 24,
-    "Jersey Size": "L",
-    "Team Name": "R K Dominators - Rakesh Oswal"
+    "Jersey Size": "L (40)",
+    "Team Name": "R K Dominators",
+    "JERSEY COLOR": "A755-01 Bright Green"
   },
   {
     "Player Name": "Satish Jain",
@@ -577,8 +645,9 @@
     "Mobile Number": 9881874309,
     "Jersey Name": "RJ",
     "Jersey Number": 54,
-    "Jersey Size": "L",
-    "Team Name": "RJ Strikers - Satish Jain"
+    "Jersey Size": "L (40)",
+    "Team Name": "RJ Strikers",
+    "JERSEY COLOR": "A784 SKY BLUE"
   },
   {
     "Player Name": "Pankaj Shah",
@@ -586,8 +655,9 @@
     "Mobile Number": 9028774197,
     "Jersey Name": "PS",
     "Jersey Number": 67,
-    "Jersey Size": "M",
-    "Team Name": "RJ Strikers - Satish Jain"
+    "Jersey Size": "L (40)",
+    "Team Name": "RJ Strikers",
+    "JERSEY COLOR": "A784 SKY BLUE"
   },
   {
     "Player Name": "Amit Gandhi",
@@ -595,17 +665,19 @@
     "Mobile Number": 7276319578,
     "Jersey Name": "Amit",
     "Jersey Number": 24,
-    "Jersey Size": "XXL",
-    "Team Name": "RJ Strikers - Satish Jain"
+    "Jersey Size": "2XL (44)",
+    "Team Name": "RJ Strikers",
+    "JERSEY COLOR": "A784 SKY BLUE"
   },
   {
     "Player Name": "Kushal Shah",
-    "Cric Heroes Link": "https://cricheroes.com/player-profile/35511666/Charu-Shah",
+    "Cric Heroes Link": "https://cricheroes.com/player-profile/20236609/Kushal-Bokadiya",
     "Mobile Number": 8149009905,
     "Jersey Name": "KUSH",
     "Jersey Number": 4,
-    "Jersey Size": "M",
-    "Team Name": "RJ Strikers - Satish Jain"
+    "Jersey Size": "M (38)",
+    "Team Name": "RJ Strikers",
+    "JERSEY COLOR": "A784 SKY BLUE"
   },
   {
     "Player Name": "Mukesh Jain",
@@ -613,8 +685,9 @@
     "Mobile Number": 9420277778,
     "Jersey Name": "Max",
     "Jersey Number": 23,
-    "Jersey Size": "L",
-    "Team Name": "RJ Strikers - Satish Jain"
+    "Jersey Size": "L (40)",
+    "Team Name": "RJ Strikers",
+    "JERSEY COLOR": "A784 SKY BLUE"
   },
   {
     "Player Name": "Sachin Oswal",
@@ -622,8 +695,9 @@
     "Mobile Number": 9823095979,
     "Jersey Name": "Sachin",
     "Jersey Number": 9,
-    "Jersey Size": "M",
-    "Team Name": "RJ Strikers - Satish Jain"
+    "Jersey Size": "L (40)",
+    "Team Name": "RJ Strikers",
+    "JERSEY COLOR": "A784 SKY BLUE"
   },
   {
     "Player Name": "Karan Jain",
@@ -631,8 +705,9 @@
     "Mobile Number": 8793126160,
     "Jersey Name": "KARAN",
     "Jersey Number": 11,
-    "Jersey Size": "L",
-    "Team Name": "RJ Strikers - Satish Jain"
+    "Jersey Size": "L (40)",
+    "Team Name": "RJ Strikers",
+    "JERSEY COLOR": "A784 SKY BLUE"
   },
   {
     "Player Name": "Naksh Jain",
@@ -640,8 +715,9 @@
     "Mobile Number": 9881874309,
     "Jersey Name": "NJ",
     "Jersey Number": 9,
-    "Jersey Size": "XXS",
-    "Team Name": "RJ Strikers - Satish Jain"
+    "Jersey Size": 32,
+    "Team Name": "RJ Strikers",
+    "JERSEY COLOR": "A784 SKY BLUE"
   },
   {
     "Player Name": "Dilip Jain",
@@ -649,8 +725,9 @@
     "Mobile Number": 9028590888,
     "Jersey Name": "DILIP",
     "Jersey Number": 13,
-    "Jersey Size": "L",
-    "Team Name": "S G Warriors - Dinesh Bothra"
+    "Jersey Size": "L (40)",
+    "Team Name": "S G Warriors",
+    "JERSEY COLOR": "A718-01 BROWN"
   },
   {
     "Player Name": "Pranit Jodhavat",
@@ -658,8 +735,9 @@
     "Mobile Number": 9175416019,
     "Jersey Name": "Pranit",
     "Jersey Number": 6,
-    "Jersey Size": "L",
-    "Team Name": "S G Warriors - Dinesh Bothra"
+    "Jersey Size": "L (40)",
+    "Team Name": "S G Warriors",
+    "JERSEY COLOR": "A718-01 BROWN"
   },
   {
     "Player Name": "Vinod Jain",
@@ -667,8 +745,9 @@
     "Mobile Number": 9028847311,
     "Jersey Name": "VINOD",
     "Jersey Number": 5,
-    "Jersey Size": "XXL",
-    "Team Name": "S G Warriors - Dinesh Bothra"
+    "Jersey Size": "2XL (44)",
+    "Team Name": "S G Warriors",
+    "JERSEY COLOR": "A718-01 BROWN"
   },
   {
     "Player Name": "Hitendra Shah",
@@ -676,8 +755,9 @@
     "Mobile Number": 9881121124,
     "Jersey Name": "Hiten",
     "Jersey Number": 18,
-    "Jersey Size": "L",
-    "Team Name": "S G Warriors - Dinesh Bothra"
+    "Jersey Size": "L (40)",
+    "Team Name": "S G Warriors",
+    "JERSEY COLOR": "A718-01 BROWN"
   },
   {
     "Player Name": "Pankaj Jain",
@@ -685,8 +765,9 @@
     "Mobile Number": 7798983029,
     "Jersey Name": "Pankaj",
     "Jersey Number": 23,
-    "Jersey Size": "L",
-    "Team Name": "S G Warriors - Dinesh Bothra"
+    "Jersey Size": "L (40)",
+    "Team Name": "S G Warriors",
+    "JERSEY COLOR": "A718-01 BROWN"
   },
   {
     "Player Name": "Aarav Jain",
@@ -694,8 +775,9 @@
     "Mobile Number": 8956585958,
     "Jersey Name": "AARAV",
     "Jersey Number": 30,
-    "Jersey Size": "XXS",
-    "Team Name": "S G Warriors - Dinesh Bothra"
+    "Jersey Size": 32,
+    "Team Name": "S G Warriors",
+    "JERSEY COLOR": "A718-01 BROWN"
   },
   {
     "Player Name": "Sunny Parekh",
@@ -703,8 +785,9 @@
     "Mobile Number": 9503903122,
     "Jersey Name": "SUNNY",
     "Jersey Number": 21,
-    "Jersey Size": "M",
-    "Team Name": "S G Warriors - Dinesh Bothra"
+    "Jersey Size": "M (38)",
+    "Team Name": "S G Warriors",
+    "JERSEY COLOR": "A718-01 BROWN"
   },
   {
     "Player Name": "Daksh D Shah",
@@ -712,8 +795,9 @@
     "Mobile Number": 7276766428,
     "Jersey Name": "Daksh",
     "Jersey Number": 14,
-    "Jersey Size": "S",
-    "Team Name": "S G Warriors - Dinesh Bothra"
+    "Jersey Size": "S (36)",
+    "Team Name": "S G Warriors",
+    "JERSEY COLOR": "A718-01 BROWN"
   },
   {
     "Player Name": "Darshan Rathod",
@@ -721,8 +805,9 @@
     "Mobile Number": 9422367596,
     "Jersey Name": "Darshan",
     "Jersey Number": 17,
-    "Jersey Size": "L",
-    "Team Name": "Shapura Strikers - Darshan Rathod"
+    "Jersey Size": "L (40)",
+    "Team Name": "Shapura Strikers",
+    "JERSEY COLOR": "A722 Light ORANGE"
   },
   {
     "Player Name": "Manthan Oswal",
@@ -730,8 +815,9 @@
     "Mobile Number": 9960444815,
     "Jersey Name": "Manthan",
     "Jersey Number": 25,
-    "Jersey Size": "M",
-    "Team Name": "Shapura Strikers - Darshan Rathod"
+    "Jersey Size": "M (38)",
+    "Team Name": "Shapura Strikers",
+    "JERSEY COLOR": "A722 Light ORANGE"
   },
   {
     "Player Name": "Ankit Porwal",
@@ -739,8 +825,9 @@
     "Mobile Number": 9881466839,
     "Jersey Name": "Ankit",
     "Jersey Number": 8,
-    "Jersey Size": "L",
-    "Team Name": "Shapura Strikers - Darshan Rathod"
+    "Jersey Size": "L (40)",
+    "Team Name": "Shapura Strikers",
+    "JERSEY COLOR": "A722 Light ORANGE"
   },
   {
     "Player Name": "Yash Oswal",
@@ -748,8 +835,9 @@
     "Mobile Number": 9021753760,
     "Jersey Name": "Yash",
     "Jersey Number": 17,
-    "Jersey Size": "L",
-    "Team Name": "Shapura Strikers - Darshan Rathod"
+    "Jersey Size": "L (40)",
+    "Team Name": "Shapura Strikers",
+    "JERSEY COLOR": "A722 Light ORANGE"
   },
   {
     "Player Name": "Pritesh Gandhi",
@@ -757,8 +845,9 @@
     "Mobile Number": 8605101696,
     "Jersey Name": "Pritesh",
     "Jersey Number": 5,
-    "Jersey Size": "XXL",
-    "Team Name": "Shapura Strikers - Darshan Rathod"
+    "Jersey Size": "2XL (44)",
+    "Team Name": "Shapura Strikers",
+    "JERSEY COLOR": "A722 Light ORANGE"
   },
   {
     "Player Name": "Sunil Patni",
@@ -766,8 +855,9 @@
     "Mobile Number": 9049057671,
     "Jersey Name": "Sunil",
     "Jersey Number": 9,
-    "Jersey Size": "L",
-    "Team Name": "Shapura Strikers - Darshan Rathod"
+    "Jersey Size": "L (40)",
+    "Team Name": "Shapura Strikers",
+    "JERSEY COLOR": "A722 Light ORANGE"
   },
   {
     "Player Name": "Umesh Porwal",
@@ -775,8 +865,9 @@
     "Mobile Number": 9822541922,
     "Jersey Name": "Umesh",
     "Jersey Number": 45,
-    "Jersey Size": "M",
-    "Team Name": "Shapura Strikers - Darshan Rathod"
+    "Jersey Size": "M (38)",
+    "Team Name": "Shapura Strikers",
+    "JERSEY COLOR": "A722 Light ORANGE"
   },
   {
     "Player Name": "Bhavesh Jain",
@@ -784,7 +875,8 @@
     "Mobile Number": 9423217173,
     "Jersey Name": "Bhavesh",
     "Jersey Number": 18,
-    "Jersey Size": "M",
-    "Team Name": "Shapura Strikers - Darshan Rathod"
+    "Jersey Size": "M (38)",
+    "Team Name": "Shapura Strikers",
+    "JERSEY COLOR": "A722 Light ORANGE"
   }
 ]

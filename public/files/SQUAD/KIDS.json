@@ -1,282 +1,310 @@
 [
   {
-    "Player Name": "Viaan Gandhi",
-    "Cric Heroes Link": "https://cricheroes.in/player-profile/5904600/Viaan-Gandhi",
-    "Mobile Number": 7276319578,
-    "Age": 8,
-    "Jersey Name": "VIAAN",
-    "Jersey Number": 84,
-    "Jersey Size": "XS",
-    "Team Name": "Viaan Warriors - Rashmi Amit Gandhi"
-  },
-  {
-    "Player Name": "Veer Mangesh Desarda",
-    "Cric Heroes Link": "https://cricheroes.com/player-profile/30875665/Veer-Desarda",
-    "Mobile Number": 7756068949,
-    "Age": 10,
-    "Jersey Name": "VEER",
-    "Jersey Number": 7,
-    "Jersey Size": "XXS",
-    "Team Name": "Viaan Warriors - Rashmi Amit Gandhi"
-  },
-  {
-    "Player Name": "Kavya Sanghavi",
-    "Cric Heroes Link": "https://cricheroes.com/player-profile/2355644/Jsg-Timir-Sanghavi",
-    "Mobile Number": 9371037721,
-    "Age": 11,
-    "Jersey Name": "Virat Kavya",
-    "Jersey Number": 18,
-    "Jersey Size": "XS",
-    "Team Name": "Viaan Warriors - Rashmi Amit Gandhi"
-  },
-  {
-    "Player Name": "Naksh Paresh Bafna",
-    "Cric Heroes Link": "https://cricheroes.in/player-profile/43055859/naksh",
-    "Mobile Number": 8668744545,
-    "Age": 10,
-    "Jersey Name": "Naksh",
-    "Jersey Number": 18,
-    "Jersey Size": "XS",
-    "Team Name": "Viaan Warriors - Rashmi Amit Gandhi"
-  },
-  {
-    "Player Name": "Henik Umesh Porwal",
-    "Cric Heroes Link": "https://cricheroes.com/player-profile/43074698/Henik-Umesh-Porwal",
-    "Mobile Number": 8956450890,
-    "Age": 8,
-    "Jersey Name": "Henik",
-    "Jersey Number": 8,
-    "Jersey Size": "XXS",
-    "Team Name": "Viaan Warriors - Rashmi Amit Gandhi"
-  },
-  {
-    "Player Name": "Jinisha Dipal Shah",
-    "Cric Heroes Link": "https://cricheroes.com/player-profile/43057652/Jinisha-Shah",
-    "Mobile Number": 8291267507,
-    "Age": 11,
-    "Jersey Name": "Jinisha",
-    "Jersey Number": 9,
-    "Jersey Size": "XS",
-    "Team Name": "Viaan Warriors - Rashmi Amit Gandhi"
-  },
-  {
-    "Player Name": "Urvish Vishal Bhurat",
-    "Cric Heroes Link": "https://cricheroes.com/player-profile/43014149/Urvish-Vishal-Bhurat",
-    "Mobile Number": 9130329243,
-    "Age": 10,
-    "Jersey Name": "URVISH",
-    "Jersey Number": 7,
-    "Jersey Size": "XXS",
-    "Team Name": "Viaan Warriors - Rashmi Amit Gandhi"
-  },
-  {
-    "Player Name": "Dheer Mukesh Jain",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/43056349/Dheer-M-Jain",
     "Mobile Number": 9420277778,
     "Age": 7,
+    "Player Name": "Dheer Mukesh Jain",
     "Jersey Name": "Dheer",
     "Jersey Number": 16,
-    "Jersey Size": "XXS",
-    "Team Name": "DJ Dorimons - Komal Mukesh Jain"
+    "Jersey Size": 26,
+    "Team Name": "DJ Dorimons",
+    "JERSEY COLOR": "FLORSCENT GREEN"
   },
   {
-    "Player Name": "Dhruvansh Vinod Jain",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/4125998/Dhruvansh-Jain",
     "Mobile Number": 9028847311,
     "Age": 9,
+    "Player Name": "Dhruvansh Vinod Jain",
     "Jersey Name": "DHRUVANSH",
     "Jersey Number": 3,
-    "Jersey Size": "XXS",
-    "Team Name": "DJ Dorimons - Komal Mukesh Jain"
+    "Jersey Size": 26,
+    "Team Name": "DJ Dorimons",
+    "JERSEY COLOR": "FLORSCENT GREEN"
   },
   {
-    "Player Name": "Kavyansh Jain",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/21500914/Kavyansh-Jain",
     "Mobile Number": 8087387945,
     "Age": 9,
+    "Player Name": "Kavyansh Jain",
     "Jersey Name": "KAVYANSH",
     "Jersey Number": 25,
-    "Jersey Size": "XXS",
-    "Team Name": "DJ Dorimons - Komal Mukesh Jain"
+    "Jersey Size": 26,
+    "Team Name": "DJ Dorimons",
+    "JERSEY COLOR": "FLORSCENT GREEN"
   },
   {
-    "Player Name": "Dhruvin Singhvi",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/43044744/Dhruvin-Singhvi",
     "Mobile Number": 9833987485,
     "Age": 10,
+    "Player Name": "Dhruvin Singhvi",
     "Jersey Name": "Dhruvin",
     "Jersey Number": 18,
-    "Jersey Size": "XS",
-    "Team Name": "DJ Dorimons - Komal Mukesh Jain"
+    "Jersey Size": 28,
+    "Team Name": "DJ Dorimons",
+    "JERSEY COLOR": "FLORSCENT GREEN"
   },
   {
-    "Player Name": "Jinaya P Oswal",
     "Cric Heroes Link": "https://cricheroes.in/player-profile/4417186/Preeti-Oswal",
     "Mobile Number": 9370478222,
     "Age": 10,
+    "Player Name": "Jinaya P Oswal",
     "Jersey Name": "JINAYA",
     "Jersey Number": 27,
-    "Jersey Size": "M",
-    "Team Name": "DJ Dorimons - Komal Mukesh Jain"
+    "Jersey Size": "M (38)",
+    "Team Name": "DJ Dorimons",
+    "JERSEY COLOR": "FLORSCENT GREEN"
   },
   {
-    "Player Name": "Yashvi Oswal",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/43051873/Yashvi-Oswal",
     "Mobile Number": 9890061489,
     "Age": 10,
+    "Player Name": "Yashvi Oswal",
     "Jersey Name": "Yashvi",
     "Jersey Number": 25,
-    "Jersey Size": "XXS",
-    "Team Name": "DJ Dorimons - Komal Mukesh Jain"
+    "Jersey Size": 28,
+    "Team Name": "DJ Dorimons",
+    "JERSEY COLOR": "FLORSCENT GREEN"
   },
   {
-    "Player Name": "Sayyam Bhavesh Jain",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/16174494/Bhavesh-Jain",
     "Mobile Number": 9423217173,
     "Age": 7,
+    "Player Name": "Sayyam Bhavesh Jain",
     "Jersey Name": "Sayyam",
     "Jersey Number": 18,
-    "Jersey Size": "XXS",
-    "Team Name": "DJ Dorimons - Komal Mukesh Jain"
+    "Jersey Size": 28,
+    "Team Name": "DJ Dorimons",
+    "JERSEY COLOR": "FLORSCENT GREEN"
   },
   {
-    "Player Name": "Hridhan Arun Rathod",
     "Cric Heroes Link": "https://cricheroes.in/player-profile/33821202/Hridhan-Rathod:",
     "Mobile Number": 8434853434,
     "Age": 10,
+    "Player Name": "Hridhan Arun Rathod",
     "Jersey Name": "H R",
     "Jersey Number": 29,
-    "Jersey Size": "S",
-    "Team Name": "Rathod Royals - Dr.Ashika Arun Rathod"
+    "Jersey Size": "M (38)",
+    "Team Name": "Rathod Royals",
+    "JERSEY COLOR": "FLORSCENT BLUE"
   },
   {
-    "Player Name": "Kalash Hitesh Medtia",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/43018294/Kalash-Hitesh-Medtia",
     "Mobile Number": 8766422772,
     "Age": 8,
+    "Player Name": "Kalash Hitesh Medtia",
     "Jersey Name": "Kalash",
     "Jersey Number": 77,
-    "Jersey Size": "XXS",
-    "Team Name": "Rathod Royals - Dr.Ashika Arun Rathod"
+    "Jersey Size": 28,
+    "Team Name": "Rathod Royals",
+    "JERSEY COLOR": "FLORSCENT BLUE"
   },
   {
-    "Player Name": "Tanish Anil Shah",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/1831827/Tanish shah",
     "Mobile Number": 9326650100,
     "Age": 11,
+    "Player Name": "Tanish Anil Shah",
     "Jersey Name": "Tanish",
     "Jersey Number": 7,
-    "Jersey Size": "XS",
-    "Team Name": "Rathod Royals - Dr.Ashika Arun Rathod"
+    "Jersey Size": "S (36)",
+    "Team Name": "Rathod Royals",
+    "JERSEY COLOR": "FLORSCENT BLUE"
   },
   {
-    "Player Name": "Yuvaan Mehta",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/35503537/Yuvaan-VedMutha-",
     "Mobile Number": 9921356606,
     "Age": 10,
+    "Player Name": "Yuvaan Mehta",
     "Jersey Name": "Yuvaan",
     "Jersey Number": 7,
-    "Jersey Size": "XXS",
-    "Team Name": "Rathod Royals - Dr.Ashika Arun Rathod"
+    "Jersey Size": "S (36)",
+    "Team Name": "Rathod Royals",
+    "JERSEY COLOR": "FLORSCENT BLUE"
   },
   {
-    "Player Name": "Jiaan Khush Oswal",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/2099143/Khush--Jain",
     "Mobile Number": 9028661666,
     "Age": 7,
+    "Player Name": "Jiaan Khush Oswal",
     "Jersey Name": "Bungee",
     "Jersey Number": 1,
-    "Jersey Size": "XXS",
-    "Team Name": "Rathod Royals - Dr.Ashika Arun Rathod"
+    "Jersey Size": 28,
+    "Team Name": "Rathod Royals",
+    "JERSEY COLOR": "FLORSCENT BLUE"
   },
   {
-    "Player Name": "Saksham Hitesh Mutha",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/33841411/Poonam-Hitesh-Mutha",
     "Mobile Number": 9405022291,
     "Age": 8,
+    "Player Name": "Saksham Hitesh Mutha",
     "Jersey Name": "Saksham",
     "Jersey Number": 13,
-    "Jersey Size": "XXS",
-    "Team Name": "Rathod Royals - Dr.Ashika Arun Rathod"
+    "Jersey Size": 28,
+    "Team Name": "Rathod Royals",
+    "JERSEY COLOR": "FLORSCENT BLUE"
   },
   {
-    "Player Name": "Vivaan Kalpesh Dhoka",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/42999763/Vivaan-Kalpesh-Dhoka",
     "Mobile Number": 9850204067,
     "Age": 11,
+    "Player Name": "Vivaan Kalpesh Dhoka",
     "Jersey Name": "Vivaan",
     "Jersey Number": 37,
-    "Jersey Size": "XS",
-    "Team Name": "Rathod Royals - Dr.Ashika Arun Rathod"
+    "Jersey Size": "S (36)",
+    "Team Name": "Rathod Royals",
+    "JERSEY COLOR": "FLORSCENT BLUE"
   },
   {
-    "Player Name": "Reyansh B Jain",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/349155/Bhawesh-Kumar-G-Jain",
     "Mobile Number": 8660029115,
     "Age": 11,
+    "Player Name": "Reyansh B Jain",
     "Jersey Name": "Reyansh Jain",
     "Jersey Number": 7,
-    "Jersey Size": "XXS",
-    "Team Name": "Unique Chargers - Reema Jitendra Jain"
+    "Jersey Size": 30,
+    "Team Name": "Unique Chargers",
+    "JERSEY COLOR": "FLORSCENT ORANGE/RED"
   },
   {
-    "Player Name": "Vandit Sunil Patni",
     "Cric Heroes Link": "https://cricheroes.in/player-profile/16168302/Sunil-Patni-Fc",
     "Mobile Number": 9049057671,
     "Age": 11,
+    "Player Name": "Vandit Sunil Patni",
     "Jersey Name": "Vandit",
     "Jersey Number": 18,
-    "Jersey Size": "XS",
-    "Team Name": "Unique Chargers - Reema Jitendra Jain"
+    "Jersey Size": 32,
+    "Team Name": "Unique Chargers",
+    "JERSEY COLOR": "FLORSCENT ORANGE/RED"
   },
   {
-    "Player Name": "Sanay Shah",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/42998934/Sanay-Shah",
     "Mobile Number": 9940425690,
     "Age": 8,
+    "Player Name": "Sanay Shah",
     "Jersey Name": "Sanay",
     "Jersey Number": 33,
-    "Jersey Size": "XXS",
-    "Team Name": "Unique Chargers - Reema Jitendra Jain"
+    "Jersey Size": 26,
+    "Team Name": "Unique Chargers",
+    "JERSEY COLOR": "FLORSCENT ORANGE/RED"
   },
   {
-    "Player Name": "Siddh Nilesh Nahar",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/43058077/Siddh-Nahar",
     "Mobile Number": 9764442099,
     "Age": 8,
+    "Player Name": "Siddh Nilesh Nahar",
     "Jersey Name": "SIDDH",
     "Jersey Number": 18,
-    "Jersey Size": "XXS",
-    "Team Name": "Unique Chargers - Reema Jitendra Jain"
+    "Jersey Size": 28,
+    "Team Name": "Unique Chargers",
+    "JERSEY COLOR": "FLORSCENT ORANGE/RED"
   },
   {
-    "Player Name": "Kriya Hitesh Medtia",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/43043631/Kriya-Hitesh-Medtia",
     "Mobile Number": 8766422772,
     "Age": 8,
+    "Player Name": "Kriya Hitesh Medtia",
     "Jersey Name": "Kriya",
     "Jersey Number": 18,
-    "Jersey Size": "XXS",
-    "Team Name": "Unique Chargers - Reema Jitendra Jain"
+    "Jersey Size": 26,
+    "Team Name": "Unique Chargers",
+    "JERSEY COLOR": "FLORSCENT ORANGE/RED"
   },
   {
-    "Player Name": "Moksha Dipal Shah",
     "Cric Heroes Link": "https://cricheroes.com/player-profile/43059964/Moksha-Shah",
     "Mobile Number": 8291267507,
     "Age": 10,
+    "Player Name": "Moksha Dipal Shah",
     "Jersey Name": "Moksha",
     "Jersey Number": 21,
-    "Jersey Size": "XS",
-    "Team Name": "Unique Chargers - Reema Jitendra Jain"
+    "Jersey Size": 32,
+    "Team Name": "Unique Chargers",
+    "JERSEY COLOR": "FLORSCENT ORANGE/RED"
   },
   {
-    "Player Name": "Aarav Kamlesh Shah",
     "Cric Heroes Link": "https://cricheroes.in/player-profile/27080534/Aarav-Shah",
     "Mobile Number": 9372550100,
     "Age": 9,
+    "Player Name": "Aarav Kamlesh Shah",
     "Jersey Name": "Aarav",
     "Jersey Number": 60,
-    "Jersey Size": "XXS",
-    "Team Name": "Unique Chargers - Reema Jitendra Jain"
+    "Jersey Size": 28,
+    "Team Name": "Unique Chargers",
+    "JERSEY COLOR": "FLORSCENT ORANGE/RED"
+  },
+  {
+    "Cric Heroes Link": "https://cricheroes.in/player-profile/5904600/Viaan-Gandhi",
+    "Mobile Number": 7276319578,
+    "Age": 8,
+    "Player Name": "Viaan Gandhi",
+    "Jersey Name": "VIAAN",
+    "Jersey Number": 84,
+    "Jersey Size": 28,
+    "Team Name": "Viaan Warriors",
+    "JERSEY COLOR": "FLORSCENT ORANGE/RED"
+  },
+  {
+    "Cric Heroes Link": "https://cricheroes.com/player-profile/30875665/Veer-Desarda",
+    "Mobile Number": 7756068949,
+    "Age": 10,
+    "Player Name": "Veer Mangesh Desarda",
+    "Jersey Name": "VEER",
+    "Jersey Number": 7,
+    "Jersey Size": 26,
+    "Team Name": "Viaan Warriors",
+    "JERSEY COLOR": "FLORSCENT YELLOW"
+  },
+  {
+    "Cric Heroes Link": "https://cricheroes.com/player-profile/2355644/Jsg-Timir-Sanghavi",
+    "Mobile Number": 9371037721,
+    "Age": 11,
+    "Player Name": "Kavya Sanghavi",
+    "Jersey Name": "Virat Kavya",
+    "Jersey Number": 18,
+    "Jersey Size": 28,
+    "Team Name": "Viaan Warriors",
+    "JERSEY COLOR": "FLORSCENT YELLOW"
+  },
+  {
+    "Cric Heroes Link": "https://cricheroes.in/player-profile/43055859/naksh",
+    "Mobile Number": 8668744545,
+    "Age": 10,
+    "Player Name": "Naksh Paresh Bafna",
+    "Jersey Name": "Naksh",
+    "Jersey Number": 18,
+    "Jersey Size": 28,
+    "Team Name": "Viaan Warriors",
+    "JERSEY COLOR": "FLORSCENT YELLOW"
+  },
+  {
+    "Cric Heroes Link": "https://cricheroes.com/player-profile/43074698/Henik-Umesh-Porwal",
+    "Mobile Number": 8956450890,
+    "Age": 8,
+    "Player Name": "Henik Umesh Porwal",
+    "Jersey Name": "Henik",
+    "Jersey Number": 8,
+    "Jersey Size": 26,
+    "Team Name": "Viaan Warriors",
+    "JERSEY COLOR": "FLORSCENT YELLOW"
+  },
+  {
+    "Cric Heroes Link": "https://cricheroes.com/player-profile/43057652/Jinisha-Shah",
+    "Mobile Number": 8291267507,
+    "Age": 11,
+    "Player Name": "Jinisha Dipal Shah",
+    "Jersey Name": "Jinisha",
+    "Jersey Number": 9,
+    "Jersey Size": 28,
+    "Team Name": "Viaan Warriors",
+    "JERSEY COLOR": "FLORSCENT YELLOW"
+  },
+  {
+    "Cric Heroes Link": "https://cricheroes.com/player-profile/43014149/Urvish-Vishal-Bhurat",
+    "Mobile Number": 9130329243,
+    "Age": 10,
+    "Player Name": "Urvish Vishal Bhurat",
+    "Jersey Name": "URVISH",
+    "Jersey Number": 7,
+    "Jersey Size": 26,
+    "Team Name": "Viaan Warriors",
+    "JERSEY COLOR": "FLORSCENT YELLOW"
   }
 ]
