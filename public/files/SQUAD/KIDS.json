@@ -258,8 +258,8 @@
     "Age": 11,
     "Player Name": "Kavya Sanghavi",
     "Jersey Name": "Virat Kavya",
-    "Jersey Number": 18,
-    "Jersey Size": 28,
+    "Jersey Number": "18",
+    "Jersey Size": "S (36)",
     "Team Name": "Viaan Warriors",
     "JERSEY COLOR": "FLORSCENT YELLOW"
   },
@@ -280,8 +280,8 @@
     "Age": 8,
     "Player Name": "Henik Umesh Porwal",
     "Jersey Name": "Henik",
-    "Jersey Number": 8,
-    "Jersey Size": 26,
+    "Jersey Number": "8",
+    "Jersey Size": "30",
     "Team Name": "Viaan Warriors",
     "JERSEY COLOR": "FLORSCENT YELLOW"
   },
@@ -306,5 +306,14 @@
     "Jersey Size": 26,
     "Team Name": "Viaan Warriors",
     "JERSEY COLOR": "FLORSCENT YELLOW"
+  },
+  {
+    "Player Name": "Amit Gandhi",
+    "Mobile Number": "7276319578",
+    "Team Name": "Viaan Warriors",
+    "Jersey Name": "YUVI",
+    "Jersey Number": "08",
+    "Jersey Size": "24",
+    "Age": 35
   }
 ]
