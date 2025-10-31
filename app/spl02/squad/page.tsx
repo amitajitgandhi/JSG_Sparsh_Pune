@@ -867,58 +867,33 @@ export default function SPL02Squad() {
         <table className="w-full bg-white dark:bg-gray-800 rounded-lg shadow-sm">
           <thead>
             <tr className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                Player Name
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                Mobile Number
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                Jersey Name
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                Jersey Number
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                Jersey Size
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                CricHeroes
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                Actions
-              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Player Name</th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Mobile Number</th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Jersey Name</th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Jersey Number</th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Jersey Size</th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">CricHeroes</th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
-            {members.map((member, index) => {
+            {members.map((member) => {
               const memberKey = getMemberKey(member)
               const isEditing = editingMember === memberKey
               const isSaving = savingMember === memberKey
 
               return (
-                <tr key={index} className={`transition-colors ${isEditing ? 'bg-blue-50 dark:bg-blue-900/20' : 'hover:bg-gray-50 dark:hover:bg-gray-700'}`}>
+                <tr key={memberKey} className={`transition-colors ${isEditing ? 'bg-blue-50 dark:bg-blue-900/20' : 'hover:bg-gray-50 dark:hover:bg-gray-700'}`}>
                   <td className="px-4 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">
-                      {member['Player Name']}
-                    </div>
-                    {member.Age && (
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
-                        Age: {member.Age} years
-                      </div>
-                    )}
+                    <div className="text-sm font-medium text-gray-900 dark:text-white">{member['Player Name']}</div>
+                    {member.Age && <div className="text-xs text-gray-500 dark:text-gray-400">Age: {member.Age} years</div>}
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap">
-                    <a 
-                      href={`tel:${member['Mobile Number']}`}
-                      className="text-sm text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-300 transition-colors flex items-center space-x-1"
-                    >
+                    <a href={`tel:${member['Mobile Number']}`} className="text-sm text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-300 transition-colors flex items-center space-x-1">
                       <Phone size={14} className="text-gray-500 dark:text-gray-400" />
                       <span>{member['Mobile Number']}</span>
                     </a>
                   </td>
-                  
-                  {/* Jersey Name - Editable */}
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                     {isEditing ? (
                       <input
@@ -934,26 +909,22 @@ export default function SPL02Squad() {
                       member['Jersey Name'] || '-'
                     )}
                   </td>
-                  
-                  {/* Jersey Number - Editable */}
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                     {isEditing ? (
                       <input
-                        type="number"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         value={editValues['Jersey Number']}
                         onChange={(e) => handleInputChange('Jersey Number', e.target.value)}
                         className="w-full px-2 py-1 text-sm border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="Number"
-                        min="0"
-                        max="999"
                         disabled={isSaving}
                       />
                     ) : (
                       member['Jersey Number'] || '-'
                     )}
                   </td>
-                  
-                  {/* Jersey Size - Editable */}
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                     {isEditing ? (
                       <select
@@ -963,15 +934,12 @@ export default function SPL02Squad() {
                         disabled={isSaving}
                       >
                         <option value="">Select Size</option>
-                        {jerseySizeOptions.map(size => (
-                          <option key={size} value={size}>{size}</option>
-                        ))}
+                        {jerseySizeOptions.map(size => <option key={size} value={size}>{size}</option>)}
                       </select>
                     ) : (
                       member['Jersey Size'] || '-'
                     )}
                   </td>
-                  
                   <td className="px-4 py-4 whitespace-nowrap text-sm">
                     {member['Cric Heroes Link'] ? (
                       <a
@@ -987,7 +955,6 @@ export default function SPL02Squad() {
                       <span className="text-gray-400 dark:text-gray-500">-</span>
                     )}
                   </td>
-                  
                   <td className="px-4 py-4 whitespace-nowrap text-sm">
                     {isEditing ? (
                       <div className="flex items-center space-x-1">
