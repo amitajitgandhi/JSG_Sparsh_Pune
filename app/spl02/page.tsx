@@ -14,7 +14,7 @@ function TitleSponsorVideo() {
     // HEAD request to confirm asset deployed on Vercel
     const check = async () => {
       try {
-        const res = await fetch('/videos/video1.mp4', { method: 'HEAD' })
+        const res = await fetch('/videos/Video1.mp4', { method: 'HEAD' })
         setAssetStatus(res.ok ? 'ok' : 'missing')
       } catch {
         setAssetStatus('missing')
@@ -37,7 +37,8 @@ function TitleSponsorVideo() {
     return (
       <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center space-y-2">
         <p className="text-sm font-semibold text-red-600">Video file not deployed</p>
-        <p className="text-xs text-red-700">Ensure <code className="font-mono">public/videos/video1.mp4</code> is committed and pushed. After redeploy open <code className="font-mono">/videos/video1.mp4</code> directly.</p>
+            <p className="text-xs text-red-700">Ensure <code className="font-mono">public/videos/Video1.mp4</code> is committed and pushed. After redeploy open <code className="font-mono">/videos/V
+                ideo1.mp4</code> directly.</p>
       </div>
     )
   }
@@ -48,7 +49,7 @@ function TitleSponsorVideo() {
         <p className="text-sm font-semibold text-yellow-700">Playback failed</p>
         <p className="text-xs text-yellow-700">File exists but browser could not decode. Re-encode with H.264 + AAC faststart or add WEBM fallback.</p>
         <div className="flex justify-center gap-3 text-xs">
-          <a href="/videos/video1.mp4" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Open MP4</a>
+          <a href="/videos/Video1.mp4" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Open MP4</a>
         </div>
       </div>
     )
@@ -63,8 +64,8 @@ function TitleSponsorVideo() {
       poster="/images/SPL02_Banner.jpeg"
       onError={() => setPlaybackError(true)}
     >
-      <source src="/videos/video1.mp4" type="video/mp4" />
-      Your browser does not support HTML5 video. <a href="/videos/video1.mp4" className="text-blue-600 underline">Download</a>.
+      <source src="/videos/Video1.mp4" type="video/mp4" />
+      Your browser does not support HTML5 video. <a href="/videos/Video1.mp4" className="text-blue-600 underline">Download</a>.
     </video>
   )
 }
