@@ -1,8 +1,59 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Calendar, MapPin, Clock, Users, Trophy, Star, Target, Award, Phone, Mail, Zap, Heart, Gift, X, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
+
+// Inline lightweight video component to handle fallback in case video cannot play (e.g. codec issues or asset missing on Vercel)
+function TitleSponsorVideo() {
+  const [error, setError] = useState(false)
+  const [canPlayMp4, setCanPlayMp4] = useState(false)
+  const [canPlayWebm, setCanPlayWebm] = useState(false)
+
+  useEffect(() => {
+    const v = document.createElement('video')
+    setCanPlayMp4(!!v.canPlayType && v.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"') !== '')
+    setCanPlayWebm(!!v.canPlayType && v.canPlayType('video/webm; codecs="vp8, vorbis"') !== '')
+  }, [])
+
+  // Prefer mp4 if playable, else webm, else show fallback link
+  if (error) {
+    return (
+      <div className="bg-gray-100 rounded-xl p-4 text-center space-y-2">
+        <p className="text-sm text-red-600 font-semibold">Video unavailable</p>
+        <p className="text-xs text-gray-600">Your device cannot play the embedded format or the file did not deploy. You can download / view directly:</p>
+        <div className="flex justify-center gap-3 text-xs">
+          <a href="/videos/video1.mp4" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">MP4</a>
+          <a href="/videos/video1.webm" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">WEBM</a>
+        </div>
+      </div>
+    )
+  }
+
+  if (!canPlayMp4 && !canPlayWebm) {
+    return (
+      <div className="bg-gray-100 rounded-xl p-4 text-center">
+        <p className="text-sm text-gray-700">Your browser does not support HTML5 video. <a href="/videos/video1.mp4" className="text-blue-600 underline">Download MP4</a></p>
+      </div>
+    )
+  }
+
+  return (
+    <video
+      key="spl02-title-sponsor"
+      className="w-full h-full object-cover"
+      controls
+      playsInline
+      preload="metadata"
+      poster="/images/SPL02_Banner.jpeg"
+      onError={() => setError(true)}
+    >
+      {canPlayMp4 && <source src="/videos/video1.mp4" type="video/mp4" />}
+      {canPlayWebm && <source src="/videos/video1.webm" type="video/webm" />}
+      Your browser does not support the video tag. <a href="/videos/video1.mp4" className="text-blue-600 underline">Download video</a>.
+    </video>
+  )
+}
 
 export default function SPL02() {
     const [showRegistrationPopup, setShowRegistrationPopup] = useState(false)
@@ -121,22 +172,14 @@ export default function SPL02() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
-                    {/* Promotional Video directly below banner */}
+                    {/* Title Sponsor Video below banner with fallback */}
                     <div className="mt-4 sm:mt-6 md:mt-8">
-                        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl bg-black/80 aspect-video">
-                            <video
-                                key="spl02-video1"
-                                className="w-full h-full object-cover"
-                                src="/videos/video1.mp4"
-                                controls
-                                preload="metadata"
-                                poster="/images/SPL02_Banner.jpeg"
-                                playsInline
-                            />
-                            {/* Optional subtle overlay gradient */}
+                        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl bg-black aspect-video">
+                            <TitleSponsorVideo />
                             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                         </div>
-                        <p className="text-center text-xs sm:text-sm text-gray-600 mt-2">SPL-02 Teaser Video</p>
+                        <p className="text-center text-xs sm:text-sm text-gray-600 mt-2">Title Sponsor Video</p>
+                        <p className="text-center text-[10px] sm:text-xs text-gray-400 mt-1">If video does not play on Vercel, ensure video1.mp4 (H.264 + AAC) and optional video1.webm are present in /public/videos</p>
                     </div>
                 </div>
 
