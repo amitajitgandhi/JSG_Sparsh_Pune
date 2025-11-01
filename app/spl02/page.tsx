@@ -61,7 +61,7 @@ function TitleSponsorVideo() {
       controls
       playsInline
       preload="metadata"
-      poster="/images/SPL02_Banner.jpeg"
+          poster="/images/TitleSponsor.png"
       onError={() => setPlaybackError(true)}
     >
       <source src="/videos/Video1.mp4" type="video/mp4" />
