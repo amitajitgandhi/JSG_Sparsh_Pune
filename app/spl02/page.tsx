@@ -193,7 +193,7 @@ export default function SPL02() {
                           <TitleSponsorVideo />
                           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                       </div>
-                      <p className="text-center text-xs sm:text-sm text-gray-600 mt-2">Title Sponsor Video</p>
+                      <p className="text-center text-xs sm:text-sm text-gray-600 mt-2">Proud Associate SG Promoters & Real Estate Consultant Video</p>
                       </div>
               </div>
 
