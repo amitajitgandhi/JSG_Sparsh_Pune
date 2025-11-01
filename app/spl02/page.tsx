@@ -119,8 +119,24 @@ export default function SPL02() {
                             alt="SPL02 - Sparsh Premier League Season 2 Banner" 
                             className="w-full h-auto object-cover object-center group-hover:scale-105 transition-transform duration-700"
                         />
-                        {/* Optional overlay for better text readability if needed */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    </div>
+                    {/* Promotional Video directly below banner */}
+                    <div className="mt-4 sm:mt-6 md:mt-8">
+                        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl bg-black/80 aspect-video">
+                            <video
+                                key="spl02-video1"
+                                className="w-full h-full object-cover"
+                                src="/videos/video1.mp4"
+                                controls
+                                preload="metadata"
+                                poster="/images/SPL02_Banner.jpeg"
+                                playsInline
+                            />
+                            {/* Optional subtle overlay gradient */}
+                            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                        </div>
+                        <p className="text-center text-xs sm:text-sm text-gray-600 mt-2">SPL-02 Teaser Video</p>
                     </div>
                 </div>
 

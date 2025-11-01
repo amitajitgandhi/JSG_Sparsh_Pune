@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { Menu, X, Home, Users, Calendar, Heart, Info, Trophy, Shield } from 'lucide-react'
 import JoinUsModal from './JoinUsModal'
 import AdminLoginModal from './AdminLoginModal'
+import ModalPortal from './ModalPortal'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -152,16 +153,20 @@ export default function Navbar() {
       </nav>
 
       {/* Join Us Modal */}
-      <JoinUsModal 
-        isOpen={isJoinUsModalOpen} 
-        onClose={() => setIsJoinUsModalOpen(false)} 
-      />
+      <ModalPortal>
+        <JoinUsModal 
+          isOpen={isJoinUsModalOpen} 
+          onClose={() => setIsJoinUsModalOpen(false)} 
+        />
+      </ModalPortal>
 
       {/* Admin Login Modal */}
-      <AdminLoginModal 
-        isOpen={isAdminModalOpen} 
-        onClose={() => setIsAdminModalOpen(false)} 
-      />
+      <ModalPortal>
+        <AdminLoginModal 
+          isOpen={isAdminModalOpen} 
+          onClose={() => setIsAdminModalOpen(false)} 
+        />
+      </ModalPortal>
     </>
   )
 }

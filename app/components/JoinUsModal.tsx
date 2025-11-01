@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { X, UserPlus, CheckCircle } from 'lucide-react'
+import ModalPortal from './ModalPortal'
 
 interface JoinUsModalProps {
   isOpen: boolean
@@ -117,189 +118,193 @@ const JoinUsModal: React.FC<JoinUsModalProps> = ({ isOpen, onClose }) => {
 
   if (success) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-        <div className="bg-white rounded-3xl p-8 max-w-md w-full mx-4 relative overflow-hidden my-8">
-          <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-blue-50 to-yellow-50 opacity-50"></div>
-          <div className="relative z-10 text-center">
-            <div className="mx-auto w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-4 animate-bounce">
-              <CheckCircle className="text-white" size={32} />
+      <ModalPortal>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full mx-4 relative overflow-hidden my-8">
+            <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-blue-50 to-yellow-50 opacity-50"></div>
+            <div className="relative z-10 text-center">
+              <div className="mx-auto w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-4 animate-bounce">
+                <CheckCircle className="text-white" size={32} />
+              </div>
+              <div className="text-4xl mb-2">🎉</div>
+              <h2 className="text-2xl font-bold text-green-800 mb-2">
+                Welcome to JSG SPARSH Family!
+              </h2>
+              <p className="text-green-600 text-sm mb-4">
+                Thank you for your interest in joining JSG SPARSH Pune. Our team will contact you soon with membership details and upcoming community events.
+              </p>
+              <p className="text-gray-600 text-sm">
+                This window will close automatically...
+              </p>
             </div>
-            <div className="text-4xl mb-2">🎉</div>
-            <h2 className="text-2xl font-bold text-green-800 mb-2">
-              Welcome to JSG SPARSH Family!
-            </h2>
-            <p className="text-green-600 text-sm mb-4">
-              Thank you for your interest in joining JSG SPARSH Pune. Our team will contact you soon with membership details and upcoming community events.
-            </p>
-            <p className="text-gray-600 text-sm">
-              This window will close automatically...
-            </p>
           </div>
         </div>
-      </div>
+      </ModalPortal>
     )
   }
 
   return (
-    <div 
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) handleClose()
-      }}
-    >
+    <ModalPortal>
       <div 
-        className="bg-white rounded-3xl max-w-md w-full mx-4 relative overflow-hidden my-8 max-h-[90vh] overflow-y-auto"
-        onClick={(e) => e.stopPropagation()}
+        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) handleClose()
+        }}
       >
-        {/* Header */}
-        <div className="bg-gradient-to-r from-primary-500 to-secondary-500 p-6 text-white relative">
-          <button
-            onClick={handleClose}
-            className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-1 transition-colors"
-            disabled={loading}
-          >
-            <X size={24} />
-          </button>
-          <div className="flex items-center mb-2">
-            <UserPlus className="mr-3" size={28} />
-            <h2 className="text-2xl font-bold">Join JSG SPARSH</h2>
-          </div>
-          <p className="text-white/90 text-sm">
-            Become part of our vibrant Jain community
-          </p>
-        </div>
-
-        <div className="p-6">
-          {/* Community Information */}
-          <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-xl p-4 mb-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3 text-center">
-              🏛️ Why Join JSG SPARSH Pune?
-            </h3>
-            <div className="space-y-2 text-sm text-gray-700">
-              <div className="flex items-start">
-                <span className="text-blue-500 mr-2">🤝</span>
-                <span>Connect with like-minded Jain families</span>
-              </div>
-              <div className="flex items-start">
-                <span className="text-green-500 mr-2">🎯</span>
-                <span>Participate in community events and initiatives</span>
-              </div>
-              <div className="flex items-start">
-                <span className="text-purple-500 mr-2">📚</span>
-                <span>Educational and cultural programs</span>
-              </div>
-              <div className="flex items-start">
-                <span className="text-orange-500 mr-2">❤️</span>
-                <span>Contribute to charitable activities</span>
-              </div>
-              <div className="flex items-start">
-                <span className="text-red-500 mr-2">🏆</span>
-                <span>Sports tournaments and recreational activities</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Name Field */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                Full Name *
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                placeholder="Enter your full name"
-                required
-                disabled={loading}
-              />
-            </div>
-
-            {/* Address Field */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                Address *
-              </label>
-              <textarea
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-                rows={3}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                placeholder="Enter your complete address"
-                required
-                disabled={loading}
-              />
-            </div>
-
-            {/* Mobile Number Field */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                Mobile Number *
-              </label>
-              <input
-                type="tel"
-                name="mobile_number"
-                value={formData.mobile_number}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                placeholder="Enter 10-digit mobile number"
-                maxLength={10}
-                pattern="[0-9]{10}"
-                required
-                disabled={loading}
-              />
-            </div>
-
-            {/* Error Message */}
-            {error && (
-              <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">
-                {error}
-              </div>
-            )}
-
-            {/* Submit Button */}
+        <div 
+          className="bg-white rounded-3xl max-w-md w-full mx-4 relative overflow-hidden my-8 max-h-[90vh] overflow-y-auto"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="bg-gradient-to-r from-primary-500 to-secondary-500 p-6 text-white relative">
             <button
-              type="submit"
+              onClick={handleClose}
+              className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-1 transition-colors"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white py-4 rounded-lg font-semibold hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? (
-                <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  Submitting...
-                </div>
-              ) : (
-                'Join JSG SPARSH Community'
-              )}
+              <X size={24} />
             </button>
-          </form>
+            <div className="flex items-center mb-2">
+              <UserPlus className="mr-3" size={28} />
+              <h2 className="text-2xl font-bold">Join JSG SPARSH</h2>
+            </div>
+            <p className="text-white/90 text-sm">
+              Become part of our vibrant Jain community
+            </p>
+          </div>
 
-          {/* Additional Info */}
-          <div className="mt-6 bg-yellow-50 rounded-xl p-4">
-            <div className="text-center">
-              <h4 className="font-semibold text-yellow-800 mb-2">📞 What's Next?</h4>
-              <p className="text-yellow-700 text-sm mb-2">
-                Our membership committee will review your application and contact you within 2-3 business days
-              </p>
-              <p className="text-xs text-gray-500 mt-2">
-                By submitting, you agree to our{' '}
-                <a href="/privacy-policy" className="text-primary-600 hover:text-primary-700 underline">
-                  Privacy Policy
-                </a>
-                {' '}and{' '}
-                <a href="/terms-and-conditions" className="text-primary-600 hover:text-primary-700 underline">
-                  Terms & Conditions
-                </a>
-              </p>
+          <div className="p-6">
+            {/* Community Information */}
+            <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-xl p-4 mb-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-3 text-center">
+                🏛️ Why Join JSG SPARSH Pune?
+              </h3>
+              <div className="space-y-2 text-sm text-gray-700">
+                <div className="flex items-start">
+                  <span className="text-blue-500 mr-2">🤝</span>
+                  <span>Connect with like-minded Jain families</span>
+                </div>
+                <div className="flex items-start">
+                  <span className="text-green-500 mr-2">🎯</span>
+                  <span>Participate in community events and initiatives</span>
+                </div>
+                <div className="flex items-start">
+                  <span className="text-purple-500 mr-2">📚</span>
+                  <span>Educational and cultural programs</span>
+                </div>
+                <div className="flex items-start">
+                  <span className="text-orange-500 mr-2">❤️</span>
+                  <span>Contribute to charitable activities</span>
+                </div>
+                <div className="flex items-start">
+                  <span className="text-red-500 mr-2">🏆</span>
+                  <span>Sports tournaments and recreational activities</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Name Field */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  placeholder="Enter your full name"
+                  required
+                  disabled={loading}
+                />
+              </div>
+
+              {/* Address Field */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  Address *
+                </label>
+                <textarea
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  rows={3}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  placeholder="Enter your complete address"
+                  required
+                  disabled={loading}
+                />
+              </div>
+
+              {/* Mobile Number Field */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  Mobile Number *
+                </label>
+                <input
+                  type="tel"
+                  name="mobile_number"
+                  value={formData.mobile_number}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  placeholder="Enter 10-digit mobile number"
+                  maxLength={10}
+                  pattern="[0-9]{10}"
+                  required
+                  disabled={loading}
+                />
+              </div>
+
+              {/* Error Message */}
+              {error && (
+                <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">
+                  {error}
+                </div>
+              )}
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 text-white py-4 rounded-lg font-semibold hover:from-primary-600 hover:to-secondary-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? (
+                  <div className="flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    Submitting...
+                  </div>
+                ) : (
+                  'Join JSG SPARSH Community'
+                )}
+              </button>
+            </form>
+
+            {/* Additional Info */}
+            <div className="mt-6 bg-yellow-50 rounded-xl p-4">
+              <div className="text-center">
+                <h4 className="font-semibold text-yellow-800 mb-2">📞 What's Next?</h4>
+                <p className="text-yellow-700 text-sm mb-2">
+                  Our membership committee will review your application and contact you within 2-3 business days
+                </p>
+                <p className="text-xs text-gray-500 mt-2">
+                  By submitting, you agree to our{' '}
+                  <a href="/privacy-policy" className="text-primary-600 hover:text-primary-700 underline">
+                    Privacy Policy
+                  </a>
+                  {' '}and{' '}
+                  <a href="/terms-and-conditions" className="text-primary-600 hover:text-primary-700 underline">
+                    Terms & Conditions
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </ModalPortal>
   )
 }
 
