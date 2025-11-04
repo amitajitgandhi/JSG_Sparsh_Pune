@@ -6,7 +6,7 @@
     "Player Name": "Dheer Mukesh Jain",
     "Jersey Name": "Dheer",
     "Jersey Number": 16,
-    "Jersey Size": 30,
+    "Jersey Size": 28,
     "Team Name": "DJ Dorimons",
     "JERSEY COLOR": "FLORSCENT GREEN"
   },
@@ -17,7 +17,7 @@
     "Player Name": "Dhruvansh Vinod Jain",
     "Jersey Name": "DHRUVANSH",
     "Jersey Number": 3,
-    "Jersey Size": 32,
+    "Jersey Size": 30,
     "Team Name": "DJ Dorimons",
     "JERSEY COLOR": "FLORSCENT GREEN"
   },
@@ -28,7 +28,7 @@
     "Player Name": "Kavyansh Jain",
     "Jersey Name": "KAVYANSH",
     "Jersey Number": 25,
-    "Jersey Size": 28,
+    "Jersey Size": 30,
     "Team Name": "DJ Dorimons",
     "JERSEY COLOR": "FLORSCENT GREEN"
   },
@@ -80,8 +80,19 @@
     "Cric Heroes Link": "TEAM OWNER",
     "Mobile Number": 9420277778,
     "Age": 40,
-    "Player Name": "Komal Jain",
+    "Player Name": "Mukesh Jain",
     "Jersey Name": "TEAM OWNER",
+    "Jersey Number": 23,
+    "Jersey Size": "L (40)",
+    "Team Name": "DJ Dorimons",
+    "JERSEY COLOR": "FLORSCENT GREEN"
+  },
+  {
+    "Cric Heroes Link": "Extra Jersey",
+    "Mobile Number": 9420277778,
+    "Age": 40,
+    "Player Name": "Komal Jain",
+    "Jersey Name": "Komal",
     "Jersey Number": 23,
     "Jersey Size": "XL (42)",
     "Team Name": "DJ Dorimons",
@@ -336,7 +347,7 @@
     "Player Name": "Urvish Vishal Bhurat",
     "Jersey Name": "URVISH",
     "Jersey Number": 7,
-    "Jersey Size": 30,
+    "Jersey Size": 32,
     "Team Name": "Viaan Warriors",
     "JERSEY COLOR": "FLORSCENT YELLOW"
   },
