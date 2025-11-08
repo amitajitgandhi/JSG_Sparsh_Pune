@@ -19,7 +19,7 @@ export default function Events() {
       description: 'A memorable Holi celebration with record-breaking participation of 275 members! Featured breakfast, adventure activities, vibrant Holi party with colors, foam, rain dance, and concluded with AGM presentation.',
       attendees: 275,
       highlights: ['Adventure Activities', 'Rain Dance', 'DJ & Dancing', 'AGM Presentation'],
-          galleryUrl: 'https://www.facebook.com/share/p/17YNJaTyoV/'
+      galleryUrl: 'https://www.facebook.com/share/p/17YNJaTyoV/'
     },
     {
       id: 2,
@@ -30,9 +30,8 @@ export default function Events() {
       description: 'Vibrant celebration of India\'s cultural heritage with committee installation. Members dressed in traditional attire representing diverse Indian cultures, with dance performances and oath-taking ceremony.',
       attendees: 200,
       highlights: ['Committee Installation', 'Cultural Performances', 'Traditional Attire', 'Award Ceremony'],
-        galleryUrl: 'https://www.facebook.com/share/p/1JzCcPrGx5/'
-    }
-    ,
+      galleryUrl: 'https://www.facebook.com/share/p/1JzCcPrGx5/'
+    },
     {
       id: 3,
       title: 'Aqua Magic',
@@ -42,7 +41,7 @@ export default function Events() {
       description: 'Unforgettable splash of fun at Aqua Imagica! Started with Darshan at Kalash Mandir, followed by thrilling water rides, wave pools, lunch at the park, and dinner at Zalawadi.',
       attendees: 150,
       highlights: ['Water Rides', 'Wave Pools', 'Temple Darshan', 'Full Day Fun'],
-        galleryUrl: 'https://www.facebook.com/share/p/17W5ri8BCV/'
+      galleryUrl: 'https://www.facebook.com/share/p/17W5ri8BCV/'
     },
     {
       id: 4,
@@ -53,7 +52,41 @@ export default function Events() {
       description: 'Glam & Glitter edition with Masti Mania, live band musical tambola by Abhishek Parekh, and high-energy Bachata-Bollywood fusion by actress Aiyli Giya. Dance floor alive till the end!',
       attendees: 180,
       highlights: ['Live Band Tambola', 'Bachata', 'Celebrity Performance', 'DJ Night'],
-        galleryUrl: 'https://www.facebook.com/share/p/17UaNPMcHd/'
+      galleryUrl: 'https://www.facebook.com/share/p/17UaNPMcHd/'
+    },
+    // Newly added events
+    {
+      id: 5,
+      title: 'Mini Cricket Tournament',
+      date: '2025-08-15',
+      time: '4:00 PM - 11:30 PM',
+      venue: 'PSA, Pune',
+      description: 'Independence Day celebration featuring a spirited Mini Cricket Tournament & Auction. Opening ceremony graced by Ex-Army Sunil Kale Sir. Every match showcased healthy competition, player passion, and unity—creating unforgettable memories and reinforcing teamwork.',
+      attendees: '60+ players',
+      highlights: ['Auction', 'Opening by Ex-Army Sunil Kale Sir', 'Team Spirit', 'Independence Day Energy'],
+      galleryUrl: ''
+    },
+    {
+      id: 6,
+      title: 'ATMASPARSH Tirthyatra',
+      date: '2025-09-07',
+      time: '7:00 AM - 11:30 PM',
+      venue: 'Abhay Prabhavana & Jayanand Dham, Lonavala',
+        description: 'The divine journey began with a soulful visit to the Jain Spiritual Museum – Abhay Prabhavana, followed by darshan and bhakti at Jayanand Dham, Lonavala. The yatra culminated in a felicitation ceremony honoring over 80 Tapasvis who observed diverse tapasya during Paryushan',
+      attendees: '80+ Tapasvis',
+      highlights: ['Tapasvi Felicitation', 'Silver Coin Lucky Draw', 'Spiritual Upliftment', 'Community Bonding'],
+      galleryUrl: ''
+    },
+    {
+      id: 7,
+      title: 'Rangeelo Garba',
+      date: '2025-10-30',
+      time: '7:00 PM - 11:30 PM',
+      venue: 'Mahalakshmi Lawns, Karvenagar',
+      description: 'A night of rhythm, joy & celebration managed by Lokmat Group. Energetic Garba & Dandiya, vibrant traditional attire, festive Navratri spirit, and pride as winners across men, women & kids were all from JSG Pune Sparsh!',
+      attendees: '200+ participants',
+      highlights: ['Garba & Dandiya', 'Managed by Lokmat Group', 'Traditional Attire', 'Multiple Winners'],
+      galleryUrl: ''
     }
   ]
 

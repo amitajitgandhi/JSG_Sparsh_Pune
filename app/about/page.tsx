@@ -1,4 +1,4 @@
-import { Heart, Users, Calendar, Award, Sparkles, Target, CheckCircle } from 'lucide-react'
+import { Heart, Users, Calendar, Award, Sparkles, Target, CheckCircle, Medal } from 'lucide-react'
 
 export default function AboutPage() {
   const features = [
@@ -185,6 +185,40 @@ export default function AboutPage() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* First Year Achievements */}
+          <div className="mt-16 sm:mt-20">
+            <h2 className="text-2xl sm:text-3xl font-bold text-blue-800 mb-6 sm:mb-8 text-center">
+              FIRST YEAR (2024-25) ACHIEVEMENTS
+            </h2>
+            <div className="max-w-5xl mx-auto bg-white rounded-2xl sm:rounded-3xl shadow-md border border-blue-200 p-6 sm:p-8 space-y-5">
+              <p className="text-gray-700 leading-relaxed text-sm sm:text-base text-center font-medium">
+                We extend our heartfelt gratitude to <span className="font-semibold text-blue-700">JSG International Federation</span>, <span className="font-semibold text-blue-700">JSG Maharashtra Region</span>, &amp; <span className="font-semibold text-blue-700">JSG Pune Zone</span> for recognizing our efforts &amp; honoring us with prestigious awards in the very first year of our Group’s formation.
+              </p>
+              <div className="bg-gradient-to-r from-blue-50 to-yellow-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100">
+                <h3 className="flex items-center justify-center gap-2 text-blue-800 font-bold text-lg sm:text-xl mb-3">
+                  <Medal className="text-yellow-500" size={24} /> Recognitions &amp; Honors
+                </h3>
+                <ul className="space-y-2 text-gray-700 text-sm sm:text-base">
+                  <li>
+                    <span className="font-semibold text-blue-700">Quarter 5 &amp; 6 Silver Medal</span> at the Maharashtra level
+                  </li>
+                  <li>
+                    <span className="font-semibold text-blue-700">JSGIF Best Debut Group</span> – JSG Maharashtra Region (JSG MaRC)
+                  </li>
+                  <li>
+                    <span className="font-semibold text-blue-700">Best Debut Group</span> – JSG Pune Zone
+                  </li>
+                  <li>
+                    <span className="font-semibold text-blue-700">And many more recognitions</span>
+                  </li>
+                </ul>
+              </div>
+              <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
+                This achievement holds special significance for us, as it comes in our inaugural year. These recognitions are a testament to the hard work, dedication, &amp; teamwork of our members. They inspire us to continue striving for excellence &amp; contributing meaningfully to the JSG community.
+              </p>
             </div>
           </div>
 
