@@ -154,7 +154,7 @@ export default function Goa2026() {
                 <p><strong className="text-3xl md:text-4xl text-yellow-600">₹20,000</strong> <span className="text-base">per couple</span></p>
                 <p>Includes stay, meals, activities, and surprises!</p>
                 <p className="text-xs md:text-sm text-gray-600 bg-yellow-50 border border-yellow-100 rounded-lg p-3 leading-relaxed">
-                                  Travel is not part of the standard package. However, for members who may require travelassistance, we are considering organizing a group travel option at a minimal additional cost to ensure participation for all.
+                                  Travel is not part of the standard package. However, for members who may require travel assistance, we are considering organizing a group travel option at a minimal additional cost.
                 </p>
               </div>
             </div>
