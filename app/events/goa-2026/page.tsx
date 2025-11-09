@@ -54,7 +54,7 @@ export default function Goa2026() {
       {/* Hero Banner */}
       <div className="relative w-full h-[300px] md:h-[480px] lg:h-[520px] overflow-hidden">
         <Image 
-          src="/images/goa.jpg" 
+          src="/images/GOA.jpg" 
           alt="GOA 2026 Sun, Sand & Sparsh" 
           fill 
           priority
