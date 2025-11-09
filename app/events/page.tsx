@@ -80,7 +80,7 @@ export default function Events() {
     {
       id: 7,
       title: 'Rangeelo Garba',
-      date: '2025-10-30',
+      date: '2025-09-30',
       time: '7:00 PM - 11:30 PM',
       venue: 'Mahalakshmi Lawns, Karvenagar',
       description: 'A night of rhythm, joy & celebration managed by Lokmat Group. Energetic Garba & Dandiya, vibrant traditional attire, festive Navratri spirit, and pride as winners across men, women & kids were all from JSG Pune Sparsh!',
