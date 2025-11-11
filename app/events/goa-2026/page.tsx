@@ -13,6 +13,7 @@ export default function Goa2026() {
   const [success, setSuccess] = useState(false)
   const initialForm = { name: '', mobile: '', kids: 'No', kidsCount: '', kidsAges: '', transport: 'Self', extraCoupleCount: '' }
   const [formData, setFormData] = useState(initialForm)
+  const fieldClasses = "rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-yellow-500 focus:border-yellow-300 dark:focus:border-yellow-500"
 
   useEffect(() => {
     // Generate particles once on mount
@@ -279,7 +280,7 @@ export default function Goa2026() {
 
       {showInterest && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-yellow-200 overflow-hidden">
+          <div className="relative w-full max-w-xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-yellow-200 dark:border-yellow-700 overflow-hidden">
             <div className="bg-gradient-to-r from-yellow-500 via-orange-500 to-pink-600 px-6 py-4 text-white flex justify-between items-center">
               <h3 className="text-lg font-bold">Goa 2026 • Interest Form</h3>
               <button onClick={closeModal} className="text-white/80 hover:text-white text-sm">✕</button>
@@ -287,35 +288,35 @@ export default function Goa2026() {
             <form onSubmit={handleSubmit} className="p-6 space-y-5 text-sm">
               {success ? (
                 <div className="space-y-4">
-                  <p className="font-semibold text-green-700">Thank you! Your interest has been noted.</p>
-                  <p className="text-gray-600 text-xs">We will reach out when bookings open. Save the dates!</p>
+                  <p className="font-semibold text-green-700 dark:text-green-400">Thank you! Your interest has been noted.</p>
+                  <p className="text-gray-600 dark:text-gray-300 text-xs">We will reach out when bookings open. Save the dates!</p>
                   <button type="button" onClick={closeModal} className="w-full rounded-lg bg-green-600 hover:bg-green-700 text-white py-2 font-semibold">Close</button>
                 </div>
               ) : (
                 <>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1">
-                      <label className="font-medium">Name *</label>
-                      <input name="name" value={formData.name} onChange={handleChange} required className="rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Full Name" />
+                      <label className="font-medium text-gray-700 dark:text-gray-200">Name *</label>
+                      <input name="name" value={formData.name} onChange={handleChange} required className={fieldClasses} placeholder="Full Name" />
                     </div>
                     <div className="flex flex-col gap-1">
-                      <label className="font-medium">Mobile Number *</label>
-                      <input name="mobile" value={formData.mobile} onChange={handleChange} required pattern="\d{10}" className="rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="10-digit" />
-                      {!validMobile.test(formData.mobile) && formData.mobile !== '' && <span className="text-[10px] text-red-500">Enter 10 digits</span>}
+                      <label className="font-medium text-gray-700 dark:text-gray-200">Mobile Number *</label>
+                      <input name="mobile" value={formData.mobile} onChange={handleChange} required pattern="\d{10}" className={fieldClasses} placeholder="10-digit" />
+                      {!validMobile.test(formData.mobile) && formData.mobile !== '' && <span className="text-[10px] text-red-500 dark:text-red-400">Enter 10 digits</span>}
                     </div>
                   </div>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1">
-                      <label className="font-medium">Transport *</label>
-                      <select name="transport" value={formData.transport} onChange={handleChange} className="rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                      <label className="font-medium text-gray-700 dark:text-gray-200">Transport *</label>
+                      <select name="transport" value={formData.transport} onChange={handleChange} className={fieldClasses}>
                         <option>Self</option>
                         <option>Sparsh Bus</option>
                         <option>Sparsh Train</option>
                       </select>
                     </div>
                     <div className="flex flex-col gap-1">
-                      <label className="font-medium">Bringing Kids? *</label>
-                      <select name="kids" value={formData.kids} onChange={handleChange} className="rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                      <label className="font-medium text-gray-700 dark:text-gray-200">Bringing Kids? *</label>
+                      <select name="kids" value={formData.kids} onChange={handleChange} className={fieldClasses}>
                         <option>No</option>
                         <option>Yes</option>
                       </select>
@@ -324,29 +325,29 @@ export default function Goa2026() {
                   {formData.kids === 'Yes' && (
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="flex flex-col gap-1">
-                        <label className="font-medium">Kids Count *</label>
-                        <input name="kidsCount" value={formData.kidsCount} onChange={handleChange} required={formData.kids==='Yes'} type="number" min="1" className="rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+                        <label className="font-medium text-gray-700 dark:text-gray-200">Kids Count *</label>
+                        <input name="kidsCount" value={formData.kidsCount} onChange={handleChange} required={formData.kids==='Yes'} type="number" min="1" className={fieldClasses} />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <label className="font-medium">Kids Ages (comma separated) *</label>
-                        <input name="kidsAges" value={formData.kidsAges} onChange={handleChange} required={formData.kids==='Yes'} className="rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="e.g. 5,8" />
+                        <label className="font-medium text-gray-700 dark:text-gray-200">Kids Ages (comma separated) *</label>
+                        <input name="kidsAges" value={formData.kidsAges} onChange={handleChange} required={formData.kids==='Yes'} className={fieldClasses} placeholder="e.g. 5,8" />
                       </div>
                     </div>
                   )}
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1">
-                      <label className="font-medium">Extra Guest Couple Count</label>
-                      <input name="extraCoupleCount" value={formData.extraCoupleCount} onChange={handleChange} type="number" min="0" className="rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="0" />
+                      <label className="font-medium text-gray-700 dark:text-gray-200">Extra Guest Couple Count</label>
+                      <input name="extraCoupleCount" value={formData.extraCoupleCount} onChange={handleChange} type="number" min="0" className={fieldClasses} placeholder="0" />
                     </div>
                     <div className="flex flex-col gap-1">
-                      <label className="font-medium">Notes (optional)</label>
-                      <input name="notes" onChange={handleChange} className="rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Any special info" />
+                      <label className="font-medium text-gray-700 dark:text-gray-200">Notes (optional)</label>
+                      <input name="notes" onChange={handleChange} className={fieldClasses} placeholder="Any special info" />
                     </div>
                   </div>
-                  <div className="text-[10px] text-gray-500 leading-relaxed">This is an interest form only – booking will be confirmed later. Ensure mobile number is correct for updates.</div>
+                  <div className="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed">This is an interest form only – booking will be confirmed later. Ensure mobile number is correct for updates.</div>
                   <div className="flex gap-3">
                     <button type="submit" disabled={submitting} className="flex-1 rounded-lg bg-yellow-500 hover:bg-yellow-600 disabled:opacity-50 text-white font-semibold py-2 shadow">{submitting ? 'Submitting...' : 'Submit Interest'}</button>
-                    <button type="button" onClick={closeModal} className="rounded-lg border border-gray-300 px-4 py-2 text-gray-600 hover:bg-gray-50 font-medium">Cancel</button>
+                    <button type="button" onClick={closeModal} className="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2 text-gray-600 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-800 font-medium">Cancel</button>
                   </div>
                 </>
               )}
