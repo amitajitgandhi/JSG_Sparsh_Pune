@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react"
 import { Calendar, MapPin, Clock, Users, Trophy, Star, Target, Award, Phone, Mail, Zap, Heart, Gift, X, AlertCircle } from 'lucide-react'
-import Link from 'next/link'
+import Link from "next/link"
 
 // Improved Title Sponsor Video component with asset existence + codec differentiation
 function TitleSponsorVideo() {
-  const [assetStatus, setAssetStatus] = useState<'unknown' | 'ok' | 'missing'>('unknown')
+  const [assetStatus, setAssetStatus] = useState<"unknown" | "ok" | "missing">("unknown")
   const [playbackError, setPlaybackError] = useState(false)
   const [checked, setChecked] = useState(false)
 
@@ -14,10 +14,10 @@ function TitleSponsorVideo() {
     // HEAD request to confirm asset deployed on Vercel
     const check = async () => {
       try {
-        const res = await fetch('/videos/Video1.mp4', { method: 'HEAD' })
-        setAssetStatus(res.ok ? 'ok' : 'missing')
+        const res = await fetch("/videos/Video1.mp4", { method: "HEAD" })
+        setAssetStatus(res.ok ? "ok" : "missing")
       } catch {
-        setAssetStatus('missing')
+        setAssetStatus("missing")
       } finally {
         setChecked(true)
       }
@@ -33,7 +33,7 @@ function TitleSponsorVideo() {
     )
   }
 
-  if (assetStatus === 'missing') {
+  if (assetStatus === "missing") {
     return (
       <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center space-y-2">
         <p className="text-sm font-semibold text-red-600">Video file not deployed</p>
@@ -72,6 +72,7 @@ function TitleSponsorVideo() {
 
 export default function SPL02() {
   const [showRegistrationPopup, setShowRegistrationPopup] = useState(false)
+  const [showTeamsFinalizedPopup, setShowTeamsFinalizedPopup] = useState(false)
 
   const tournamentInfo = {
       title: "SPARSH PREMIER LEAGUE",
@@ -160,9 +161,9 @@ export default function SPL02() {
   ]
 
   const handleBrochureDownload = () => {
-      const link = document.createElement('a')
-      link.href = '/files/SPL02_Sponsorship.pdf'
-      link.download = 'SPL02_Sponsorship_Brochure.pdf'
+      const link = document.createElement("a")
+      link.href = "/files/SPL02_Sponsorship.pdf"
+      link.download = "SPL02_Sponsorship_Brochure.pdf"
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
@@ -171,6 +172,11 @@ export default function SPL02() {
   const handleRegistrationClick = (e: React.MouseEvent) => {
       e.preventDefault()
       setShowRegistrationPopup(true)
+  }
+
+  const handleTeamsFinalizedClick = (e: React.MouseEvent) => {
+      e.preventDefault()
+      setShowTeamsFinalizedPopup(true)
   }
 
   return (
@@ -242,6 +248,37 @@ export default function SPL02() {
                   </div>
               )}
 
+              {/* Teams Finalized Popup - New Addition */}
+              {showTeamsFinalizedPopup && (
+                  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                      <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 max-w-md w-full mx-auto shadow-2xl border border-gray-200 animate-scale-in relative">
+                          <button onClick={() => setShowTeamsFinalizedPopup(false)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"><X size={24} /></button>
+                          <div className="text-center mb-6">
+                              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                  <Trophy className="w-8 h-8 text-green-600" />
+                              </div>
+                              <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Teams Are Finalized</h3>
+                              <p className="text-gray-600 mb-6 leading-relaxed">Player list and Auction details are locked. <p>For any clarifications kindly contact the committee</p></p>
+                          </div>
+                          <div className="space-y-3">
+                              <Link
+                                  href="/committee"
+                                  onClick={() => setShowTeamsFinalizedPopup(false)}
+                                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 text-center block shadow-lg hover:shadow-xl"
+                              >
+                                  Contact Committee
+                              </Link>
+                              <button
+                                  onClick={() => setShowTeamsFinalizedPopup(false)}
+                                  className="w-full bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300"
+                              >
+                                  Close
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              )}
+
               {/* Title Sponsor Section - Naturally Integrated */}
               <div className="text-center mb-8 sm:mb-12 animate-slide-up">
                   <div className="bg-white/80 backdrop-blur-sm rounded-3xl sm:rounded-4xl p-6 sm:p-10 shadow-large border border-white/50 relative overflow-hidden group hover:shadow-glow-lg transition-all duration-500">
@@ -277,15 +314,26 @@ export default function SPL02() {
                           </div>
 
                           {/* FINAL SQUAD Button - Big and Prominent */}
-                          <div className="pt-6 pb-4">
+                          <div className="pt-6 pb-4 flex flex-col sm:flex-row items-center justify-center gap-4">
                               <Link
                                   href="/spl02/squad"
                                   className="group relative inline-block"
                               >
                                   <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-500 rounded-2xl sm:rounded-3xl blur-md opacity-75 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                  <button className="relative bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-8 sm:px-12 md:px-16 py-4 sm:py-5 md:py-6 rounded-2xl sm:rounded-3xl font-bold text-lg sm:text-xl md:text-2xl transition-all duration-300 shadow-2xl hover:scale-105 hover:shadow-glow-lg flex items-center space-x-3 sm:space-x-4 animate-pulse">
+                                  <button className="relative flex items-center space-x-3 sm:space-x-4 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-8 sm:px-12 md:px-16 py-4 sm:py-5 md:py-6 rounded-2xl sm:rounded-3xl font-bold text-lg sm:text-xl md:text-2xl transition-all duration-300 shadow-2xl hover:scale-105 hover:shadow-glow-lg animate-pulse">
                                       <Users size={24} className="sm:w-7 sm:h-7 md:w-8 md:h-8 group-hover:animate-bounce" />
                                       <span className="relative z-10 whitespace-nowrap">FINAL SQUAD</span>
+                                      <Trophy size={24} className="sm:w-7 sm:h-7 md:w-8 md:h-8 group-hover:animate-bounce" />
+                                  </button>
+                              </Link>
+                              <Link
+                                  href="/spl02/tournament-rules"
+                                  className="group relative inline-block"
+                              >
+                                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-indigo-500 rounded-2xl sm:rounded-3xl blur-md opacity-75 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                  <button className="relative flex items-center space-x-3 sm:space-x-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 sm:px-12 md:px-16 py-4 sm:py-5 md:py-6 rounded-2xl sm:rounded-3xl font-bold text-lg sm:text-xl md:text-2xl transition-all duration-300 shadow-2xl hover:scale-105 hover:shadow-glow-lg animate-pulse">
+                                      <Award size={24} className="sm:w-7 sm:h-7 md:w-8 md:h-8 group-hover:animate-bounce" />
+                                      <span className="relative z-10 whitespace-nowrap">SPL02 Rules</span>
                                       <Trophy size={24} className="sm:w-7 sm:h-7 md:w-8 md:h-8 group-hover:animate-bounce" />
                                   </button>
                               </Link>
@@ -303,29 +351,21 @@ export default function SPL02() {
                                           <span className="relative z-10">Register Now</span>
                                       </button>
                                       
-                                      <Link
-                                          href="/spl02/players"
+                                      <button
+                                          onClick={handleTeamsFinalizedClick}
                                           className="group relative inline-flex items-center justify-center space-x-2 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 overflow-hidden flex-1 text-red-600 hover:text-red-700 hover:bg-red-50 hover:shadow-md whitespace-nowrap"
                                       >
                                           <Users size={18} className="sm:w-5 sm:h-5 flex-shrink-0" />
                                           <span className="relative z-10">View Players</span>
-                                      </Link>
+                                      </button>
 
-                                      <Link
-                                          href="/spl02/tournament-rules"
-                                          className="group relative inline-flex items-center justify-center space-x-2 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 overflow-hidden flex-1 text-purple-600 hover:text-purple-700 hover:bg-purple-50 hover:shadow-md whitespace-nowrap"
-                                      >
-                                          <Award size={18} className="sm:w-5 sm:h-5 flex-shrink-0" />
-                                          <span className="relative z-10">Match Rules</span>
-                                      </Link>
-
-                                      <Link
-                                          href="/spl02/auction-rules"
+                                      <button
+                                          onClick={handleTeamsFinalizedClick}
                                           className="group relative inline-flex items-center justify-center space-x-2 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 overflow-hidden flex-1 text-green-600 hover:text-green-700 hover:bg-green-50 hover:shadow-md whitespace-nowrap"
                                       >
                                           <Target size={18} className="sm:w-5 sm:h-5 flex-shrink-0" />
                                           <span className="relative z-10">Auction Rules</span>
-                                      </Link>
+                                      </button>
                                   </div>
                               </div>
                           </div>
@@ -379,7 +419,7 @@ export default function SPL02() {
                                   className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 sm:p-8 shadow-large hover:shadow-glow-lg transition-all duration-500 border border-white/50 group hover:scale-105 hover:-translate-y-2"
                                   style={{
                                       animationDelay: `${index * 200}ms`,
-                                      animation: 'slideUp 0.8s ease-out forwards'
+                                      animation: "slideUp 0.8s ease-out forwards"
                                   }}
                               >
                                   <div className={`bg-gradient-to-r ${team.color} p-4 sm:p-6 rounded-2xl sm:rounded-3xl text-white text-center mb-4 sm:mb-6 group-hover:scale-110 transition-all duration-300 shadow-lg`}>
@@ -418,7 +458,7 @@ export default function SPL02() {
                                       className="text-center p-4 sm:p-6 bg-blue-50/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl hover:bg-blue-100 hover:scale-105 hover:-translate-y-1 transition-all duration-300 group/benefit border border-blue-100"
                                       style={{
                                           animationDelay: `${index * 150}ms`,
-                                          animation: 'fadeIn 0.6s ease-in-out forwards'
+                                          animation: "fadeIn 0.6s ease-in-out forwards"
                                       }}
                                   >
                                       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 sm:p-4 rounded-full w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 flex items-center justify-center group-hover/benefit:animate-bounce shadow-lg">
@@ -457,7 +497,7 @@ export default function SPL02() {
                               className="bg-blue-50/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 hover:bg-blue-100 hover:scale-105 hover:-translate-y-1 transition-all duration-300 group/contact border border-blue-100"
                               style={{
                                   animationDelay: `${index * 200}ms`,
-                                  animation: 'slideUp 0.8s ease-out forwards'
+                                  animation: "slideUp 0.8s ease-out forwards"
                               }}
                           >
                               <h4 className="text-lg sm:text-xl font-bold text-blue-800 mb-1 sm:mb-2 group-hover/contact:text-blue-600 transition-colors duration-300">{person.name}</h4>

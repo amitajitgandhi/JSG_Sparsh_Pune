@@ -518,7 +518,7 @@
     "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1759909749031-5spkzrxlb-photo-1759909749033.jpg"
   },
   {
-    "CATEGORY": "Waiting",
+    "CATEGORY": "Gold",
     "Sr No": 38,
     "Full Name": "Pranjal Manish Jain",
     "Mobile Number": 7888163651,
@@ -530,33 +530,5 @@
     "Jersey Number": 9,
     "Jersey Size": "S",
     "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1760370396420-sh2vtb5un-photo-1760370396421.jpg"
-  },
-  {
-    "CATEGORY": "Waiting",
-    "Sr No": 39,
-    "Full Name": "Snehal Dhiraj Shah",
-    "Mobile Number": 9561457474,
-    "Age": 44,
-    "Skillset": "Bowler",
-    "Bowling Arm": "Right Arm",
-    "Cric Heroes Link": "https://cricheroes.com/player-profile/14199113/Snehal-Shah",
-    "Jersey Name": "SD",
-    "Jersey Number": 1,
-    "Jersey Size": "XXL",
-    "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1759741440449-07vpcejh7-photo-1759741440453.jpg"
-  },
-  {
-    "CATEGORY": "Waiting",
-    "Sr No": 40,
-    "Full Name": "Vaishali Vidyut Jain",
-    "Mobile Number": 9423571432,
-    "Age": 45,
-    "Skillset": "All Rounder",
-    "Bowling Arm": "Right Arm",
-    "Cric Heroes Link": "https://cricheroes.in/player-profile/1850275/Vaishali-Vidyut-Jain",
-    "Jersey Name": "RV",
-    "Jersey Number": 28,
-    "Jersey Size": "M",
-    "Photo URL": "https://iueehwimntgckauagkqe.supabase.co/storage/v1/object/public/registration-photos/profile-1759989570118-vt83a0bi4-photo-1759989570119.jpeg"
   }
 ]
