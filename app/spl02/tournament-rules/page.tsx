@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { BookOpen, Trophy, Users, Shield, ChevronDown, ChevronUp, Star, Target, Clock, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
 
@@ -51,7 +51,7 @@ export default function SPL02TournamentRules() {
                         <h4 className="font-bold text-blue-800 dark:text-blue-400 mb-2">Men’s Division – 11 Teams</h4>
                         <ul className="space-y-2">
                             <li>• <strong>League Stage:</strong> 4 matches per team</li>
-                            <li>• <strong>Super 8 Qualification:</strong> Top 8 teams advance</li>
+                            <li>• <strong>Super 8 Round:</strong> Top 8 teams qualify</li>
                             <li className="mt-2 font-semibold">Super 8 Structure:</li>
                             <li className="ml-4">Top Bracket: TB1 (Rank 1 vs Rank 4) & TB2 (Rank 2 vs Rank 3) → Winners become SF1 & SF2</li>
                             <li className="ml-4">Bottom Bracket: BB1 (Rank 5 vs Rank 8) & BB2 (Rank 6 vs Rank 7)</li>
@@ -66,7 +66,7 @@ export default function SPL02TournamentRules() {
                         <h4 className="font-bold text-pink-800 dark:text-pink-400 mb-2">Women’s Division – 4 Teams</h4>
                         <ul className="space-y-2">
                             <li>• <strong>League Stage:</strong> 3 matches per team</li>
-                            <li>• <strong>Semi Final:</strong> Rank 2 vs Rank 3 (Winner becomes F2)</li>
+                            <li>• <strong>Semi Final:</strong> Rank 2 vs Rank 3 (Winner is F2)</li>
                             <li>• <strong>Final:</strong> Rank 1 (F1) vs F2</li>
                         </ul>
                     </div>
@@ -101,28 +101,29 @@ export default function SPL02TournamentRules() {
                     <div className="bg-yellow-50 dark:bg-yellow-950/20 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Powerplay Over</h4>
                         <ul className="space-y-1 ml-2">
-                            <li>• Fixed at the 3rd over of each innings</li>
-                            <li>• Only one boundary fielder allowed; others ahead of center line</li>
+                            <li>• Fixed at the 3rd over of each innings (2.1 to 2.6)</li>
+                            <li>• Only one boundary fielder; all others ahead of center line</li>
                             <li>• Magic Ball rule does not apply during powerplay</li>
                         </ul>
                     </div>
                     <div className="bg-red-50 dark:bg-red-950/30 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Magic Ball Rule ⭐</h4>
                         <ul className="space-y-1 ml-2">
-                            <li>• First ball of every over is a Magic Ball</li>
-                            <li>• All runs (including extras) count double</li>
-                            <li>• Wicket on Magic Ball (including run-out on 2nd run or wide) deducts 5 runs</li>
-                            <li>• Example: Wide + run-out on legal ball after = 2 − 5 = -3</li>
-                            <li>• Strike rotation based on normal runs (not doubled)</li>
+                            <li>• Magic Ball is only the first <strong>legal</strong> delivery of every over (wides/no-balls don’t count)</li>
+                            <li>• On that legal ball, all runs (bat, byes, leg byes) are doubled</li>
+                            <li>• Runs from wides / no-balls are never doubled</li>
+                            <li>• –5 runs only if a wicket falls on the legal Magic Ball (not on wides/no-balls)</li>
+                            <li>• Strike rotation follows the actual runs scored (pre-doubling)</li>
                         </ul>
                     </div>
                     <div className="bg-green-50 dark:bg-green-950/30 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Run Scoring</h4>
                         <ul className="space-y-1 ml-2">
-                            <li>• <strong>Front Net Boundary:</strong> Only front net counts as boundary</li>
-                            <li>• <strong>Side Net:</strong> Catches off side nets are NOT OUT</li>
-                            <li>• <strong>Ceiling Net:</strong> Catches off ceiling are OUT</li>
-                            <li>• <strong>Ball Leaving Turf/Dugout:</strong> Declared 1 run; strike changes</li>
+                            <li>• Front net only counts as boundary</li>
+                            <li>• Square box in front net = 8 runs (16 on Magic Ball)</li>
+                            <li>• Side net catches: NOT OUT</li>
+                            <li>• Ceiling net catches: OUT</li>
+                            <li>• Ball leaving turf / dugout / unreachable area: 1 run declared & strike must change</li>
                         </ul>
                     </div>
                 </div>
@@ -137,26 +138,34 @@ export default function SPL02TournamentRules() {
                 <div className="space-y-6 text-sm sm:text-base text-gray-700 dark:text-gray-300">
                     <div className="bg-red-50 dark:bg-red-950/30 p-4 rounded-lg border-l-4 border-red-500">
                         <h4 className="font-semibold mb-2">Opening Pair Rule</h4>
-                        <p>A new opening pair must start every league match. If a repeated opener is notified during innings: player is out & runs scored by them deducted. Not applicable in knockouts.</p>
+                        <p>A new opening pair must start every league match. If a repeated opener is notified during the innings: player declared out & their runs deducted. Not applicable in knockouts.</p>
                     </div>
                     <div className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Byes & Leg Byes</h4>
-                        <p>All byes and leg byes allowed even when no shot is offered.</p>
+                        <p>All byes and leg byes allowed, even when no shot is offered.</p>
                     </div>
                     <div className="bg-yellow-50 dark:bg-yellow-950/20 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Runner Rules</h4>
-                        <p>Only one runner allowed per innings; the batsman taking runner must bat last in order.</p>
+                        <ul className="space-y-1 ml-2">
+                            <li>• Only one runner allowed per innings</li>
+                            <li>• A batsman using a runner may bat only after three wickets have fallen</li>
+                            <li>• Exception (Men’s League Stage): An opening batsman may use a runner once across the 4 league matches</li>
+                            <li>• Knockouts: must follow the standard (may bat only after three wickets fall)</li>
+                        </ul>
                     </div>
                     <div className="bg-purple-50 dark:bg-purple-950/30 p-4 rounded-lg">
-                        <h4 className="font-semibold mb-2">Retired Hurt</h4>
-                        <p>Generally not allowed. Forced retirement against rules counts as Retired Out; ball counts as one legal delivery.</p>
+                        <h4 className="font-semibold mb-2">Retired Hurt Rules</h4>
+                        <ul className="space-y-1 ml-2">
+                            <li>• Retired Hurt treated as ‘retired out’ (cannot return)</li>
+                            <li>• Not allowed during first 2 overs</li>
+                        </ul>
                     </div>
                     <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                        <h4 className="font-semibold mb-2">Hit Wicket</h4>
+                        <h4 className="font-semibold mb-2">Hit Wicket Rules</h4>
                         <ul className="space-y-1 ml-2">
-                            <li>• Dislodging stumps with bat/body/clothing before ball is dead = out</li>
-                            <li>• Boundary/six + wicket broken before ball dead = hit wicket (out)</li>
-                            <li>• If on Magic Ball: additional -5 runs</li>
+                            <li>• Dislodging stumps with bat/body/clothing before ball is dead = out (hit wicket)</li>
+                            <li>• Boundary / six + wicket broken before ball dead → hit wicket takes precedence (out)</li>
+                            <li>• If on Magic Ball → team also loses 5 runs</li>
                         </ul>
                     </div>
                 </div>
@@ -171,11 +180,11 @@ export default function SPL02TournamentRules() {
                 <div className="space-y-6 text-sm sm:text-base text-gray-700 dark:text-gray-300">
                     <div className="bg-orange-50 dark:bg-orange-950/30 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Normal Overs</h4>
-                        <p>Max 2 boundary fielders; others ahead of center line.</p>
+                        <p>Maximum two fielders on boundary; others must remain ahead of center line.</p>
                     </div>
                     <div className="bg-yellow-50 dark:bg-yellow-950/20 p-4 rounded-lg">
-                        <h4 className="font-semibold mb-2">Powerplay Over (3rd)</h4>
-                        <p>Max 1 boundary fielder; others ahead of center line.</p>
+                        <h4 className="font-semibold mb-2">Powerplay Over</h4>
+                        <p>Maximum one boundary fielder; others must remain ahead of center line.</p>
                     </div>
                 </div>
             )
@@ -189,42 +198,43 @@ export default function SPL02TournamentRules() {
                 <div className="space-y-6 text-sm sm:text-base text-gray-700 dark:text-gray-300">
                     <div className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">One Over Per Player</h4>
-                        <p>Every player bowls exactly 1 over (no repeat overs) except in short-player scenarios as defined.</p>
+                        <p>Every player to bowl 1 over (no repeat overs) unless short-player condition applies.</p>
                     </div>
                     <div className="bg-red-50 dark:bg-red-950/30 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Speed & Hand Rotation Rule</h4>
                         <ul className="space-y-1 ml-2">
-                            <li>• 1st instance speed/hand rotation: If dot or wicket → Dead ball + Warning; if runs → Warning only</li>
-                            <li>• Further instances in same innings → No-ball</li>
+                            <li>• First instance: If dot or wicket → Dead ball + Warning; if runs scored → Warning only</li>
+                            <li>• Subsequent instances in same innings → No-ball</li>
                         </ul>
                     </div>
                     <div className="bg-purple-50 dark:bg-purple-950/30 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Dead Ball Rule (Kids & Women)</h4>
                         <ul className="space-y-1 ml-2">
-                            <li>• Two consecutive dead balls → counts as one valid ball + 2 runs</li>
+                            <li>• Ball bouncing twice before reaching striker is dead unless second bounce is behind batter (then legal)</li>
+                            <li>• Two consecutive dead balls → treated as one valid ball + 2 runs</li>
                             <li>• Applies: First 6 overs (Women) & First 5 overs (Kids)</li>
                         </ul>
                     </div>
                     <div className="bg-green-50 dark:bg-green-950/30 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Bowling Box Rule</h4>
                         <ul className="space-y-1 ml-2">
-                            <li>• Touch side/back border = No-ball</li>
-                            <li>• Fully cross front line = No-ball</li>
+                            <li>• Touching side/back border = No-ball</li>
+                            <li>• Fully crossing front line = No-ball</li>
                         </ul>
                     </div>
                     <div className="bg-yellow-50 dark:bg-yellow-950/20 p-4 rounded-lg">
-                        <h4 className="font-semibold mb-2">Side & Keeper Confirmation (Men)</h4>
+                        <h4 className="font-semibold mb-2">Side & Keeper Confirmation (Only for Mens Division)</h4>
                         <ul className="space-y-1 ml-2">
-                            <li>• Bowler must confirm bowling side before over / change</li>
-                            <li>• Keeper position changes must be confirmed</li>
-                            <li>• Failure = No-ball</li>
+                            <li>• Bowler must confirm bowling side before every over or any switch</li>
+                            <li>• Change in wicket keeper must be confirmed with umpire</li>
+                            <li>• Failure to confirm = No-ball</li>
                         </ul>
                     </div>
                     <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">No-Ball Consequences</h4>
                         <ul className="space-y-1 ml-2">
-                            <li>• Every no-ball followed by Free Hit</li>
-                            <li>• On Free Hit: only Run Out dismissals apply</li>
+                            <li>• Every no-ball followed by a Free Hit</li>
+                            <li>• On Free Hit only Run Out dismissal applies</li>
                         </ul>
                     </div>
                 </div>
@@ -240,7 +250,7 @@ export default function SPL02TournamentRules() {
                     <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Equipment & Dress Code</h4>
                         <ul className="space-y-1 ml-2">
-                            <li>• Mandatory: Team jersey, shoes, full-length track pants</li>
+                            <li>• Team jersey, shoes & full-length track pants mandatory</li>
                             <li>• Shorts not allowed</li>
                             <li>• Fiber bats not allowed</li>
                         </ul>
@@ -248,41 +258,44 @@ export default function SPL02TournamentRules() {
                     <div className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Scoring & Tiebreakers</h4>
                         <ul className="space-y-1 ml-2">
-                            <li>• One batting team member must sit with scorer</li>
-                            <li>• Disputes must be raised immediately – post-match complaints invalid</li>
+                            <li>• One member of batting team must sit with scorer</li>
+                            <li>• Disputes must be raised immediately during innings (post-match invalid)</li>
                             <li className="mt-2 font-medium">Tiebreakers (League):</li>
-                            <li className="ml-4">1. Most sixes</li>
-                            <li className="ml-4">2. If tied → Most fours</li>
-                            <li className="ml-4">3. If tied → Fewer wickets lost</li>
-                            <li className="mt-2">Knockouts: Super Over</li>
+                            <li className="ml-4">1. Team with most sixes</li>
+                            <li className="ml-4">2. If tied → Team with most fours</li>
+                            <li className="ml-4">3. If still tied → Team with fewer wickets lost</li>
+                            <li className="mt-2">Knockout Matches: Decided by a Super Over</li>
                         </ul>
                     </div>
                     <div className="bg-yellow-50 dark:bg-yellow-950/20 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Player Availability (Team Short)</h4>
                         <ul className="space-y-1 ml-2">
-                            <li>• Team plays short if player absent</li>
-                            <li>• Last man batting allowed with dead runner</li>
-                            <li>• Repeat bowler from same category of missing player</li>
-                            <li>• Wild category short → repeat from last category</li>
-                            <li>• No substitute fielders</li>
-                            <li>• Late-arriving players after start cannot join</li>
+                            <li>• Minimum 5 players required to start; otherwise opponent awarded a bye</li>
+                            <li>• Player arriving after first innings completion cannot participate (team plays short)</li>
+                            <li className="ml-4">o No dead runner</li>
+                            <li className="ml-4">o Repeat bowler must be from same category</li>
+                            <li>• If players unavailable for whole tournament & informed in advance: committee may provide ONE substitute fielder</li>
+                            <li className="ml-4">o Last man batting allowed with dead runner</li>
+                            <li className="ml-4">o Substitute fielder only in front of center line and cannot be wicket keeper</li>
+                            <li className="ml-4">o Repeat bowler must match missing player’s category</li>
+                            <li>• Wild category shortage → repeat bowler comes from last category</li>
                         </ul>
                     </div>
                     <div className="bg-red-50 dark:bg-red-950/30 p-4 rounded-lg border-l-4 border-red-500">
                         <h4 className="font-semibold mb-2">Umpire’s Authority</h4>
-                        <p>Umpire’s decision is final. Arguments: Warning → Match Ban.</p>
+                        <p>The Umpire’s decision is final and binding. Any argument → Warning followed by Match Ban.</p>
                     </div>
                     <div className="bg-indigo-50 dark:bg-indigo-950/30 p-4 rounded-lg border-l-4 border-indigo-500">
                         <h4 className="font-semibold mb-2">Committee Rights</h4>
-                        <p>Tournament Committee may revise / amend / interpret rules for fair conduct.</p>
+                        <p>The Tournament Committee may revise, amend, or interpret any rule for fair conduct.</p>
                     </div>
                     <div className="bg-green-50 dark:bg-green-950/30 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">ICC Standard Rules</h4>
-                        <p>All ICC rules apply where not specifically overridden here.</p>
+                        <p>All standard ICC rules apply where not specifically mentioned.</p>
                     </div>
                     <div className="bg-purple-50 dark:bg-purple-950/30 p-4 rounded-lg">
                         <h4 className="font-semibold mb-2">Spirit of the Game</h4>
-                        <p>All players must uphold respect for officials and the spirit of cricket at all times.</p>
+                        <p>All players and teams must always respect the spirit of the game and officials.</p>
                     </div>
                 </div>
             )
@@ -296,7 +309,7 @@ export default function SPL02TournamentRules() {
                 <div className="space-y-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">
                     <div className="bg-indigo-50 dark:bg-indigo-950/30 p-4 rounded-lg border-l-4 border-indigo-500">
                         <p className="font-semibold mb-2">Read & Acknowledge</p>
-                        <p>All teams are expected to read and understand these rules. Ignorance of rules will not be accepted as an excuse in any dispute.</p>
+                        <p>All teams are expected to read and understand these rules. Ignorance will not be accepted as an excuse.</p>
                     </div>
                 </div>
             )
@@ -313,7 +326,7 @@ export default function SPL02TournamentRules() {
                         SPL-02 Tournament Rules
                     </h1>
                     <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-8 px-4 leading-relaxed">
-                        Official rules and regulations for Sparsh Premier League Season 2. Please read carefully before participating.
+                        Official Rules and Regulations for Sparsh Premier League – Season 2. Please read carefully before participating.
                     </p>
 
                     {/* Quick Stats */}
@@ -446,8 +459,7 @@ export default function SPL02TournamentRules() {
                     <BookOpen className="w-8 h-8 mx-auto mb-3" />
                     <h3 className="text-lg sm:text-xl font-bold mb-2">Important Note</h3>
                     <p className="text-sm sm:text-base opacity-90 max-w-2xl mx-auto">
-                        All participants are expected to read and understand these rules thoroughly.
-                        The Tournament Committee reserves the right to make final decisions on any disputes or clarifications.
+                        All players and teams are expected to always respect the spirit of the game and the authority of the officials. The Tournament Committee reserves the right to make final decisions on any disputes or clarifications.
                     </p>
                 </div>
             </div>
