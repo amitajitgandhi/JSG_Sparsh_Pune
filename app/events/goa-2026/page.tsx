@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Calendar, MapPin, Users, CheckCircle, Sparkles, Gift } from 'lucide-react'
+import { Calendar, MapPin, Users, CheckCircle } from 'lucide-react'
 
 export default function Goa2026() {
   const [particles, setParticles] = useState<{ id: number; left: number; size: number; delay: number; duration: number; type: 'sand' | 'drop' }[]>([])
@@ -11,42 +11,51 @@ export default function Goa2026() {
   const [showInterest, setShowInterest] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
-  const initialForm = { name: '', mobile: '', kids: 'No', kidsCount: '', kidsAges: '', transport: 'Self', extraCoupleCount: '' }
+  const [error, setError] = useState<string | null>(null)
+  const initialForm = { name: '', mobile: '', kids: 'No', kidsCount: '', kidsAges: '', transport: 'Self', extraCoupleCount: '', notes: '' }
   const [formData, setFormData] = useState(initialForm)
   const fieldClasses = "rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-yellow-500 focus:border-yellow-300 dark:focus:border-yellow-500"
 
   useEffect(() => {
-    // Generate particles once on mount
     const count = 40
     const list: typeof particles = []
     for (let i = 0; i < count; i++) {
-      list.push({
-        id: i,
-        left: Math.random() * 100, // vw percentage
-        size: Math.random() * 6 + 4, // px
-        delay: Math.random() * 1.5, // s
-        duration: Math.random() * 3 + 4, // s
-        type: Math.random() < 0.5 ? 'sand' : 'drop'
-      })
+      list.push({ id: i, left: Math.random() * 100, size: Math.random() * 6 + 4, delay: Math.random() * 1.5, duration: Math.random() * 3 + 4, type: Math.random() < 0.5 ? 'sand' : 'drop' })
     }
     setParticles(list)
-    // Hide animation layer after 8s
     const t = setTimeout(() => setHide(true), 8000)
     return () => clearTimeout(t)
   }, [])
 
-  const closeModal = () => { setShowInterest(false); setSuccess(false); setFormData(initialForm) }
+  const closeModal = () => { setShowInterest(false); setSuccess(false); setError(null); setFormData(initialForm) }
   const handleChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = e => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
   }
   const validMobile = /^\d{10}$/
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError(null)
     if (!formData.name.trim() || !validMobile.test(formData.mobile)) return
     if (formData.kids === 'Yes' && (!formData.kidsCount || !formData.kidsAges.trim())) return
     setSubmitting(true)
-    setTimeout(() => { setSubmitting(false); setSuccess(true); }, 1000)
+    try {
+      const res = await fetch('/api/goa-interest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      const data = await res.json()
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Failed to save')
+      }
+      setSuccess(true)
+    } catch (err: any) {
+      setError(err.message || 'Unexpected error')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -173,9 +182,9 @@ export default function Goa2026() {
                 </div>
               </div>
               <div className="text-center md:text-right">
-                <p className="text-[13px] uppercase font-bold tracking-wide text-slate-500">Couple Price</p>
-                <p className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-yellow-600 via-orange-600 to-pink-500 text-transparent bg-clip-text drop-shadow">₹20,000</p>
-                <p className="text-[11px] md:text-xs text-slate-500">(2 Nights • All Inclusive)</p>
+                <p className="text-[13px] uppercase font-bold tracking-wide text-slate-500">First 50 Couple Price</p>
+                <p className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-yellow-600 via-orange-600 to-pink-500 text-transparent bg-clip-text drop-shadow">₹18,999</p>
+                <p className="text-[11px] md:text-xs text-slate-500">(2 Nights • Ex-Package)</p>
               </div>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
@@ -193,8 +202,9 @@ export default function Goa2026() {
             <div className="mt-7 grid sm:grid-cols-1 gap-4 text-[11px] md:text-xs text-slate-600">
               <p className="flex items-start gap-2"><span className="inline-block mt-1 w-2 h-2 rounded-full bg-orange-500" />Booking Opens: <strong className="text-slate-800">15 Nov 2025</strong> (₹5000 couple booking charge)</p>
             </div>
+            {/* Buttons */}
             <div className="mt-6 flex flex-col sm:flex-row gap-4">
-              <button onClick={() => setShowInterest(true)} className="flex-1 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-yellow-500 via-orange-500 to-pink-600 text-white font-semibold py-3 text-sm shadow-md hover:shadow-lg hover:brightness-110 transition">Pre-Register Interest</button>
+              <button onClick={() => setShowInterest(true)} className="flex-1 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-yellow-500 via-orange-500 to-pink-600 text-white font-semibold py-3 text-sm shadow-md hover:shadow-lg hover:brightness-110 transition">Register Now</button>
               <Link href="tel:+918975797500" className="flex-1 inline-flex items-center justify-center rounded-xl border border-pink-300 bg-white/50 text-pink-600 font-semibold py-3 text-sm shadow-sm hover:bg-pink-50 transition">Clarify a Query</Link>
             </div>
           </div>
@@ -218,14 +228,14 @@ export default function Goa2026() {
             <div className="group rounded-xl bg-white/90 backdrop-blur-sm border border-teal-100 p-5 flex flex-col justify-between text-center shadow-sm hover:shadow-md transition hover:-translate-y-1">
               <div>
                 <p className="text-[11px] font-semibold text-teal-600 uppercase tracking-wide">7 – 12 Years</p>
-                <p className="text-xl font-extrabold text-teal-700 mt-1">₹1000 <span className="text-sm font-bold text-teal-500">/ day</span></p>
+                              <p className="text-xl font-extrabold text-teal-700 mt-1">₹2000 <span className="text-sm font-bold text-teal-500">(₹1000 / day)</span></p>
               </div>
               <p className="mt-3 text-[11px] text-teal-600 font-medium">Meals + stay (same room)</p>
             </div>
             <div className="group rounded-xl bg-white/90 backdrop-blur-sm border border-teal-100 p-5 flex flex-col justify-between text-center shadow-sm hover:shadow-md transition hover:-translate-y-1">
               <div>
                 <p className="text-[11px] font-semibold text-teal-600 uppercase tracking-wide">12+ Years</p>
-                <p className="text-xl font-extrabold text-teal-700 mt-1">₹2500 <span className="text-sm font-bold text-teal-500">/ day</span></p>
+                              <p className="text-xl font-extrabold text-teal-700 mt-1">₹5000 <span className="text-sm font-bold text-teal-500">(₹2500 / day)</span></p>
               </div>
               <p className="mt-3 text-[11px] text-teal-600 font-medium">Meals + stay (same room)</p>
             </div>
@@ -268,13 +278,6 @@ export default function Goa2026() {
               </p>
             </div>
           </div>
-          <div className="space-y-8">
-            <div className="bg-white rounded-2xl p-6 md:p-7 shadow-lg border border-gray-200">
-              <h4 className="text-sm font-bold uppercase tracking-wide text-blue-700 mb-2">Stay Tuned</h4>
-              <p className="text-xs md:text-sm text-gray-600 font-medium mb-2">Registration link will be activated soon. Prepare to book early.</p>
-              <p className="text-xs text-gray-500">We will announce booking window across all channels.</p>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -288,12 +291,16 @@ export default function Goa2026() {
             <form onSubmit={handleSubmit} className="p-6 space-y-5 text-sm">
               {success ? (
                 <div className="space-y-4">
-                  <p className="font-semibold text-green-700 dark:text-green-400">Thank you! Your interest has been noted.</p>
-                  <p className="text-gray-600 dark:text-gray-300 text-xs">We will reach out when bookings open. Save the dates!</p>
-                  <button type="button" onClick={closeModal} className="w-full rounded-lg bg-green-600 hover:bg-green-700 text-white py-2 font-semibold">Close</button>
+                  <p className="font-semibold text-green-700 dark:text-green-400">Thank you! Your Interest form is successfully submitted.</p>
+                  <p className="text-gray-600 dark:text-gray-300 text-xs">Please deposit booking amount of ₹5,000 on or before 20 Nov to complete your registation</p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Link href="/committee" className="flex-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white py-2 font-semibold text-center shadow">Contact Committee</Link>
+                    <button type="button" onClick={closeModal} className="flex-1 rounded-lg bg-green-600 hover:bg-green-700 text-white py-2 font-semibold shadow">Close</button>
+                  </div>
                 </div>
               ) : (
                 <>
+                  {error && <div className="text-xs text-red-600 font-medium bg-red-50 border border-red-200 rounded p-2">{error}</div>}
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1">
                       <label className="font-medium text-gray-700 dark:text-gray-200">Name *</label>
@@ -341,7 +348,7 @@ export default function Goa2026() {
                     </div>
                     <div className="flex flex-col gap-1">
                       <label className="font-medium text-gray-700 dark:text-gray-200">Notes (optional)</label>
-                      <input name="notes" onChange={handleChange} className={fieldClasses} placeholder="Any special info" />
+                      <input name="notes" value={formData.notes} onChange={handleChange} className={fieldClasses} placeholder="Any special info" />
                     </div>
                   </div>
                   <div className="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed">This is an interest form only – booking will be confirmed later. Ensure mobile number is correct for updates.</div>
