@@ -58,6 +58,19 @@ export const checkRegistrationsTable = async (): Promise<boolean> => {
   }
 }
 
+export interface GoaInterest {
+  id?: string
+  name: string
+  mobile: string
+  transport: string
+  kids: 'Yes' | 'No'
+  kids_count?: number | null
+  kids_ages?: string | null
+  extra_couple_count?: number | null
+  notes?: string | null
+  created_at?: string
+}
+
 export interface Registration {
   id?: string
   category: 'male' | 'female' | 'kids'
@@ -294,6 +307,17 @@ export const getEnquiries = async (): Promise<{ data: Enquiry[] | null, error: a
     return { data, error }
   } catch (e) {
     console.error('getEnquiries error:', e)
+    return { data: null, error: e }
+  }
+}
+
+// New function for getting Goa interest entries
+export const getGoaInterest = async (): Promise<{ data: GoaInterest[] | null, error: any }> => {
+  try {
+    const { data, error } = await getServerClient().from('goa_interest').select('*').order('created_at', { ascending: false })
+    return { data, error }
+  } catch (e) {
+    console.error('getGoaInterest error:', e)
     return { data: null, error: e }
   }
 }
