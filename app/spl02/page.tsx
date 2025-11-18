@@ -205,7 +205,7 @@ export default function SPL02() {
             </div>
            </div>
 
-         {/* Team Categories */}
+         {/* Team Categories 
           <div className="mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl font-bold text-blue-800 mb-6 sm:mb-8 text-center">Tournament Categories</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
@@ -224,7 +224,7 @@ export default function SPL02() {
                 )
               })}
             </div>
-          </div>
+          </div> */}
 
           {/* Stay Tuned for Full Pitch Tournament Announcement */}
           <div className="mb-12 sm:mb-16">
