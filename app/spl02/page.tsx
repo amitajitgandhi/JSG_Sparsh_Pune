@@ -49,7 +49,7 @@ export default function SPL02() {
   const otherSponsors = [
     { category: 'Jersey Sponsor', sponsor: 'Chimmy Bamrecha', firm: 'Paras Sales', emoji: '👕' },
     { category: 'Trophy Sponsor', sponsor: 'Shalak & Yuvraj Shah', firm: 'Flamingo Tours & Travels', emoji: '🏆' },
-    { category: 'Sports Kit Sponsor', sponsor: 'Kalpesh Dhoka', firm: 'Vacations Store', emoji: '🎽' },
+    { category: 'Sports Kit Sponsor', sponsor: 'Kalpesh Dhoka', firm: 'Vacations Store', emoji: '🎒' },
     { category: 'Cap Sponsor', sponsor: 'Sanjay Jain & Mukesh Oswal', firm: 'Smart Modiform Industries LLP', emoji: '🧢' },
     { category: 'Toss Ka Boss Sponsor', sponsor: 'Sunil & Mamtesh Patni', firm: 'Arihant Hardware & Steel', emoji: '🪙' },
     { category: 'Boundary Sponsor', sponsor: 'Dilip Jain', firm: 'Water World', emoji: '🎯' }
