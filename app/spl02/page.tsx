@@ -267,8 +267,8 @@ export default function SPL02() {
           {/* Sponsorship Section */}
           <div className="mb-12 sm:mb-16">
             <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-4 sm:p-8 md:p-12 shadow-large border border-white/50">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-blue-800 mb-4 sm:mb-8">Why Sponsor SPL-02?</h2>
-              <p className="text-base sm:text-xl text-gray-700 text-center mb-8 sm:mb-12 leading-relaxed max-w-4xl mx-auto">Partnering with SPL-02 places your brand at the heart of a dynamic sporting celebration that unites the community and delivers measurable visibility.</p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-blue-800 mb-4 sm:mb-8">Why Sponsor Sparsh Tournament</h2>
+              <p className="text-base sm:text-xl text-gray-700 text-center mb-8 sm:mb-12 leading-relaxed max-w-4xl mx-auto">Partnering with Sparsh places your brand at the heart of a dynamic sporting celebration that unites the community and delivers measurable visibility.</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 mb-8 sm:mb-12">
                 {sponsorshipBenefits.map((benefit, index) => {
                   const IconComponent = benefit.icon
@@ -284,8 +284,8 @@ export default function SPL02() {
                 })}
               </div>
               <div className="bg-gradient-to-r from-yellow-500 via-orange-500 to-blue-600 rounded-3xl p-6 sm:p-8 text-white text-center">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">Let's Create Season 2 Together!</h3>
-                <p className="text-base sm:text-xl mb-4 sm:mb-6 leading-relaxed">Be part of one of Pune's biggest community sporting events of 2025. Build your brand, celebrate cricket, and strengthen community ties.</p>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">Let's Create Brand Together!</h3>
+                <p className="text-base sm:text-xl mb-4 sm:mb-6 leading-relaxed">Be part of one of Pune's biggest community sporting events of 2025-2026. Build your brand, celebrate cricket, and strengthen community ties.</p>
               </div>
             </div>
           </div>
