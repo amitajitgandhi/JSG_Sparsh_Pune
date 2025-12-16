@@ -11,13 +11,13 @@ export default function AdminIndex() {
           <p className='text-gray-600 text-sm'>Select a dashboard to manage registrations and interests.</p>
         </div>
         <div className='grid gap-5'>
-          <Link href='/admin/spl02-dashboard' className='group block rounded-2xl border border-blue-200 bg-white p-6 shadow hover:shadow-md transition'>
+          <Link href='/admin/hurda-dashboard' className='group block rounded-2xl border border-emerald-200 bg-white p-6 shadow hover:shadow-md transition'>
             <div className='flex items-center justify-between'>
               <div>
-                <h2 className='text-xl font-semibold text-blue-700 group-hover:text-blue-800'>SPL 02 Registration Dashboard</h2>
-                <p className='text-sm text-gray-600 mt-1'>View and export player registrations.</p>
+                <h2 className='text-xl font-semibold text-emerald-700 group-hover:text-emerald-800'>Hurda-Party Registration Dashboard</h2>
+                <p className='text-sm text-gray-600 mt-1'>View and export Hurda-Party registrations.</p>
               </div>
-              <span className='text-blue-500 text-2xl'>&rarr;</span>
+              <span className='text-emerald-500 text-2xl'>&rarr;</span>
             </div>
           </Link>
           <Link href='/admin/goa-dashboard' className='group block rounded-2xl border border-teal-200 bg-white p-6 shadow hover:shadow-md transition'>
