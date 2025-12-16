@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
@@ -19,7 +19,7 @@ export default function HurdaPartyPage() {
 
   const KID_RATE = 500
   const GUEST_RATE = 750
-  const REFUNDABLE_DEPOSIT_PER_REGISTRATION = 250
+  const REFUNDABLE_DEPOSIT_PER_REGISTRATION = 500
 
   const totalAmount = useMemo(() => {
     const kidsTotal = kidsCount * KID_RATE
@@ -161,7 +161,7 @@ export default function HurdaPartyPage() {
                       <span className='mt-0.5'>✅</span>
                       <div className='leading-snug'>
                         <div>Members: FREE.</div>
-                        <div className='text-xs text-emerald-700'>₹250 per head - Refundable Deposit at Venue before 10am</div>
+                        <div className='text-xs text-emerald-700'>₹500 - Refundable Deposit at Venue before 10am</div>
                       </div>
                     </li>
                     <li className='flex items-start gap-2'><span className='mt-0.5'>✅</span><span>Kids (5–12 yrs): ₹500 per head</span></li>
