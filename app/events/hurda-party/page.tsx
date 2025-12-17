@@ -4,6 +4,31 @@ import { useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { supabase } from '../../../lib/supabase'
 
+// Lazy import to avoid bundling Capacitor libs for web
+const pickNativeImage = async (): Promise<File | null> => {
+  try {
+    const cap = (globalThis as any).Capacitor
+    if (!cap || !cap.isNativePlatform) return null
+    const { Camera } = await import('@capacitor/camera')
+    const photo = await Camera.getPhoto({
+      source: 'PHOTOS', // open gallery
+      resultType: 'uri',
+      quality: 80,
+      allowEditing: false,
+    })
+    if (!photo?.path && !photo?.webPath) return null
+    const uri = (photo.path || photo.webPath) as string
+    const res = await fetch(uri)
+    const blob = await res.blob()
+    const ext = blob.type.split('/')[1] || 'jpg'
+    const file = new File([blob], `hurda-${Date.now()}.${ext}`, { type: blob.type })
+    return file
+  } catch (e) {
+    console.error('Native image pick failed:', e)
+    return null
+  }
+}
+
 export default function HurdaPartyPage() {
   const [name, setName] = useState('')
   const [mobile, setMobile] = useState('')
@@ -118,6 +143,17 @@ export default function HurdaPartyPage() {
 
   const fieldClass = 'w-full max-w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'
   const selectClass = fieldClass
+
+  const onChooseFileClick = async () => {
+    // Try native picker in Capacitor; fall back to HTML input on web
+    const file = await pickNativeImage()
+    if (file) {
+      setScreenshotFile(file)
+    } else {
+      // Fallback: trigger the input (works in browsers)
+      try { fileInputRef.current?.click() } catch {}
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-amber-50 pb-12 relative overflow-hidden">
@@ -343,9 +379,9 @@ export default function HurdaPartyPage() {
                   onChange={onFileChange}
                   className='hidden'
                 />
-                <label htmlFor='screenshot' className='inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 w-full sm:w-auto'>
+                <button type='button' onClick={onChooseFileClick} className='inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 w-full sm:w-auto'>
                   Choose File
-                </label>
+                </button>
                 <span className='text-xs text-gray-500'>Max file size: 10MB. Allowed formats: JPEG, JPG, PNG, HEIC, HEIF.</span>
                 {screenshotFile && (
                   <span className='text-xs text-gray-500 break-all'>Selected: {screenshotFile.name}</span>
