@@ -404,7 +404,7 @@ export default function HurdaPartyPage() {
               </div>
               <div className='pt-2 flex flex-col sm:flex-row gap-3'>
                 <button onClick={() => setShowConfirm(false)} className='flex-1 inline-flex items-center justify-center rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2'>Close</button>
-                <a href='tel:+918975797500' className='flex-1 inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-700 font-semibold py-2 hover:bg-gray-50'>Need Help?</a>
+                <a href='tel:+917276319578' className='flex-1 inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-700 font-semibold py-2 hover:bg-gray-50'>Need Help?</a>
               </div>
             </div>
           </div>
