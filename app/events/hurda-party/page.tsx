@@ -166,7 +166,7 @@ export default function HurdaPartyPage() {
                       </div>
                     </li>
                     <li className='flex items-start gap-2'><span className='mt-0.5'>✅</span><span>Kids (5–12 yrs): ₹500 per head</span></li>
-                    <li className='flex items-start gap-2'><span className='mt-0.5'>✅</span><span>Guests (12+ yrs): ₹750 per head</span></li>
+                    <li className='flex items-start gap-2'><span className='mt-0.5'>✅</span><span>Kids (12+ yrs): ₹750 per head</span></li>
                   </ul>
                 </div>
               </div>
@@ -295,7 +295,7 @@ export default function HurdaPartyPage() {
 
                 <div className='grid gap-1'>
                   <label htmlFor='guests' className='text-sm font-medium text-gray-700'>
-                    Guest (above 12yrs)
+                    Kids (above 12yrs)
                   </label>
                   <select
                     id='guests'
