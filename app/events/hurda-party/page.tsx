@@ -116,10 +116,6 @@ export default function HurdaPartyPage() {
     }
   }
 
-  const onFileButtonClick = () => {
-    try { fileInputRef.current?.click() } catch {}
-  }
-
   const fieldClass = 'w-full max-w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'
   const selectClass = fieldClass
 
@@ -345,11 +341,11 @@ export default function HurdaPartyPage() {
                   accept='image/jpeg,image/jpg,image/png,image/heic,image/heif,image/*'
                   required
                   onChange={onFileChange}
-                  className='sr-only'
+                  className='hidden'
                 />
-                <button type='button' onClick={onFileButtonClick} className='inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 w-full sm:w-auto'>
+                <label htmlFor='screenshot' className='inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 w-full sm:w-auto'>
                   Choose File
-                </button>
+                </label>
                 <span className='text-xs text-gray-500'>Max file size: 10MB. Allowed formats: JPEG, JPG, PNG, HEIC, HEIF.</span>
                 {screenshotFile && (
                   <span className='text-xs text-gray-500 break-all'>Selected: {screenshotFile.name}</span>
