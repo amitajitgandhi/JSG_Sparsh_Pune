@@ -4,14 +4,16 @@ import { useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { supabase } from '../../../lib/supabase'
 
-// Lazy import to avoid bundling Capacitor libs for web
+// Lazy native picker without bundling Capacitor plugins on web
 const pickNativeImage = async (): Promise<File | null> => {
   try {
     const cap = (globalThis as any).Capacitor
     if (!cap || !cap.isNativePlatform) return null
-    const { Camera } = await import('@capacitor/camera')
+    const Camera = cap.Plugins?.Camera
+    if (!Camera || typeof Camera.getPhoto !== 'function') return null
+
     const photo = await Camera.getPhoto({
-      source: 'PHOTOS', // open gallery
+      source: 'PHOTOS',
       resultType: 'uri',
       quality: 80,
       allowEditing: false,
@@ -20,8 +22,8 @@ const pickNativeImage = async (): Promise<File | null> => {
     const uri = (photo.path || photo.webPath) as string
     const res = await fetch(uri)
     const blob = await res.blob()
-    const ext = blob.type.split('/')[1] || 'jpg'
-    const file = new File([blob], `hurda-${Date.now()}.${ext}`, { type: blob.type })
+    const ext = (blob.type?.split('/')?.[1]) || 'jpg'
+    const file = new File([blob], `hurda-${Date.now()}.${ext}`, { type: blob.type || 'image/jpeg' })
     return file
   } catch (e) {
     console.error('Native image pick failed:', e)
