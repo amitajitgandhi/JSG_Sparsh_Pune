@@ -1,6 +1,6 @@
 ﻿'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { supabase } from '../../../lib/supabase'
 
@@ -16,10 +16,11 @@ export default function HurdaPartyPage() {
   const [showQR, setShowQR] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [confirmInfo, setConfirmInfo] = useState<{name:string;mobile:string;registrationFor:string;kids:number;guests:number;total:number;txnId:string;img?:string} | null>(null)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   const KID_RATE = 500
   const GUEST_RATE = 750
-  const REFUNDABLE_DEPOSIT_PER_REGISTRATION = 250
+  const REFUNDABLE_DEPOSIT_PER_REGISTRATION = 500
 
   const totalAmount = useMemo(() => {
     const kidsTotal = kidsCount * KID_RATE
@@ -113,6 +114,10 @@ export default function HurdaPartyPage() {
     } finally {
       setSubmitting(false)
     }
+  }
+
+  const onFileButtonClick = () => {
+    try { fileInputRef.current?.click() } catch {}
   }
 
   const fieldClass = 'w-full max-w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'
@@ -335,12 +340,16 @@ export default function HurdaPartyPage() {
                 <input
                   id='screenshot'
                   name='screenshot'
+                  ref={fileInputRef}
                   type='file'
                   accept='image/jpeg,image/jpg,image/png,image/heic,image/heif,image/*'
                   required
                   onChange={onFileChange}
-                  className='w-full max-w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 file:mr-4 file:rounded-md file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-blue-700'
+                  className='sr-only'
                 />
+                <button type='button' onClick={onFileButtonClick} className='inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 w-full sm:w-auto'>
+                  Choose File
+                </button>
                 <span className='text-xs text-gray-500'>Max file size: 10MB. Allowed formats: JPEG, JPG, PNG, HEIC, HEIF.</span>
                 {screenshotFile && (
                   <span className='text-xs text-gray-500 break-all'>Selected: {screenshotFile.name}</span>
