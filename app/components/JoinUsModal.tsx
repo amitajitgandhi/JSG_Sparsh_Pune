@@ -13,7 +13,8 @@ const JoinUsModal: React.FC<JoinUsModalProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     name: '',
     address: '',
-    mobile_number: ''
+    mobile_number: '',
+    age: ''
   })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -44,6 +45,12 @@ const JoinUsModal: React.FC<JoinUsModalProps> = ({ isOpen, onClose }) => {
     setError('')
   }
 
+  const handleMobileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 10)
+    setFormData(prev => ({ ...prev, mobile_number: digits }))
+    setError('')
+  }
+
   const validateForm = () => {
     if (!formData.name.trim()) {
       setError('Name is required')
@@ -55,6 +62,15 @@ const JoinUsModal: React.FC<JoinUsModalProps> = ({ isOpen, onClose }) => {
     }
     if (!formData.mobile_number.trim() || !/^\d{10}$/.test(formData.mobile_number)) {
       setError('Please enter a valid 10-digit mobile number')
+      return false
+    }
+    if (!formData.age.trim()) {
+      setError('Age is required')
+      return false
+    }
+    const ageNum = Number(formData.age)
+    if (!Number.isInteger(ageNum) || ageNum < 1 || ageNum > 120) {
+      setError('Please enter a valid age between 1 and 120')
       return false
     }
     return true
@@ -69,12 +85,19 @@ const JoinUsModal: React.FC<JoinUsModalProps> = ({ isOpen, onClose }) => {
     setError('')
 
     try {
+      const payload = {
+        name: formData.name,
+        address: formData.address,
+        mobile_number: formData.mobile_number,
+        age: Number(formData.age)
+      }
+
       const response = await fetch('/api/join-us', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       })
 
       const result = await response.json()
@@ -90,7 +113,8 @@ const JoinUsModal: React.FC<JoinUsModalProps> = ({ isOpen, onClose }) => {
         setFormData({
           name: '',
           address: '',
-          mobile_number: ''
+          mobile_number: '',
+          age: ''
         })
         setSuccess(false)
         onClose()
@@ -107,7 +131,8 @@ const JoinUsModal: React.FC<JoinUsModalProps> = ({ isOpen, onClose }) => {
     setFormData({
       name: '',
       address: '',
-      mobile_number: ''
+      mobile_number: '',
+      age: ''
     })
     setError('')
     setSuccess(false)
@@ -190,7 +215,7 @@ const JoinUsModal: React.FC<JoinUsModalProps> = ({ isOpen, onClose }) => {
                 </div>
                 <div className="flex items-start">
                   <span className="text-purple-500 mr-2">📚</span>
-                  <span>Educational and cultural programs</span>
+                  <span>Adventurous, Fun-Filled, Unique programs</span>
                 </div>
                 <div className="flex items-start">
                   <span className="text-orange-500 mr-2">❤️</span>
@@ -248,11 +273,30 @@ const JoinUsModal: React.FC<JoinUsModalProps> = ({ isOpen, onClose }) => {
                   type="tel"
                   name="mobile_number"
                   value={formData.mobile_number}
-                  onChange={handleInputChange}
+                  onChange={handleMobileChange}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                   placeholder="Enter 10-digit mobile number"
                   maxLength={10}
                   pattern="[0-9]{10}"
+                  required
+                  disabled={loading}
+                />
+              </div>
+
+              {/* Age Field */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  Age *
+                </label>
+                <input
+                  type="number"
+                  name="age"
+                  value={formData.age}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  placeholder="Enter your age"
+                  min={1}
+                  max={120}
                   required
                   disabled={loading}
                 />
@@ -277,7 +321,7 @@ const JoinUsModal: React.FC<JoinUsModalProps> = ({ isOpen, onClose }) => {
                     Submitting...
                   </div>
                 ) : (
-                  'Join JSG SPARSH Community'
+                  'Submit'
                 )}
               </button>
             </form>

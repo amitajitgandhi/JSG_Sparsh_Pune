@@ -72,7 +72,7 @@ export default function Events() {
       date: '2025-09-07',
       time: '7:00 AM - 11:30 PM',
       venue: 'Abhay Prabhavana & Jayanand Dham, Lonavala',
-        description: 'The divine journey began with a soulful visit to the Jain Spiritual Museum – Abhay Prabhavana, followed by darshan and bhakti at Jayanand Dham, Lonavala. The yatra culminated in a felicitation ceremony honoring over 80 Tapasvis who observed diverse tapasya during Paryushan',
+      description: 'The divine journey began with a soulful visit to the Jain Spiritual Museum – Abhay Prabhavana, followed by darshan and bhakti at Jayanand Dham, Lonavala. The yatra culminated in a felicitation ceremony honoring over 80 Tapasvis who observed diverse tapasya during Paryushan',
       attendees: '80+ Tapasvis',
       highlights: ['Tapasvi Felicitation', 'Silver Coin Lucky Draw', 'Spiritual Upliftment', 'Community Bonding'],
       galleryUrl: ''
@@ -127,12 +127,9 @@ export default function Events() {
           {events.map((event, index) => {
             const isEvenIndex = index % 2 === 0
             const headerColor = isEvenIndex ? 'from-blue-500 to-blue-600' : 'from-yellow-500 to-yellow-600'
-            
+
             return (
-              <div 
-                key={event.id} 
-                className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100"
-              >
+              <div key={event.id} className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
                 {/* Event Header - Mobile Optimized */}
                 <div className={`bg-gradient-to-r ${headerColor} p-4 sm:p-6 md:p-8 text-white relative overflow-hidden`}>
                   <div className="absolute inset-0 opacity-10">
@@ -152,7 +149,7 @@ export default function Events() {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Event Details - Responsive Heights */}
                 <div className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6">
                   {/* Full Description - No Truncation */}
@@ -161,7 +158,7 @@ export default function Events() {
                       {event.description}
                     </p>
                   </div>
-                  
+
                   {/* Event Highlights - Original Grid Style */}
                   <div>
                     <h4 className={`font-bold ${isEvenIndex ? 'text-blue-800' : 'text-yellow-800'} mb-2 sm:mb-3 text-xs sm:text-sm uppercase tracking-wide`}>
@@ -169,26 +166,23 @@ export default function Events() {
                     </h4>
                     <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
                       {event.highlights.map((highlight, idx) => (
-                        <span 
-                          key={idx} 
-                          className={`${isEvenIndex ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-yellow-50 text-yellow-700 border-yellow-200'} px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-xs font-semibold border text-center leading-tight`}
-                        >
+                        <span key={idx} className={`${isEvenIndex ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-yellow-50 text-yellow-700 border-yellow-200'} px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-xs font-semibold border text-center leading-tight`}>
                           {highlight}
                         </span>
                       ))}
                     </div>
                   </div>
-                  
+
                   {/* Event Info - Compact Mobile Layout */}
                   <div className="space-y-2 sm:space-y-3">
                     <div className={`flex items-start ${isEvenIndex ? 'text-blue-700' : 'text-yellow-700'}`}>
                       <Calendar size={14} className={`mr-2 sm:mr-3 mt-0.5 ${isEvenIndex ? 'text-blue-600' : 'text-yellow-600'} flex-shrink-0`} />
                       <span className="font-medium text-xs sm:text-sm leading-tight">
-                        {new Date(event.date).toLocaleDateString('en-US', { 
-                          weekday: 'short', 
-                          year: 'numeric', 
-                          month: 'short', 
-                          day: 'numeric' 
+                        {new Date(event.date).toLocaleDateString('en-US', {
+                          weekday: 'short',
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric'
                         })}
                       </span>
                     </div>
@@ -207,13 +201,10 @@ export default function Events() {
                       </span>
                     </div>
                   </div>
-                  
+
                   {/* Single Gallery Button - Full Width */}
                   <div className="pt-2">
-                    <button 
-                      onClick={() => handleGalleryLink(event.galleryUrl)}
-                      className={`w-full ${isEvenIndex ? 'bg-blue-600 hover:bg-blue-700' : 'bg-yellow-500 hover:bg-yellow-600'} text-white py-3 sm:py-3.5 px-4 sm:px-6 rounded-lg sm:rounded-xl md:rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105`}
-                    >
+                    <button onClick={() => handleGalleryLink(event.galleryUrl)} className={`w-full ${isEvenIndex ? 'bg-blue-600 hover:bg-blue-700' : 'bg-yellow-500 hover:bg-yellow-600'} text-white py-3 sm:py-3.5 px-4 sm:px-6 rounded-lg sm:rounded-xl md:rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105`}>
                       <span>View Event Gallery</span>
                       <ArrowRight size={16} />
                     </button>
@@ -236,7 +227,7 @@ export default function Events() {
               or community bonding - we'd love to hear your suggestions and make it happen together!
             </p>
             <div className="flex justify-center">
-              <Link 
+              <Link
                 href="/committee"
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 md:py-5 rounded-lg sm:rounded-xl md:rounded-2xl font-bold text-base sm:text-lg md:text-xl transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 inline-block"
               >
@@ -245,55 +236,76 @@ export default function Events() {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Custom Modal - Enhanced for Mobile */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl md:rounded-3xl shadow-2xl border border-gray-100 max-w-md w-full relative overflow-hidden">
-            {/* Modal Header */}
-            <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white relative">
-              <div className="absolute inset-0 opacity-10">
-                <div className="w-32 h-32 bg-yellow-300 rounded-full -top-16 -right-16"></div>
-              </div>
-              <div className="relative z-10 flex justify-between items-center">
-                <h3 className="text-xl font-bold">Event Gallery</h3>
-                <button 
-                  onClick={() => setShowModal(false)}
-                  className="p-2 hover:bg-blue-700 rounded-lg transition-colors"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-            </div>
-
-            {/* Modal Content */}
-            <div className="p-6 space-y-4">
-              <div className="bg-gray-50 p-4 rounded-lg border">
-                <p className="text-sm text-gray-600 mb-2 font-medium">Gallery URL:</p>
-                <p className="text-xs text-blue-600 break-all font-mono bg-white p-2 rounded border">
-                  {modalUrl}
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3 pt-2">
-                <button 
-                  onClick={copyToClipboard}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  Copy Link
-                </button>
-                <button 
-                  onClick={() => setShowModal(false)}
-                  className="w-full border-2 border-gray-300 text-gray-600 hover:bg-gray-50 py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300"
-                >
-                  Close
-                </button>
-              </div>
+        {/* Recent Events Quick Links */}
+        <div className="mt-6 sm:mt-8 md:mt-10">
+          <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border-2 border-gray-100">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-yellow-600 mb-4 sm:mb-6">
+              Recent Events
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              
+              <Link href="/spl02" className="inline-flex items-center justify-center rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
+                SPL 02
+              </Link>
+              <Link href="/events/hurda-party" className="inline-flex items-center justify-center rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
+                Hurda Party
+                          </Link>
+                          <Link href="/events/goa-2026" className="inline-flex items-center justify-center rounded-lg bg-yellow-500 hover:bg-blue-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
+                              Goa 2026
+                          </Link>
             </div>
           </div>
         </div>
-      )}
+
+        {/* Custom Modal - Enhanced for Mobile */}
+        {showModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl md:rounded-3xl shadow-2xl border border-gray-100 max-w-md w-full relative overflow-hidden">
+              {/* Modal Header */}
+              <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white relative">
+                <div className="absolute inset-0 opacity-10">
+                  <div className="w-32 h-32 bg-yellow-300 rounded-full -top-16 -right-16"></div>
+                </div>
+                <div className="relative z-10 flex justify-between items-center">
+                  <h3 className="text-xl font-bold">Event Gallery</h3>
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="p-2 hover:bg-blue-700 rounded-lg transition-colors"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Content */}
+              <div className="p-6 space-y-4">
+                <div className="bg-gray-50 p-4 rounded-lg border">
+                  <p className="text-sm text-gray-600 mb-2 font-medium">Gallery URL:</p>
+                  <p className="text-xs text-blue-600 break-all font-mono bg-white p-2 rounded border">
+                    {modalUrl}
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-3 pt-2">
+                  <button
+                    onClick={copyToClipboard}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 shadow-lg hover:shadow-xl"
+                  >
+                    Copy Link
+                  </button>
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="w-full border-2 border-gray-300 text-gray-600 hover:bg-gray-50 py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

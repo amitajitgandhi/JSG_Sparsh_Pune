@@ -27,8 +27,6 @@ export default function Navbar() {
     { href: '/about', label: 'About', icon: Info },
     { href: '/committee', label: 'Committee', icon: Users },
     { href: '/events', label: 'Events', icon: Calendar },
-    { href: '/events/hurda-party', label: 'Hurda-Party', icon: Calendar },
-    { href: '/spl02', label: 'SPL 02', icon: Trophy },
     { href: '/social', label: 'Social', icon: Heart },
   ]
 
