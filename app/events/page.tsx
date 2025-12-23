@@ -57,7 +57,7 @@ export default function Events() {
     // Newly added events
     {
       id: 5,
-      title: 'Mini Cricket Tournament',
+      title: 'Mini Cricket Tournament [BONUS]',
       date: '2025-08-15',
       time: '4:00 PM - 11:30 PM',
       venue: 'PSA, Pune',
@@ -79,7 +79,7 @@ export default function Events() {
     },
     {
       id: 7,
-      title: 'Rangeelo Garba',
+        title: 'Rangeelo Garba [BONUS]',
       date: '2025-09-30',
       time: '7:00 PM - 11:30 PM',
       venue: 'Mahalakshmi Lawns, Karvenagar',
@@ -94,7 +94,7 @@ export default function Events() {
           date: '2025-10-29',
           time: '5:00 PM - 11:30 PM',
           venue: 'Vilayati Pure Veg, Kondhwa',
-          description: 'Cricket Auction for Sparsh Premier League – Season 02 (SPL#02) in proud association with SG Promoters & Real Estate Consultant. Three Division - Mens, Womens, Kids',
+          description: 'The official grand auction for Sparsh Premier League – Season 02 (SPL 2.0), organized in association with SG Promoters & Real Estate Consultant, featuring Men’s, Women’s, and Kids’ divisions with exciting team selections and big reveals.',
           attendees: '150+ participants',
           highlights: ['Cricket Auction', 'Revealing Ceremony', 'Sparsh App Launch', 'Delicious Dinner'],
           galleryUrl: 'https://www.facebook.com/media/set/?set=a.122218043144263798&type=3'
@@ -105,7 +105,7 @@ export default function Events() {
           date: '2025-11-15',
           time: '8:00 AM - 11:30 PM',
           venue: 'PSA Ground, Kondhwa',
-          description: '19 competitive teams and 150+ passionate players battling it out over 2 action-packed days filled with thrilling cricket, team spirit, and nonstop excitement.',
+          description: '11 Mens Team, 4 Womens Team, 4 Kids Team, 150+ passionate players battling it out over 2 action-packed days filled with thrilling cricket, team spirit, and nonstop excitement.',
           attendees: '150+ participants',
           highlights: ['Nailbiting Matches', 'Trophies', 'Delicious Food', 'Entertainment'],
           galleryUrl: 'https://www.facebook.com/media/set/?set=a.122220334856263798&type=3'
@@ -121,7 +121,6 @@ export default function Events() {
           highlights: ['Hurda', 'Fun Games', 'Pool', 'Entertainment'],
           galleryUrl: 'To be updated soon..!!'
       },
-      ,
       {
           id: 11,
           title: 'Goa Escape',
