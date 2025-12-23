@@ -17,7 +17,7 @@ export default function Events() {
       time: '9:00 AM - 6:00 PM',
       venue: 'Bharti Resort, Pune',
       description: 'A memorable Holi celebration with record-breaking participation of 275 members! Featured breakfast, adventure activities, vibrant Holi party with colors, foam, rain dance, and concluded with AGM presentation.',
-      attendees: '250+ members',
+      attendees: '250+',
       highlights: ['Adventure Activities', 'Rain Dance', 'DJ & Dancing', 'AGM Presentation'],
       galleryUrl: 'https://www.facebook.com/share/p/17YNJaTyoV/'
     },
@@ -28,7 +28,7 @@ export default function Events() {
       time: '5:00 PM - 11:00 PM',
       venue: 'Utsav Banquet, Pune',
       description: 'Vibrant celebration of India\'s cultural heritage with committee installation. Members dressed in traditional attire representing diverse Indian cultures, with dance performances and oath-taking ceremony.',
-        attendees: '200+ members' ,
+        attendees: '200+' ,
       highlights: ['Committee Installation', 'Cultural Performances', 'Traditional Attire', 'Award Ceremony'],
       galleryUrl: 'https://www.facebook.com/share/p/1JzCcPrGx5/'
     },
@@ -39,7 +39,7 @@ export default function Events() {
       time: '7:00 AM - 11:00 PM',
       venue: 'Aqua Imagica Water Park',
       description: 'Unforgettable splash of fun at Aqua Imagica! Started with Darshan at Kalash Mandir, followed by thrilling water rides, wave pools, lunch at the park, and dinner at Zalawadi.',
-        attendees: '150+ members',
+        attendees: '150+',
       highlights: ['Water Rides', 'Wave Pools', 'Temple Darshan', 'Full Day Fun'],
       galleryUrl: 'https://www.facebook.com/share/p/17W5ri8BCV/'
     },
@@ -50,7 +50,7 @@ export default function Events() {
       time: '4:00 PM - 11:30 PM',
       venue: 'Epitome, Pune',
       description: 'Glam & Glitter edition with Masti Mania, live band musical tambola by Abhishek Parekh, and high-energy Bachata-Bollywood fusion by actress Aiyli Giya. Dance floor alive till the end!',
-      attendees: '200+ members',
+      attendees: '200+',
       highlights: ['Live Band Tambola', 'Bachata', 'Celebrity Performance', 'DJ Night'],
       galleryUrl: 'https://www.facebook.com/share/p/17UaNPMcHd/'
     },
@@ -62,7 +62,7 @@ export default function Events() {
       time: '4:00 PM - 11:30 PM',
       venue: 'PSA, Pune',
       description: 'Independence Day celebration featuring a spirited Mini Cricket Tournament & Auction. Opening ceremony graced by Ex-Army Sunil Kale Sir. Every match showcased healthy competition, player passion, and unity—creating unforgettable memories and reinforcing teamwork.',
-      attendees: '60+ players',
+      attendees: '60+',
       highlights: ['Auction', 'Opening by Ex-Army Sunil Kale Sir', 'Team Spirit', 'Independence Day Energy'],
         galleryUrl: 'https://www.facebook.com/share/p/1FDbG2oLhR/'
     },
@@ -73,7 +73,7 @@ export default function Events() {
       time: '7:00 AM - 11:30 PM',
       venue: 'Abhay Prabhavana & Jayanand Dham, Lonavala',
       description: 'The divine journey began with a soulful visit to the Jain Spiritual Museum – Abhay Prabhavana, followed by darshan and bhakti at Jayanand Dham, Lonavala. The yatra culminated in a felicitation ceremony honoring over 80 Tapasvis who observed diverse tapasya during Paryushan',
-      attendees: '80+ Tapasvis',
+      attendees: '100+',
       highlights: ['Tapasvi Felicitation', 'Silver Coin Lucky Draw', 'Spiritual Upliftment', 'Community Bonding'],
         galleryUrl: 'https://www.facebook.com/media/set/?set=a.122212157300263798&type=3'
     },
@@ -84,7 +84,7 @@ export default function Events() {
       time: '7:00 PM - 11:30 PM',
       venue: 'Mahalakshmi Lawns, Karvenagar',
       description: 'A night of rhythm, joy & celebration managed by Lokmat Group. Energetic Garba & Dandiya, vibrant traditional attire, festive Navratri spirit, and pride as winners across men, women & kids were all from JSG Pune Sparsh!',
-        attendees: '200+ members',
+        attendees: '160+',
       highlights: ['Garba & Dandiya', 'Managed by Lokmat Group', 'Traditional Attire', 'Multiple Winners'],
         galleryUrl: 'https://www.facebook.com/share/p/1BuUt4Tz2q/'
       },
@@ -95,7 +95,7 @@ export default function Events() {
           time: '5:00 PM - 11:30 PM',
           venue: 'Vilayati Pure Veg, Kondhwa',
           description: 'The official grand auction for Sparsh Premier League – Season 02 (SPL 2.0), organized in association with SG Promoters & Real Estate Consultant, featuring Men’s, Women’s, and Kids’ divisions with exciting team selections and big reveals.',
-          attendees: '150+ participants',
+          attendees: '200+',
           highlights: ['Cricket Auction', 'Revealing Ceremony', 'Sparsh App Launch', 'Delicious Dinner'],
           galleryUrl: 'https://www.facebook.com/media/set/?set=a.122218043144263798&type=3'
       },
@@ -106,7 +106,7 @@ export default function Events() {
           time: '8:00 AM - 11:30 PM',
           venue: 'PSA Ground, Kondhwa',
           description: '11 Mens Team, 4 Womens Team, 4 Kids Team, 150+ passionate players battling it out over 2 action-packed days filled with thrilling cricket, team spirit, and nonstop excitement.',
-          attendees: '150+ participants',
+          attendees: '200+',
           highlights: ['Nailbiting Matches', 'Trophies', 'Delicious Food', 'Entertainment'],
           galleryUrl: 'https://www.facebook.com/media/set/?set=a.122220334856263798&type=3'
       },
@@ -117,7 +117,7 @@ export default function Events() {
           time: '2 Days',
           venue: 'Yavat24',
           description: 'A full-day celebration at Yavat24 bringing together 250+ participants for fun-filled activities, great food, lively entertainment, and memorable moments.',
-          attendees: '250+ members',
+          attendees: '250+',
           highlights: ['Hurda', 'Fun Games', 'Pool', 'Entertainment'],
           galleryUrl: 'To be updated soon..!!'
       },
@@ -128,7 +128,7 @@ export default function Events() {
           time: '2 Nights',
           venue: 'South Goa',
           description: 'Stay at a 4-Star Beach Touch Resort on the pristine Betalbatim Beach, where golden sands meet crystal-blue waters. A perfect blend of fun, relaxation, and unforgettable memories awaits you in paradise!',
-          attendees: '100+ members',
+          attendees: '100+',
           highlights: ['Beach', 'Party', 'Bonding', 'Refreshment'],
           galleryUrl: 'To be updated soon..!!'
       }
