@@ -112,24 +112,25 @@ export default function Events() {
       },
       {
           id: 10,
-          title: 'Sparsh Premier League #02',
-          date: '2025-11-15',
-          time: '8:00 AM - 11:30 PM',
-          venue: 'PSA Ground, Kondhwa',
-          description: '19 competitive teams and 150+ passionate players battling it out over 2 action-packed days filled with thrilling cricket, team spirit, and nonstop excitement.',
-          attendees: '150+ participants',
-          highlights: ['Nailbiting Matches', 'Trophies', 'Delicious Food', 'Entertainment'],
-          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122220334856263798&type=3'
-      },
-      {
-          id: 11,
           title: 'Yavat24 Hurday Party',
           date: '2025-12-21',
-          time: '9:00 AM - 6:30 PM',
+          time: '2 Days',
           venue: 'Yavat24',
           description: 'A full-day celebration at Yavat24 bringing together 250+ participants for fun-filled activities, great food, lively entertainment, and memorable moments.',
           attendees: '250+ participants',
           highlights: ['Hurda', 'Fun Games', 'Pool', 'Entertainment'],
+          galleryUrl: 'To be updated soon..!!'
+      },
+      ,
+      {
+          id: 11,
+          title: 'Goa Escape',
+          date: '2026-01-24',
+          time: '2 Nights',
+          venue: 'South Goa',
+          description: 'Stay at a 4-Star Beach Touch Resort on the pristine Betalbatim Beach, where golden sands meet crystal-blue waters. A perfect blend of fun, relaxation, and unforgettable memories awaits you in paradise!',
+          attendees: '100+ participants',
+          highlights: ['Beach', 'Party', 'Bonding', 'Refreshment'],
           galleryUrl: 'To be updated soon..!!'
       }
   ]
