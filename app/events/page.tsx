@@ -64,7 +64,7 @@ export default function Events() {
       description: 'Independence Day celebration featuring a spirited Mini Cricket Tournament & Auction. Opening ceremony graced by Ex-Army Sunil Kale Sir. Every match showcased healthy competition, player passion, and unity—creating unforgettable memories and reinforcing teamwork.',
       attendees: '60+ players',
       highlights: ['Auction', 'Opening by Ex-Army Sunil Kale Sir', 'Team Spirit', 'Independence Day Energy'],
-      galleryUrl: ''
+        galleryUrl: 'https://www.facebook.com/share/p/1FDbG2oLhR/'
     },
     {
       id: 6,
@@ -75,7 +75,7 @@ export default function Events() {
       description: 'The divine journey began with a soulful visit to the Jain Spiritual Museum – Abhay Prabhavana, followed by darshan and bhakti at Jayanand Dham, Lonavala. The yatra culminated in a felicitation ceremony honoring over 80 Tapasvis who observed diverse tapasya during Paryushan',
       attendees: '80+ Tapasvis',
       highlights: ['Tapasvi Felicitation', 'Silver Coin Lucky Draw', 'Spiritual Upliftment', 'Community Bonding'],
-      galleryUrl: ''
+        galleryUrl: 'https://www.facebook.com/media/set/?set=a.122212157300263798&type=3'
     },
     {
       id: 7,
@@ -86,8 +86,52 @@ export default function Events() {
       description: 'A night of rhythm, joy & celebration managed by Lokmat Group. Energetic Garba & Dandiya, vibrant traditional attire, festive Navratri spirit, and pride as winners across men, women & kids were all from JSG Pune Sparsh!',
       attendees: '200+ participants',
       highlights: ['Garba & Dandiya', 'Managed by Lokmat Group', 'Traditional Attire', 'Multiple Winners'],
-      galleryUrl: ''
-    }
+        galleryUrl: 'https://www.facebook.com/share/p/1BuUt4Tz2q/'
+      },
+      {
+          id: 8,
+          title: 'SPL 2.0 Grand Auction',
+          date: '2025-10-29',
+          time: '5:00 PM - 11:30 PM',
+          venue: 'Vilayati Pure Veg, Kondhwa',
+          description: 'Cricket Auction for Sparsh Premier League – Season 02 (SPL#02) in proud association with SG Promoters & Real Estate Consultant. Three Division - Mens, Womens, Kids',
+          attendees: '150+ participants',
+          highlights: ['Cricket Auction', 'Revealing Ceremony', 'Sparsh App Launch', 'Delicious Dinner'],
+          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122218043144263798&type=3'
+      },
+      {
+          id: 9,
+          title: 'Sparsh Premier League #02',
+          date: '2025-11-15',
+          time: '8:00 AM - 11:30 PM',
+          venue: 'PSA Ground, Kondhwa',
+          description: '19 competitive teams and 150+ passionate players battling it out over 2 action-packed days filled with thrilling cricket, team spirit, and nonstop excitement.',
+          attendees: '150+ participants',
+          highlights: ['Nailbiting Matches', 'Trophies', 'Delicious Food', 'Entertainment'],
+          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122220334856263798&type=3'
+      },
+      {
+          id: 10,
+          title: 'Sparsh Premier League #02',
+          date: '2025-11-15',
+          time: '8:00 AM - 11:30 PM',
+          venue: 'PSA Ground, Kondhwa',
+          description: '19 competitive teams and 150+ passionate players battling it out over 2 action-packed days filled with thrilling cricket, team spirit, and nonstop excitement.',
+          attendees: '150+ participants',
+          highlights: ['Nailbiting Matches', 'Trophies', 'Delicious Food', 'Entertainment'],
+          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122220334856263798&type=3'
+      },
+      {
+          id: 11,
+          title: 'Yavat24 Hurday Party',
+          date: '2025-12-21',
+          time: '9:00 AM - 6:30 PM',
+          venue: 'Yavat24',
+          description: 'A full-day celebration at Yavat24 bringing together 250+ participants for fun-filled activities, great food, lively entertainment, and memorable moments.',
+          attendees: '250+ participants',
+          highlights: ['Hurda', 'Fun Games', 'Pool', 'Entertainment'],
+          galleryUrl: 'To be updated soon..!!'
+      }
   ]
 
   // Function to handle external gallery links - Always show modal
