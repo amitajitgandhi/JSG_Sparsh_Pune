@@ -112,16 +112,6 @@ export default function Hero() {
               <p className="text-gray-700 font-medium">Choose an event to view details & register early.</p>
               <div className="grid gap-3">
                 <Link
-                                  href="/events/hurda-party"
-                  onClick={() => setShowUpcoming(false)}
-                  className="group rounded-xl border border-blue-300 bg-blue-50 px-4 py-3 font-semibold text-blue-700 flex items-center justify-between hover:bg-blue-100 transition"
-                >
-                  <span>Hurda Party</span>
-                  <span className="text-[11px] font-bold uppercase tracking-wide group-hover:translate-x-1 transition">
-                    Explore &rarr;
-                  </span>
-                </Link>
-                <Link
                   href="/events/goa"
                   onClick={() => setShowUpcoming(false)}
                   className="group rounded-xl border border-pink-300 bg-pink-50 px-4 py-3 font-semibold text-pink-700 flex items-center justify-between hover:bg-pink-100 transition"
