@@ -28,10 +28,6 @@ export default function UpcomingEventsModal() {
         <div className="p-5 space-y-4 text-sm">
           <p className="text-gray-700 font-medium">Choose an event to view details & register early.</p>
           <div className="grid gap-3">
-            <Link href="/events/hurda-party" onClick={close} className="group rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-3 font-semibold text-emerald-700 flex items-center justify-between hover:bg-emerald-100 transition">
-              <span>Hurda Party</span>
-              <span className="text-[11px] font-bold uppercase tracking-wide group-hover:translate-x-1 transition">View →</span>
-            </Link>
             <Link href="/events/goa" onClick={close} className="group rounded-xl border border-pink-300 bg-pink-50 px-4 py-3 font-semibold text-pink-700 flex items-center justify-between hover:bg-pink-100 transition">
               <span>Goa Escape</span>
               <span className="text-[11px] font-bold uppercase tracking-wide group-hover:translate-x-1 transition">Explore →</span>
