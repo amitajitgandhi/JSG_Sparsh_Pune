@@ -14,7 +14,7 @@ export default function Page() {
       <div className="max-w-3xl mx-auto px-4 py-6 sm:py-10">
         <div className="mb-4 sm:mb-6">
           <h1 className="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-yellow-600">
-            JSG SPARSH 2026–2027 
+            2026–2027 
           </h1>
                   <p className="text-sm sm:text-base text-gray-600 mt-2">Membership Registration</p>
         </div>

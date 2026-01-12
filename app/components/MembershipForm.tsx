@@ -91,6 +91,12 @@ export default function MembershipForm() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)
   const [toast, setToast] = useState<{ type: 'success' | 'error' | 'info'; msg: string } | null>(null)
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
+
+  const markTouched = useCallback((name: string) => {
+    setTouched((t) => (t[name] ? t : { ...t, [name]: true }))
+  }, [])
+  const getError = useCallback((name: string) => (touched[name] ? errors[name] : undefined), [touched, errors])
 
   // Close modal helpers
   const closeToast = useCallback(() => setToast(null), [])
@@ -255,7 +261,7 @@ committee link`;
   }
 
   const FieldError = ({ name }: { name: string }) => {
-    const msg = errors[name]
+    const msg = touched[name] ? errors[name] : undefined
     if (!msg) return null
     return <p className="text-xs text-red-600 mt-1">{msg}</p>
   }
@@ -312,7 +318,7 @@ committee link`;
       </div>
       {/* Benefits - colorful emoji tiles */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">Benefits</h3>
+        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">Highlights</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="rounded-xl border border-gray-200 dark:border-neutral-700 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-neutral-800 dark:to-neutral-800 p-4">
             <div className="text-xl">🎉</div>
@@ -373,62 +379,62 @@ committee link`;
 
   const renderMemberDetails = () => (
     <div className="p-4 sm:p-6 space-y-4">
-      <TextInput name="full_name" autoComplete="name" label="Full Name" value={values.full_name} onChange={(e) => setField('full_name', e.currentTarget.value)} placeholder="Enter your full name" required error={errors['full_name']} />
+      <TextInput name="full_name" autoComplete="name" label="Full Name" value={values.full_name} onChange={(e) => { markTouched('full_name'); setField('full_name', e.currentTarget.value) }} placeholder="Enter your full name" required error={getError('full_name')} />
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="residential_address">Residential Address<span className="text-red-600"> *</span></label>
-        <textarea id="residential_address" name="residential_address" autoComplete="street-address" value={values.residential_address} onChange={(e) => setField('residential_address', e.currentTarget.value)} placeholder="Full address" className="w-full rounded-lg border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-gray-900 dark:text-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-24" required />
+        <textarea id="residential_address" name="residential_address" autoComplete="street-address" value={values.residential_address} onChange={(e) => { markTouched('residential_address'); setField('residential_address', e.currentTarget.value) }} placeholder="Full address" className="w-full rounded-lg border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-gray-900 dark:text-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-24" required />
         <FieldError name="residential_address" />
       </div>
       <div className="grid grid-cols-3 gap-2">
-        <SelectInput name="dob.day" label="DOB Day" value={values.dob.day} onChange={(e) => setField('dob', { ...values.dob, day: e.currentTarget.value })} error={errors['dob.day']} required>
+        <SelectInput name="dob.day" label="DOB Day" value={values.dob.day} onChange={(e) => { markTouched('dob.day'); setField('dob', { ...values.dob, day: e.currentTarget.value }) }} error={getError('dob.day')} required>
           <option value="">Day</option>
           {days.map((d) => <option key={d} value={String(d).padStart(2,'0')}>{d}</option>)}
         </SelectInput>
-        <SelectInput name="dob.month" label="DOB Month" value={values.dob.month} onChange={(e) => setField('dob', { ...values.dob, month: e.currentTarget.value })} error={errors['dob.month']} required>
+        <SelectInput name="dob.month" label="DOB Month" value={values.dob.month} onChange={(e) => { markTouched('dob.month'); setField('dob', { ...values.dob, month: e.currentTarget.value }) }} error={getError('dob.month')} required>
           <option value="">Month</option>
           {months.map((m) => <option key={m.value} value={m.value}>{m.label}</option>)}
         </SelectInput>
-        <SelectInput name="dob.year" label="DOB Year" value={values.dob.year} onChange={(e) => setField('dob', { ...values.dob, year: e.currentTarget.value })} error={errors['dob.year']} required>
+        <SelectInput name="dob.year" label="DOB Year" value={values.dob.year} onChange={(e) => { markTouched('dob.year'); setField('dob', { ...values.dob, year: e.currentTarget.value }) }} error={getError('dob.year')} required>
           <option value="">Year</option>
           {years.map((y) => <option key={y} value={y}>{y}</option>)}
         </SelectInput>
       </div>
       <div className="grid grid-cols-3 gap-2">
-        <SelectInput name="wedding_date.day" label="Wedding Day" value={values.wedding_date.day} onChange={(e) => setField('wedding_date', { ...values.wedding_date, day: e.currentTarget.value })} error={errors['wedding_date.day']} required>
+        <SelectInput name="wedding_date.day" label="Wedding Day" value={values.wedding_date.day} onChange={(e) => { markTouched('wedding_date.day'); setField('wedding_date', { ...values.wedding_date, day: e.currentTarget.value }) }} error={getError('wedding_date.day')} required>
           <option value="">Day</option>
           {days.map((d) => <option key={d} value={String(d).padStart(2,'0')}>{d}</option>)}
         </SelectInput>
-        <SelectInput name="wedding_date.month" label="Wedding Month" value={values.wedding_date.month} onChange={(e) => setField('wedding_date', { ...values.wedding_date, month: e.currentTarget.value })} error={errors['wedding_date.month']} required>
+        <SelectInput name="wedding_date.month" label="Wedding Month" value={values.wedding_date.month} onChange={(e) => { markTouched('wedding_date.month'); setField('wedding_date', { ...values.wedding_date, month: e.currentTarget.value }) }} error={getError('wedding_date.month')} required>
           <option value="">Month</option>
           {months.map((m) => <option key={m.value} value={m.value}>{m.label}</option>)}
         </SelectInput>
-        <SelectInput name="wedding_date.year" label="Wedding Year" value={values.wedding_date.year} onChange={(e) => setField('wedding_date', { ...values.wedding_date, year: e.currentTarget.value })} error={errors['wedding_date.year']} required>
+        <SelectInput name="wedding_date.year" label="Wedding Year" value={values.wedding_date.year} onChange={(e) => { markTouched('wedding_date.year'); setField('wedding_date', { ...values.wedding_date, year: e.currentTarget.value }) }} error={getError('wedding_date.year')} required>
           <option value="">Year</option>
           {years.map((y) => <option key={y} value={y}>{y}</option>)}
         </SelectInput>
       </div>
-      <TextInput name="whatsapp_number" autoComplete="tel" label="WhatsApp Number" value={values.whatsapp_number} onChange={(e) => setField('whatsapp_number', e.currentTarget.value)} placeholder="e.g. 9876543210" inputMode="tel" error={errors['whatsapp_number']} required />
+      <TextInput name="whatsapp_number" autoComplete="tel" label="WhatsApp Number" value={values.whatsapp_number} onChange={(e) => { markTouched('whatsapp_number'); setField('whatsapp_number', e.currentTarget.value) }} placeholder="e.g. 9876543210" inputMode="tel" error={getError('whatsapp_number')} required />
     </div>
   )
 
   const renderSpouse = () => (
     <div className="p-4 sm:p-6 space-y-4">
-      <TextInput name="spouse_full_name" autoComplete="off" label="Spouse Full Name" value={values.spouse_full_name} onChange={(e) => setField('spouse_full_name', e.currentTarget.value)} placeholder="Enter spouse full name" error={errors['spouse_full_name']} required />
+      <TextInput name="spouse_full_name" autoComplete="off" label="Spouse Full Name" value={values.spouse_full_name} onChange={(e) => { markTouched('spouse_full_name'); setField('spouse_full_name', e.currentTarget.value) }} placeholder="Enter spouse full name" error={getError('spouse_full_name')} required />
       <div className="grid grid-cols-3 gap-2">
-        <SelectInput name="spouse_dob.day" label="Spouse DOB Day" value={values.spouse_dob.day} onChange={(e) => setField('spouse_dob', { ...values.spouse_dob, day: e.currentTarget.value })} error={errors['spouse_dob.day']} required>
+        <SelectInput name="spouse_dob.day" label="Spouse DOB Day" value={values.spouse_dob.day} onChange={(e) => { markTouched('spouse_dob.day'); setField('spouse_dob', { ...values.spouse_dob, day: e.currentTarget.value }) }} error={getError('spouse_dob.day')} required>
           <option value="">Day</option>
           {days.map((d) => <option key={d} value={String(d).padStart(2,'0')}>{d}</option>)}
         </SelectInput>
-        <SelectInput name="spouse_dob.month" label="Spouse DOB Month" value={values.spouse_dob.month} onChange={(e) => setField('spouse_dob', { ...values.spouse_dob, month: e.currentTarget.value })} error={errors['spouse_dob.month']} required>
+        <SelectInput name="spouse_dob.month" label="Spouse DOB Month" value={values.spouse_dob.month} onChange={(e) => { markTouched('spouse_dob.month'); setField('spouse_dob', { ...values.spouse_dob, month: e.currentTarget.value }) }} error={getError('spouse_dob.month')} required>
           <option value="">Month</option>
           {months.map((m) => <option key={m.value} value={m.value}>{m.label}</option>)}
         </SelectInput>
-        <SelectInput name="spouse_dob.year" label="Spouse DOB Year" value={values.spouse_dob.year} onChange={(e) => setField('spouse_dob', { ...values.spouse_dob, year: e.currentTarget.value })} error={errors['spouse_dob.year']} required>
+        <SelectInput name="spouse_dob.year" label="Spouse DOB Year" value={values.spouse_dob.year} onChange={(e) => { markTouched('spouse_dob.year'); setField('spouse_dob', { ...values.spouse_dob, year: e.currentTarget.value }) }} error={getError('spouse_dob.year')} required>
           <option value="">Year</option>
           {years.map((y) => <option key={y} value={y}>{y}</option>)}
         </SelectInput>
       </div>
-      <TextInput name="spouse_whatsapp" autoComplete="tel" label="Spouse WhatsApp" value={values.spouse_whatsapp} onChange={(e) => setField('spouse_whatsapp', e.currentTarget.value)} placeholder="e.g. 9876543210" inputMode="tel" error={errors['spouse_whatsapp']} required />
+      <TextInput name="spouse_whatsapp" autoComplete="tel" label="Spouse WhatsApp" value={values.spouse_whatsapp} onChange={(e) => { markTouched('spouse_whatsapp'); setField('spouse_whatsapp', e.currentTarget.value) }} placeholder="e.g. 9876543210" inputMode="tel" error={getError('spouse_whatsapp')} required />
     </div>
   )
 
