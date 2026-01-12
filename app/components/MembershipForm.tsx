@@ -188,7 +188,7 @@ export default function MembershipForm() {
     setValues((v) => {
       const count = v.number_of_children
       const arr = [...v.children]
-      while (arr.length < count) arr.push({ name: '', gender: '', school: '', other_school: '', dob: { day: '', month: '', year: '' } })
+      while (arr.length < count) arr.push({ name: '', gender: 'Male', school: 'Not Applicable ( Kid is small)', other_school: '', dob: { day: '', month: '', year: '' } })
       while (arr.length > count) arr.pop()
       return { ...v, children: arr }
     })
@@ -466,13 +466,9 @@ committee link`;
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor={`child_${idx}_gender`}>Gender<span className="text-red-600"> *</span></label>
           <select id={`child_${idx}_gender`} className="w-full rounded-lg border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-gray-900 dark:text-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={child?.gender || ''} onChange={(e) => {
             const arr = [...values.children]
-            arr[idx] = { ...arr[idx], gender: e.currentTarget.value }
+            arr[idx] = { ...arr[idx], gender: e.currentTarget.value as 'Male' | 'Female' }
             setField('children', arr)
           }} required>
-            <option value="">Select</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor={`child_${idx}_school`}>School<span className="text-red-600"> *</span></label>
@@ -593,8 +589,8 @@ committee link`;
           <div><span className="text-gray-500 dark:text-gray-400">Name:</span> {values.full_name || '-'} </div>
           <div><span className="text-gray-500 dark:text-gray-400">WhatsApp:</span> {values.whatsapp_number || '-'} </div>
           <div className="sm:col-span-2"><span className="text-gray-500 dark:text-gray-400">Address:</span> {values.residential_address || '-'} </div>
-          <div><span className="text-gray-500 dark:text-gray-400">DOB:</span> {values.dob.day}/{values.dob.month}/{values.dob.year}</div>
-          <div><span className="text-gray-500 dark:text-gray-400">Wedding:</span> {values.wedding_date.day}/{values.wedding_date.month}/{values.wedding_date.year}</div>
+          <div><span className="text-gray-500 dark:text-gray-400">DOB:</span> {values.dob.day || '-'}{values.dob.day && values.dob.month ? '/' : ''}{values.dob.month || '-'}{values.dob.month && values.dob.year ? '/' : ''}{values.dob.year || '-'}</div>
+          <div><span className="text-gray-500 dark:text-gray-400">Wedding:</span> {values.wedding_date.day || '-'}{values.wedding_date.day && values.wedding_date.month ? '/' : ''}{values.wedding_date.month || '-'}{values.wedding_date.month && values.wedding_date.year ? '/' : ''}{values.wedding_date.year || '-'}</div>
         </div>
       </div>
       <div className="bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-xl p-4">
