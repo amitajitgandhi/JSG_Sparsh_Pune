@@ -119,7 +119,7 @@ export default function Events() {
           description: 'A full-day celebration at Yavat24 bringing together 250+ participants for fun-filled activities, great food, lively entertainment, and memorable moments.',
           attendees: '250+',
           highlights: ['Hurda', 'Fun Games', 'Pool', 'Entertainment'],
-          galleryUrl: 'To be updated soon..!!'
+          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122224464524263798&type=3'
       },
       {
           id: 11,
