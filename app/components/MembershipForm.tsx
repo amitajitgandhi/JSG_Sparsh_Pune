@@ -90,7 +90,7 @@ export default function MembershipForm() {
   const [values, setValues] = useState<MembershipInput>(initialValues)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)
-  const [toast, setToast] = useState<{ type: 'success' | 'error' | 'info'; msg: string } | null>(null)
+  const [toast, setToast] = useState<{ type: 'success' | 'error' | 'info'; msg: string; toastLink?: { href: string; label?: string } } | null>(null)
   const [touched, setTouched] = useState<Record<string, boolean>>({})
 
   const markTouched = useCallback((name: string) => {
@@ -215,27 +215,21 @@ export default function MembershipForm() {
       if (!res.ok || !data?.ok) throw new Error(data?.error || 'Submission failed')
 
       localStorage.removeItem(DRAFT_KEY)
-      const successMsg = `Thank You 🙏🏻 for your decision on joining JSG SPARSH , the "Most Energetic💃🏻 & Enthusiastic🕺🏻 Young Couple Group" ( upto 45 years age)
+      const successMsg = `Thank you for choosing to join JSG SPARSH – the Most Energetic & Enthusiastic Young Couple Group (up to 45 years).
 
-Member has to Submit Photocopy of Aadhar Card for Self ,spouse & children , along with payment of membership fee   
+Required: Submit photocopies of Aadhaar cards for self, spouse, and children, along with the membership fee.
 
-Please note, only after verification of the documents, a membership will be confirmed. 
+Note: Membership will be confirmed only after document verification.
 
-I will abide by all the rules of group and maintain sanctity of the events and comply with decisions of the committee members.
+Declaration:
+• I will abide by all group rules and maintain the sanctity of events.
+• I will comply with decisions of the committee members.
+• Membership is at the sole discretion of the committee.
 
-My membership will be on sole discretion of committee members
+You can deposit the membership fee with any of our committee members.
 
-~~@~~~@~~~@~~~@~~~@~~
-
-YOU CAN DEPOSIT MEMBERSHIP FEES AMOUNT WITH ANY OF OUR COMMITTEE MEMBERS
-
-
-~~@~~~@~~~@~~~@~~~@~~
-
-For more information or queries, please contact our committee members . 📲
-
-committee link`;
-      setToast({ type: 'success', msg: successMsg })
+For more information or queries, please contact our committee members.`;
+      setToast({ type: 'success', msg: successMsg, toastLink: { href: '/committee', label: 'View committee page' } })
       setStep(0)
       setValues(initialValues)
     } catch (e: any) {
@@ -697,6 +691,9 @@ committee link`;
               <p>{toast.msg}</p>
             </div>
             <div className="p-3 flex justify-end gap-2">
+              {toast.toastLink && (
+                <a href={toast.toastLink.href} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-700" target="_self" rel="noopener">{toast.toastLink.label || 'Open link'}</a>
+              )}
               <button onClick={closeToast} className="px-4 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 text-sm hover:bg-gray-50 dark:hover:bg-neutral-800">Close</button>
             </div>
           </div>
