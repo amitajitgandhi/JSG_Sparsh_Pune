@@ -469,6 +469,10 @@ committee link`;
             arr[idx] = { ...arr[idx], gender: e.currentTarget.value as 'Male' | 'Female' }
             setField('children', arr)
           }} required>
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor={`child_${idx}_school`}>School<span className="text-red-600"> *</span></label>
