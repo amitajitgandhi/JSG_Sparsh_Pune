@@ -1,4 +1,4 @@
-'use client'
+ï»¿'use client'
 
 import React, { useEffect, useMemo, useState } from 'react'
 import { RefreshCw, Users, Baby, Calendar } from 'lucide-react'
@@ -123,7 +123,7 @@ export default function MembershipDashboard() {
         <div className='mb-8 flex justify-between items-center'>
           <div>
             <h1 className='text-3xl font-bold text-gray-900 mb-2'>Membership Registration Dashboard</h1>
-            <p className='text-gray-600'>Overview of membership submissions (2026–27)</p>
+            <p className='text-gray-600'>Overview of membership submissions (2026â€“27)</p>
           </div>
           <button onClick={refresh} disabled={refreshing} className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center disabled:opacity-50'>
             <RefreshCw size={16} className={`mr-2 ${refreshing? 'animate-spin':''}`}/>{refreshing? 'Refreshing...':'Refresh'}
@@ -151,14 +151,14 @@ export default function MembershipDashboard() {
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
           <div className='bg-white p-6 rounded-lg shadow'>
-            <h2 className='text-lg font-semibold text-gray-900 mb-4'>Old Members – Age wise</h2>
+            <h2 className='text-lg font-semibold text-gray-900 mb-4'>Old Members â€“ Age wise</h2>
             <ul className='space-y-2 text-sm text-gray-700'>
-              <li className='flex justify-between'><span>?25</span><span>{oldAge['<=25']}</span></li>
-              <li className='flex justify-between'><span>26–35</span><span>{oldAge['26-35']}</span></li>
-              <li className='flex justify-between'><span>36–45</span><span>{oldAge['36-45']}</span></li>
+              <li className='flex justify-between'><span>â‰¤25</span><span>{oldAge['<=25']}</span></li>
+              <li className='flex justify-between'><span>26â€“35</span><span>{oldAge['26-35']}</span></li>
+              <li className='flex justify-between'><span>36â€“45</span><span>{oldAge['36-45']}</span></li>
               <li className='flex justify-between'><span>>45</span><span>{oldAge['>45']}</span></li>
             </ul>
-            <h3 className='text-lg font-semibold text-gray-900 mt-6 mb-2'>Old Members – Kids wise</h3>
+            <h3 className='text-lg font-semibold text-gray-900 mt-6 mb-2'>Old Members â€“ Kids wise</h3>
             <ul className='space-y-2 text-sm text-gray-700'>
               <li className='flex justify-between'><span>0 kids</span><span>{oldKids['0']}</span></li>
               <li className='flex justify-between'><span>1 kid</span><span>{oldKids['1']}</span></li>
@@ -168,14 +168,14 @@ export default function MembershipDashboard() {
           </div>
 
           <div className='bg-white p-6 rounded-lg shadow'>
-            <h2 className='text-lg font-semibold text-gray-900 mb-4'>New Members – Age wise</h2>
+            <h2 className='text-lg font-semibold text-gray-900 mb-4'>New Members â€“ Age wise</h2>
             <ul className='space-y-2 text-sm text-gray-700'>
-              <li className='flex justify-between'><span>?25</span><span>{newAge['<=25']}</span></li>
-              <li className='flex justify-between'><span>26–35</span><span>{newAge['26-35']}</span></li>
-              <li className='flex justify-between'><span>36–45</span><span>{newAge['36-45']}</span></li>
+              <li className='flex justify-between'><span>â‰¤25</span><span>{newAge['<=25']}</span></li>
+              <li className='flex justify-between'><span>26â€“35</span><span>{newAge['26-35']}</span></li>
+              <li className='flex justify-between'><span>36â€“45</span><span>{newAge['36-45']}</span></li>
               <li className='flex justify-between'><span>>45</span><span>{newAge['>45']}</span></li>
             </ul>
-            <h3 className='text-lg font-semibold text-gray-900 mt-6 mb-2'>New Members – Kids wise</h3>
+            <h3 className='text-lg font-semibold text-gray-900 mt-6 mb-2'>New Members â€“ Kids wise</h3>
             <ul className='space-y-2 text-sm text-gray-700'>
               <li className='flex justify-between'><span>0 kids</span><span>{newKids['0']}</span></li>
               <li className='flex justify-between'><span>1 kid</span><span>{newKids['1']}</span></li>
