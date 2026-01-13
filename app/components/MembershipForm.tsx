@@ -694,7 +694,7 @@ For more information or queries, please contact our committee members.`;
               {toast.toastLink && (
                 <a href={toast.toastLink.href} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-700" target="_self" rel="noopener">{toast.toastLink.label || 'Open link'}</a>
               )}
-              <button onClick={closeToast} className="px-4 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 text-sm hover:bg-gray-50 dark:hover:bg-neutral-800">Close</button>
+              <button onClick={closeToast} className="px-4 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 text-sm text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-neutral-800">Close</button>
             </div>
           </div>
         </div>
