@@ -590,32 +590,32 @@ For more information or queries, please contact our committee members.`;
       <div className="bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-xl p-4">
         <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2">Primary</div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div><span className="text-gray-500 dark:text-gray-400">Name:</span> {values.full_name || '-'} </div>
-          <div><span className="text-gray-500 dark:text-gray-400">WhatsApp:</span> {values.whatsapp_number || '-'} </div>
-          <div className="sm:col-span-2"><span className="text-gray-500 dark:text-gray-400">Address:</span> {values.residential_address || '-'} </div>
-          <div><span className="text-gray-500 dark:text-gray-400">DOB:</span> {values.dob.day || '-'}{values.dob.day && values.dob.month ? '/' : ''}{values.dob.month || '-'}{values.dob.month && values.dob.year ? '/' : ''}{values.dob.year || '-'}</div>
-          <div><span className="text-gray-500 dark:text-gray-400">Wedding:</span> {values.wedding_date.day || '-'}{values.wedding_date.day && values.wedding_date.month ? '/' : ''}{values.wedding_date.month || '-'}{values.wedding_date.month && values.wedding_date.year ? '/' : ''}{values.wedding_date.year || '-'}</div>
+          <div><span className="text-gray-500 dark:text-gray-300">Name:</span> <span className="text-gray-700 dark:text-gray-100">{values.full_name || '-'}</span> </div>
+          <div><span className="text-gray-500 dark:text-gray-300">WhatsApp:</span> <span className="text-gray-700 dark:text-gray-100">{values.whatsapp_number || '-'}</span> </div>
+          <div className="sm:col-span-2"><span className="text-gray-500 dark:text-gray-300">Address:</span> <span className="text-gray-700 dark:text-gray-100">{values.residential_address || '-'}</span> </div>
+          <div><span className="text-gray-500 dark:text-gray-300">DOB:</span> <span className="text-gray-700 dark:text-gray-100">{values.dob.day || '-'}{values.dob.day && values.dob.month ? '/' : ''}{values.dob.month || '-'}{values.dob.month && values.dob.year ? '/' : ''}{values.dob.year || '-'}</span></div>
+          <div><span className="text-gray-500 dark:text-gray-300">Wedding:</span> <span className="text-gray-700 dark:text-gray-100">{values.wedding_date.day || '-'}{values.wedding_date.day && values.wedding_date.month ? '/' : ''}{values.wedding_date.month || '-'}{values.wedding_date.month && values.wedding_date.year ? '/' : ''}{values.wedding_date.year || '-'}</span></div>
         </div>
       </div>
       <div className="bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-xl p-4">
         <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2">Spouse</div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div><span className="text-gray-500 dark:text-gray-400">Name:</span> {values.spouse_full_name || '-'} </div>
-          <div><span className="text-gray-500 dark:text-gray-400">WhatsApp:</span> {values.spouse_whatsapp || '-'} </div>
-          <div><span className="text-gray-500 dark:text-gray-400">DOB:</span> {values.spouse_dob.day || '-'}/{values.spouse_dob.month || '-'}/{values.spouse_dob.year || '-'}</div>
+          <div><span className="text-gray-500 dark:text-gray-300">Name:</span> <span className="text-gray-700 dark:text-gray-100">{values.spouse_full_name || '-'}</span> </div>
+          <div><span className="text-gray-500 dark:text-gray-300">WhatsApp:</span> <span className="text-gray-700 dark:text-gray-100">{values.spouse_whatsapp || '-'}</span> </div>
+          <div><span className="text-gray-500 dark:text-gray-300">DOB:</span> <span className="text-gray-700 dark:text-gray-100">{values.spouse_dob.day || '-'}/{values.spouse_dob.month || '-'}/{values.spouse_dob.year || '-'}</span></div>
         </div>
       </div>
       <div className="bg-gray-50 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-xl p-4">
         <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2">Children</div>
-        {values.number_of_children === 0 && <div className="text-gray-500 dark:text-gray-400">No children</div>}
+        {values.number_of_children === 0 && <div className="text-gray-500 dark:text-gray-300">No children</div>}
         {values.children.slice(0, values.number_of_children).map((c, i) => (
-          <div key={i} className="border border-gray-200 dark:border-neutral-700 rounded-lg p-3 mb-2 bg-white dark:bg-neutral-900">
+          <div key={i} className="border border-gray-200 dark:border-neutral-700 rounded-lg p-3 mb-2 bg-white dark:bg-neutral-800">
             <div className="font-medium text-gray-800 dark:text-gray-100">Child #{i+1}</div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-1 text-gray-700 dark:text-gray-300">
-              <div><span className="text-gray-500 dark:text-gray-400">Name:</span> {c.name || '-'} </div>
-              <div><span className="text-gray-500 dark:text-gray-400">Gender:</span> {c.gender || '-'} </div>
-              <div><span className="text-gray-500 dark:text-gray-400">School:</span> {c.school === 'Other' ? (c.other_school || 'Other') : (c.school || '-')} </div>
-              <div><span className="text-gray-500 dark:text-gray-400">DOB:</span> {c.dob?.day || '-'}/{c.dob?.month || '-'}/{c.dob?.year || '-'}</div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-1 text-gray-700 dark:text-gray-100">
+              <div><span className="text-gray-500 dark:text-gray-300">Name:</span> <span className="text-gray-700 dark:text-gray-100">{c.name || '-'}</span> </div>
+              <div><span className="text-gray-500 dark:text-gray-300">Gender:</span> <span className="text-gray-700 dark:text-gray-100">{c.gender || '-'}</span> </div>
+              <div><span className="text-gray-500 dark:text-gray-300">School:</span> <span className="text-gray-700 dark:text-gray-100">{c.school === 'Other' ? (c.other_school || 'Other') : (c.school || '-')}</span> </div>
+              <div><span className="text-gray-500 dark:text-gray-300">DOB:</span> <span className="text-gray-700 dark:text-gray-100">{c.dob?.day || '-'}/{c.dob?.month || '-'}/{c.dob?.year || '-'}</span></div>
             </div>
           </div>
         ))}
@@ -624,7 +624,7 @@ For more information or queries, please contact our committee members.`;
         <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2">Membership</div>
         <div className="text-gray-800 dark:text-gray-100">{values.membership_type === 'OLD_MEMBER' ? 'Old Member' : 'New Member'}</div>
       </div>
-      <div className="text-xs text-gray-500 dark:text-gray-400">By submitting, you agree to committee approval and non-refundable policy. Data will be used only for membership communication.</div>
+      <div className="text-xs text-gray-500 dark:text-gray-300">By submitting, you agree to committee approval and non-refundable policy. Data will be used only for membership communication.</div>
     </div>
   )
 
