@@ -10,6 +10,9 @@ interface MembershipRow {
   dob: string // YYYY-MM-DD
   membership_type: 'OLD_MEMBER' | 'NEW_MEMBER'
   created_at?: string | null
+  spouse_name?: string | null
+  spouse_whatsapp?: string | null
+  spouse_dob?: string | null
 }
 
 interface ChildRow {
@@ -47,7 +50,7 @@ export default function MembershipDashboard() {
     setLoading(true)
     const { data: mData, error: mErr } = await supabase
       .from('memberships_2026_27')
-      .select('id, full_name, dob, membership_type, created_at')
+      .select('id, full_name, dob, membership_type, created_at, spouse_name, spouse_whatsapp, spouse_dob')
       .order('created_at', { ascending: false })
     const { data: cData, error: cErr } = await supabase
       .from('membership_children_2026_27')
@@ -124,6 +127,10 @@ export default function MembershipDashboard() {
       membership_type: m.membership_type,
       dob: m.dob,
       age: calcAge(m.dob) ?? '',
+      spouse_name: m.spouse_name ?? '',
+      spouse_whatsapp: m.spouse_whatsapp ?? '',
+      spouse_dob: m.spouse_dob ?? '',
+      spouse_age: calcAge(m.spouse_dob) ?? '',
       child1_name: c1?.name ?? '',
       child1_age: (calcAge(c1?.dob) ?? ''),
       child1_gender: c1?.gender ?? '',
@@ -136,6 +143,7 @@ export default function MembershipDashboard() {
       child3_age: (calcAge(c3?.dob) ?? ''),
       child3_gender: c3?.gender ?? '',
       child3_school: c3?.school ?? '',
+      kids_count: childrenFor.length,
       created_at: m.created_at ? new Date(m.created_at).toLocaleString() : ''
     }
   }
@@ -206,6 +214,33 @@ export default function MembershipDashboard() {
               <div className='bg-white p-4 rounded-lg shadow border-l-4 border-purple-500'>
                 <p className='text-sm text-gray-600 flex items-center gap-1'><Baby size={14}/>Total Kids</p>
                 <p className='text-2xl font-bold text-purple-700'>{totals.kidsTotal}</p>
+              </div>
+            </div>
+
+            <div className='bg-white rounded-lg shadow overflow-hidden mb-8'>
+              <div className='overflow-x-auto'>
+                <table className='min-w-full divide-y divide-gray-200'>
+                  <thead className='bg-gray-50'>
+                    <tr>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Name</th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Type</th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Submitted At</th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Age</th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Kids</th>
+                    </tr>
+                  </thead>
+                  <tbody className='bg-white divide-y divide-gray-200'>
+                    {members.map(m => (
+                      <tr key={m.id} className='hover:bg-gray-50'>
+                        <td className='px-6 py-4 text-sm font-medium text-gray-900'>{m.full_name}</td>
+                        <td className='px-6 py-4 text-sm text-gray-700'>{m.membership_type === 'OLD_MEMBER' ? 'Old' : 'New'}</td>
+                        <td className='px-6 py-4 text-sm text-gray-700'>{m.created_at ? new Date(m.created_at).toLocaleString() : ''}</td>
+                        <td className='px-6 py-4 text-sm text-gray-700'>{calcAge(m.dob) ?? ''}</td>
+                        <td className='px-6 py-4 text-sm text-gray-700'>{childCountByMembership.get(m.id) || 0}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
 
