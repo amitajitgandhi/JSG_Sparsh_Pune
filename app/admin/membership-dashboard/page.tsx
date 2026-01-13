@@ -38,6 +38,44 @@ function calcAge(dob: string | null | undefined): number | null {
   return age
 }
 
+// Top-level DonutChart to ensure it is in scope where used
+const DonutChart: React.FC<{ data: { label: string; value: number; color: string }[]; size?: number; stroke?: number }> = ({ data, size = 160, stroke = 18 }) => {
+  const total = data.reduce((s, d) => s + d.value, 0)
+  const r = (size - stroke) / 2
+  const c = 2 * Math.PI * r
+  let offset = 0
+  return (
+    <div className='flex flex-col items-center gap-3'>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <circle cx={size/2} cy={size/2} r={r} fill='none' stroke='#e5e7eb' strokeWidth={stroke} />
+        {total > 0 && data.map((d, i) => {
+          const len = (d.value / total) * c
+          const el = (
+            <circle key={i} cx={size/2} cy={size/2} r={r} fill='none' stroke={d.color} strokeWidth={stroke}
+              strokeDasharray={`${len} ${c}`} strokeDashoffset={offset} transform={`rotate(-90 ${size/2} ${size/2})`} />
+          )
+          offset -= len
+          return el
+        })}
+        {total > 0 && (
+          <text x='50%' y='50%' dominantBaseline='middle' textAnchor='middle' className='fill-gray-700' style={{ fontSize: 14 }}>{total}</text>
+        )}
+      </svg>
+      <div className='grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-700'>
+        {data.map((d, i) => {
+          const pct = total ? Math.round((d.value / total) * 100) : 0
+          return (
+            <div key={i} className='flex items-center gap-2'>
+              <span className='inline-block w-3 h-3 rounded' style={{ backgroundColor: d.color }} />
+              <span className='whitespace-nowrap'>{d.label}: {d.value} ({pct}%)</span>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 export default function MembershipDashboard() {
   const [members, setMembers] = useState<MembershipRow[]>([])
   const [children, setChildren] = useState<ChildRow[]>([])
@@ -121,41 +159,38 @@ export default function MembershipDashboard() {
   const oldKids = useMemo(() => groupKids(oldRows), [oldRows, childCountByMembership])
   const newKids = useMemo(() => groupKids(newRows), [newRows, childCountByMembership])
 
-  function DonutChart({ data, size = 160, stroke = 18 }: { data: { label: string; value: number; color: string }[]; size?: number; stroke?: number }) {
-    const total = data.reduce((s, d) => s + d.value, 0)
-    const r = (size - stroke) / 2
-    const c = 2 * Math.PI * r
-    let offset = 0
-    return (
-      <div className='flex flex-col items-center gap-3'>
-        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-          <circle cx={size/2} cy={size/2} r={r} fill='none' stroke='#e5e7eb' strokeWidth={stroke} />
-          {total > 0 && data.map((d, i) => {
-            const len = (d.value / total) * c
-            const el = (
-              <circle key={i} cx={size/2} cy={size/2} r={r} fill='none' stroke={d.color} strokeWidth={stroke}
-                strokeDasharray={`${len} ${c}`} strokeDashoffset={offset} transform={`rotate(-90 ${size/2} ${size/2})`} />
-            )
-            offset -= len
-            return el
-          })}
-          {total > 0 && (
-            <text x='50%' y='50%' dominantBaseline='middle' textAnchor='middle' className='fill-gray-700' style={{ fontSize: 14 }}>{total}</text>
-          )}
-        </svg>
-        <div className='grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-700'>
-          {data.map((d, i) => {
-            const pct = total ? Math.round((d.value / total) * 100) : 0
-            return (
-              <div key={i} className='flex items-center gap-2'>
-                <span className='inline-block w-3 h-3 rounded' style={{ backgroundColor: d.color }} />
-                <span className='whitespace-nowrap'>{d.label}: {d.value} ({pct}%)</span>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    )
+  // Flatten a membership row with spouse and up to 3 kids for CSV export
+  const flattenMembership = (m: MembershipRow) => {
+    const kids = children
+      .filter(c => c.membership_id === m.id)
+      .sort((a,b)=> (a.child_index ?? 0) - (b.child_index ?? 0))
+      .slice(0,3)
+    const [c1, c2, c3] = kids
+    return {
+      id: m.id,
+      full_name: m.full_name,
+      membership_type: m.membership_type,
+      dob: m.dob,
+      age: calcAge(m.dob) ?? '',
+      spouse_name: m.spouse_name ?? '',
+      spouse_whatsapp: m.spouse_whatsapp ?? '',
+      spouse_dob: m.spouse_dob ?? '',
+      spouse_age: calcAge(m.spouse_dob) ?? '',
+      child1_name: c1?.name ?? '',
+      child1_age: (calcAge(c1?.dob) ?? ''),
+      child1_gender: c1?.gender ?? '',
+      child1_school: c1?.school ?? '',
+      child2_name: c2?.name ?? '',
+      child2_age: (calcAge(c2?.dob) ?? ''),
+      child2_gender: c2?.gender ?? '',
+      child2_school: c2?.school ?? '',
+      child3_name: c3?.name ?? '',
+      child3_age: (calcAge(c3?.dob) ?? ''),
+      child3_gender: c3?.gender ?? '',
+      child3_school: c3?.school ?? '',
+      kids_count: kids.length,
+      created_at: m.created_at ? new Date(m.created_at).toLocaleString() : ''
+    }
   }
 
   // Table rows with derived fields
