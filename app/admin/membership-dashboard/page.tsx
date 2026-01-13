@@ -121,37 +121,41 @@ export default function MembershipDashboard() {
   const oldKids = useMemo(() => groupKids(oldRows), [oldRows, childCountByMembership])
   const newKids = useMemo(() => groupKids(newRows), [newRows, childCountByMembership])
 
-  const flattenMembership = (m: MembershipRow) => {
-    const childrenFor = children
-      .filter(c => c.membership_id === m.id)
-      .sort((a,b)=> (a.child_index ?? 0) - (b.child_index ?? 0))
-      .slice(0,3)
-    const [c1, c2, c3] = childrenFor
-    return {
-      id: m.id,
-      full_name: m.full_name,
-      membership_type: m.membership_type,
-      dob: m.dob,
-      age: calcAge(m.dob) ?? '',
-      spouse_name: m.spouse_name ?? '',
-      spouse_whatsapp: m.spouse_whatsapp ?? '',
-      spouse_dob: m.spouse_dob ?? '',
-      spouse_age: calcAge(m.spouse_dob) ?? '',
-      child1_name: c1?.name ?? '',
-      child1_age: (calcAge(c1?.dob) ?? ''),
-      child1_gender: c1?.gender ?? '',
-      child1_school: c1?.school ?? '',
-      child2_name: c2?.name ?? '',
-      child2_age: (calcAge(c2?.dob) ?? ''),
-      child2_gender: c2?.gender ?? '',
-      child2_school: c2?.school ?? '',
-      child3_name: c3?.name ?? '',
-      child3_age: (calcAge(c3?.dob) ?? ''),
-      child3_gender: c3?.gender ?? '',
-      child3_school: c3?.school ?? '',
-      kids_count: childrenFor.length,
-      created_at: m.created_at ? new Date(m.created_at).toLocaleString() : ''
-    }
+  function DonutChart({ data, size = 160, stroke = 18 }: { data: { label: string; value: number; color: string }[]; size?: number; stroke?: number }) {
+    const total = data.reduce((s, d) => s + d.value, 0)
+    const r = (size - stroke) / 2
+    const c = 2 * Math.PI * r
+    let offset = 0
+    return (
+      <div className='flex flex-col items-center gap-3'>
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+          <circle cx={size/2} cy={size/2} r={r} fill='none' stroke='#e5e7eb' strokeWidth={stroke} />
+          {total > 0 && data.map((d, i) => {
+            const len = (d.value / total) * c
+            const el = (
+              <circle key={i} cx={size/2} cy={size/2} r={r} fill='none' stroke={d.color} strokeWidth={stroke}
+                strokeDasharray={`${len} ${c}`} strokeDashoffset={offset} transform={`rotate(-90 ${size/2} ${size/2})`} />
+            )
+            offset -= len
+            return el
+          })}
+          {total > 0 && (
+            <text x='50%' y='50%' dominantBaseline='middle' textAnchor='middle' className='fill-gray-700' style={{ fontSize: 14 }}>{total}</text>
+          )}
+        </svg>
+        <div className='grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-700'>
+          {data.map((d, i) => {
+            const pct = total ? Math.round((d.value / total) * 100) : 0
+            return (
+              <div key={i} className='flex items-center gap-2'>
+                <span className='inline-block w-3 h-3 rounded' style={{ backgroundColor: d.color }} />
+                <span className='whitespace-nowrap'>{d.label}: {d.value} ({pct}%)</span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
   }
 
   // Table rows with derived fields
@@ -266,77 +270,46 @@ export default function MembershipDashboard() {
               </div>
             </div>
 
-            {/* Old/New breakdown with percentages and donut */}
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-8'>
-              <div className='bg-white p-6 rounded-lg shadow border border-gray-100'>
-                <div className='text-sm text-gray-600 mb-1'>Old Members</div>
-                <div className='flex items-end gap-2'>
-                  <div className='text-2xl font-bold text-emerald-700'>{totals.old}</div>
-                  <div className='text-sm text-gray-500 mb-1'>({totals.oldPct}%)</div>
-                </div>
+            {/* Old/New age-wise and kids-wise as donut charts */}
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-8'>
+              <div className='bg-white p-6 rounded-lg shadow'>
+                <h2 className='text-lg font-semibold text-gray-900 mb-4'>Old Members – Age wise</h2>
+                <DonutChart data={[
+                  { label: '≤25', value: oldAge['<=25'], color: '#60a5fa' },
+                  { label: '26–35', value: oldAge['26-35'], color: '#34d399' },
+                  { label: '36–45', value: oldAge['36-45'], color: '#f59e0b' },
+                  { label: '>45', value: oldAge['>45'], color: '#a78bfa' },
+                ]} />
+                <h3 className='text-lg font-semibold text-gray-900 mt-6 mb-4'>Old Members – Kids wise</h3>
+                <DonutChart data={[
+                  { label: '0 kids', value: oldKids['0'], color: '#e5e7eb' },
+                  { label: '1 kid', value: oldKids['1'], color: '#60a5fa' },
+                  { label: '2 kids', value: oldKids['2'], color: '#34d399' },
+                  { label: '3+ kids', value: oldKids['3+'], color: '#f59e0b' },
+                ]} />
               </div>
-              <div className='bg-white p-6 rounded-lg shadow border border-gray-100'>
-                <div className='text-sm text-gray-600 mb-1'>New Members</div>
-                <div className='flex items-end gap-2'>
-                  <div className='text-2xl font-bold text-amber-700'>{totals.New}</div>
-                  <div className='text-sm text-gray-500 mb-1'>({totals.newPct}%)</div>
-                </div>
-              </div>
-              <div className='bg-white p-6 rounded-lg shadow border border-gray-100 flex items-center justify-center'>
-                {totals.total === 0 ? (
-                  <div className='text-gray-500 text-sm'>No data</div>
-                ) : (
-                  (() => {
-                    const size = 140, stroke = 16, r = (size - stroke) / 2, c = 2 * Math.PI * r
-                    const oldLen = (totals.old / totals.total) * c
-                    const newLen = c - oldLen
-                    return (
-                      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-                        <circle cx={size/2} cy={size/2} r={r} fill='none' stroke='#e5e7eb' strokeWidth={stroke} />
-                        <circle cx={size/2} cy={size/2} r={r} fill='none' stroke='#f59e0b' strokeWidth={stroke} strokeDasharray={`${newLen} ${c}`} strokeDashoffset={0} transform={`rotate(-90 ${size/2} ${size/2})`} />
-                        <circle cx={size/2} cy={size/2} r={r} fill='none' stroke='#10b981' strokeWidth={stroke} strokeDasharray={`${oldLen} ${c}`} strokeDashoffset={newLen} transform={`rotate(-90 ${size/2} ${size/2})`} />
-                        <text x='50%' y='50%' dominantBaseline='middle' textAnchor='middle' className='fill-gray-700' style={{fontSize: 14}}>{totals.oldPct}% Old</text>
-                      </svg>
-                    )
-                  })()
-                )}
+              <div className='bg-white p-6 rounded-lg shadow'>
+                <h2 className='text-lg font-semibold text-gray-900 mb-4'>New Members – Age wise</h2>
+                <DonutChart data={[
+                  { label: '≤25', value: newAge['<=25'], color: '#60a5fa' },
+                  { label: '26–35', value: newAge['26-35'], color: '#34d399' },
+                  { label: '36–45', value: newAge['36-45'], color: '#f59e0b' },
+                  { label: '>45', value: newAge['>45'], color: '#a78bfa' },
+                ]} />
+                <h3 className='text-lg font-semibold text-gray-900 mt-6 mb-4'>New Members – Kids wise</h3>
+                <DonutChart data={[
+                  { label: '0 kids', value: newKids['0'], color: '#e5e7eb' },
+                  { label: '1 kid', value: newKids['1'], color: '#60a5fa' },
+                  { label: '2 kids', value: newKids['2'], color: '#34d399' },
+                  { label: '3+ kids', value: newKids['3+'], color: '#f59e0b' },
+                ]} />
               </div>
             </div>
 
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-              <div className='bg-white p-6 rounded-lg shadow'>
-                <h2 className='text-lg font-semibold text-gray-900 mb-4'>Old Members – Age wise</h2>
-                <ul className='space-y-2 text-sm text-gray-700'>
-                  <li className='flex justify-between'><span>≤25</span><span>{oldAge['<=25']}</span></li>
-                  <li className='flex justify-between'><span>26–35</span><span>{oldAge['26-35']}</span></li>
-                  <li className='flex justify-between'><span>36–45</span><span>{oldAge['36-45']}</span></li>
-                  <li className='flex justify-between'><span>&gt;45</span><span>{oldAge['>45']}</span></li>
-                </ul>
-                <h3 className='text-lg font-semibold text-gray-900 mt-6 mb-2'>Old Members – Kids wise</h3>
-                <ul className='space-y-2 text-sm text-gray-700'>
-                  <li className='flex justify-between'><span>0 kids</span><span>{oldKids['0']}</span></li>
-                  <li className='flex justify-between'><span>1 kid</span><span>{oldKids['1']}</span></li>
-                  <li className='flex justify-between'><span>2 kids</span><span>{oldKids['2']}</span></li>
-                  <li className='flex justify-between'><span>3+ kids</span><span>{oldKids['3+']}</span></li>
-                </ul>
-              </div>
-
-              <div className='bg-white p-6 rounded-lg shadow'>
-                <h2 className='text-lg font-semibold text-gray-900 mb-4'>New Members – Age wise</h2>
-                <ul className='space-y-2 text-sm text-gray-700'>
-                  <li className='flex justify-between'><span>≤25</span><span>{newAge['<=25']}</span></li>
-                  <li className='flex justify-between'><span>26–35</span><span>{newAge['26-35']}</span></li>
-                  <li className='flex justify-between'><span>36–45</span><span>{newAge['36-45']}</span></li>
-                  <li className='flex justify-between'><span>&gt;45</span><span>{newAge['>45']}</span></li>
-                </ul>
-                <h3 className='text-lg font-semibold text-gray-900 mt-6 mb-2'>New Members – Kids wise</h3>
-                <ul className='space-y-2 text-sm text-gray-700'>
-                  <li className='flex justify-between'><span>0 kids</span><span>{newKids['0']}</span></li>
-                  <li className='flex justify-between'><span>1 kid</span><span>{newKids['1']}</span></li>
-                  <li className='flex justify-between'><span>2 kids</span><span>{newKids['2']}</span></li>
-                  <li className='flex justify-between'><span>3+ kids</span><span>{newKids['3+']}</span></li>
-                </ul>
-              </div>
+              {/* Placeholder kept if you want additional breakdowns later */}
+              <div className='hidden' />
+              <div className='hidden' />
             </div>
 
             {/* Data table moved to end with sorting and improved UI */}
