@@ -156,7 +156,7 @@ export default function MembershipDashboard() {
               <li className='flex justify-between'><span>≤25</span><span>{oldAge['<=25']}</span></li>
               <li className='flex justify-between'><span>26–35</span><span>{oldAge['26-35']}</span></li>
               <li className='flex justify-between'><span>36–45</span><span>{oldAge['36-45']}</span></li>
-              <li className='flex justify-between'><span>>45</span><span>{oldAge['>45']}</span></li>
+              <li className='flex justify-between'><span>&gt;45</span><span>{oldAge['>45']}</span></li>
             </ul>
             <h3 className='text-lg font-semibold text-gray-900 mt-6 mb-2'>Old Members – Kids wise</h3>
             <ul className='space-y-2 text-sm text-gray-700'>
@@ -173,7 +173,7 @@ export default function MembershipDashboard() {
               <li className='flex justify-between'><span>≤25</span><span>{newAge['<=25']}</span></li>
               <li className='flex justify-between'><span>26–35</span><span>{newAge['26-35']}</span></li>
               <li className='flex justify-between'><span>36–45</span><span>{newAge['36-45']}</span></li>
-              <li className='flex justify-between'><span>>45</span><span>{newAge['>45']}</span></li>
+              <li className='flex justify-between'><span>&gt;45</span><span>{newAge['>45']}</span></li>
             </ul>
             <h3 className='text-lg font-semibold text-gray-900 mt-6 mb-2'>New Members – Kids wise</h3>
             <ul className='space-y-2 text-sm text-gray-700'>
