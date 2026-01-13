@@ -121,6 +121,39 @@ export default function MembershipDashboard() {
   const oldKids = useMemo(() => groupKids(oldRows), [oldRows, childCountByMembership])
   const newKids = useMemo(() => groupKids(newRows), [newRows, childCountByMembership])
 
+  const flattenMembership = (m: MembershipRow) => {
+    const childrenFor = children
+      .filter(c => c.membership_id === m.id)
+      .sort((a,b)=> (a.child_index ?? 0) - (b.child_index ?? 0))
+      .slice(0,3)
+    const [c1, c2, c3] = childrenFor
+    return {
+      id: m.id,
+      full_name: m.full_name,
+      membership_type: m.membership_type,
+      dob: m.dob,
+      age: calcAge(m.dob) ?? '',
+      spouse_name: m.spouse_name ?? '',
+      spouse_whatsapp: m.spouse_whatsapp ?? '',
+      spouse_dob: m.spouse_dob ?? '',
+      spouse_age: calcAge(m.spouse_dob) ?? '',
+      child1_name: c1?.name ?? '',
+      child1_age: (calcAge(c1?.dob) ?? ''),
+      child1_gender: c1?.gender ?? '',
+      child1_school: c1?.school ?? '',
+      child2_name: c2?.name ?? '',
+      child2_age: (calcAge(c2?.dob) ?? ''),
+      child2_gender: c2?.gender ?? '',
+      child2_school: c2?.school ?? '',
+      child3_name: c3?.name ?? '',
+      child3_age: (calcAge(c3?.dob) ?? ''),
+      child3_gender: c3?.gender ?? '',
+      child3_school: c3?.school ?? '',
+      kids_count: childrenFor.length,
+      created_at: m.created_at ? new Date(m.created_at).toLocaleString() : ''
+    }
+  }
+
   // Table rows with derived fields
   const tableRows = useMemo(() => members.map(m => ({
     id: m.id,
