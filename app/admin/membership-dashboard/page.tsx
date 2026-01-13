@@ -43,6 +43,8 @@ export default function MembershipDashboard() {
   const [children, setChildren] = useState<ChildRow[]>([])
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
+  const [sortKey, setSortKey] = useState<'name' | 'type' | 'age' | 'kids' | 'submitted_at'>('submitted_at')
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
 
   useEffect(() => { loadData() }, [])
 
@@ -79,7 +81,11 @@ export default function MembershipDashboard() {
     const oldMembers = members.filter(m => m.membership_type === 'OLD_MEMBER')
     const newMembers = members.filter(m => m.membership_type === 'NEW_MEMBER')
     const kidsTotal = members.reduce((sum, m) => sum + (childCountByMembership.get(m.id) || 0), 0)
-    return { total, old: oldMembers.length, New: newMembers.length, kidsTotal }
+    const old = oldMembers.length
+    const New = newMembers.length
+    const oldPct = total ? Math.round((old / total) * 100) : 0
+    const newPct = total ? 100 - oldPct : 0
+    return { total, old, New, kidsTotal, oldPct, newPct }
   }, [members, childCountByMembership])
 
   function groupAges(rows: MembershipRow[]) {
@@ -115,38 +121,48 @@ export default function MembershipDashboard() {
   const oldKids = useMemo(() => groupKids(oldRows), [oldRows, childCountByMembership])
   const newKids = useMemo(() => groupKids(newRows), [newRows, childCountByMembership])
 
-  const flattenMembership = (m: MembershipRow) => {
-    const childrenFor = children
-      .filter(c => c.membership_id === m.id)
-      .sort((a,b)=> (a.child_index ?? 0) - (b.child_index ?? 0))
-      .slice(0,3)
-    const [c1, c2, c3] = childrenFor
-    return {
-      id: m.id,
-      full_name: m.full_name,
-      membership_type: m.membership_type,
-      dob: m.dob,
-      age: calcAge(m.dob) ?? '',
-      spouse_name: m.spouse_name ?? '',
-      spouse_whatsapp: m.spouse_whatsapp ?? '',
-      spouse_dob: m.spouse_dob ?? '',
-      spouse_age: calcAge(m.spouse_dob) ?? '',
-      child1_name: c1?.name ?? '',
-      child1_age: (calcAge(c1?.dob) ?? ''),
-      child1_gender: c1?.gender ?? '',
-      child1_school: c1?.school ?? '',
-      child2_name: c2?.name ?? '',
-      child2_age: (calcAge(c2?.dob) ?? ''),
-      child2_gender: c2?.gender ?? '',
-      child2_school: c2?.school ?? '',
-      child3_name: c3?.name ?? '',
-      child3_age: (calcAge(c3?.dob) ?? ''),
-      child3_gender: c3?.gender ?? '',
-      child3_school: c3?.school ?? '',
-      kids_count: childrenFor.length,
-      created_at: m.created_at ? new Date(m.created_at).toLocaleString() : ''
-    }
+  // Table rows with derived fields
+  const tableRows = useMemo(() => members.map(m => ({
+    id: m.id,
+    name: m.full_name,
+    type: m.membership_type === 'OLD_MEMBER' ? 'Old' : 'New',
+    submitted_at: m.created_at ? new Date(m.created_at) : null,
+    submitted_at_str: m.created_at ? new Date(m.created_at).toLocaleString() : '',
+    age: calcAge(m.dob) ?? null,
+    kids: childCountByMembership.get(m.id) || 0,
+  })), [members, childCountByMembership])
+
+  const sortedRows = useMemo(() => {
+    const arr = [...tableRows]
+    arr.sort((a, b) => {
+      const dir = sortDir === 'asc' ? 1 : -1
+      switch (sortKey) {
+        case 'name': return a.name.localeCompare(b.name) * dir
+        case 'type': return a.type.localeCompare(b.type) * dir
+        case 'age': return ((a.age ?? -999) - (b.age ?? -999)) * dir
+        case 'kids': return (a.kids - b.kids) * dir
+        case 'submitted_at': {
+          const av = a.submitted_at ? a.submitted_at.getTime() : -1
+          const bv = b.submitted_at ? b.submitted_at.getTime() : -1
+          return (av - bv) * dir
+        }
+        default: return 0
+      }
+    })
+    return arr
+  }, [tableRows, sortKey, sortDir])
+
+  const toggleSort = (key: 'name'|'type'|'age'|'kids'|'submitted_at') => {
+    setSortKey(prev => key)
+    setSortDir(prev => (sortKey === key ? (prev === 'asc' ? 'desc' : 'asc') : 'asc'))
   }
+
+  const SortHeader = ({label, k}: {label: string; k: 'name'|'type'|'age'|'kids'|'submitted_at'}) => (
+    <button onClick={() => toggleSort(k)} className={`px-6 py-3 text-left text-xs font-semibold tracking-wider flex items-center gap-1 ${sortKey===k? 'text-blue-700':'text-gray-500'}`}>
+      <span>{label}</span>
+      <span className='text-[10px]'>{sortKey===k ? (sortDir==='asc'?'▲':'▼') : ''}</span>
+    </button>
+  )
 
   const exportCsv = () => {
     const rows = members.map(flattenMembership)
@@ -217,30 +233,40 @@ export default function MembershipDashboard() {
               </div>
             </div>
 
-            <div className='bg-white rounded-lg shadow overflow-hidden mb-8'>
-              <div className='overflow-x-auto'>
-                <table className='min-w-full divide-y divide-gray-200'>
-                  <thead className='bg-gray-50'>
-                    <tr>
-                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Name</th>
-                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Type</th>
-                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Submitted At</th>
-                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Age</th>
-                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>Kids</th>
-                    </tr>
-                  </thead>
-                  <tbody className='bg-white divide-y divide-gray-200'>
-                    {members.map(m => (
-                      <tr key={m.id} className='hover:bg-gray-50'>
-                        <td className='px-6 py-4 text-sm font-medium text-gray-900'>{m.full_name}</td>
-                        <td className='px-6 py-4 text-sm text-gray-700'>{m.membership_type === 'OLD_MEMBER' ? 'Old' : 'New'}</td>
-                        <td className='px-6 py-4 text-sm text-gray-700'>{m.created_at ? new Date(m.created_at).toLocaleString() : ''}</td>
-                        <td className='px-6 py-4 text-sm text-gray-700'>{calcAge(m.dob) ?? ''}</td>
-                        <td className='px-6 py-4 text-sm text-gray-700'>{childCountByMembership.get(m.id) || 0}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            {/* Old/New breakdown with percentages and donut */}
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-8'>
+              <div className='bg-white p-6 rounded-lg shadow border border-gray-100'>
+                <div className='text-sm text-gray-600 mb-1'>Old Members</div>
+                <div className='flex items-end gap-2'>
+                  <div className='text-2xl font-bold text-emerald-700'>{totals.old}</div>
+                  <div className='text-sm text-gray-500 mb-1'>({totals.oldPct}%)</div>
+                </div>
+              </div>
+              <div className='bg-white p-6 rounded-lg shadow border border-gray-100'>
+                <div className='text-sm text-gray-600 mb-1'>New Members</div>
+                <div className='flex items-end gap-2'>
+                  <div className='text-2xl font-bold text-amber-700'>{totals.New}</div>
+                  <div className='text-sm text-gray-500 mb-1'>({totals.newPct}%)</div>
+                </div>
+              </div>
+              <div className='bg-white p-6 rounded-lg shadow border border-gray-100 flex items-center justify-center'>
+                {totals.total === 0 ? (
+                  <div className='text-gray-500 text-sm'>No data</div>
+                ) : (
+                  (() => {
+                    const size = 140, stroke = 16, r = (size - stroke) / 2, c = 2 * Math.PI * r
+                    const oldLen = (totals.old / totals.total) * c
+                    const newLen = c - oldLen
+                    return (
+                      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+                        <circle cx={size/2} cy={size/2} r={r} fill='none' stroke='#e5e7eb' strokeWidth={stroke} />
+                        <circle cx={size/2} cy={size/2} r={r} fill='none' stroke='#f59e0b' strokeWidth={stroke} strokeDasharray={`${newLen} ${c}`} strokeDashoffset={0} transform={`rotate(-90 ${size/2} ${size/2})`} />
+                        <circle cx={size/2} cy={size/2} r={r} fill='none' stroke='#10b981' strokeWidth={stroke} strokeDasharray={`${oldLen} ${c}`} strokeDashoffset={newLen} transform={`rotate(-90 ${size/2} ${size/2})`} />
+                        <text x='50%' y='50%' dominantBaseline='middle' textAnchor='middle' className='fill-gray-700' style={{fontSize: 14}}>{totals.oldPct}% Old</text>
+                      </svg>
+                    )
+                  })()
+                )}
               </div>
             </div>
 
@@ -277,6 +303,34 @@ export default function MembershipDashboard() {
                   <li className='flex justify-between'><span>2 kids</span><span>{newKids['2']}</span></li>
                   <li className='flex justify-between'><span>3+ kids</span><span>{newKids['3+']}</span></li>
                 </ul>
+              </div>
+            </div>
+
+            {/* Data table moved to end with sorting and improved UI */}
+            <div className='bg-white rounded-lg shadow overflow-hidden mt-8'>
+              <div className='overflow-x-auto'>
+                <table className='min-w-full divide-y divide-gray-200'>
+                  <thead className='bg-gray-50 sticky top-0 z-10'>
+                    <tr>
+                      <th><SortHeader label='Name' k='name' /></th>
+                      <th><SortHeader label='Type' k='type' /></th>
+                      <th><SortHeader label='Age' k='age' /></th>
+                      <th><SortHeader label='Kids' k='kids' /></th>
+                      <th><SortHeader label='Submitted At' k='submitted_at' /></th>
+                    </tr>
+                  </thead>
+                  <tbody className='bg-white divide-y divide-gray-200'>
+                    {sortedRows.map(r => (
+                      <tr key={r.id} className='hover:bg-gray-50 odd:bg-gray-50/40'>
+                        <td className='px-6 py-3 text-sm font-medium text-gray-900'>{r.name}</td>
+                        <td className='px-6 py-3 text-sm'><span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${r.type==='Old'?'bg-emerald-50 text-emerald-700':'bg-amber-50 text-amber-700'}`}>{r.type}</span></td>
+                        <td className='px-6 py-3 text-sm text-gray-700'>{r.age ?? ''}</td>
+                        <td className='px-6 py-3 text-sm text-gray-700'>{r.kids}</td>
+                        <td className='px-6 py-3 text-sm text-gray-700 whitespace-nowrap'>{r.submitted_at_str}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </>
