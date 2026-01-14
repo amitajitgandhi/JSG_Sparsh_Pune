@@ -530,7 +530,7 @@ For more information or queries, please contact our committee members.`;
         </div>
         <div className="grid grid-cols-3 gap-2">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor={`child_${idx}_dob_day`}>Day<span className="text-red-600"> *</span></label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor={`child_${idx}_dob_day`}>DOB Day<span className="text-red-600"> *</span></label>
             <select id={`child_${idx}_dob_day`} className="w-full rounded-lg border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-gray-900 dark:text-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={child?.dob?.day || ''} onChange={(e) => {
               const arr = [...values.children]
               const c = arr[idx] || { dob: { day: '', month: '', year: '' } }
@@ -542,7 +542,7 @@ For more information or queries, please contact our committee members.`;
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor={`child_${idx}_dob_month`}>Month<span className="text-red-600"> *</span></label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor={`child_${idx}_dob_month`}>DOB Month<span className="text-red-600"> *</span></label>
             <select id={`child_${idx}_dob_month`} className="w-full rounded-lg border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-gray-900 dark:text-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={child?.dob?.month || ''} onChange={(e) => {
               const arr = [...values.children]
               const c = arr[idx] || { dob: { day: '', month: '', year: '' } }
@@ -554,7 +554,7 @@ For more information or queries, please contact our committee members.`;
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor={`child_${idx}_dob_year`}>Year<span className="text-red-600"> *</span></label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor={`child_${idx}_dob_year`}>DOB Year<span className="text-red-600"> *</span></label>
             <select id={`child_${idx}_dob_year`} className="w-full rounded-lg border border-gray-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-gray-900 dark:text-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={child?.dob?.year || ''} onChange={(e) => {
               const arr = [...values.children]
               const c = arr[idx] || { dob: { day: '', month: '', year: '' } }
