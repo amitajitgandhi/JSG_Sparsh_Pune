@@ -54,7 +54,7 @@ export default function Valentine2026() {
           <div className="text-center mb-8 sm:mb-12">
             <div className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-pink-600 via-rose-600 to-red-600 text-white px-5 py-2 rounded-2xl shadow-lg">
               <Heart size={20} className="animate-pulse" />
-              <span className="font-bold text-sm sm:text-base">Valentine Soirée 2026</span>
+              <span className="font-bold text-sm sm:text-base">Valentine SoirÃ©e 2026</span>
             </div>
             <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-700 via-rose-700 to-red-700">Celebrate Love with JSG Pune Sparsh</h1>
             <p className="mt-2 text-sm sm:text-base text-rose-700">An elegant evening of music, games, dinner and togetherness</p>
