@@ -130,7 +130,7 @@ export default function Events() {
           description: 'Stay at a 4-Star Beach Touch Resort on the pristine Betalbatim Beach, where golden sands meet crystal-blue waters. A perfect blend of fun, relaxation, and unforgettable memories awaits you in paradise!',
           attendees: '100+',
           highlights: ['Beach', 'Party', 'Bonding', 'Refreshment'],
-          galleryUrl: 'To be updated soon..!!'
+          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122227766174263798&type=3'
       }
   ]
 
