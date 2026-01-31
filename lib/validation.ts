@@ -19,11 +19,11 @@ export const membershipSchema = z.object({
   residential_address: z.string().min(1, 'Address is required'),
   wedding_date: dateParts,
   dob: dateParts,
-  whatsapp_number: z.string().regex(/^\+?\d{10,14}$/,'Invalid WhatsApp number'),
+  whatsapp_number: z.string().regex(/^\d{10}$/,'WhatsApp number must be 10 digits'),
 
   spouse_full_name: z.string().min(1, 'Spouse name is required'),
   spouse_dob: dateParts,
-  spouse_whatsapp: z.string().regex(/^\+?\d{10,14}$/,'Invalid WhatsApp number'),
+  spouse_whatsapp: z.string().regex(/^\d{10}$/,'WhatsApp number must be 10 digits'),
 
   number_of_children: z.number().min(0).max(3),
   children: z.array(childSchema).max(3),

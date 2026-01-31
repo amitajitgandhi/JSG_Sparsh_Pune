@@ -217,19 +217,19 @@ export default function MembershipForm() {
       localStorage.removeItem(DRAFT_KEY)
       const successMsg = `Thank you for choosing to join JSG SPARSH – the Most Energetic & Enthusiastic Young Couple Group (up to 45 years).
 
-Required: Submit photocopies of Aadhaar cards for self, spouse, and children, along with the membership fee.
-
-Note: Membership will be confirmed only after document verification.
+Documents & Payment:
+• Please submit photocopies of Aadhaar cards for self, spouse, and children.
+• Old Members: ₹15,000 if paid on or before 15 Feb 2026; ₹16,000 after 15 Feb 2026.
+• New Members: ₹16,000.
 
 Declaration:
 • I will abide by all group rules and maintain the sanctity of events.
 • I will comply with decisions of the committee members.
 • Membership is at the sole discretion of the committee.
 
-You can deposit the membership fee with any of our committee members.
-
-For more information or queries, please contact our committee members.`;
-      setToast({ type: 'success', msg: successMsg, toastLink: { href: '/committee', label: 'View committee page' } })
+Note for New Members:
+• Registration will be confirmed after payment is received, documents are verified, and subject to slot availability.`;
+      setToast({ type: 'success', msg: successMsg })
       setStep(0)
       setValues(initialValues)
     } catch (e: any) {
@@ -407,7 +407,7 @@ For more information or queries, please contact our committee members.`;
           {years.map((y) => <option key={y} value={y}>{y}</option>)}
         </SelectInput>
       </div>
-      <TextInput name="whatsapp_number" autoComplete="tel" label="WhatsApp Number" value={values.whatsapp_number} onChange={(e) => { markTouched('whatsapp_number'); setField('whatsapp_number', e.currentTarget.value) }} placeholder="e.g. 9876543210" inputMode="tel" error={getError('whatsapp_number')} required />
+      <TextInput name="whatsapp_number" autoComplete="tel" label="WhatsApp Number" value={values.whatsapp_number} onChange={(e) => { markTouched('whatsapp_number'); setField('whatsapp_number', e.currentTarget.value) }} placeholder="e.g. 9876543210" inputMode="numeric" pattern="\d{10}" maxLength={10} error={getError('whatsapp_number')} required />
     </div>
   )
 
@@ -428,7 +428,7 @@ For more information or queries, please contact our committee members.`;
           {years.map((y) => <option key={y} value={y}>{y}</option>)}
         </SelectInput>
       </div>
-      <TextInput name="spouse_whatsapp" autoComplete="tel" label="Spouse WhatsApp" value={values.spouse_whatsapp} onChange={(e) => { markTouched('spouse_whatsapp'); setField('spouse_whatsapp', e.currentTarget.value) }} placeholder="e.g. 9876543210" inputMode="tel" error={getError('spouse_whatsapp')} required />
+      <TextInput name="spouse_whatsapp" autoComplete="tel" label="Spouse WhatsApp" value={values.spouse_whatsapp} onChange={(e) => { markTouched('spouse_whatsapp'); setField('spouse_whatsapp', e.currentTarget.value) }} placeholder="e.g. 9876543210" inputMode="numeric" pattern="\d{10}" maxLength={10} error={getError('spouse_whatsapp')} required />
     </div>
   )
 

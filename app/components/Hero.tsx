@@ -47,11 +47,11 @@ export default function Hero() {
                 <ArrowRight size={16} className="sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <Link
-                href="/committee"
+                href="/memberships/2026-27"
                 className="group bg-yellow-500 hover:bg-yellow-600 text-blue-800 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 flex items-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
               >
                 <Users size={18} className="sm:w-6 sm:h-6" />
-                <span>Meet Our Team</span>
+                <span>Membership Registration</span>
               </Link>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 max-w-3xl mx-auto animate-slide-up px-2">
