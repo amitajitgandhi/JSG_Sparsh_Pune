@@ -189,6 +189,7 @@ export default function MembershipForm() {
     if (step < steps.length - 1 && stepIsValid) setStep((s) => s + 1)
   }, [step, stepIsValid])
   const prev = useCallback(() => setStep((s) => Math.max(0, s - 1)), [])
+  useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }, [step])
 
   useEffect(() => {
     setValues((v) => {
@@ -215,25 +216,7 @@ export default function MembershipForm() {
       if (!res.ok || !data?.ok) throw new Error(data?.error || 'Submission failed')
 
       localStorage.removeItem(DRAFT_KEY)
-      const successMsg = `Thank you for choosing to join JSG SPARSH – the Most Energetic & Enthusiastic Young Couple Group (up to 45 years).
-
-Documents & Payment:
-• Please submit photocopies of Aadhaar cards for self, spouse, and children.
-• Old Members: ₹15,000 if paid on or before 15 Feb 2026; ₹16,000 after 15 Feb 2026.
-• New Members: ₹16,000.
-
-Payment Deposit Details:
-• Dates: 13th & 14th February 2026
-• Location: Jain Denticure, Behind Shantinagar, Kondhwa
-• Maps: https://maps.app.goo.gl/uR1KQyLjVf9g2sbBA?g_st=awb
-
-Declaration:
-• I will abide by all group rules and maintain the sanctity of events.
-• I will comply with decisions of the committee members.
-• Membership is at the sole discretion of the committee.
-
-Note for New Members:
-• Registration will be confirmed after payment is received, documents are verified, and subject to slot availability.`;
+      const successMsg = `🎉 Welcome to JSG SPARSH! \n\nThank you for choosing to join the Most Energetic & Enthusiastic Young Couple Group (up to 45 years).\n\n📄 Documents Required\n• Photocopies of Aadhaar cards for self, spouse, and children.\n\n💳 Membership Fee\n• Old Members: ₹15,000 (on or before 15 Feb 2026)\n• Old Members: ₹16,000 (after 15 Feb 2026)\n• New Members: ₹16,000\n\n🏦 Payment Deposit Details\n• Dates: 13th & 14th February 2026\n• Location: Jain Denticure, Behind Shantinagar, Kondhwa\n• Maps: https://maps.app.goo.gl/uR1KQyLjVf9g2sbBA?g_st=awb\n\n✅ Next Steps\n• Please complete payment and submit documents at the above location.\n• You will receive communication from our team after processing.`;
       setToast({ type: 'success', msg: successMsg })
       setStep(0)
       setValues(initialValues)
@@ -665,7 +648,7 @@ Note for New Members:
       <div className="h-20" />
       <div className="fixed bottom-0 left-0 right-0 md:static bg-white/80 dark:bg-neutral-900/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-neutral-900/60 border-t dark:border-neutral-800 md:border-t-0">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-2">
-          <button onClick={() => setStep((s) => Math.max(0, s - 1))} disabled={step === 0 || loading} className="flex items-center gap-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 hover:bg-gray-50 dark:hover:bg-neutral-800 disabled:opacity-50">
+          <button onClick={() => setStep((s) => Math.max(0, s - 1))} disabled={step === 0 || loading} className="flex items-center gap-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 hover:bg-gray-50 dark:hover:bg-neutral-800 disabled:opacity-50 text-gray-700 dark:text-gray-100">
             <ChevronLeft className="h-4 w-4" />
             <span className="text-sm">Back</span>
           </button>

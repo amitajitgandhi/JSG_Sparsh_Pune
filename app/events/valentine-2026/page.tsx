@@ -132,7 +132,7 @@ export default function Valentine2026() {
             {success ? (
               <div className="space-y-3">
                 <p className="text-green-700 font-semibold text-sm">Thank you! Your registration is recorded.</p>
-                <p className="text-xs text-rose-700">We look forward to celebrating together. We will contact you for further details.</p>
+                <p className="text-xs text-rose-700">We look forward to celebrating together.</p>
                 <div className="flex gap-2">
                   <Link href="/" className="rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold px-4 py-2">Go Home</Link>
                 </div>
