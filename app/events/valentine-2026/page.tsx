@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Heart, Calendar, Clock, MapPin, Music, Users, CheckCircle } from 'lucide-react'
 
 export default function Valentine2026() {
@@ -11,6 +11,7 @@ export default function Valentine2026() {
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [particles, setParticles] = useState<{ id: number; left: number; size: number; delay: number; duration: number }[]>([])
 
   const validMobile = /^\d{10}$/
 
@@ -38,11 +39,43 @@ export default function Valentine2026() {
     } finally {
       setSubmitting(false)
     }
+
+  useEffect(() => {
+    const count = 36
+    const list: typeof particles = []
+    for (let i = 0; i < count; i++) {
+      list.push({
+        id: i,
+        left: Math.random() * 100,
+        size: Math.random() * 10 + 10,
+        delay: Math.random() * 1.5,
+        duration: Math.random() * 3 + 4,
+      })
+    }
+    setParticles(list)
+  }, [])
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-red-50">
       <section className="relative overflow-hidden py-10 sm:py-16">
+        {/* Sprinkle hearts on load */}
+        <div className="absolute inset-0 pointer-events-none z-10">
+          {particles.map(p => (
+            <span
+              key={p.id}
+              className={`absolute animate-fall`}
+              style={{
+                left: `${p.left}vw`,
+                top: '-24px',
+                animationDelay: `${p.delay}s`,
+                animationDuration: `${p.duration}s`,
+              }}
+            >
+              <Heart className="text-rose-300/80 drop-shadow" size={p.size} />
+            </span>
+          ))}
+        </div>
         <div className="absolute inset-0 pointer-events-none">
           {[...Array(20)].map((_, i) => (
             <div key={i} className="absolute animate-bounce-slow" style={{ left: `${(i*5)%100}%`, top: `${(i*7)%100}%` }}>
@@ -95,7 +128,7 @@ export default function Valentine2026() {
           </div>
 
           <div className="bg-gradient-to-br from-white to-rose-50 border border-rose-200 rounded-2xl shadow p-6">
-            <h3 className="text-sm font-bold uppercase text-rose-700 mb-4">Simple Registration</h3>
+            <h3 className="text-sm font-bold uppercase text-rose-700 mb-4">Registration</h3>
             {success ? (
               <div className="space-y-3">
                 <p className="text-green-700 font-semibold text-sm">Thank you! Your registration is recorded.</p>
@@ -122,7 +155,7 @@ export default function Valentine2026() {
                   <label htmlFor="confirmAttend" className="text-xs text-rose-800">I confirm my attendance and understand that cancellations are discouraged.</label>
                 </div>
                 <button type="submit" disabled={submitting} className="w-full sm:w-auto rounded-lg bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white font-semibold px-5 py-2 shadow">
-                  {submitting ? 'Submitting...' : 'Submit Registration'}
+                  {submitting ? 'Submitting...' : 'Submit'}
                 </button>
               </form>
             )}
@@ -133,6 +166,13 @@ export default function Valentine2026() {
       <style jsx>{`
         .animate-bounce-slow { animation: bounce 3s infinite; }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        @keyframes fall {
+          0% { transform: translateY(-24px) scale(1); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(110vh) scale(0.9); opacity: 0; }
+        }
+        .animate-fall { animation-name: fall; animation-timing-function: linear; animation-iteration-count: 1; }
       `}</style>
     </div>
   )

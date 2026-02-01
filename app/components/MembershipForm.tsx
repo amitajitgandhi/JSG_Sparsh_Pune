@@ -222,6 +222,11 @@ Documents & Payment:
 • Old Members: ₹15,000 if paid on or before 15 Feb 2026; ₹16,000 after 15 Feb 2026.
 • New Members: ₹16,000.
 
+Payment Deposit Details:
+• Dates: 13th & 14th February 2026
+• Location: Jain Denticure, Behind Shantinagar, Kondhwa
+• Maps: https://maps.app.goo.gl/uR1KQyLjVf9g2sbBA?g_st=awb
+
 Declaration:
 • I will abide by all group rules and maintain the sanctity of events.
 • I will comply with decisions of the committee members.

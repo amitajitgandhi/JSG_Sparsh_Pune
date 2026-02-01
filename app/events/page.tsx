@@ -112,7 +112,7 @@ export default function Events() {
       },
       {
           id: 10,
-          title: 'Yavat24 Hurday Party',
+          title: 'Yavat24 Hurda Party',
           date: '2025-12-21',
           time: '2 Days',
           venue: 'Yavat24',
