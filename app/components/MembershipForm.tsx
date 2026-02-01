@@ -19,6 +19,22 @@ function TextInput({ label, name, error, className, required, ...rest }: TextInp
   )
 }
 
+  // Format toast message: make URLs clickable while preserving line breaks
+  const formatToastMsg = (msg: string) => {
+    const urlRegex = /(https?:\/\/\S+)/g
+    const parts = msg.split(urlRegex)
+    return parts.map((part, idx) => {
+      if (urlRegex.test(part)) {
+        return (
+          <a key={`link-${idx}`} href={part} className="text-blue-600 underline break-all" target="_blank" rel="noopener noreferrer">
+            {part}
+          </a>
+        )
+      }
+      return <span key={`text-${idx}`}>{part}</span>
+    })
+  }
+
 type SelectInputProps = React.SelectHTMLAttributes<HTMLSelectElement> & { label: string; name: string; error?: string }
 function SelectInput({ label, name, error, className, required, children, ...rest }: SelectInputProps) {
   return (
@@ -92,6 +108,7 @@ export default function MembershipForm() {
   const [loading, setLoading] = useState(false)
   const [toast, setToast] = useState<{ type: 'success' | 'error' | 'info'; msg: string; toastLink?: { href: string; label?: string } } | null>(null)
   const [touched, setTouched] = useState<Record<string, boolean>>({})
+  const [copyUrlModal, setCopyUrlModal] = useState<{ open: boolean; url: string | null }>({ open: false, url: null })
 
   const markTouched = useCallback((name: string) => {
     setTouched((t) => (t[name] ? t : { ...t, [name]: true }))
@@ -216,7 +233,7 @@ export default function MembershipForm() {
       if (!res.ok || !data?.ok) throw new Error(data?.error || 'Submission failed')
 
       localStorage.removeItem(DRAFT_KEY)
-      const successMsg = `🎉 Welcome to JSG SPARSH! \n\nThank you for choosing to join the Most Energetic & Enthusiastic Young Couple Group (up to 45 years).\n\n📄 Documents Required\n• Photocopies of Aadhaar cards for self, spouse, and children.\n\n💳 Membership Fee\n• Old Members: ₹15,000 (on or before 15 Feb 2026)\n• Old Members: ₹16,000 (after 15 Feb 2026)\n• New Members: ₹16,000\n\n🏦 Payment Deposit Details\n• Dates: 13th & 14th February 2026\n• Location: Jain Denticure, Behind Shantinagar, Kondhwa\n• Maps: https://maps.app.goo.gl/uR1KQyLjVf9g2sbBA?g_st=awb\n\n✅ Next Steps\n• Please complete payment and submit documents at the above location.\n• You will receive communication from our team after processing.`;
+      const successMsg = `🎉 Welcome to JSG SPARSH! \n\nThank you for choosing to join the Most Energetic & Enthusiastic Young Couple Group (up to 45 years).\n\n📄 Documents Required\n• Photocopies of Aadhaar cards for self, spouse, and children.\n\n💳 Membership Fee\n• Old Members: ₹15,000 (on or before 15 Feb 2026)\n• Old Members: ₹16,000 (after 15 Feb 2026)\n• New Members: ₹16,000\n\n🏦 Payment Deposit Details\n• 📅 Date: 13th & 14th February 2026\n• 📍 Location: Jain Denticure, Behind Shantinagar, Kondhwa\n• 🔗 Map: https://maps.app.goo.gl/uR1KQyLjVf9g2sbBA?g_st=awb\n\n✅ Next Steps\n• Please complete payment and submit documents at the above location.\n• You will receive communication from our team after processing.`;
       setToast({ type: 'success', msg: successMsg })
       setStep(0)
       setValues(initialValues)
@@ -676,13 +693,41 @@ export default function MembershipForm() {
               <div className="font-semibold">{toast.type === 'success' ? 'Success' : toast.type === 'error' ? 'Error' : 'Notice'}</div>
             </div>
             <div className="p-4 text-sm text-gray-700 dark:text-gray-200 whitespace-pre-line">
-              <p>{toast.msg}</p>
+              <p>{formatToastMsg(toast.msg)}</p>
             </div>
             <div className="p-3 flex justify-end gap-2">
               {toast.toastLink && (
                 <a href={toast.toastLink.href} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-700" target="_self" rel="noopener">{toast.toastLink.label || 'Open link'}</a>
               )}
               <button onClick={closeToast} className="px-4 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 text-sm text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-neutral-800">Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {copyUrlModal.open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setCopyUrlModal({ open: false, url: null })} />
+          <div className="relative w-full max-w-sm rounded-2xl border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-large overflow-hidden">
+            <div className="px-4 py-3 bg-blue-600 text-white font-semibold">Copy Link</div>
+            <div className="p-4 space-y-3">
+              <div className="text-xs text-gray-700 dark:text-gray-200 break-all border rounded p-2 bg-gray-50 dark:bg-neutral-800">
+                {copyUrlModal.url}
+              </div>
+              <div className="flex gap-2 justify-end">
+                <button
+                  onClick={async () => {
+                    try {
+                      if (copyUrlModal.url) await navigator.clipboard.writeText(copyUrlModal.url)
+                      setCopyUrlModal({ open: false, url: null })
+                    } catch {}
+                  }}
+                  className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-700"
+                >
+                  Copy
+                </button>
+                <button onClick={() => setCopyUrlModal({ open: false, url: null })} className="px-4 py-2 rounded-lg border border-gray-300 dark:border-neutral-700 text-sm text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-neutral-800">Close</button>
+              </div>
             </div>
           </div>
         </div>

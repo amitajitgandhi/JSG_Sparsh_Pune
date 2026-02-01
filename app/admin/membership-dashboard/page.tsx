@@ -269,11 +269,11 @@ export default function MembershipDashboard() {
             <p className='text-gray-600'>Overview of membership submissions (2026–27)</p>
           </div>
           <div className='flex gap-2'>
-            <button onClick={refresh} disabled={refreshing} className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center disabled:opacity-50'>
-              <RefreshCw size={16} className={`mr-2 ${refreshing? 'animate-spin':''}`}/>{refreshing? 'Refreshing...':'Refresh'}
+            <button onClick={refresh} disabled={refreshing} className='bg-blue-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center disabled:opacity-50 text-sm'>
+              <RefreshCw size={14} className={`mr-2 ${refreshing? 'animate-spin':''}`}/>{refreshing? 'Refreshing...':'Refresh'}
             </button>
-            <button onClick={exportCsv} disabled={members.length===0} className='bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors flex items-center disabled:opacity-50'>
-              <Download size={16} className='mr-2'/>Export CSV
+            <button onClick={exportCsv} disabled={members.length===0} className='bg-emerald-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg hover:bg-emerald-700 transition-colors flex items-center disabled:opacity-50 text-sm'>
+              <Download size={14} className='mr-2'/>Export CSV
             </button>
           </div>
         </div>
