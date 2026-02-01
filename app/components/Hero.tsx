@@ -53,6 +53,14 @@ export default function Hero() {
                 <Users size={18} className="sm:w-6 sm:h-6" />
                 <span>Membership Registration</span>
               </Link>
+              <Link
+                href="/events/upcoming"
+                className="group bg-white text-blue-700 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-yellow-50 transition-all duration-300 flex items-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
+              >
+                <Calendar size={18} className="sm:w-6 sm:h-6" />
+                <span>Upcoming Event</span>
+                <ArrowRight size={16} className="sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 max-w-3xl mx-auto animate-slide-up px-2">
               <div className="text-center bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
