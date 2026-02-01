@@ -39,6 +39,7 @@ export default function Valentine2026() {
     } finally {
       setSubmitting(false)
     }
+  }
 
   useEffect(() => {
     const count = 36
@@ -54,7 +55,6 @@ export default function Valentine2026() {
     }
     setParticles(list)
   }, [])
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-red-50">
