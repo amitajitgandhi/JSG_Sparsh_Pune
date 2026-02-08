@@ -1,4 +1,5 @@
 import { Heart, Users, Calendar, Award, Sparkles, Target, CheckCircle, Medal } from 'lucide-react'
+import Link from 'next/link'
 
 export default function AboutPage() {
   const features = [
@@ -80,6 +81,11 @@ export default function AboutPage() {
               is proud to have CORE COMMITTEE & members from all four Jain sects working together 
               as one cohesive Jain Social Group.
             </p>
+            <p className="text-sm sm:text-base text-blue-700 font-medium">
+              Explore our —
+              <Link href="/achievements" className="ml-1 underline hover:text-blue-800">Achievements</Link>
+              <br />
+                      </p><br />
             <div className="bg-gradient-to-r from-blue-50 to-yellow-50 p-6 sm:p-8 rounded-2xl sm:rounded-3xl max-w-3xl mx-auto shadow-md border border-blue-200">
               <p className="text-blue-800 font-bold text-lg mb-2">Our Guiding Principle</p>
               <p className="text-blue-700 text-xl sm:text-2xl font-semibold italic leading-tight">

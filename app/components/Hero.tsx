@@ -54,7 +54,7 @@ export default function Hero() {
                 <span>Membership Registration</span>
               </Link>
               <Link
-                href="/events/upcoming"
+                href="/events/valentine-2026"
                 className="group bg-white text-blue-700 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-yellow-50 transition-all duration-300 flex items-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
               >
                 <Calendar size={18} className="sm:w-6 sm:h-6" />
@@ -119,6 +119,16 @@ export default function Hero() {
             <div className="p-5 space-y-4 text-sm">
               <p className="text-gray-700 font-medium">Choose an event to view details & register early.</p>
               <div className="grid gap-3">
+                <Link
+                  href="/events/valentine-2026"
+                  onClick={() => setShowUpcoming(false)}
+                  className="group rounded-xl border border-rose-300 bg-rose-50 px-4 py-3 font-semibold text-rose-700 flex items-center justify-between hover:bg-rose-100 transition"
+                >
+                  <span>Valentine Soirée 2026</span>
+                  <span className="text-[11px] font-bold uppercase tracking-wide group-hover:translate-x-1 transition">
+                    View &rarr;
+                  </span>
+                </Link>
                 <Link
                   href="/events/goa"
                   onClick={() => setShowUpcoming(false)}
