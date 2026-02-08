@@ -137,7 +137,14 @@ export default function Valentine2026() {
               <Heart size={20} className="animate-pulse" />
               <span className="font-bold text-sm sm:text-base">Valentine Soirée 2026</span>
             </div>
-            <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-700 via-rose-700 to-red-700">Celebrate Love with JSG Pune Sparsh</h1>
+            <h1 className="mt-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-700 via-rose-700 to-red-700 font-extrabold">
+              <span className="block text-3xl sm:text-4xl md:text-5xl flex items-center justify-center gap-2">
+                
+                <span>Celebrate Love</span>
+              </span>
+              <span className="block text-xs sm:text-sm md:text-base mt-1 text-rose-700 dark:text-rose-200">with</span>
+              <span className="block text-3xl sm:text-4xl md:text-5xl text-rose-700 dark:text-rose-300">JSG Sparsh</span>
+            </h1>
             <p className="mt-2 text-sm sm:text-base text-rose-700 dark:text-rose-200">An elegant evening of music, games, dinner and togetherness</p>
           </div>
 
@@ -145,22 +152,22 @@ export default function Valentine2026() {
             <div className="rounded-2xl bg-white shadow border border-rose-200 p-4 flex items-center gap-3 dark:bg-rose-900/30 dark:border-rose-800 dark:shadow-none">
               <div className="p-2 rounded-xl bg-rose-100 text-rose-700 dark:bg-rose-900/60 dark:text-rose-300"><Calendar size={20} /></div>
               <div>
-                <div className="text-xs font-bold uppercase text-rose-700 dark:text-rose-300">Date</div>
-                <div className="text-sm font-semibold dark:text-rose-100">15 Feb 2026</div>
+                <div className="text-xs font-bold uppercase text-rose-700 dark:text-rose-200">Date</div>
+                <div className="text-sm font-semibold text-rose-900 dark:text-white">15 Feb 2026</div>
               </div>
             </div>
             <div className="rounded-2xl bg-white shadow border border-rose-200 p-4 flex items-center gap-3 dark:bg-rose-900/30 dark:border-rose-800 dark:shadow-none">
               <div className="p-2 rounded-xl bg-rose-100 text-rose-700 dark:bg-rose-900/60 dark:text-rose-300"><Clock size={20} /></div>
               <div>
-                <div className="text-xs font-bold uppercase text-rose-700 dark:text-rose-300">Time</div>
-                <div className="text-sm font-semibold dark:text-rose-100">6:00 PM</div>
+                <div className="text-xs font-bold uppercase text-rose-700 dark:text-rose-200">Time</div>
+                <div className="text-sm font-semibold text-rose-900 dark:text-white">5:30 PM</div>
               </div>
             </div>
             <div className="rounded-2xl bg-white shadow border border-rose-200 p-4 flex items-center gap-3 dark:bg-rose-900/30 dark:border-rose-800 dark:shadow-none">
               <div className="p-2 rounded-xl bg-rose-100 text-rose-700 dark:bg-rose-900/60 dark:text-rose-300"><MapPin size={20} /></div>
               <div>
-                <div className="text-xs font-bold uppercase text-rose-700 dark:text-rose-300">Venue</div>
-                <div className="text-sm font-semibold dark:text-rose-100">Yash Raj Garden</div>
+                <div className="text-xs font-bold uppercase text-rose-700 dark:text-rose-200">Venue</div>
+                <div className="text-sm font-semibold text-rose-900 dark:text-white">Yash Raj Garden</div>
               </div>
             </div>
           </div>
@@ -284,6 +291,8 @@ export default function Valentine2026() {
       <style jsx>{`
         .animate-bounce-slow { animation: bounce 3s infinite; }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 25% { transform: scale(1.15); } 50% { transform: scale(1); } 75% { transform: scale(1.15); } }
+        .animate-heartbeat { animation: heartbeat 1.2s ease-in-out infinite; }
         @keyframes fall {
           0% { transform: translateY(-24px) scale(1); opacity: 0; }
           10% { opacity: 1; }
