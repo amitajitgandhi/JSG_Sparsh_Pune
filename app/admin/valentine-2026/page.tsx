@@ -1,9 +1,21 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { RefreshCw, Download, Users } from 'lucide-react'
+import { RefreshCw, Download, Users, Link as LinkIcon } from 'lucide-react'
 
-type Reg = { id: number; name: string; mobile: string; confirm_attend: boolean; created_at: string }
+type Reg = {
+  id: number;
+  name: string;
+  mobile: string;
+  registration_for: 'Couple' | 'Individual';
+  kids_5_9: number;
+  kids_9_plus: number;
+  transaction_id: string;
+  total_amount: number;
+  confirm_attend: boolean;
+  screenshot_url: string | null;
+  created_at: string;
+}
 
 export default function AdminValentineDashboard() {
   const [rows, setRows] = useState<Reg[]>([])
@@ -35,12 +47,18 @@ export default function AdminValentineDashboard() {
   }
 
   const exportCsv = () => {
-    const header = ['id','name','mobile','confirm_attend','created_at']
+    const header = ['id','name','mobile','registration_for','kids_5_9','kids_9_plus','transaction_id','total_amount','confirm_attend','screenshot_url','created_at']
     const csvRows = rows.map(r => ({
       id: r.id,
       name: r.name,
       mobile: r.mobile,
+      registration_for: r.registration_for,
+      kids_5_9: r.kids_5_9,
+      kids_9_plus: r.kids_9_plus,
+      transaction_id: r.transaction_id,
+      total_amount: r.total_amount,
       confirm_attend: r.confirm_attend ? 'Yes' : 'No',
+      screenshot_url: r.screenshot_url || '',
       created_at: new Date(r.created_at).toLocaleString(),
     }))
     const csv = [header, ...csvRows.map(r => header.map(k => String((r as any)[k] ?? '').replace(/"/g,'"')))]
@@ -67,6 +85,11 @@ export default function AdminValentineDashboard() {
   return (
     <div className='min-h-screen bg-gray-50 py-8'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+        {error && (
+          <div className='mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm text-red-700'>
+            {error}
+          </div>
+        )}
         <div className='mb-6 sm:mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3'>
           <div>
             <h1 className='text-2xl sm:text-3xl font-bold text-gray-900 mb-1'>Valentine 2026 Dashboard</h1>
@@ -97,7 +120,13 @@ export default function AdminValentineDashboard() {
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>#</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Name</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Mobile</th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>For</th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Kids 5-9</th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Kids 9+</th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Txn ID</th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Total (₹)</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Confirmed</th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Screenshot</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Submitted At</th>
                   </tr>
                 </thead>
@@ -107,8 +136,22 @@ export default function AdminValentineDashboard() {
                       <td className='px-4 py-2 text-sm text-gray-700'>{idx + 1}</td>
                       <td className='px-4 py-2 text-sm font-medium text-gray-900'>{r.name}</td>
                       <td className='px-4 py-2 text-sm text-gray-700'>{r.mobile}</td>
+                      <td className='px-4 py-2 text-sm text-gray-700'>{r.registration_for}</td>
+                      <td className='px-4 py-2 text-sm text-gray-700'>{r.kids_5_9}</td>
+                      <td className='px-4 py-2 text-sm text-gray-700'>{r.kids_9_plus}</td>
+                      <td className='px-4 py-2 text-sm text-gray-700 break-all'>{r.transaction_id}</td>
+                      <td className='px-4 py-2 text-sm text-gray-700'>{r.total_amount}</td>
                       <td className='px-4 py-2 text-sm'>
                         <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${r.confirm_attend?'bg-emerald-50 text-emerald-700':'bg-amber-50 text-amber-700'}`}>{r.confirm_attend ? 'Yes' : 'No'}</span>
+                      </td>
+                      <td className='px-4 py-2 text-sm text-gray-700'>
+                        {r.screenshot_url ? (
+                          <a href={r.screenshot_url} target='_blank' rel='noreferrer' className='inline-flex items-center text-blue-600 hover:underline'>
+                            <LinkIcon size={14} className='mr-1'/> View
+                          </a>
+                        ) : (
+                          <span className='text-gray-400'>—</span>
+                        )}
                       </td>
                       <td className='px-4 py-2 text-sm text-gray-700 whitespace-nowrap'>{new Date(r.created_at).toLocaleString()}</td>
                     </tr>

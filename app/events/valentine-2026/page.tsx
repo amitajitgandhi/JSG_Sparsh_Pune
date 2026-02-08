@@ -34,6 +34,16 @@ export default function Valentine2026() {
     return kids5to9Total + kids9plusTotal + deposit
   }, [kids5to9Count, kids9plusCount])
 
+  const uploadScreenshot = async (): Promise<string | null> => {
+    if (!screenshotFile) return null
+    const fd = new FormData()
+    fd.append('file', screenshotFile)
+    const res = await fetch('/api/events/valentine-2026/upload-screenshot', { method: 'POST', body: fd })
+    const data = await res.json()
+    if (!res.ok || !data?.success || !data?.url) return null
+    return data.url as string
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
@@ -43,6 +53,9 @@ export default function Valentine2026() {
     if (!transactionId.trim()) { setError('Please enter transaction/reference ID'); return }
     setSubmitting(true)
     try {
+      if (!screenshotFile) { setError('Please upload the transaction screenshot'); return }
+      const screenshotUrl = await uploadScreenshot()
+      if (!screenshotUrl) { setError('Failed to upload screenshot. Please try again.'); return }
       const res = await fetch('/api/events/valentine-2026/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -55,6 +68,7 @@ export default function Valentine2026() {
           kids9plus: kids9plusCount,
           transactionId,
           totalAmount,
+          screenshotUrl,
         })
       })
       const data = await res.json()
