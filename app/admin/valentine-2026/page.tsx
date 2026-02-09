@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { RefreshCw, Download, Users, Link as LinkIcon } from 'lucide-react'
+import { supabase } from '@/lib/supabase'
 
 type Reg = {
   id: number
@@ -24,17 +25,15 @@ export default function AdminValentineDashboard() {
   const [error, setError] = useState<string | null>(null)
 
   const load = async () => {
+    setLoading(true)
     setError(null)
-    try {
-      const res = await fetch(`/api/events/valentine-2026/list?_=${Date.now()}`, { cache: 'no-store' })
-      const data = await res.json()
-      if (!res.ok || !data?.success) throw new Error(data?.error || 'Failed to load')
-      setRows(data.registrations || [])
-    } catch (e: any) {
-      setError(e?.message || 'Unexpected error')
-    } finally {
-      setLoading(false)
-    }
+    const { data, error } = await supabase
+      .from('valentine_2026_registrations')
+      .select('id, name, mobile, registration_for, kids_5_9, kids_9_plus, transaction_id, total_amount, confirm_attend, screenshot_url, created_at')
+      .order('id', { ascending: false })
+    if (error) setError(error.message)
+    setRows((data as any) || [])
+    setLoading(false)
   }
 
   useEffect(() => { load() }, [])
