@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { RefreshCw, Download, Users, Link as LinkIcon } from 'lucide-react'
 
 type Reg = {
-  id: number;
-  name: string;
-  mobile: string;
-  registration_for: 'Couple' | 'Individual';
-  kids_5_9: number;
-  kids_9_plus: number;
-  transaction_id: string;
-  total_amount: number;
-  confirm_attend: boolean;
-  screenshot_url: string | null;
-  created_at: string;
+  id: number
+  name: string
+  mobile: string
+  registration_for: 'Couple' | 'Individual'
+  kids_5_9: number
+  kids_9_plus: number
+  transaction_id: string
+  total_amount: number
+  confirm_attend: boolean
+  screenshot_url: string | null
+  created_at: string
 }
 
 export default function AdminValentineDashboard() {
@@ -24,10 +24,9 @@ export default function AdminValentineDashboard() {
   const [error, setError] = useState<string | null>(null)
 
   const load = async () => {
-    setLoading(true)
     setError(null)
     try {
-      const res = await fetch('/api/events/valentine-2026/list')
+      const res = await fetch('/api/events/valentine-2026/list', { cache: 'no-store' })
       const data = await res.json()
       if (!res.ok || !data?.success) throw new Error(data?.error || 'Failed to load')
       setRows(data.registrations || [])
@@ -45,6 +44,17 @@ export default function AdminValentineDashboard() {
     await load()
     setRefreshing(false)
   }
+
+  const stats = useMemo(() => {
+    const total = rows.length
+    const couples = rows.filter(r => r.registration_for === 'Couple').length
+    const individuals = total - couples
+    const kids59 = rows.reduce((s, r) => s + (r.kids_5_9 || 0), 0)
+    const kids9p = rows.reduce((s, r) => s + (r.kids_9_plus || 0), 0)
+    const confirmed = rows.filter(r => r.confirm_attend).length
+    const amount = rows.reduce((s, r) => s + (r.total_amount || 0), 0)
+    return { total, couples, individuals, kids59, kids9p, confirmed, amount }
+  }, [rows])
 
   const exportCsv = () => {
     const header = ['id','name','mobile','registration_for','kids_5_9','kids_9_plus','transaction_id','total_amount','confirm_attend','screenshot_url','created_at']
@@ -93,7 +103,7 @@ export default function AdminValentineDashboard() {
         <div className='mb-6 sm:mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3'>
           <div>
             <h1 className='text-2xl sm:text-3xl font-bold text-gray-900 mb-1'>Valentine 2026 Dashboard</h1>
-            <p className='text-gray-600 text-sm'>Overview of Valentine soirée registrations</p>
+            <p className='text-gray-600 text-sm'>Overview of Valentine registrations</p>
           </div>
           <div className='flex gap-2'>
             <button onClick={refresh} disabled={refreshing} className='bg-rose-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg hover:bg-rose-700 transition-colors flex items-center disabled:opacity-50 text-sm'>
@@ -103,6 +113,16 @@ export default function AdminValentineDashboard() {
               <Download size={14} className='mr-2'/>Export CSV
             </button>
           </div>
+        </div>
+
+        {/* Summary cards */}
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 mb-6'>
+          <Card title='Total' value={stats.total} color='bg-gray-100 text-gray-800'/>
+          <Card title='Couples' value={stats.couples} color='bg-rose-100 text-rose-800'/>
+          <Card title='Individuals' value={stats.individuals} color='bg-indigo-100 text-indigo-800'/>
+          <Card title='Kids 5-9' value={stats.kids59} color='bg-amber-100 text-amber-800'/>
+          <Card title='Kids 9+' value={stats.kids9p} color='bg-lime-100 text-lime-800'/>
+          <Card title='Confirmed' value={stats.confirmed} color='bg-emerald-100 text-emerald-800'/>
         </div>
 
         {rows.length === 0 ? (
@@ -162,6 +182,15 @@ export default function AdminValentineDashboard() {
           </div>
         )}
       </div>
+    </div>
+  )
+}
+
+function Card({ title, value, color }: { title: string; value: number | string; color: string }) {
+  return (
+    <div className={`rounded-lg p-3 sm:p-4 ${color} text-center`}> 
+      <div className='text-xs text-gray-600'>{title}</div>
+      <div className='text-2xl font-semibold'>{value}</div>
     </div>
   )
 }
