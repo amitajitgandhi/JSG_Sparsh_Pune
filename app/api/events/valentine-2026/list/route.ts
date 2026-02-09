@@ -9,7 +9,7 @@ export async function GET() {
     const client = supabaseServer ?? supabase
     const { data, error } = await client
       .from('valentine_2026_registrations')
-      .select('id, name, mobile, registration_for, kids_5_9, kids_9_plus, transaction_id, total_amount, screenshot_url, created_at')
+      .select('*')
       .order('id', { ascending: false })
 
     if (error) {
