@@ -26,7 +26,7 @@ export default function AdminValentineDashboard() {
   const load = async () => {
     setError(null)
     try {
-      const res = await fetch('/api/events/valentine-2026/list', { cache: 'no-store' })
+      const res = await fetch(`/api/events/valentine-2026/list?_=${Date.now()}`, { cache: 'no-store' })
       const data = await res.json()
       if (!res.ok || !data?.success) throw new Error(data?.error || 'Failed to load')
       setRows(data.registrations || [])
@@ -145,7 +145,6 @@ export default function AdminValentineDashboard() {
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Kids 9+</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Txn ID</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Total (₹)</th>
-                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Confirmed</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Screenshot</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Submitted At</th>
                   </tr>
@@ -161,9 +160,6 @@ export default function AdminValentineDashboard() {
                       <td className='px-4 py-2 text-sm text-gray-700'>{r.kids_9_plus}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 break-all'>{r.transaction_id}</td>
                       <td className='px-4 py-2 text-sm text-gray-700'>{r.total_amount}</td>
-                      <td className='px-4 py-2 text-sm'>
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${r.confirm_attend?'bg-emerald-50 text-emerald-700':'bg-amber-50 text-amber-700'}`}>{r.confirm_attend ? 'Yes' : 'No'}</span>
-                      </td>
                       <td className='px-4 py-2 text-sm text-gray-700'>
                         {r.screenshot_url ? (
                           <a href={r.screenshot_url} target='_blank' rel='noreferrer' className='inline-flex items-center text-blue-600 hover:underline'>
