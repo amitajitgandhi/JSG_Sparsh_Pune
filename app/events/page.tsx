@@ -11,7 +11,7 @@ export default function Events() {
   const events = [
     // Past Programs (for reference and inspiration)
     {
-      id: 1,
+      id: '[BONUS for New Members]',
       title: 'Rangbarse & AGM 2025',
       date: '2025-03-16',
       time: '9:00 AM - 6:00 PM',
@@ -22,7 +22,7 @@ export default function Events() {
       galleryUrl: 'https://www.facebook.com/share/p/17YNJaTyoV/'
     },
     {
-      id: 2,
+      id: 1,
       title: 'Installation - Desh Rangila',
       date: '2025-04-16',
       time: '5:00 PM - 11:00 PM',
@@ -33,7 +33,7 @@ export default function Events() {
       galleryUrl: 'https://www.facebook.com/share/p/1JzCcPrGx5/'
     },
     {
-      id: 3,
+      id: 2,
       title: 'Aqua Magic',
       date: '2025-06-01',
       time: '7:00 AM - 11:00 PM',
@@ -44,7 +44,7 @@ export default function Events() {
       galleryUrl: 'https://www.facebook.com/share/p/17W5ri8BCV/'
     },
     {
-      id: 4,
+      id: 3,
       title: 'Dazzle-N-Dance',
       date: '2025-07-06',
       time: '4:00 PM - 11:30 PM',
@@ -56,8 +56,8 @@ export default function Events() {
     },
     // Newly added events
     {
-      id: 5,
-      title: 'Mini Cricket Tournament [BONUS]',
+      id: '[BONUS]',
+      title: 'Mini Cricket Tournament',
       date: '2025-08-15',
       time: '4:00 PM - 11:30 PM',
       venue: 'PSA, Pune',
@@ -67,7 +67,7 @@ export default function Events() {
         galleryUrl: 'https://www.facebook.com/share/p/1FDbG2oLhR/'
     },
     {
-      id: 6,
+      id: 4,
       title: 'ATMASPARSH Tirthyatra',
       date: '2025-09-07',
       time: '7:00 AM - 11:30 PM',
@@ -78,8 +78,8 @@ export default function Events() {
         galleryUrl: 'https://www.facebook.com/media/set/?set=a.122212157300263798&type=3'
     },
     {
-      id: 7,
-        title: 'Rangeelo Garba [BONUS]',
+        id: '[BONUS]',
+        title: 'Rangeelo Garba',
       date: '2025-09-30',
       time: '7:00 PM - 11:30 PM',
       venue: 'Mahalakshmi Lawns, Karvenagar',
@@ -89,7 +89,7 @@ export default function Events() {
         galleryUrl: 'https://www.facebook.com/share/p/1BuUt4Tz2q/'
       },
       {
-          id: 8,
+          id: '5 - I',
           title: 'SPL 2.0 Grand Auction',
           date: '2025-10-29',
           time: '5:00 PM - 11:30 PM',
@@ -100,7 +100,7 @@ export default function Events() {
           galleryUrl: 'https://www.facebook.com/media/set/?set=a.122218043144263798&type=3'
       },
       {
-          id: 9,
+          id: '5 - II',
           title: 'Sparsh Premier League #02',
           date: '2025-11-15',
           time: '8:00 AM - 11:30 PM',
@@ -111,10 +111,10 @@ export default function Events() {
           galleryUrl: 'https://www.facebook.com/media/set/?set=a.122220334856263798&type=3'
       },
       {
-          id: 10,
+          id: 6,
           title: 'Yavat24 Hurda Party',
           date: '2025-12-21',
-          time: '2 Days',
+          time: '9:00 AM - 06:30 PM',
           venue: 'Yavat24',
           description: 'A full-day celebration at Yavat24 bringing together 250+ participants for fun-filled activities, great food, lively entertainment, and memorable moments.',
           attendees: '250+',
@@ -122,7 +122,7 @@ export default function Events() {
           galleryUrl: 'https://www.facebook.com/media/set/?set=a.122224464524263798&type=3'
       },
       {
-          id: 11,
+          id: 7,
           title: 'Goa Escape',
           date: '2026-01-24',
           time: '2 Nights',
@@ -131,6 +131,17 @@ export default function Events() {
           attendees: '100+',
           highlights: ['Beach', 'Party', 'Bonding', 'Refreshment'],
           galleryUrl: 'https://www.facebook.com/media/set/?set=a.122227766174263798&type=3'
+      },
+      {
+          id: 8,
+          title: 'Valentine Soiree - Powerplay Edition',
+          date: '2026-02-15',
+          time: '5:00 PM - 11:30 PM',
+          venue: 'Yashraj Garden',
+          description: 'Celebrate the spirit of Valentine’s Day with the ultimate cricket showdown — India vs Pakistan. An evening of passion, pride, and unforgettable memories.',
+          attendees: '200+',
+          highlights: ['Live Music', 'IndVsPak Screening', 'Romantic Ambience', 'Gourmet Dinner'],
+          galleryUrl: 'To be updated soon'
       }
   ]
 
@@ -171,6 +182,9 @@ export default function Events() {
           {events.map((event, index) => {
             const isEvenIndex = index % 2 === 0
             const headerColor = isEvenIndex ? 'from-blue-500 to-blue-600' : 'from-yellow-500 to-yellow-600'
+            // Determine if the id contains "BONUS" so we can render it smaller and without a dot
+            const isBonusId = typeof event.id === 'string' && event.id.toUpperCase().includes('BONUS')
+            const idText = String(event.id).replace(/\.$/, '')
 
             return (
               <div key={event.id} className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
@@ -181,7 +195,17 @@ export default function Events() {
                   </div>
                   <div className="relative z-10 flex justify-between items-center gap-3">
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 leading-tight break-words">{event.id}. {event.title}</h3>
+                      {isBonusId ? (
+                        <div className="leading-tight">
+                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-1 break-words">{event.title}</h3>
+                          <div className="text-xs sm:text-sm font-semibold opacity-90 mt-0.5">{idText}</div>
+                        </div>
+                      ) : (
+                        <div className="flex items-baseline gap-3">
+                          <span className="text-lg sm:text-xl md:text-2xl font-semibold">{idText}.</span>
+                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold break-words m-0">{event.title}</h3>
+                        </div>
+                      )}
                     </div>
                     <div className="text-right flex-shrink-0">
                       <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${isEvenIndex ? 'text-yellow-200' : 'text-blue-200'}`}>

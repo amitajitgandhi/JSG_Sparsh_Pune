@@ -13,6 +13,9 @@ interface MembershipRow {
   spouse_name?: string | null
   spouse_whatsapp?: string | null
   spouse_dob?: string | null
+  transaction_id?: string | null
+  transaction_screenshot_url?: string | null
+  payment_type?: string | null
 }
 
 interface ChildRow {
@@ -90,7 +93,7 @@ export default function MembershipDashboard() {
     setLoading(true)
     const { data: mData, error: mErr } = await supabase
       .from('memberships_2026_27')
-      .select('id, full_name, dob, membership_type, created_at, spouse_name, spouse_whatsapp, spouse_dob')
+      .select('id, full_name, dob, membership_type, created_at, spouse_name, spouse_whatsapp, spouse_dob, transaction_id, transaction_screenshot_url, payment_type')
       .order('created_at', { ascending: false })
     const { data: cData, error: cErr } = await supabase
       .from('membership_children_2026_27')
@@ -169,6 +172,9 @@ export default function MembershipDashboard() {
     return {
       id: m.id,
       full_name: m.full_name,
+      transaction_id: m.transaction_id ?? '',
+      transaction_screenshot_url: m.transaction_screenshot_url ?? '',
+      payment_type: m.payment_type ?? '',
       membership_type: m.membership_type,
       dob: m.dob,
       age: calcAge(m.dob) ?? '',
@@ -197,6 +203,9 @@ export default function MembershipDashboard() {
   const tableRows = useMemo(() => members.map(m => ({
     id: m.id,
     name: m.full_name,
+    transaction_id: (m as any).transaction_id || '',
+    transaction_screenshot_url: (m as any).transaction_screenshot_url || '',
+    payment_type: (m as any).payment_type || '',
     type: m.membership_type === 'OLD_MEMBER' ? 'Old' : 'New',
     submitted_at: m.created_at ? new Date(m.created_at) : null,
     submitted_at_str: m.created_at ? new Date(m.created_at).toLocaleString() : '',
@@ -355,6 +364,9 @@ export default function MembershipDashboard() {
                     <tr>
                       <th><SortHeader label='Name' k='name' /></th>
                       <th><SortHeader label='Type' k='type' /></th>
+                      <th className='px-6 py-3 text-left text-xs font-semibold tracking-wider'>Payment</th>
+                      <th className='px-6 py-3 text-left text-xs font-semibold tracking-wider'>Transaction ID</th>
+                      <th className='px-6 py-3 text-left text-xs font-semibold tracking-wider'>Transaction Screenshot</th>
                       <th><SortHeader label='Age' k='age' /></th>
                       <th><SortHeader label='Kids' k='kids' /></th>
                       <th><SortHeader label='Submitted At' k='submitted_at' /></th>
@@ -365,6 +377,17 @@ export default function MembershipDashboard() {
                       <tr key={r.id} className='hover:bg-gray-50 odd:bg-gray-50/40'>
                         <td className='px-6 py-3 text-sm font-medium text-gray-900'>{r.name}</td>
                         <td className='px-6 py-3 text-sm'><span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${r.type==='Old'?'bg-emerald-50 text-emerald-700':'bg-amber-50 text-amber-700'}`}>{r.type}</span></td>
+                        <td className='px-6 py-3 text-sm text-gray-700'>{r.payment_type || ''}</td>
+                        <td className='px-6 py-3 text-sm text-gray-700 break-words max-w-[200px]'>{r.transaction_id || ''}</td>
+                        <td className='px-6 py-3 text-sm text-gray-700'>
+                          {r.transaction_screenshot_url ? (
+                            <a href={r.transaction_screenshot_url} target='_blank' rel='noreferrer' className='text-sm text-blue-600 underline'>
+                              View
+                            </a>
+                          ) : (
+                            <span className='text-gray-400'>-</span>
+                          )}
+                        </td>
                         <td className='px-6 py-3 text-sm text-gray-700'>{r.age ?? ''}</td>
                         <td className='px-6 py-3 text-sm text-gray-700'>{r.kids}</td>
                         <td className='px-6 py-3 text-sm text-gray-700 whitespace-nowrap'>{r.submitted_at_str}</td>

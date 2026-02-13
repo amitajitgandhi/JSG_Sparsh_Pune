@@ -7,6 +7,11 @@ export async function POST(req: Request) {
   try {
     const json = await req.json()
     const payload = membershipSchema.parse(json)
+    // transaction fields may be present but are not part of membershipSchema
+    const jsonAny: any = json
+    const txId = jsonAny.transaction_id || null
+    const txUrl = jsonAny.transaction_screenshot_url || null
+    const paymentType = jsonAny.payment_type || null
 
     const wedding_date = `${payload.wedding_date.year}-${payload.wedding_date.month}-${payload.wedding_date.day}`
     const dob = `${payload.dob.year}-${payload.dob.month}-${payload.dob.day}`
@@ -28,7 +33,10 @@ export async function POST(req: Request) {
           wedding_date,
           dob,
           spouse_dob,
+          transaction_id: txId,
+          transaction_screenshot_url: txUrl,
           membership_type: payload.membership_type,
+          payment_type: paymentType,
         },
       ])
       .select('id')

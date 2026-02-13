@@ -175,10 +175,12 @@ export const uploadRegistrationTransactionScreenshot = async (file: File, regist
     if (!allowedExt.includes(ext) && !allowedMime.includes(file.type.toLowerCase())) return null
 
     let fileName = `transaction-${registrationId}-${Date.now()}.${ext}`
-    console.log('Attempting registration transaction screenshot upload with filename:', fileName)
+    // If you created a folder named 'fees' in the bucket, upload under that prefix
+    const remotePath = `fees/${fileName}`
+    console.log('Attempting registration transaction screenshot upload with remotePath:', remotePath)
 
-    // Upload to registration-transaction-ss bucket
-    const { data, error } = await client.storage.from('registration-transaction-ss').upload(fileName, file)
+    // Upload to membership-fees-ss bucket (used for membership fee screenshots)
+    const { data, error } = await client.storage.from('membership-fees-ss').upload(remotePath, file, { cacheControl: '3600', upsert: false })
     console.log('Registration transaction upload result:', { path: data?.path, err: error?.message })
     
     if (error) {
@@ -191,10 +193,30 @@ export const uploadRegistrationTransactionScreenshot = async (file: File, regist
       return null
     }
 
-    const { data: pub } = client.storage.from('registration-transaction-ss').getPublicUrl(data.path)
-    if (!pub?.publicUrl) return null
-    console.log('REGISTRATION TRANSACTION UPLOAD OK', pub.publicUrl)
-    return pub.publicUrl
+    // Try to get a public URL. If bucket is private, fall back to signed URL using service role client.
+    const { data: pub } = client.storage.from('membership-fees-ss').getPublicUrl(data.path)
+    if (pub?.publicUrl) {
+      console.log('REGISTRATION TRANSACTION UPLOAD OK (publicUrl)', pub.publicUrl)
+      return pub.publicUrl
+    }
+
+    // Fallback: create signed URL (requires service role or server client)
+    if (supabaseServer) {
+      try {
+        const { data: signed, error: sErr } = await supabaseServer.storage.from('membership-fees-ss').createSignedUrl(data.path, 60 * 60)
+        if (sErr) {
+          console.error('createSignedUrl error:', sErr)
+        } else if (signed?.signedURL) {
+          console.log('REGISTRATION TRANSACTION UPLOAD OK (signedURL)', signed.signedURL)
+          return signed.signedURL
+        }
+      } catch (e) {
+        console.error('createSignedUrl unexpected error:', e)
+      }
+    }
+
+    console.warn('No public or signed URL available for uploaded file:', data.path)
+    return null
   } catch (e) {
     console.error('uploadRegistrationTransactionScreenshot unexpected error:', e)
     return null

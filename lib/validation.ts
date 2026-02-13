@@ -27,8 +27,11 @@ export const membershipSchema = z.object({
 
   number_of_children: z.number().min(0).max(3),
   children: z.array(childSchema).max(3),
-
   membership_type: z.enum(['OLD_MEMBER','NEW_MEMBER']),
+  payment_type: z.enum(['CASH','ONLINE']).nullable().optional(),
+  // Optional payment fields
+  transaction_id: z.string().nullable().optional(),
+  transaction_screenshot_url: z.string().nullable().optional(),
 })
 
 export type MembershipInput = z.infer<typeof membershipSchema>

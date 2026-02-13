@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState, useLayoutEffect } from 'reac
 import { z } from 'zod'
 import { Check, ChevronLeft, ChevronRight, Loader2, AlertTriangle } from 'lucide-react'
 import { membershipSchema, type MembershipInput, childSchema } from '../../lib/validation'
+import { uploadRegistrationTransactionScreenshot } from '../../lib/supabase'
 
 // Presentational inputs (stable identity)
 type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & { label: string; name: string; error?: string }
@@ -77,6 +78,7 @@ const steps = [
   'Child #3',
   'Membership Type',
   'Review',
+  'Payments',
   'Submit',
 ] as const
 
@@ -104,6 +106,9 @@ const years = Array.from({ length: 90 }, (_, i) => String(new Date().getFullYear
 export default function MembershipForm() {
   const [step, setStep] = useState(0)
   const [values, setValues] = useState<MembershipInput>(initialValues)
+  const [paymentTxId, setPaymentTxId] = useState('')
+  const [paymentScreenshot, setPaymentScreenshot] = useState<File | null>(null)
+  const [paymentType, setPaymentType] = useState<'CASH' | 'ONLINE' | null>(null)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)
   const [toast, setToast] = useState<{ type: 'success' | 'error' | 'info'; msg: string; toastLink?: { href: string; label?: string } } | null>(null)
@@ -191,6 +196,17 @@ export default function MembershipForm() {
         case 8:
           return true
         case 9: {
+          // Payments step: if OLD_MEMBER require payment type; if ONLINE require tx id + screenshot
+          if (values.membership_type === 'OLD_MEMBER') {
+            if (!paymentType) return false
+            if (paymentType === 'ONLINE') {
+              if (!paymentTxId || !paymentTxId.trim()) return false
+              if (!paymentScreenshot) return false
+            }
+          }
+          return true
+        }
+        case 10: {
           membershipSchema.parse(values)
           return true
         }
@@ -200,11 +216,23 @@ export default function MembershipForm() {
     } catch (e: any) {
       return false
     }
-  }, [step, values])
+  }, [step, values, paymentTxId, paymentScreenshot])
 
   const next = useCallback(() => {
-    if (step < steps.length - 1 && stepIsValid) setStep((s) => s + 1)
-  }, [step, stepIsValid])
+    if (!stepIsValid) return
+    // From Review (step 8) decide destination based on membership type
+    if (step === 8) {
+      if (values.membership_type === 'NEW_MEMBER') {
+        // skip Payments and go to Submit
+        setStep(10)
+      } else {
+        // Old members go to Payments
+        setStep(9)
+      }
+      return
+    }
+    if (step < steps.length - 1) setStep((s) => s + 1)
+  }, [step, stepIsValid, values.membership_type])
   const prev = useCallback(() => setStep((s) => Math.max(0, s - 1)), [])
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }, [step])
 
@@ -222,18 +250,46 @@ export default function MembershipForm() {
     try {
       setLoading(true)
       setToast(null)
+      // Include payment fields when present
       const payload = membershipSchema.parse(values)
+      const payloadWithPayment = {
+        ...payload,
+        transaction_id: paymentTxId || null,
+        transaction_screenshot_url: null, // will be set after upload if any
+        payment_type: paymentType || null,
+      }
+
+      // If there's a screenshot file, upload it first and set URL
+      if (paymentScreenshot) {
+        const uploadedUrl = await uploadRegistrationTransactionScreenshot(paymentScreenshot, 'membership')
+        if (uploadedUrl) payloadWithPayment.transaction_screenshot_url = uploadedUrl
+      }
 
       const res = await fetch('/api/memberships/2026-27', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(payloadWithPayment),
       })
       const data = await res.json()
       if (!res.ok || !data?.ok) throw new Error(data?.error || 'Submission failed')
 
       localStorage.removeItem(DRAFT_KEY)
-      const successMsg = `🎉 Welcome to JSG SPARSH! \n\nThank you for choosing to join the Most Energetic & Enthusiastic Young Couple Group (up to 45 years).\n\n📄 Documents Required\n• Photocopies of Aadhaar cards for self, spouse, and children.\n\n💳 Membership Fee\n• Old Members: ₹15,000 (on or before 15 Feb 2026)\n• Old Members: ₹16,000 (after 15 Feb 2026)\n• New Members: ₹16,000\n\n🏦 Payment Deposit Details\n• 📅 Date: 13th & 14th February 2026\n• 📍 Location: Jain Denticure, Behind Shantinagar, Kondhwa\n• 🔗 Map: https://maps.app.goo.gl/uR1KQyLjVf9g2sbBA?g_st=awb\n\n✅ Next Steps\n• Please complete payment and submit documents at the above location.\n• You will receive communication from our team after processing.`;
+      const successMsg = `🎉 Welcome to JSG SPARSH!
+
+Dear Member,
+
+Thank you for registering with JSG SPARSH – The Most Energetic & Enthusiastic Young Couple Group (Up to 45 Years).
+
+We are delighted to have you express your interest in becoming a part of our vibrant and dynamic community. Your registration has been successfully received.
+
+✨ Important Note for New Members:
+At present, we are not accepting any payments.
+Kindly note that existing members will be given priority
+
+Should a slot be confirmed for you, our Committee Team will personally reach out with further details, including payment instructions.
+
+With warm regards,
+Team JSG SPARSH`;
       setToast({ type: 'success', msg: successMsg })
       setStep(0)
       setValues(initialValues)
@@ -294,6 +350,15 @@ export default function MembershipForm() {
           }
           case 7:
             z.object({ membership_type: z.enum(['OLD_MEMBER','NEW_MEMBER']) }).parse({ membership_type: values.membership_type })
+            break
+          case 9:
+            if (values.membership_type === 'OLD_MEMBER') {
+              if (!paymentType) newErr['paymentType'] = 'Select payment method'
+              if (paymentType === 'ONLINE') {
+                if (!paymentTxId || !paymentTxId.trim()) newErr['paymentTxId'] = 'Transaction ID required'
+                if (!paymentScreenshot) newErr['paymentScreenshot'] = 'Transaction screenshot required'
+              }
+            }
             break
         }
       } catch (e: any) {
@@ -629,7 +694,54 @@ export default function MembershipForm() {
         <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2">Membership</div>
         <div className="text-gray-800 dark:text-gray-100">{values.membership_type === 'OLD_MEMBER' ? 'Old Member' : 'New Member'}</div>
       </div>
-      <div className="text-xs text-gray-500 dark:text-gray-300">By submitting, you agree to committee approval and non-refundable policy. Data will be used only for membership communication.</div>
+      <div className="text-xs text-gray-500 dark:text-gray-300">Kindly review all entered data carefully before proceeding. Incorrect or incomplete information may delay processing.</div>
+    </div>
+  )
+
+
+  const renderPayments = () => (
+    <div className="p-4 sm:p-6 space-y-4">
+      {values.membership_type === 'OLD_MEMBER' ? (
+        <div className="space-y-3">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Payment Method <span className="text-red-600">*</span></label>
+            <div className="flex gap-3">
+              <button type="button" onClick={() => { setPaymentType('CASH'); setPaymentTxId(''); setPaymentScreenshot(null); setStep(10) }} className={`flex-1 px-4 py-3 rounded-lg border text-center transition ${paymentType==='CASH' ? 'border-blue-600 bg-blue-50 shadow-sm' : 'border-gray-200 hover:bg-gray-50'}`}>
+                <div className="font-semibold">Cash</div>
+                <div className="text-xs text-gray-500">Pay at Jain Denticure</div>
+              </button>
+              <button type="button" onClick={() => setPaymentType('ONLINE')} className={`flex-1 px-4 py-3 rounded-lg border text-center transition ${paymentType==='ONLINE' ? 'border-blue-600 bg-blue-50 shadow-sm' : 'border-gray-200 hover:bg-gray-50'}`}>
+                <div className="font-semibold">Online</div>
+                <div className="text-xs text-gray-500">Pay via QR / UPI and upload screenshot</div>
+              </button>
+            </div>
+          </div>
+
+          {paymentType === 'ONLINE' && (
+            <div className="space-y-3">
+              <div>
+                <img src="/images/SPARSH_QR_Code.jpeg" alt="iSPARSH QR" className="w-48 h-auto rounded-lg border" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Transaction ID <span className="text-red-600">*</span></label>
+                <input value={paymentTxId} onChange={(e) => setPaymentTxId(e.currentTarget.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" />
+                {errors['paymentTxId'] ? <p className="text-xs text-red-600 mt-1">{errors['paymentTxId']}</p> : null}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Upload Transaction Screenshot <span className="text-red-600">*</span></label>
+                <input type="file" accept="image/*" onChange={(e) => setPaymentScreenshot(e.target.files?.[0] || null)} className="w-full text-sm" />
+                {errors['paymentScreenshot'] ? <p className="text-xs text-red-600 mt-1">{errors['paymentScreenshot']}</p> : null}
+              </div>
+            </div>
+          )}
+
+          {paymentType === 'CASH' }
+        </div>
+      ) : (
+        <div>
+          <p className="text-sm text-gray-600">As a new member, proceed to submit documents on the next step.</p>
+        </div>
+      )}
     </div>
   )
 
@@ -637,6 +749,18 @@ export default function MembershipForm() {
     <div className="p-4 sm:p-6">
       <div className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-xl p-4 text-sm">
         <p className="text-gray-700 dark:text-gray-300">Click submit to complete registration. You will receive a confirmation message if successful.</p>
+        {/* Payment instructions for Cash (Old members) */}
+        {values.membership_type === 'OLD_MEMBER' && paymentType === 'CASH' && (
+          <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+            <div className="font-semibold text-gray-800 dark:text-gray-100">Cash Payment Instructions</div>
+            <div className="text-sm text-gray-700 dark:text-gray-200 mt-2">
+              Please pay the membership fee in person at the collection desk:
+              <div className="mt-2 font-medium">Jain Denticure, Behind Shantinagar, Kondhwa</div>
+              <div className="mt-2 text-sm text-gray-700 dark:text-gray-200">Kindly complete the payment before <span className="font-semibold">15 Feb 2026</span>.</div>
+            </div>
+          </div>
+        )}
+        <div className="mt-3 text-xs text-gray-500 dark:text-gray-400">By submitting, you agree to committee approval and non-refundable policy. Data will be used only for membership communication.</div>
       </div>
     </div>
   )
@@ -652,7 +776,8 @@ export default function MembershipForm() {
       case 6: return renderChild(2)
       case 7: return renderMembershipType()
       case 8: return renderReview()
-      case 9: return renderSubmit()
+      case 9: return renderPayments()
+      case 10: return renderSubmit()
       default: return null
     }
   }
@@ -671,7 +796,7 @@ export default function MembershipForm() {
           </button>
           <div className="ml-auto" />
           {step < steps.length - 1 ? (
-            <button onClick={() => step < steps.length - 1 && stepIsValid && setStep((s) => s + 1)} disabled={!stepIsValid || loading} className="flex items-center gap-2 px-5 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-yellow-500 text-white font-semibold shadow disabled:opacity-60">
+            <button onClick={next} disabled={!stepIsValid || loading} className="flex items-center gap-2 px-5 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-yellow-500 text-white font-semibold shadow disabled:opacity-60">
               <span className="text-sm">Continue</span>
               <ChevronRight className="h-4 w-4" />
             </button>

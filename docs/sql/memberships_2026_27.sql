@@ -9,6 +9,9 @@ create table if not exists public.memberships_2026_27 (
   wedding_date date not null,
   dob date not null,
   spouse_dob date,
+  transaction_id text,
+  transaction_screenshot_url text,
+  payment_type text,
   membership_type text not null check (membership_type in ('OLD_MEMBER','NEW_MEMBER')),
   created_at timestamptz not null default now()
 );
