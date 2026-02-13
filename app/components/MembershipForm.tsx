@@ -252,7 +252,7 @@ export default function MembershipForm() {
       setToast(null)
       // Include payment fields when present
       const payload = membershipSchema.parse(values)
-      const payloadWithPayment = {
+      const payloadWithPayment: Partial<MembershipInput> & { transaction_id?: string | null; transaction_screenshot_url?: string | null; payment_type?: string | null } = {
         ...payload,
         transaction_id: paymentTxId || null,
         transaction_screenshot_url: null, // will be set after upload if any

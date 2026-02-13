@@ -30,8 +30,8 @@ export const membershipSchema = z.object({
   membership_type: z.enum(['OLD_MEMBER','NEW_MEMBER']),
   payment_type: z.enum(['CASH','ONLINE']).nullable().optional(),
   // Optional payment fields
-  transaction_id: z.string().nullable().optional(),
-  transaction_screenshot_url: z.string().nullable().optional(),
+  transaction_id: z.string().nullable().optional(), // Transaction ID for payment
+  transaction_screenshot_url: z.string().nullable().optional(), // URL for transaction screenshot
 })
 
 export type MembershipInput = z.infer<typeof membershipSchema>
