@@ -206,9 +206,9 @@ export const uploadRegistrationTransactionScreenshot = async (file: File, regist
         const { data: signed, error: sErr } = await supabaseServer.storage.from('membership-fees-ss').createSignedUrl(data.path, 60 * 60)
         if (sErr) {
           console.error('createSignedUrl error:', sErr)
-        } else if (signed?.signedURL) {
-          console.log('REGISTRATION TRANSACTION UPLOAD OK (signedURL)', signed.signedURL)
-          return signed.signedURL
+        } else if (signed?.signedUrl) {
+          console.log('REGISTRATION TRANSACTION UPLOAD OK (signedUrl)', signed.signedUrl)
+          return signed.signedUrl
         }
       } catch (e) {
         console.error('createSignedUrl unexpected error:', e)
