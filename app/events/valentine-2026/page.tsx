@@ -3,9 +3,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Heart, Calendar, Clock, MapPin, Music, Users, CheckCircle } from 'lucide-react'
 
 export default function Valentine2026() {
+  const router = useRouter()
+  const [showClosedModal, setShowClosedModal] = useState<boolean>(true)
   const [name, setName] = useState('')
   const [mobile, setMobile] = useState('')
   const [confirmAttend, setConfirmAttend] = useState(false)
@@ -272,6 +275,24 @@ export default function Valentine2026() {
                 </button>
               </form>
             )}
+
+      {/* Registration closed modal */}
+      {showClosedModal && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 p-4">
+          <div className="w-full max-w-sm bg-white rounded-2xl p-6 text-center shadow-lg">
+            <h3 className="text-lg font-semibold text-rose-700 mb-3">Registration is Closed</h3>
+            <p className="text-sm text-rose-600 mb-5">Thank you for your interest. Registrations for this event are now closed.</p>
+            <div className="flex justify-center">
+              <button
+                onClick={() => router.push('/')}
+                className="rounded-lg bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 font-medium"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
           </div>
         </div>
       </section>
