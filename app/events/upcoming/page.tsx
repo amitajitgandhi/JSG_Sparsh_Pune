@@ -30,14 +30,14 @@ export default function UpcomingEvent() {
               <div className="p-2 rounded-xl bg-blue-50 text-blue-700"><Calendar size={20} /></div>
               <div>
                 <div className="text-xs text-blue-600">Tentative Window</div>
-                <div className="text-sm font-semibold text-blue-900">10 Feb -20 Feb 2026</div>
+                <div className="text-sm font-semibold text-blue-900">08-22 March 2026</div>
               </div>
             </div>
             <div className="rounded-2xl bg-white border border-white/80 p-4 flex items-center gap-3 text-blue-800">
               <div className="p-2 rounded-xl bg-blue-50 text-blue-700"><Clock size={20} /></div>
               <div>
                 <div className="text-xs text-blue-600">Time</div>
-                <div className="text-sm font-semibold text-blue-900">Evening</div>
+                <div className="text-sm font-semibold text-blue-900">9am to 6pm</div>
               </div>
             </div>
             <div className="rounded-2xl bg-white border border-white/80 p-4 flex items-center gap-3 text-blue-800">
