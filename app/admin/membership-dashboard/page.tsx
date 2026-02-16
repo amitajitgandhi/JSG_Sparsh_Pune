@@ -12,6 +12,7 @@ interface MembershipRow {
   created_at?: string | null
   spouse_name?: string | null
   spouse_whatsapp?: string | null
+  whatsapp?: string | null
   spouse_dob?: string | null
   transaction_id?: string | null
   transaction_screenshot_url?: string | null
@@ -93,7 +94,7 @@ export default function MembershipDashboard() {
     setLoading(true)
     const { data: mData, error: mErr } = await supabase
       .from('memberships_2026_27')
-      .select('id, full_name, dob, membership_type, created_at, spouse_name, spouse_whatsapp, spouse_dob, transaction_id, transaction_screenshot_url, payment_type')
+      .select('id, full_name, dob, membership_type, created_at, whatsapp, spouse_name, spouse_whatsapp, spouse_dob, transaction_id, transaction_screenshot_url, payment_type')
       .order('created_at', { ascending: false })
     const { data: cData, error: cErr } = await supabase
       .from('membership_children_2026_27')
@@ -171,6 +172,7 @@ export default function MembershipDashboard() {
     const [c1, c2, c3] = kids
     return {
       id: m.id,
+      whatsapp: (m as any).whatsapp ?? '',
       full_name: m.full_name,
       transaction_id: m.transaction_id ?? '',
       transaction_screenshot_url: m.transaction_screenshot_url ?? '',
