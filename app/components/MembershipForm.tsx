@@ -196,13 +196,11 @@ export default function MembershipForm() {
         case 8:
           return true
         case 9: {
-          // Payments step: if OLD_MEMBER require payment type; if ONLINE require tx id + screenshot
-          if (values.membership_type === 'OLD_MEMBER') {
-            if (!paymentType) return false
-            if (paymentType === 'ONLINE') {
-              if (!paymentTxId || !paymentTxId.trim()) return false
-              if (!paymentScreenshot) return false
-            }
+          // Payments step: require payment selection for all members; if ONLINE require tx id + screenshot
+          if (!paymentType) return false
+          if (paymentType === 'ONLINE') {
+            if (!paymentTxId || !paymentTxId.trim()) return false
+            if (!paymentScreenshot) return false
           }
           return true
         }
@@ -222,13 +220,8 @@ export default function MembershipForm() {
     if (!stepIsValid) return
     // From Review (step 8) decide destination based on membership type
     if (step === 8) {
-      if (values.membership_type === 'NEW_MEMBER') {
-        // skip Payments and go to Submit
-        setStep(10)
-      } else {
-        // Old members go to Payments
-        setStep(9)
-      }
+      // Always show Payments page next (step 9) regardless of membership type
+      setStep(9)
       return
     }
     if (step < steps.length - 1) setStep((s) => s + 1)
@@ -701,47 +694,44 @@ Team JSG SPARSH`;
 
   const renderPayments = () => (
     <div className="p-4 sm:p-6 space-y-4">
-      {values.membership_type === 'OLD_MEMBER' ? (
-        <div className="space-y-3">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Payment Method <span className="text-red-600">*</span></label>
-            <div className="flex gap-3">
-              <button type="button" onClick={() => { setPaymentType('CASH'); setPaymentTxId(''); setPaymentScreenshot(null); setStep(10) }} className={`flex-1 px-4 py-3 rounded-lg border text-center transition ${paymentType==='CASH' ? 'border-blue-600 bg-blue-50 shadow-sm' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <div className="font-semibold">Cash</div>
-                <div className="text-xs text-gray-500">Pay at Jain Denticure</div>
-              </button>
-              <button type="button" onClick={() => setPaymentType('ONLINE')} className={`flex-1 px-4 py-3 rounded-lg border text-center transition ${paymentType==='ONLINE' ? 'border-blue-600 bg-blue-50 shadow-sm' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <div className="font-semibold">Online</div>
-                <div className="text-xs text-gray-500">Pay via QR / UPI and upload screenshot</div>
-              </button>
+      <div className="space-y-3">
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+          <div className="text-sm text-gray-600">Amount</div>
+          <div className="text-2xl font-extrabold text-gray-900">₹16,000</div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Payment Method <span className="text-red-600">*</span></label>
+          <div className="flex gap-3">
+            <button type="button" onClick={() => { setPaymentType('CASH'); setPaymentTxId(''); setPaymentScreenshot(null); setStep(10) }} className={`flex-1 px-4 py-3 rounded-lg border text-center transition ${paymentType==='CASH' ? 'border-blue-600 bg-blue-50 shadow-sm' : 'border-gray-200 hover:bg-gray-50'}`}>
+              <div className="font-semibold">Cash</div>
+              <div className="text-xs text-gray-500">Pay at Jain Denticure</div>
+            </button>
+            <button type="button" onClick={() => setPaymentType('ONLINE')} className={`flex-1 px-4 py-3 rounded-lg border text-center transition ${paymentType==='ONLINE' ? 'border-blue-600 bg-blue-50 shadow-sm' : 'border-gray-200 hover:bg-gray-50'}`}>
+              <div className="font-semibold">Online</div>
+              <div className="text-xs text-gray-500">Pay via QR / UPI and upload screenshot</div>
+            </button>
+          </div>
+        </div>
+
+        {paymentType === 'ONLINE' && (
+          <div className="space-y-3">
+            <div>
+              <img src="/images/SPARSH_QR_Code.jpeg" alt="SPARSH QR" className="w-48 h-auto rounded-lg border" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Transaction ID <span className="text-red-600">*</span></label>
+              <input value={paymentTxId} onChange={(e) => setPaymentTxId(e.currentTarget.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" />
+              {errors['paymentTxId'] ? <p className="text-xs text-red-600 mt-1">{errors['paymentTxId']}</p> : null}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Upload Transaction Screenshot <span className="text-red-600">*</span></label>
+              <input type="file" accept="image/*" onChange={(e) => setPaymentScreenshot(e.target.files?.[0] || null)} className="w-full text-sm" />
+              {errors['paymentScreenshot'] ? <p className="text-xs text-red-600 mt-1">{errors['paymentScreenshot']}</p> : null}
             </div>
           </div>
-
-          {paymentType === 'ONLINE' && (
-            <div className="space-y-3">
-              <div>
-                <img src="/images/SPARSH_QR_Code.jpeg" alt="iSPARSH QR" className="w-48 h-auto rounded-lg border" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Transaction ID <span className="text-red-600">*</span></label>
-                <input value={paymentTxId} onChange={(e) => setPaymentTxId(e.currentTarget.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" />
-                {errors['paymentTxId'] ? <p className="text-xs text-red-600 mt-1">{errors['paymentTxId']}</p> : null}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Upload Transaction Screenshot <span className="text-red-600">*</span></label>
-                <input type="file" accept="image/*" onChange={(e) => setPaymentScreenshot(e.target.files?.[0] || null)} className="w-full text-sm" />
-                {errors['paymentScreenshot'] ? <p className="text-xs text-red-600 mt-1">{errors['paymentScreenshot']}</p> : null}
-              </div>
-            </div>
-          )}
-
-          {paymentType === 'CASH' }
-        </div>
-      ) : (
-        <div>
-          <p className="text-sm text-gray-600">As a new member, proceed to submit documents on the next step.</p>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 
