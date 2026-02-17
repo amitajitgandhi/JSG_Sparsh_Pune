@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Facebook, Instagram, Mail, Phone, MapPin, Youtube, X } from 'lucide-react'
+import JoinUsModal from './JoinUsModal'
 import { useEffect, useState } from 'react'
 
 export default function Footer() {
@@ -10,6 +11,7 @@ export default function Footer() {
   const [showModal, setShowModal] = useState(false)
   const [modalUrl, setModalUrl] = useState('')
   const [modalTitle, setModalTitle] = useState('')
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -138,6 +140,12 @@ export default function Footer() {
               <h3 className="font-bold text-xl mb-6 text-yellow-300">Quick Links</h3>
               <div className="lg:inline-block">
                 <ul className="space-y-4 text-left">
+                  <li>
+                    <button onClick={() => setIsJoinModalOpen(true)} className="text-blue-100 hover:text-yellow-300 transition-colors duration-200 flex items-center space-x-2 group text-base">
+                      <span className="w-2 h-2 bg-yellow-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                      <span>Join Us</span>
+                    </button>
+                  </li>
                   {quickLinks.map((link, index) => (
                     <li key={index}>
                       <Link 
@@ -265,6 +273,8 @@ export default function Footer() {
           </div>
         </div>
       )}
+      {/* Join Us Modal */}
+      <JoinUsModal isOpen={isJoinModalOpen} onClose={() => setIsJoinModalOpen(false)} />
     </>
   )
 }

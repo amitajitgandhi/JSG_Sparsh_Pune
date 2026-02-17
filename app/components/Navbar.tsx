@@ -90,12 +90,9 @@ export default function Navbar() {
               
               {/* CTA Button */}
               <div className="ml-4 pl-4 border-l border-neutral-300">
-                <button
-                  onClick={handleJoinUsClick}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 px-4 py-2.5 rounded-xl font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 text-sm"
-                >
+                <Link href="/membership/2026-27" className="bg-yellow-500 hover:bg-yellow-600 text-blue-900 px-4 py-2.5 rounded-xl font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 text-sm">
                   Join Us
-                </button>
+                </Link>
               </div>
             </div>
 
