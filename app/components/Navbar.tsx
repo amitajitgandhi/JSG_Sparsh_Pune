@@ -135,12 +135,13 @@ export default function Navbar() {
                 
                 {/* Mobile CTA */}
                 <div className="pt-3 mt-3 border-t border-neutral-200/50">
-                  <button
-                    onClick={handleJoinUsClick}
+                  <Link
+                    href="/membership/2026-27"
+                    onClick={() => setIsOpen(false)}
                     className="flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-blue-900 px-6 py-3 rounded-xl font-semibold transition-all duration-300 w-full"
                   >
                     Join JSG SPARSH
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

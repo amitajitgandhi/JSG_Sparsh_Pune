@@ -141,7 +141,7 @@ export default function Events() {
           description: 'Celebrate the spirit of Valentine’s Day with the ultimate cricket showdown — India vs Pakistan. An evening of passion, pride, and unforgettable memories.',
           attendees: '200+',
           highlights: ['Live Music', 'IndVsPak Screening', 'Romantic Ambience', 'Gourmet Dinner'],
-          galleryUrl: 'To be updated soon'
+          galleryUrl: 'https://www.facebook.com/media/set/?vanity=61557913960543&set=a.122230926764263798'
       }
   ]
 
