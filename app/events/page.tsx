@@ -334,6 +334,9 @@ export default function Events() {
                           <Link href="/events/goa-2026" className="inline-flex items-center justify-center rounded-lg bg-yellow-500 hover:bg-blue-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
                               Goa 2026
                           </Link>
+                          <Link href="/events/valentine-2026" className="inline-flex items-center justify-center rounded-lg bg-rose-500 hover:bg-rose-600 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
+                              Valentine Soiree
+                          </Link>
             </div>
           </div>
         </div>
