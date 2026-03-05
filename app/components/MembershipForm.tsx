@@ -115,6 +115,13 @@ export default function MembershipForm() {
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [copyUrlModal, setCopyUrlModal] = useState<{ open: boolean; url: string | null }>({ open: false, url: null })
 
+  // Cutoff date for early bird pricing (15 Feb 2026 end of day)
+  const cutoffDate = useMemo(() => new Date(2026, 1, 15, 23, 59, 59), [])
+  const afterCutoff = useMemo(() => new Date() > cutoffDate, [cutoffDate])
+  const oldMemberPrice = afterCutoff ? 16000 : 15000
+  const newMemberPrice = 16000
+  const displayAmount = values.membership_type === 'OLD_MEMBER' ? oldMemberPrice : newMemberPrice
+
   const markTouched = useCallback((name: string) => {
     setTouched((t) => (t[name] ? t : { ...t, [name]: true }))
   }, [])
@@ -410,25 +417,48 @@ Team JSG SPARSH`;
         </div>
       </div>
       {/* Fees - compact pricing cards */}
-      <div className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-xl p-4">
+        <div className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-xl p-4">
         <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">Membership Fee (2026–2027)</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="rounded-lg border border-green-200 dark:border-green-800 bg-green-50 dark:bg-neutral-800 p-4">
-            <div className="text-xs inline-flex items-center rounded-full bg-green-600 text-white px-2 py-0.5">Early bird till 15 Feb 2026</div>
-            <div className="mt-2 font-semibold text-gray-800 dark:text-gray-100">Old Members</div>
-            <div className="text-lg font-extrabold text-green-700 dark:text-green-400 mt-1">₹15,000</div>
-          </div>
-          <div className="rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-neutral-800 p-4">
-            <div className="text-xs inline-flex items-center rounded-full bg-blue-600 text-white px-2 py-0.5">After 15 Feb</div>
-            <div className="mt-2 font-semibold text-gray-800 dark:text-gray-100">Old Members</div>
-            <div className="text-lg font-extrabold text-blue-700 dark:text-blue-400 mt-1">₹16,000</div>
-          </div>
-          <div className="rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-neutral-800 p-4">
-            <div className="text-xs inline-flex items-center rounded-full bg-amber-500 text-white px-2 py-0.5">Standard</div>
-            <div className="mt-2 font-semibold text-gray-800 dark:text-gray-100">New Members</div>
-            <div className="text-lg font-extrabold text-amber-700 dark:text-amber-400 mt-1">₹16,000</div>
-          </div>
+          {!afterCutoff ? (
+            <>
+              <div className="rounded-lg border border-green-200 dark:border-green-800 bg-green-50 dark:bg-neutral-800 p-4">
+                <div className="text-xs inline-flex items-center rounded-full bg-green-600 text-white px-2 py-0.5">Early bird till 15 Feb 2026</div>
+                <div className="mt-2 font-semibold text-gray-800 dark:text-gray-100">Old Members</div>
+                <div className="text-lg font-extrabold text-green-700 dark:text-green-400 mt-1">₹15,000</div>
+              </div>
+
+              <div className="rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-neutral-800 p-4">
+                <div className="text-xs inline-flex items-center rounded-full bg-blue-600 text-white px-2 py-0.5">After 15 Feb</div>
+                <div className="mt-2 font-semibold text-gray-800 dark:text-gray-100">Old Members</div>
+                <div className="text-lg font-extrabold text-blue-700 dark:text-blue-400 mt-1">₹16,000</div>
+              </div>
+
+              <div className="rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-neutral-800 p-4">
+                <div className="text-xs inline-flex items-center rounded-full bg-amber-500 text-white px-2 py-0.5">Standard</div>
+                <div className="mt-2 font-semibold text-gray-800 dark:text-gray-100">New Members</div>
+                <div className="text-lg font-extrabold text-amber-700 dark:text-amber-400 mt-1">₹{newMemberPrice.toLocaleString('en-IN')}</div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-neutral-800 p-4 sm:col-span-1">
+                <div className="text-xs inline-flex items-center rounded-full bg-blue-600 text-white px-2 py-0.5">Current</div>
+                <div className="mt-2 font-semibold text-gray-800 dark:text-gray-100">Old Members</div>
+                <div className="text-lg font-extrabold text-blue-700 dark:text-blue-400 mt-1">₹{oldMemberPrice.toLocaleString('en-IN')}</div>
+              </div>
+
+              <div className="rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-neutral-800 p-4">
+                <div className="text-xs inline-flex items-center rounded-full bg-amber-500 text-white px-2 py-0.5">Standard</div>
+                <div className="mt-2 font-semibold text-gray-800 dark:text-gray-100">New Members</div>
+                <div className="text-lg font-extrabold text-amber-700 dark:text-amber-400 mt-1">₹{newMemberPrice.toLocaleString('en-IN')}</div>
+              </div>
+            </>
+          )}
         </div>
+        {afterCutoff && (
+          <p className="text-sm text-red-600 mt-3">Note: Early bird offer for existing members is over.</p>
+        )}
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">Disclaimer: Membership is subject to approval by the managing committee. Fees once paid are non‑refundable. By submitting this form, you consent to be contacted for membership‑related communication.</p>
       </div>
     </div>
@@ -637,9 +667,18 @@ Team JSG SPARSH`;
     <div className="p-4 sm:p-6 space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {(['OLD_MEMBER','NEW_MEMBER'] as const).map((type) => (
-          <button key={type} onClick={() => setField('membership_type', type)} className={`border rounded-xl p-4 text-left transition shadow-sm ${values.membership_type === type ? 'border-blue-600 ring-2 ring-blue-200 bg-blue-50 dark:bg-blue-950' : 'hover:bg-gray-50 dark:hover:bg-neutral-800'} dark:border-neutral-700`}>
-            <div className="font-semibold text-gray-800 dark:text-gray-100">{type === 'OLD_MEMBER' ? 'Old Member' : 'New Member'}<span className="text-red-600"> *</span></div>
-            <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">{type === 'OLD_MEMBER' ? 'Early bird ₹15,000 till 15 Feb 2026; then ₹16,000' : '₹16,000'}</div>
+          <button
+            key={type}
+            onClick={() => setField('membership_type', type)}
+            className={`rounded-xl p-6 text-center transition shadow-sm border dark:border-neutral-700 flex items-center justify-center flex-col space-y-1
+              ${values.membership_type === type
+                ? type === 'OLD_MEMBER'
+                  ? 'bg-gradient-to-r from-green-400 to-green-600 text-white ring-2 ring-green-200 border-green-600'
+                  : 'bg-gradient-to-r from-amber-400 to-amber-600 text-white ring-2 ring-amber-200 border-amber-600'
+                : 'bg-white hover:shadow-md dark:bg-neutral-900 hover:scale-[1.01]'}
+            `}
+          >
+            <div className="text-lg font-semibold">{type === 'OLD_MEMBER' ? 'Old Member' : 'New Member'}</div>
           </button>
         ))}
 
@@ -697,7 +736,7 @@ Team JSG SPARSH`;
       <div className="space-y-3">
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
           <div className="text-sm text-gray-600">Amount</div>
-          <div className="text-2xl font-extrabold text-gray-900">₹16,000</div>
+          <div className="text-2xl font-extrabold text-gray-900">₹{displayAmount.toLocaleString('en-IN')}</div>
         </div>
 
         <div>
@@ -746,7 +785,7 @@ Team JSG SPARSH`;
             <div className="text-sm text-gray-700 dark:text-gray-200 mt-2">
               Please pay the membership fee in person at the collection desk:
               <div className="mt-2 font-medium">Jain Denticure, Behind Shantinagar, Kondhwa</div>
-              <div className="mt-2 text-sm text-gray-700 dark:text-gray-200">Kindly complete the payment before <span className="font-semibold">15 Feb 2026</span>.</div>
+              <div className="mt-2 text-sm text-gray-700 dark:text-gray-200">Kindly complete the payment at the earliest.</div>
             </div>
           </div>
         )}

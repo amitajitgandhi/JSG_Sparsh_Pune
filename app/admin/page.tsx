@@ -15,18 +15,9 @@ export default function AdminIndex() {
             <div className='flex items-center justify-between'>
               <div>
                 <h2 className='text-xl font-semibold text-blue-700 group-hover:text-blue-800'>Membership Registration Dashboard</h2>
-                <p className='text-sm text-gray-600 mt-1'>View total registrations, Old/New break?up, age wise, and kids wise counts.</p>
+                <p className='text-sm text-gray-600 mt-1'>View total registrations, Old/New break-up, age wise, and kids wise counts.</p>
               </div>
               <span className='text-blue-500 text-2xl'>&rarr;</span>
-            </div>
-          </Link>
-          <Link href='/admin/valentine-2026' className='group block rounded-2xl border border-rose-200 bg-white p-6 shadow hover:shadow-md transition'>
-            <div className='flex items-center justify-between'>
-              <div>
-                <h2 className='text-xl font-semibold text-rose-700 group-hover:text-rose-800'>Valentine 2026 Dashboard</h2>
-                <p className='text-sm text-gray-600 mt-1'>View Valentine soirée registrations and attendance confirmations.</p>
-              </div>
-              <span className='text-rose-500 text-2xl'>&rarr;</span>
             </div>
           </Link>
         </div>

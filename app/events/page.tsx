@@ -143,6 +143,18 @@ export default function Events() {
           highlights: ['Live Music', 'IndVsPak Screening', 'Romantic Ambience', 'Gourmet Dinner'],
           galleryUrl: 'https://www.facebook.com/media/set/?vanity=61557913960543&set=a.122230926764263798'
       }
+    ,
+    {
+      id: 9,
+      title: 'To be Revealed Soon..',
+      date: '2026-03-22',
+      time: '5:00 PM - 11:00 PM',
+      venue: 'To be decided, Pune',
+      description: '...',
+      attendees: 'XXX',
+      highlights: ['Engaging Games', 'Live Music', 'Delicious Food', 'Entertainment'],
+      galleryUrl: 'Coming Soon..!!'
+    }
   ]
 
   // Function to handle external gallery links - Always show modal
