@@ -130,6 +130,7 @@ export default function DoubleCross() {
             guest_count: guestCount,
             transaction_id: transactionId,
             screenshot_url: screenshotUrl,
+            total_amount: totalAmount,
           },
         ])
 
@@ -241,24 +242,18 @@ export default function DoubleCross() {
         />
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 md:px-8 -mt-16 md:-mt-24 relative z-20 space-y-10 md:space-y-14">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 -mt-16 md:-mt-24 relative z-20 space-y-4 md:space-y-6">
         {/* Event Info */}
-          <div className="group relative rounded-2xl sm:rounded-3xl p-[2px] bg-gradient-to-br from-transparent to-transparent shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
-          <div className="absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-30 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.5),transparent_65%)] transition-opacity" />
-          <section className="relative rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-lg overflow-hidden">
-            <div className="relative rounded-2xl bg-gradient-to-br from-neutral-900 via-rose-900 to-black p-6 sm:p-10 md:p-14">
-              <div className="flex items-center justify-center w-full text-center">
-                <span className="text-5xl sm:text-7xl md:text-8xl fire-emoji text-yellow-300">🔥</span>
-                <h1 className="mx-4 leading-tight text-4xl sm:text-6xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-rose-400 to-white title-glow">Double‑Cross</h1>
-                <span className="text-5xl sm:text-7xl md:text-8xl fire-emoji text-yellow-300">🔥</span>
-              </div>
-            </div>
-            <hr className="my-4 sm:my-6 border-gray-700" />
-          </section>
+        <div className="relative rounded-2xl bg-gradient-to-br from-neutral-900 via-rose-900 to-black p-3 sm:p-10 md:p-14 border-4 border-yellow-400 animated-border">
+          <div className="flex items-center justify-center w-full text-center">
+            <span className="text-3xl sm:text-7xl md:text-8xl fire-emoji text-yellow-300">🔥</span>
+            <h1 className="mx-2 sm:mx-4 leading-tight text-2xl sm:text-6xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-rose-400 to-white title-glow whitespace-nowrap">DOUBLE CROSS</h1>
+            <span className="text-3xl sm:text-7xl md:text-8xl fire-emoji text-yellow-300">🔥</span>
+          </div>
         </div>
 
         {/* Date Tile */}
-        <section className='group relative rounded-2xl sm:rounded-3xl p-[2px] bg-gradient-to-br from-black/40 via-rose-700 to-rose-800 shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-rose-800 mb-6'>
+        <section className='group relative rounded-2xl sm:rounded-3xl p-[2px] bg-gradient-to-br from-black/40 via-rose-700 to-rose-800 shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-rose-800'>
           <div className='absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-30 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.12),transparent_65%)] transition-opacity' />
           <div className='relative rounded-2xl bg-white/95 dark:bg-neutral-900/95 p-4 sm:p-6 md:p-8 shadow'>
             <ul className='mt-1 space-y-2 text-gray-700 dark:text-rose-100'>
@@ -279,7 +274,7 @@ export default function DoubleCross() {
         </section>
 
         {/* Entry Fees Tile (match width/style of Highlights) */}
-        <section className='group relative rounded-2xl sm:rounded-3xl p-[2px] bg-gradient-to-br from-black/40 via-rose-700 to-rose-800 shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-rose-800 mb-6'>
+        <section className='group relative rounded-2xl sm:rounded-3xl p-[2px] bg-gradient-to-br from-black/40 via-rose-700 to-rose-800 shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-rose-800'>
           <div className='absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-30 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.12),transparent_65%)] transition-opacity' />
           <div className='relative rounded-2xl bg-white/95 dark:bg-neutral-900/95 p-4 sm:p-6 md:p-8 shadow'>
             <div className='flex items-center gap-3'>
@@ -512,6 +507,17 @@ export default function DoubleCross() {
         .particle.smoke { background: radial-gradient(circle at 30% 30%, rgba(200,200,200,0.4), rgba(120,120,120,0.08)); opacity: 0.6; animation-name: riseSlow; }
         .fire-emoji { display: inline-block; animation: fireBounce 1.6s ease-in-out infinite, fireGlow 2s ease-in-out infinite; }
         .title-glow { animation: titlePulse 3s ease-in-out infinite; }
+        .animated-border { animation: borderPulse 2s ease-in-out infinite; }
+        @keyframes borderPulse { 
+          0%, 100% { 
+            border-color: rgba(251, 191, 36, 1); 
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.8), 0 0 40px rgba(251, 191, 36, 0.5), inset 0 0 20px rgba(251, 191, 36, 0.2); 
+          } 
+          50% { 
+            border-color: rgba(245, 158, 11, 1); 
+            box-shadow: 0 0 30px rgba(245, 158, 11, 1), 0 0 60px rgba(245, 158, 11, 0.7), inset 0 0 30px rgba(245, 158, 11, 0.3); 
+          } 
+        }
         @keyframes titlePulse { 0% { text-shadow: 0 0 8px rgba(255,200,80,0.6); } 50% { text-shadow: 0 0 28px rgba(255,120,40,0.9); } 100% { text-shadow: 0 0 8px rgba(255,200,80,0.6); } }
         @keyframes fireBounce { 0% { transform: translateY(0) scale(1) } 50% { transform: translateY(-6px) scale(1.05) } 100% { transform: translateY(0) scale(1) } }
         @keyframes fireGlow { 0% { filter: drop-shadow(0 0 0 rgba(255,200,0,0.0)) } 50% { filter: drop-shadow(0 0 12px rgba(255,140,0,0.9)) } 100% { filter: drop-shadow(0 0 0 rgba(255,200,0,0.0)) } }

@@ -20,6 +20,16 @@ export default function AdminIndex() {
               <span className='text-blue-500 text-2xl'>&rarr;</span>
             </div>
           </Link>
+          
+          <Link href='/admin/double-cross' className='group block rounded-2xl border border-amber-200 bg-white p-6 shadow hover:shadow-md transition'>
+            <div className='flex items-center justify-between'>
+              <div>
+                <h2 className='text-xl font-semibold text-amber-700 group-hover:text-amber-800'>Double-Cross Registration Dashboard</h2>
+                <p className='text-sm text-gray-600 mt-1'>View Double-Cross event registrations, couples, individuals, kids, and payment status.</p>
+              </div>
+              <span className='text-amber-500 text-2xl'>&rarr;</span>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
