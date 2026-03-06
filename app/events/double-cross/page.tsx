@@ -136,7 +136,8 @@ export default function DoubleCross() {
 
       if (error) {
         console.error('Double-Cross insert error:', error)
-        alert(error.message || 'Failed to save registration. Check policies and try again.')
+        setConfirmInfo(null)
+        setShowConfirm(true)
         return
       }
 
@@ -255,21 +256,29 @@ export default function DoubleCross() {
         {/* Date Tile */}
         <section className='group relative rounded-2xl sm:rounded-3xl p-[2px] bg-gradient-to-br from-black/40 via-rose-700 to-rose-800 shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-rose-800'>
           <div className='absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-30 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.12),transparent_65%)] transition-opacity' />
-          <div className='relative rounded-2xl bg-white/95 dark:bg-neutral-900/95 p-4 sm:p-6 md:p-8 shadow'>
-            <ul className='mt-1 space-y-2 text-gray-700 dark:text-rose-100'>
-              <li className='flex items-center gap-3'>
-                <span className='text-lg'>🗓</span>
-                <span className='font-semibold'>SUNDAY, 22 MARCH 2026</span>
-              </li>
-              <li className='flex items-center gap-3'>
-                <span className='text-lg'>⏰</span>
-                <span className='font-semibold'>5:00 PM - 11:00 PM</span>
-              </li>
-              <li className='flex items-center gap-3'>
-                <span className='text-lg'>📍</span>
-                <span className='font-semibold'>To be revealed soon.</span>
-              </li>
-            </ul>
+          <div className='relative rounded-2xl bg-white/95 dark:bg-neutral-900/95 p-3 sm:p-6 md:p-8 shadow'>
+            <div className='grid grid-cols-3 gap-2 sm:gap-4'>
+              {/* Date Box */}
+              <div className='flex flex-col items-center justify-center rounded-lg sm:rounded-xl bg-gradient-to-br from-rose-50 to-rose-100 dark:from-rose-900/30 dark:to-rose-800/30 border border-rose-200 sm:border-2 dark:border-rose-700 p-2 sm:p-4 md:p-5 text-center shadow-sm'>
+                <span className='text-xl sm:text-3xl md:text-4xl mb-1 sm:mb-2'>🗓</span>
+                <span className='text-[9px] sm:text-xs md:text-sm font-bold text-rose-700 dark:text-rose-300 uppercase tracking-tight sm:tracking-wider'>Date</span>
+                <span className='text-[10px] sm:text-sm md:text-base font-semibold text-gray-800 dark:text-rose-100 mt-0.5 sm:mt-1 leading-tight'>SUNDAY, 22 MAR 2026</span>
+              </div>
+
+              {/* Time Box */}
+              <div className='flex flex-col items-center justify-center rounded-lg sm:rounded-xl bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/30 border border-amber-200 sm:border-2 dark:border-amber-700 p-2 sm:p-4 md:p-5 text-center shadow-sm'>
+                <span className='text-xl sm:text-3xl md:text-4xl mb-1 sm:mb-2'>⏰</span>
+                <span className='text-[9px] sm:text-xs md:text-sm font-bold text-amber-700 dark:text-amber-300 uppercase tracking-tight sm:tracking-wider'>Time</span>
+                <span className='text-[10px] sm:text-sm md:text-base font-semibold text-gray-800 dark:text-amber-100 mt-0.5 sm:mt-1 leading-tight'>5 PM - 11 PM</span>
+              </div>
+
+              {/* Location Box */}
+              <div className='flex flex-col items-center justify-center rounded-lg sm:rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/30 border border-emerald-200 sm:border-2 dark:border-emerald-700 p-2 sm:p-4 md:p-5 text-center shadow-sm'>
+                <span className='text-xl sm:text-3xl md:text-4xl mb-1 sm:mb-2'>📍</span>
+                <span className='text-[9px] sm:text-xs md:text-sm font-bold text-emerald-700 dark:text-emerald-300 uppercase tracking-tight sm:tracking-wider'>Location</span>
+                <span className='text-[10px] sm:text-sm md:text-base font-semibold text-gray-800 dark:text-emerald-100 mt-0.5 sm:mt-1 leading-tight'>Reveal soon</span>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -284,16 +293,16 @@ export default function DoubleCross() {
             <ul className='mt-3 space-y-2 text-gray-700 dark:text-rose-100'>
               <li className='flex items-center gap-3'>
                 <span className='text-lg'>💸</span>
-                <span className='font-semibold'>Entry Fees — ₹500 (Refundable)</span>
+                <span className='font-semibold'>Entry Fees : ₹500 (Refundable)</span>
               </li>
               <li className='flex items-center gap-3'>
                 <span className='text-lg'>👶</span>
-                <span className='font-semibold'>Kids 5+ — ₹500</span>
+                <span className='font-semibold'>Kids 5+ years : ₹500</span>
               </li>
-              <li className='flex items-center gap-3'>
+                          <li className='flex items-center gap-3'>
                 <span className='text-lg'>🧒</span>
-                <span className='font-semibold'>Kids 10+ — ₹750</span>
-              </li>
+                <span className='font-semibold'>Kids 12+ years : ₹750</span>
+              </li> 
             </ul>
           </div>
         </section>
@@ -449,6 +458,10 @@ export default function DoubleCross() {
                   </div>
                 </>
               )}
+            </form>
+          </div>
+        </div>
+      )}
 
       {showQR && (
         <div className='fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4'>
@@ -462,32 +475,57 @@ export default function DoubleCross() {
         </div>
       )}
 
-      {showConfirm && confirmInfo && (
+      {showConfirm && (
         <div className='fixed inset-0 z-[110] flex items-center justify-center bg-black/60 p-4'>
           <div className='relative w-full max-w-lg rounded-2xl bg-white shadow-2xl overflow-hidden'>
-            <div className='bg-gradient-to-r from-rose-600 via-rose-700 to-black px-5 py-3 text-white flex items-center justify-between'>
-              <h3 className='text-base font-bold tracking-wide'>Registration Submitted</h3>
-              <button onClick={() => setShowConfirm(false)} className='text-white/90 hover:text-white text-sm'>✕</button>
-            </div>
-            <div className='p-5 space-y-3 text-sm text-gray-700'>
-              <div className='grid sm:grid-cols-2 gap-3'>
-                <div><span className='font-semibold'>Name:</span> {confirmInfo.name}</div>
-                <div><span className='font-semibold'>Mobile:</span> {confirmInfo.mobile}</div>
-                <div><span className='font-semibold'>For:</span> {confirmInfo.registrationFor}</div>
-                <div><span className='font-semibold'>Kids:</span> {confirmInfo.kids}</div>
-                <div><span className='font-semibold'>Guests:</span> {confirmInfo.guests}</div>
-                <div><span className='font-semibold'>Transaction ID:</span> {confirmInfo.txnId}</div>
-                <div className='sm:col-span-2'><span className='font-semibold'>Total Amount:</span> ₹{confirmInfo.total}</div>
-              </div>
-              <div className='pt-2 flex flex-col sm:flex-row gap-3'>
-                <button onClick={() => setShowConfirm(false)} className='flex-1 inline-flex items-center justify-center rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2'>Close</button>
-                <a href='tel:+917276319578' className='flex-1 inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-700 font-semibold py-2 hover:bg-gray-50'>Need Help?</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-            </form>
+            {confirmInfo ? (
+              <>
+                <div className='bg-gradient-to-r from-emerald-600 via-emerald-700 to-green-700 px-5 py-3 text-white flex items-center justify-between'>
+                  <h3 className='text-base font-bold tracking-wide flex items-center gap-2'>
+                    <CheckCircle size={20} />
+                    Registration Successful!
+                  </h3>
+                  <button onClick={() => setShowConfirm(false)} className='text-white/90 hover:text-white text-sm'>✕</button>
+                </div>
+                <div className='p-5 space-y-3 text-sm text-gray-700'>
+                  <div className='bg-green-50 border border-green-200 rounded-lg p-3 mb-3'>
+                    <p className='text-green-800 font-medium'>Your registration is successfull..!!</p>
+                  </div>
+                  <div className='grid sm:grid-cols-2 gap-3'>
+                    <div><span className='font-semibold'>Name:</span> {confirmInfo.name}</div>
+                    <div><span className='font-semibold'>Mobile:</span> {confirmInfo.mobile}</div>
+                    <div><span className='font-semibold'>For:</span> {confirmInfo.registrationFor}</div>
+                    <div><span className='font-semibold'>Kids (5-12):</span> {confirmInfo.kids}</div>
+                    <div><span className='font-semibold'>Kids (12+):</span> {confirmInfo.guests}</div>
+                    <div><span className='font-semibold'>Transaction ID:</span> {confirmInfo.txnId}</div>
+                    <div className='sm:col-span-2'><span className='font-semibold'>Total Amount:</span> ₹{confirmInfo.total}</div>
+                  </div>
+                  <div className='pt-2 flex flex-col sm:flex-row gap-3'>
+                    <button onClick={() => setShowConfirm(false)} className='flex-1 inline-flex items-center justify-center rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2'>Close</button>
+                    <a href='tel:+917276319578' className='flex-1 inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-700 font-semibold py-2 hover:bg-gray-50'>Need Help?</a>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className='bg-gradient-to-r from-red-600 via-red-700 to-red-800 px-5 py-3 text-white flex items-center justify-between'>
+                  <h3 className='text-base font-bold tracking-wide flex items-center gap-2'>
+                    ⚠️ Registration Failed
+                  </h3>
+                  <button onClick={() => setShowConfirm(false)} className='text-white/90 hover:text-white text-sm'>✕</button>
+                </div>
+                <div className='p-5 space-y-3 text-sm text-gray-700'>
+                  <div className='bg-red-50 border border-red-200 rounded-lg p-4'>
+                    <p className='text-red-800 font-medium mb-2'>Failed to save registration.</p>
+                    <p className='text-red-700 text-xs'>Please check your details and try again. If the problem persists, contact the committee.</p>
+                  </div>
+                  <div className='pt-2 flex flex-col sm:flex-row gap-3'>
+                    <button onClick={() => setShowConfirm(false)} className='flex-1 inline-flex items-center justify-center rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold py-2'>Try Again</button>
+                    <a href='tel:+917276319578' className='flex-1 inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-700 font-semibold py-2 hover:bg-gray-50'>Contact Support</a>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}

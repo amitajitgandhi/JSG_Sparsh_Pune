@@ -14,7 +14,6 @@ type Reg = {
   transaction_id: string
   total_amount: number
   screenshot_url: string | null
-  status: string
   created_at: string
 }
 
@@ -29,7 +28,7 @@ export default function AdminDoubleCrossDashboard() {
     setError(null)
     const { data, error } = await supabase
       .from('double_cross_registrations')
-      .select('id, name, mobile, registration_for, kids_count, guest_count, transaction_id, total_amount, screenshot_url, status, created_at')
+      .select('id, name, mobile, registration_for, kids_count, guest_count, transaction_id, total_amount, screenshot_url, created_at')
       .order('id', { ascending: false })
     if (error) setError(error.message)
     setRows((data as any) || [])
@@ -55,7 +54,7 @@ export default function AdminDoubleCrossDashboard() {
   }, [rows])
 
   const exportCsv = () => {
-    const header = ['id','name','mobile','registration_for','kids_count','guest_count','transaction_id','total_amount','status','screenshot_url','created_at']
+    const header = ['id','name','mobile','registration_for','kids_count','guest_count','transaction_id','total_amount','screenshot_url','created_at']
     const csvRows = rows.map(r => ({
       id: r.id,
       name: r.name,
@@ -65,7 +64,6 @@ export default function AdminDoubleCrossDashboard() {
       guest_count: r.guest_count,
       transaction_id: r.transaction_id,
       total_amount: r.total_amount,
-      status: r.status,
       screenshot_url: r.screenshot_url || '',
       created_at: new Date(r.created_at).toLocaleString(),
     }))
@@ -146,7 +144,6 @@ export default function AdminDoubleCrossDashboard() {
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Kids (12+)</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Txn ID</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Total (₹)</th>
-                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Status</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Screenshot</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Submitted At</th>
                   </tr>
@@ -162,15 +159,6 @@ export default function AdminDoubleCrossDashboard() {
                       <td className='px-4 py-2 text-sm text-gray-700'>{r.guest_count}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 break-all'>{r.transaction_id}</td>
                       <td className='px-4 py-2 text-sm text-gray-700'>{r.total_amount}</td>
-                      <td className='px-4 py-2 text-sm'>
-                        <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${
-                          r.status === 'approved' ? 'bg-green-100 text-green-800' :
-                          r.status === 'rejected' ? 'bg-red-100 text-red-800' :
-                          'bg-yellow-100 text-yellow-800'
-                        }`}>
-                          {r.status}
-                        </span>
-                      </td>
                       <td className='px-4 py-2 text-sm text-gray-700'>
                         {r.screenshot_url ? (
                           <a href={r.screenshot_url} target='_blank' rel='noreferrer' className='inline-flex items-center text-blue-600 hover:underline'>
