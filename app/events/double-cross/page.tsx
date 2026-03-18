@@ -304,6 +304,9 @@ export default function DoubleCross() {
                 <span className='font-semibold'>Guest : ₹2000 per person</span>
               </li> 
             </ul>
+            <div className='mt-3 pt-2 border-t border-rose-200 dark:border-rose-700'>
+              <p className='text-xs text-rose-600 dark:text-rose-300 font-medium'>⏰ Note: Refundable deposit of ₹500 is valid till 5:30 PM</p>
+            </div>
           </div>
         </section>
 
@@ -384,7 +387,7 @@ export default function DoubleCross() {
               <div className='grid gap-1'>
                 <label htmlFor='total' className='text-sm font-medium text-gray-700 dark:text-gray-200'>Total Amount to be paid</label>
                 <input id='total' name='total' type='text' readOnly value={`₹${totalAmount}`} className='w-full max-w-full rounded-lg border border-gray-200 bg-gray-50 dark:bg-neutral-800 px-3 py-2 text-gray-900 dark:text-gray-100' />
-                <span className='text-xs text-gray-500 dark:text-gray-400'>Includes refundable deposit of ₹{REFUNDABLE_DEPOSIT_PER_REGISTRATION} per registration.</span>
+                <span className='text-xs text-gray-500 dark:text-gray-400'>Includes refundable deposit of ₹{REFUNDABLE_DEPOSIT_PER_REGISTRATION} per registration till 5:30PM</span>
                 <button type='button' onClick={() => setShowQR(true)} className='mt-2 inline-flex text-sm text-rose-600 hover:text-rose-500 underline'>View QR Code for Payment</button>
               </div>
 
@@ -496,9 +499,12 @@ export default function DoubleCross() {
                     <div><span className='font-semibold'>Mobile:</span> {confirmInfo.mobile}</div>
                     <div><span className='font-semibold'>For:</span> {confirmInfo.registrationFor}</div>
                     <div><span className='font-semibold'>Kids (5-12):</span> {confirmInfo.kids}</div>
-                    <div><span className='font-semibold'>Kids (12+):</span> {confirmInfo.guests}</div>
+                    <div><span className='font-semibold'>Guest:</span> {confirmInfo.guests}</div>
                     <div><span className='font-semibold'>Transaction ID:</span> {confirmInfo.txnId}</div>
                     <div className='sm:col-span-2'><span className='font-semibold'>Total Amount:</span> ₹{confirmInfo.total}</div>
+                  </div>
+                  <div className='bg-amber-50 border border-amber-200 rounded-lg p-3 mt-3'>
+                    <p className='text-amber-800 text-xs font-medium'>⏰ Please note: Refundable deposit of ₹500 is valid till 5:30 PM</p>
                   </div>
                   <div className='pt-2 flex flex-col sm:flex-row gap-3'>
                     <button onClick={() => setShowConfirm(false)} className='flex-1 inline-flex items-center justify-center rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2'>Close</button>
