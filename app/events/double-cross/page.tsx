@@ -262,7 +262,7 @@ export default function DoubleCross() {
               <div className='flex flex-col items-center justify-center rounded-lg sm:rounded-xl bg-gradient-to-br from-rose-50 to-rose-100 dark:from-rose-900/30 dark:to-rose-800/30 border border-rose-200 sm:border-2 dark:border-rose-700 p-2 sm:p-4 md:p-5 text-center shadow-sm'>
                 <span className='text-xl sm:text-3xl md:text-4xl mb-1 sm:mb-2'>🗓</span>
                 <span className='text-[9px] sm:text-xs md:text-sm font-bold text-rose-700 dark:text-rose-300 uppercase tracking-tight sm:tracking-wider'>Date</span>
-                <span className='text-[10px] sm:text-sm md:text-base font-semibold text-gray-800 dark:text-rose-100 mt-0.5 sm:mt-1 leading-tight'>SUNDAY, 22 MAR 2026</span>
+                <span className='text-[10px] sm:text-sm md:text-base font-semibold text-gray-800 dark:text-rose-100 mt-0.5 sm:mt-1 leading-tight'>SUN, 22 MAR</span>
               </div>
 
               {/* Time Box */}
