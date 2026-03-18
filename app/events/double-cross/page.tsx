@@ -57,8 +57,8 @@ export default function DoubleCross() {
   const [confirmInfo, setConfirmInfo] = useState<{name:string;mobile:string;registrationFor:string;kids:number;guests:number;total:number;txnId:string;img?:string} | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
-  const KID_RATE = 500
-  const GUEST_RATE = 750
+  const KID_RATE = 1000
+  const GUEST_RATE = 2000
   const REFUNDABLE_DEPOSIT_PER_REGISTRATION = 500
 
   const totalAmount = useMemo(() => {
@@ -276,7 +276,7 @@ export default function DoubleCross() {
               <div className='flex flex-col items-center justify-center rounded-lg sm:rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/30 border border-emerald-200 sm:border-2 dark:border-emerald-700 p-2 sm:p-4 md:p-5 text-center shadow-sm'>
                 <span className='text-xl sm:text-3xl md:text-4xl mb-1 sm:mb-2'>📍</span>
                 <span className='text-[9px] sm:text-xs md:text-sm font-bold text-emerald-700 dark:text-emerald-300 uppercase tracking-tight sm:tracking-wider'>Location</span>
-                <span className='text-[10px] sm:text-sm md:text-base font-semibold text-gray-800 dark:text-emerald-100 mt-0.5 sm:mt-1 leading-tight'>Reveal soon</span>
+                              <span className='text-[10px] sm:text-sm md:text-base font-semibold text-gray-800 dark:text-emerald-100 mt-0.5 sm:mt-1 leading-tight'>Aishwarya Lawns</span>
               </div>
             </div>
           </div>
@@ -297,11 +297,11 @@ export default function DoubleCross() {
               </li>
               <li className='flex items-center gap-3'>
                 <span className='text-lg'>👶</span>
-                <span className='font-semibold'>Kids 5+ years : ₹500</span>
+                <span className='font-semibold'>Kids 5+ years : ₹1000</span>
               </li>
                           <li className='flex items-center gap-3'>
                 <span className='text-lg'>🧒</span>
-                <span className='font-semibold'>Kids 12+ years : ₹750</span>
+                <span className='font-semibold'>Guest : ₹2000 per person</span>
               </li> 
             </ul>
           </div>
@@ -344,7 +344,7 @@ export default function DoubleCross() {
               </div>
 
               <div className='grid gap-2'>
-                <span className='text-sm font-medium text-gray-700 dark:text-gray-200'>Registration for</span>
+                <span className='text-sm font-medium text-gray-700 dark:text-gray-200'>JSG Member Registration for</span>
                 <div className='flex flex-wrap gap-6'>
                   <label className='inline-flex items-center gap-2 text-gray-800 dark:text-gray-200'>
                     <input type='radio' name='registrationFor' value='Couple' checked={registrationFor === 'Couple'} onChange={() => setRegistrationFor('Couple')} className='h-4 w-4 text-rose-600' />
@@ -359,7 +359,7 @@ export default function DoubleCross() {
 
               <div className='grid gap-3 sm:grid-cols-2 sm:gap-5'>
                 <div className='grid gap-1'>
-                  <label htmlFor='kids' className='text-sm font-medium text-gray-700 dark:text-gray-200'>Kids (5 yrs to 12yrs)</label>
+                  <label htmlFor='kids' className='text-sm font-medium text-gray-700 dark:text-gray-200'>Kids (5 yrs & above)</label>
                   <select id='kids' name='kids' value={kidsCount} onChange={(e) => setKidsCount(parseInt(e.target.value, 10))} className={selectClass}>
                     <option value={0}>0</option>
                     <option value={1}>1</option>
@@ -370,7 +370,7 @@ export default function DoubleCross() {
                 </div>
 
                 <div className='grid gap-1'>
-                  <label htmlFor='guests' className='text-sm font-medium text-gray-700 dark:text-gray-200'>Kids (above 12yrs)</label>
+                  <label htmlFor='guests' className='text-sm font-medium text-gray-700 dark:text-gray-200'>Guest</label>
                   <select id='guests' name='guests' value={guestCount} onChange={(e) => setGuestCount(parseInt(e.target.value, 10))} className={selectClass}>
                     <option value={0}>0</option>
                     <option value={1}>1</option>
