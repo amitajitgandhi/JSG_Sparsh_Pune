@@ -146,13 +146,13 @@ export default function Events() {
     ,
     {
       id: 9,
-      title: 'To be Revealed Soon..',
+      title: 'Double Cross',
       date: '2026-03-22',
       time: '5:00 PM - 11:00 PM',
-      venue: 'To be decided, Pune',
-      description: '...',
-      attendees: 'XXX',
-      highlights: ['Engaging Games', 'Live Music', 'Delicious Food', 'Entertainment'],
+      venue: 'Aishwarya Lawns, Pune',
+      description: 'Traitors vs Loyalists - A thrilling game of strategy, deception, and fun! Two teams battle it out in a series of challenges to uncover the traitors among them. Expect suspense, laughter, and unforgettable moments as alliances are formed and broken in this ultimate test of trust and wit.',
+      attendees: '200+',
+      highlights: ['Suspense', 'Bonding', 'Delicious Food', 'Mind Games'],
       galleryUrl: 'Coming Soon..!!'
     }
   ]
@@ -324,7 +324,7 @@ export default function Events() {
               Recent Events
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              
+
               <Link href="/spl02" className="inline-flex items-center justify-center rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
                 SPL 02
               </Link>
@@ -336,6 +336,9 @@ export default function Events() {
                           </Link>
                           <Link href="/events/valentine-2026" className="inline-flex items-center justify-center rounded-lg bg-rose-500 hover:bg-rose-600 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
                               Valentine Soiree
+                          </Link>
+                          <Link href="/events/double-cross" className="inline-flex items-center justify-center rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
+                              Double Cross (Upcoming)
                           </Link>
             </div>
           </div>
