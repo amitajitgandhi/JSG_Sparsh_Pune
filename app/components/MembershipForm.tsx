@@ -742,10 +742,6 @@ Team JSG SPARSH`;
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Payment Method <span className="text-red-600">*</span></label>
           <div className="flex gap-3">
-            <button type="button" onClick={() => { setPaymentType('CASH'); setPaymentTxId(''); setPaymentScreenshot(null); setStep(10) }} className={`flex-1 px-4 py-3 rounded-lg border text-center transition ${paymentType==='CASH' ? 'border-blue-600 bg-blue-50 shadow-sm' : 'border-gray-200 hover:bg-gray-50'}`}>
-              <div className="font-semibold">Cash</div>
-              <div className="text-xs text-gray-500">Pay at Jain Denticure</div>
-            </button>
             <button type="button" onClick={() => setPaymentType('ONLINE')} className={`flex-1 px-4 py-3 rounded-lg border text-center transition ${paymentType==='ONLINE' ? 'border-blue-600 bg-blue-50 shadow-sm' : 'border-gray-200 hover:bg-gray-50'}`}>
               <div className="font-semibold">Online</div>
               <div className="text-xs text-gray-500">Pay via QR / UPI and upload screenshot</div>
@@ -778,17 +774,6 @@ Team JSG SPARSH`;
     <div className="p-4 sm:p-6">
       <div className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-xl p-4 text-sm">
         <p className="text-gray-700 dark:text-gray-300">Click submit to complete registration. You will receive a confirmation message if successful.</p>
-        {/* Payment instructions for Cash (Old members) */}
-        {values.membership_type === 'OLD_MEMBER' && paymentType === 'CASH' && (
-          <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-            <div className="font-semibold text-gray-800 dark:text-gray-100">Cash Payment Instructions</div>
-            <div className="text-sm text-gray-700 dark:text-gray-200 mt-2">
-              Please pay the membership fee in person at the collection desk:
-              <div className="mt-2 font-medium">Jain Denticure, Behind Shantinagar, Kondhwa</div>
-              <div className="mt-2 text-sm text-gray-700 dark:text-gray-200">Kindly complete the payment at the earliest.</div>
-            </div>
-          </div>
-        )}
         <div className="mt-3 text-xs text-gray-500 dark:text-gray-400">By submitting, you agree to committee approval and non-refundable policy. Data will be used only for membership communication.</div>
       </div>
     </div>
