@@ -44,6 +44,11 @@ export default function DoubleCross() {
   const [formData, setFormData] = useState(initialForm)
   const [showRegistrationClosed, setShowRegistrationClosed] = useState(false)
 
+  // Show registration closed popup on page load
+  useEffect(() => {
+    setShowRegistrationClosed(true)
+  }, [])
+
   // Registration fields (same as Hurda Party)
   const [name, setName] = useState('')
   const [mobile, setMobile] = useState('')
@@ -494,11 +499,17 @@ export default function DoubleCross() {
             </div>
             <div className='p-6 space-y-4'>
               <div className='bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700 rounded-lg p-4'>
-                <p className='text-amber-900 dark:text-amber-200 font-semibold text-center'>Registration for Double-Cross event has been closed.</p>
+                <p className='text-amber-900 dark:text-amber-200 font-semibold text-center mb-2'>Registration for Double-Cross event has been closed.</p>
+                <p className='text-amber-800 dark:text-amber-300 text-sm text-center'>It&apos;s time to find your team!</p>
               </div>
-              <p className='text-gray-700 dark:text-gray-300 text-sm text-center'>Thank you for your interest. Please contact the committee for any queries.</p>
-              <div className='flex gap-3 justify-center'>
-                <button onClick={() => setShowRegistrationClosed(false)} className='px-6 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold shadow transition-colors'>Close</button>
+              <div className='flex flex-col gap-3'>
+                <a 
+                  href='https://jsg-pune-sparsh.vercel.app/events/find-your-team'
+                  className='px-6 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow transition-colors text-center'
+                >
+                  Find Your Team →
+                </a>
+                <button onClick={() => setShowRegistrationClosed(false)} className='px-6 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold transition-colors'>Close</button>
               </div>
             </div>
           </div>

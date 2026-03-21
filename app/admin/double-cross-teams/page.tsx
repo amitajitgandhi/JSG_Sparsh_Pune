@@ -140,7 +140,7 @@ export default function DoublerossTeamDashboard() {
       teamColor: r.teamColor,
       role: r.role
     }))
-    
+
     const csv = [
       header,
       ...csvRows.map(r => [
@@ -154,12 +154,45 @@ export default function DoublerossTeamDashboard() {
     ]
       .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
       .join('\n')
-    
+
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
     a.download = `double-cross-teams-${new Date().toISOString().split('T')[0]}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const exportWithoutRole = () => {
+    // Create CSV content WITHOUT role column
+    const header = ['Sr_No', 'Phone_Number', 'Team_Name', 'Member_Name', 'Team_Color']
+    const csvRows = sortedRows.map(r => ({
+      srNo: r.srNo,
+      phoneNumber: r.phoneNumber,
+      teamName: r.teamName,
+      memberName: r.memberName,
+      teamColor: r.teamColor
+    }))
+
+    const csv = [
+      header,
+      ...csvRows.map(r => [
+        r.srNo,
+        r.phoneNumber,
+        r.teamName,
+        r.memberName,
+        r.teamColor
+      ])
+    ]
+      .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+      .join('\n')
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `double-cross-teams-no-role-${new Date().toISOString().split('T')[0]}.csv`
     a.click()
     URL.revokeObjectURL(url)
   }
@@ -204,6 +237,14 @@ export default function DoublerossTeamDashboard() {
             >
               <Download size={14} className='mr-2'/>
               Export Excel
+            </button>
+            <button 
+              onClick={exportWithoutRole} 
+              disabled={sortedRows.length === 0} 
+              className='bg-blue-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center disabled:opacity-50 text-sm'
+            >
+              <Download size={14} className='mr-2'/>
+              Export (No Role)
             </button>
           </div>
         </div>
