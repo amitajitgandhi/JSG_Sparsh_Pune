@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState, useMemo } from 'react'
 import { supabase } from '../../../lib/supabase'
-import { Calendar, MapPin, Users, CheckCircle } from 'lucide-react'
+import { Calendar, MapPin, Users, CheckCircle, AlertTriangle } from 'lucide-react'
 
 // Lazy native picker without bundling Capacitor plugins on web
 const pickNativeImage = async (): Promise<File | null> => {
@@ -42,6 +42,7 @@ export default function DoubleCross() {
   const [error, setError] = useState<string | null>(null)
   const initialForm = { name: '', mobile: '', role: 'Player', notes: '' }
   const [formData, setFormData] = useState(initialForm)
+  const [showRegistrationClosed, setShowRegistrationClosed] = useState(false)
 
   // Registration fields (same as Hurda Party)
   const [name, setName] = useState('')
@@ -103,6 +104,9 @@ export default function DoubleCross() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    // Show registration closed popup
+    setShowRegistrationClosed(true)
+    return
     if (!screenshotFile) {
       alert('Please upload the transaction screenshot.')
       return
@@ -473,6 +477,29 @@ export default function DoubleCross() {
             <div className='text-center mb-3 font-semibold text-gray-700'>Scan to Pay</div>
             <div className='relative w-full aspect-square'>
               <Image src='/images/SPARSH_QR_Code.jpeg' alt='Sparsh QR Code' fill className='object-contain rounded-lg' />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showRegistrationClosed && (
+        <div className='fixed inset-0 z-[120] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4'>
+          <div className='relative w-full max-w-md rounded-2xl bg-white dark:bg-neutral-900 shadow-2xl overflow-hidden border-2 border-rose-600'>
+            <div className='bg-gradient-to-r from-rose-600 via-rose-700 to-black px-5 py-4 text-white flex items-center justify-between'>
+              <h3 className='text-lg font-bold tracking-wide flex items-center gap-2'>
+                <AlertTriangle size={22} />
+                Registration Closed
+              </h3>
+              <button onClick={() => setShowRegistrationClosed(false)} className='text-white/90 hover:text-white text-xl'>✕</button>
+            </div>
+            <div className='p-6 space-y-4'>
+              <div className='bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700 rounded-lg p-4'>
+                <p className='text-amber-900 dark:text-amber-200 font-semibold text-center'>Registration for Double-Cross event has been closed.</p>
+              </div>
+              <p className='text-gray-700 dark:text-gray-300 text-sm text-center'>Thank you for your interest. Please contact the committee for any queries.</p>
+              <div className='flex gap-3 justify-center'>
+                <button onClick={() => setShowRegistrationClosed(false)} className='px-6 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold shadow transition-colors'>Close</button>
+              </div>
             </div>
           </div>
         </div>

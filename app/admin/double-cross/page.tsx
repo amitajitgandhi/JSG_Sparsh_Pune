@@ -22,6 +22,8 @@ export default function AdminDoubleCrossDashboard() {
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [sortField, setSortField] = useState<keyof Reg | null>(null)
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
 
   const load = async () => {
     setLoading(true)
@@ -52,6 +54,33 @@ export default function AdminDoubleCrossDashboard() {
     const amount = rows.reduce((s, r) => s + (r.total_amount || 0), 0)
     return { total, couples, individuals, kids, guests, amount }
   }, [rows])
+
+  const handleSort = (field: keyof Reg) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+    } else {
+      setSortField(field)
+      setSortDirection('asc')
+    }
+  }
+
+  const sortedRows = useMemo(() => {
+    if (!sortField) return rows
+    const sorted = [...rows].sort((a, b) => {
+      const aVal = a[sortField]
+      const bVal = b[sortField]
+      if (aVal === null || aVal === undefined) return 1
+      if (bVal === null || bVal === undefined) return -1
+      if (typeof aVal === 'string' && typeof bVal === 'string') {
+        return sortDirection === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
+      }
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return sortDirection === 'asc' ? aVal - bVal : bVal - aVal
+      }
+      return 0
+    })
+    return sorted
+  }, [rows, sortField, sortDirection])
 
   const exportCsv = () => {
     const header = ['id','name','mobile','registration_for','kids_count','guest_count','transaction_id','total_amount','screenshot_url','created_at']
@@ -136,20 +165,38 @@ export default function AdminDoubleCrossDashboard() {
               <table className='min-w-full divide-y divide-gray-200'>
                 <thead className='bg-gray-50'>
                   <tr>
-                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>#</th>
-                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Name</th>
-                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Mobile</th>
-                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>For</th>
-                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Kids (5-12)</th>
-                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Kids (12+)</th>
-                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Txn ID</th>
-                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Total (₹)</th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100' onClick={() => handleSort('id')}>
+                      # {sortField === 'id' && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100' onClick={() => handleSort('name')}>
+                      Name {sortField === 'name' && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100' onClick={() => handleSort('mobile')}>
+                      Mobile {sortField === 'mobile' && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100' onClick={() => handleSort('registration_for')}>
+                      For {sortField === 'registration_for' && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100' onClick={() => handleSort('kids_count')}>
+                      Kids (5-12) {sortField === 'kids_count' && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100' onClick={() => handleSort('guest_count')}>
+                      Kids (12+) {sortField === 'guest_count' && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100' onClick={() => handleSort('transaction_id')}>
+                      Txn ID {sortField === 'transaction_id' && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100' onClick={() => handleSort('total_amount')}>
+                      Total (₹) {sortField === 'total_amount' && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Screenshot</th>
-                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600'>Submitted At</th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100' onClick={() => handleSort('created_at')}>
+                      Submitted At {sortField === 'created_at' && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </th>
                   </tr>
                 </thead>
                 <tbody className='bg-white divide-y divide-gray-200'>
-                  {rows.map((r, idx) => (
+                  {sortedRows.map((r, idx) => (
                     <tr key={r.id} className='hover:bg-gray-50 odd:bg-gray-50/40'>
                       <td className='px-4 py-2 text-sm text-gray-700'>{idx + 1}</td>
                       <td className='px-4 py-2 text-sm font-medium text-gray-900'>{r.name}</td>
