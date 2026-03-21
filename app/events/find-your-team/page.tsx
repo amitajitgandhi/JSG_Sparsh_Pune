@@ -225,12 +225,12 @@ export default function FindYourTeam() {
 
             {/* Result Display */}
             {result && (
-              <div className={`mt-8 rounded-2xl p-6 border-2 ${
+              <div className={`mt-8 rounded-2xl p-4 sm:p-6 border-2 overflow-hidden max-w-full ${
                 result.found
                   ? 'bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-500'
                   : 'bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-900/20 dark:to-rose-900/20 border-red-500'
               } animate-fadeIn`}>
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-2 sm:gap-4 max-w-full overflow-hidden">
                   {result.found ? (
                     <div className="flex-shrink-0">
                       <div className="h-14 w-14 rounded-full bg-green-500 flex items-center justify-center">
@@ -244,13 +244,13 @@ export default function FindYourTeam() {
                       </div>
                     </div>
                   )}
-                  <div className="flex-1">
-                    <h3 className={`text-xl sm:text-2xl font-bold mb-2 ${
+                  <div className="flex-1 min-w-0 overflow-hidden">
+                    <h3 className={`text-lg sm:text-xl md:text-2xl font-bold mb-2 break-words ${
                       result.found ? 'text-green-800 dark:text-green-200' : 'text-red-800 dark:text-red-200'
                     }`}>
                       {result.found ? '🎉 Team Found!' : '😔 Not Found'}
                     </h3>
-                    <p className={`text-base sm:text-lg break-words ${
+                    <p className={`text-sm sm:text-base md:text-lg break-words overflow-wrap-anywhere ${
                       result.found ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'
                     }`}>
                       {result.message}
@@ -258,12 +258,12 @@ export default function FindYourTeam() {
                     {result.found && result.teamName && (
                       <div className="mt-4 space-y-3">
                         {/* Team Name Card */}
-                        <div className="p-3 sm:p-4 rounded-xl bg-white/80 dark:bg-neutral-800/80 border-2 border-green-300 dark:border-green-600">
-                          <div className="flex items-start gap-2 sm:gap-3">
-                            <Users className="h-6 w-6 sm:h-8 sm:w-8 text-green-600 flex-shrink-0 mt-1" />
-                            <div className="min-w-0 flex-1">
+                        <div className="p-2 sm:p-3 md:p-4 rounded-xl bg-white/80 dark:bg-neutral-800/80 border-2 border-green-300 dark:border-green-600 overflow-hidden">
+                          <div className="flex items-start gap-2 sm:gap-3 max-w-full">
+                            <Users className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-green-600 flex-shrink-0 mt-0.5 sm:mt-1" />
+                            <div className="min-w-0 flex-1 overflow-hidden">
                               <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Your Team</p>
-                              <p className="text-xl sm:text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-purple-600 break-words">
+                              <p className="text-base sm:text-xl md:text-2xl lg:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-purple-600 break-words overflow-wrap-anywhere leading-tight">
                                 {result.teamName}
                               </p>
                             </div>
@@ -272,13 +272,13 @@ export default function FindYourTeam() {
 
                         {/* Team Color Card */}
                         {result.teamColor && (
-                          <div className="p-3 sm:p-4 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-2 border-purple-300 dark:border-purple-600">
-                            <div className="flex items-start gap-2 sm:gap-3">
-                              <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-full flex-shrink-0 mt-1 shadow-lg border-2 border-white dark:border-gray-700" style={{ backgroundColor: result.teamColor }}>
+                          <div className="p-2 sm:p-3 md:p-4 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-2 border-purple-300 dark:border-purple-600 overflow-hidden">
+                            <div className="flex items-start gap-2 sm:gap-3 max-w-full">
+                              <div className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 rounded-full flex-shrink-0 mt-0.5 sm:mt-1 shadow-lg border-2 border-white dark:border-gray-700" style={{ backgroundColor: result.teamColor }}>
                               </div>
-                              <div className="min-w-0 flex-1">
+                              <div className="min-w-0 flex-1 overflow-hidden">
                                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Team Color</p>
-                                <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100 break-words capitalize">
+                                <p className="text-sm sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 dark:text-gray-100 break-words overflow-wrap-anywhere capitalize leading-tight">
                                   {result.teamColor}
                                 </p>
                               </div>
@@ -288,14 +288,14 @@ export default function FindYourTeam() {
 
                         {/* Member Name Card */}
                         {result.memberName && (
-                          <div className="p-3 sm:p-4 rounded-xl bg-blue-50/80 dark:bg-blue-900/20 border-2 border-blue-300 dark:border-blue-600">
-                            <div className="flex items-start gap-2 sm:gap-3">
-                              <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm sm:text-base flex-shrink-0 mt-1">
+                          <div className="p-2 sm:p-3 md:p-4 rounded-xl bg-blue-50/80 dark:bg-blue-900/20 border-2 border-blue-300 dark:border-blue-600 overflow-hidden">
+                            <div className="flex items-start gap-2 sm:gap-3 max-w-full">
+                              <div className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xs sm:text-sm md:text-base flex-shrink-0 mt-0.5 sm:mt-1">
                                 👤
                               </div>
-                              <div className="min-w-0 flex-1">
+                              <div className="min-w-0 flex-1 overflow-hidden">
                                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Member Name</p>
-                                <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100 break-words">
+                                <p className="text-sm sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 dark:text-gray-100 break-words overflow-wrap-anywhere leading-tight">
                                   {result.memberName}
                                 </p>
                               </div>
