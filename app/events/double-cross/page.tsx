@@ -153,7 +153,7 @@ export default function DoubleCross() {
         guests: guestCount,
         total: totalAmount,
         txnId: transactionId,
-        img: screenshotUrl
+        img: screenshotUrl ?? undefined
       })
       setShowConfirm(true)
 
