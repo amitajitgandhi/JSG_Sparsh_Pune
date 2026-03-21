@@ -9,8 +9,8 @@ export default function FindYourTeam() {
   const [hide, setHide] = useState(false)
   const [phoneNumber, setPhoneNumber] = useState('')
   const [searching, setSearching] = useState(false)
-  const [result, setResult] = useState<{ found: boolean; teamName?: string; memberName?: string; message: string } | null>(null)
-  const [csvData, setCsvData] = useState<{ phone: string; team: string; memberName: string }[]>([])
+  const [result, setResult] = useState<{ found: boolean; teamName?: string; memberName?: string; teamColor?: string; message: string } | null>(null)
+  const [csvData, setCsvData] = useState<{ phone: string; team: string; memberName: string; teamColor: string }[]>([])
   const [loadingCsv, setLoadingCsv] = useState(true)
 
   // Load CSV data on mount
@@ -20,14 +20,15 @@ export default function FindYourTeam() {
         const response = await fetch('/files/double-cross.csv')
         const text = await response.text()
         
-        // Parse CSV - column 2: phone, column 3: team, column 4: member_name
+        // Parse CSV - column 2: phone, column 3: team, column 4: member_name, column 5: team_color
         const lines = text.split('\n').filter(line => line.trim())
         const data = lines.slice(1).map(line => { // Skip header
           const columns = line.split(',').map(col => col.trim().replace(/^"|"$/g, ''))
           return {
             phone: columns[1] || '',      // Column 2 (index 1)
             team: columns[2] || '',       // Column 3 (index 2)
-            memberName: columns[3] || ''  // Column 4 (index 3)
+            memberName: columns[3] || '', // Column 4 (index 3)
+            teamColor: columns[4] || ''   // Column 5 (index 4)
           }
         }).filter(item => item.phone && item.team)
         
@@ -87,6 +88,7 @@ export default function FindYourTeam() {
           found: true,
           teamName: match.team,
           memberName: match.memberName,
+          teamColor: match.teamColor,
           message: `You're in Team ${match.team}!`
         })
       } else {
@@ -147,12 +149,12 @@ export default function FindYourTeam() {
         {/* Title Card */}
         <div className="relative rounded-2xl bg-gradient-to-br from-neutral-900 via-rose-900 to-black p-6 sm:p-10 border-4 border-yellow-400 animated-border">
           <div className="flex items-center justify-center w-full text-center flex-col gap-3">
-            <div className="flex items-center gap-3">
-              <span className="text-3xl sm:text-6xl md:text-7xl">🔍</span>
-              <h1 className="leading-tight text-2xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-rose-400 to-white title-glow">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <span className="text-2xl sm:text-5xl md:text-6xl lg:text-7xl">🔍</span>
+              <h1 className="leading-tight text-xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-rose-400 to-white title-glow">
                 FIND YOUR TEAM
               </h1>
-              <span className="text-3xl sm:text-6xl md:text-7xl">👥</span>
+              <span className="text-2xl sm:text-5xl md:text-6xl lg:text-7xl">👥</span>
             </div>
             <p className="text-sm sm:text-base text-gray-300 max-w-2xl">
               Enter your phone number to discover which Double-Cross team you're in!
@@ -183,7 +185,7 @@ export default function FindYourTeam() {
                       onChange={handlePhoneChange}
                       placeholder="9876543210"
                       maxLength={10}
-                      className="w-full px-5 py-4 text-lg rounded-xl border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-neutral-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-rose-500/50 focus:border-rose-500 transition-all"
+                      className="w-full px-4 sm:px-5 py-3 sm:py-4 text-base sm:text-lg rounded-xl border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-neutral-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-rose-500/50 focus:border-rose-500 transition-all"
                       disabled={searching}
                     />
                     {phoneNumber && (
@@ -204,7 +206,7 @@ export default function FindYourTeam() {
                 <button
                   type="submit"
                   disabled={searching || !phoneNumber || phoneNumber.length !== 10}
-                  className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-rose-600 via-rose-700 to-black text-white font-bold text-lg shadow-lg hover:shadow-xl hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3"
+                  className="w-full py-3 sm:py-4 px-4 sm:px-6 rounded-xl bg-gradient-to-r from-rose-600 via-rose-700 to-black text-white font-bold text-base sm:text-lg shadow-lg hover:shadow-xl hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 sm:gap-3"
                 >
                   {searching ? (
                     <>
@@ -243,12 +245,12 @@ export default function FindYourTeam() {
                     </div>
                   )}
                   <div className="flex-1">
-                    <h3 className={`text-2xl font-bold mb-2 ${
+                    <h3 className={`text-xl sm:text-2xl font-bold mb-2 ${
                       result.found ? 'text-green-800 dark:text-green-200' : 'text-red-800 dark:text-red-200'
                     }`}>
                       {result.found ? '🎉 Team Found!' : '😔 Not Found'}
                     </h3>
-                    <p className={`text-lg ${
+                    <p className={`text-base sm:text-lg break-words ${
                       result.found ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'
                     }`}>
                       {result.message}
@@ -256,28 +258,44 @@ export default function FindYourTeam() {
                     {result.found && result.teamName && (
                       <div className="mt-4 space-y-3">
                         {/* Team Name Card */}
-                        <div className="p-4 rounded-xl bg-white/80 dark:bg-neutral-800/80 border-2 border-green-300 dark:border-green-600">
-                          <div className="flex items-center gap-3">
-                            <Users className="h-8 w-8 text-green-600" />
-                            <div>
-                              <p className="text-sm text-gray-600 dark:text-gray-400">Your Team</p>
-                              <p className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-purple-600">
+                        <div className="p-3 sm:p-4 rounded-xl bg-white/80 dark:bg-neutral-800/80 border-2 border-green-300 dark:border-green-600">
+                          <div className="flex items-start gap-2 sm:gap-3">
+                            <Users className="h-6 w-6 sm:h-8 sm:w-8 text-green-600 flex-shrink-0 mt-1" />
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Your Team</p>
+                              <p className="text-xl sm:text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-purple-600 break-words">
                                 {result.teamName}
                               </p>
                             </div>
                           </div>
                         </div>
 
+                        {/* Team Color Card */}
+                        {result.teamColor && (
+                          <div className="p-3 sm:p-4 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-2 border-purple-300 dark:border-purple-600">
+                            <div className="flex items-start gap-2 sm:gap-3">
+                              <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-full flex-shrink-0 mt-1 shadow-lg border-2 border-white dark:border-gray-700" style={{ backgroundColor: result.teamColor }}>
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Team Color</p>
+                                <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100 break-words capitalize">
+                                  {result.teamColor}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
                         {/* Member Name Card */}
                         {result.memberName && (
-                          <div className="p-4 rounded-xl bg-blue-50/80 dark:bg-blue-900/20 border-2 border-blue-300 dark:border-blue-600">
-                            <div className="flex items-center gap-3">
-                              <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
+                          <div className="p-3 sm:p-4 rounded-xl bg-blue-50/80 dark:bg-blue-900/20 border-2 border-blue-300 dark:border-blue-600">
+                            <div className="flex items-start gap-2 sm:gap-3">
+                              <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm sm:text-base flex-shrink-0 mt-1">
                                 👤
                               </div>
-                              <div>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">Member Name</p>
-                                <p className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+                              <div className="min-w-0 flex-1">
+                                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Member Name</p>
+                                <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100 break-words">
                                   {result.memberName}
                                 </p>
                               </div>
@@ -339,9 +357,9 @@ export default function FindYourTeam() {
               href='https://wa.me/917276319578'
               target='_blank'
               rel='noopener noreferrer'
-              className='flex items-center justify-center gap-3 w-full py-3 px-6 rounded-xl bg-gradient-to-r from-green-600 to-green-700 text-white font-bold text-lg shadow-lg hover:shadow-xl hover:brightness-110 transition-all transform hover:scale-[1.02] active:scale-[0.98]'
+              className='flex items-center justify-center gap-2 sm:gap-3 w-full py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl bg-gradient-to-r from-green-600 to-green-700 text-white font-bold text-base sm:text-lg shadow-lg hover:shadow-xl hover:brightness-110 transition-all transform hover:scale-[1.02] active:scale-[0.98]'
             >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
               </svg>
               <span>Chat on WhatsApp</span>
