@@ -207,19 +207,19 @@ export default function DoublerossTeamDashboard() {
   )
 
   return (
-    <div className='min-h-screen bg-gray-50 py-8'>
+    <div className='min-h-screen bg-gray-50 dark:bg-neutral-900 py-8'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         {error && (
-          <div className='mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm text-red-700'>
+          <div className='mb-4 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/30 px-4 py-2 text-sm text-red-700 dark:text-red-200'>
             {error}
           </div>
         )}
-        
+
         {/* Header */}
         <div className='mb-6 sm:mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3'>
           <div>
-            <h1 className='text-2xl sm:text-3xl font-bold text-gray-900 mb-1'>Double-Cross Team Dashboard</h1>
-            <p className='text-gray-600 text-sm'>Complete team roster with roles</p>
+            <h1 className='text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1'>Double-Cross Team Dashboard</h1>
+            <p className='text-gray-600 dark:text-gray-400 text-sm'>Complete team roster with roles</p>
           </div>
           <div className='flex gap-2'>
             <button 
@@ -258,19 +258,19 @@ export default function DoublerossTeamDashboard() {
         </div>
 
         {/* Filters */}
-        <div className='bg-white rounded-lg shadow p-4 mb-6'>
+        <div className='bg-white dark:bg-neutral-800 rounded-lg shadow dark:shadow-neutral-950 p-4 mb-6'>
           <div className='flex items-center gap-2 mb-3'>
-            <Filter size={18} className='text-gray-600'/>
-            <h2 className='text-lg font-semibold text-gray-800'>Filters</h2>
+            <Filter size={18} className='text-gray-600 dark:text-gray-400'/>
+            <h2 className='text-lg font-semibold text-gray-800 dark:text-gray-200'>Filters</h2>
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
             {/* Team Filter */}
             <div>
-              <label className='block text-sm font-medium text-gray-700 mb-1'>Team</label>
+              <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>Team</label>
               <select
                 value={teamFilter}
                 onChange={(e) => setTeamFilter(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500'
+                className='w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-neutral-900 text-gray-900 dark:text-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 dark:focus:ring-rose-400'
               >
                 <option value='all'>All Teams</option>
                 {uniqueTeams.map(team => (
@@ -281,11 +281,11 @@ export default function DoublerossTeamDashboard() {
 
             {/* Role Filter */}
             <div>
-              <label className='block text-sm font-medium text-gray-700 mb-1'>Role</label>
+              <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>Role</label>
               <select
                 value={roleFilter}
                 onChange={(e) => setRoleFilter(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500'
+                className='w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-neutral-900 text-gray-900 dark:text-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 dark:focus:ring-rose-400'
               >
                 <option value='all'>All Roles</option>
                 {uniqueRoles.map(role => (
@@ -294,12 +294,12 @@ export default function DoublerossTeamDashboard() {
               </select>
             </div>
           </div>
-          
+
           {/* Clear Filters */}
           {(teamFilter !== 'all' || roleFilter !== 'all') && (
             <button
               onClick={() => { setTeamFilter('all'); setRoleFilter('all'); }}
-              className='mt-3 text-sm text-rose-600 hover:text-rose-700 font-medium'
+              className='mt-3 text-sm text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 font-medium'
             >
               Clear Filters
             </button>
@@ -308,76 +308,76 @@ export default function DoublerossTeamDashboard() {
 
         {/* Table */}
         {sortedRows.length === 0 ? (
-          <div className='text-center py-16 bg-white rounded-lg shadow'>
-            <Users className='mx-auto h-12 w-12 text-gray-400 mb-4'/>
-            <h3 className='text-lg font-medium text-gray-900 mb-2'>No data found</h3>
-            <p className='text-gray-500'>Try adjusting your filters or refresh the data.</p>
+          <div className='text-center py-16 bg-white dark:bg-neutral-800 rounded-lg shadow dark:shadow-neutral-950'>
+            <Users className='mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 mb-4'/>
+            <h3 className='text-lg font-medium text-gray-900 dark:text-gray-100 mb-2'>No data found</h3>
+            <p className='text-gray-500 dark:text-gray-400'>Try adjusting your filters or refresh the data.</p>
           </div>
         ) : (
-          <div className='bg-white rounded-lg shadow overflow-hidden'>
+          <div className='bg-white dark:bg-neutral-800 rounded-lg shadow dark:shadow-neutral-950 overflow-hidden'>
             <div className='overflow-x-auto'>
-              <table className='min-w-full divide-y divide-gray-200'>
-                <thead className='bg-gray-50'>
+              <table className='min-w-full divide-y divide-gray-200 dark:divide-gray-700'>
+                <thead className='bg-gray-50 dark:bg-neutral-900'>
                   <tr>
                     <th 
-                      className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100'
+                      className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800'
                       onClick={() => handleSort('srNo')}
                     >
                       Sr No {sortField === 'srNo' && (sortDirection === 'asc' ? '↑' : '↓')}
                     </th>
                     <th 
-                      className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100'
+                      className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800'
                       onClick={() => handleSort('phoneNumber')}
                     >
                       Phone Number {sortField === 'phoneNumber' && (sortDirection === 'asc' ? '↑' : '↓')}
                     </th>
                     <th 
-                      className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100'
+                      className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800'
                       onClick={() => handleSort('teamName')}
                     >
                       Team Name {sortField === 'teamName' && (sortDirection === 'asc' ? '↑' : '↓')}
                     </th>
                     <th 
-                      className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100'
+                      className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800'
                       onClick={() => handleSort('memberName')}
                     >
                       Member Name {sortField === 'memberName' && (sortDirection === 'asc' ? '↑' : '↓')}
                     </th>
                     <th 
-                      className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100'
+                      className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800'
                       onClick={() => handleSort('teamColor')}
                     >
                       Team Color {sortField === 'teamColor' && (sortDirection === 'asc' ? '↑' : '↓')}
                     </th>
                     <th 
-                      className='px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100'
+                      className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800'
                       onClick={() => handleSort('role')}
                     >
                       Role {sortField === 'role' && (sortDirection === 'asc' ? '↑' : '↓')}
                     </th>
                   </tr>
                 </thead>
-                <tbody className='bg-white divide-y divide-gray-200'>
+                <tbody className='bg-white dark:bg-neutral-800 divide-y divide-gray-200 dark:divide-gray-700'>
                   {sortedRows.map((row, idx) => (
-                    <tr key={`${row.srNo}-${row.phoneNumber}`} className='hover:bg-gray-50 odd:bg-gray-50/40'>
-                      <td className='px-4 py-2 text-sm text-gray-700'>{row.srNo}</td>
-                      <td className='px-4 py-2 text-sm text-gray-700 font-medium'>{row.phoneNumber}</td>
-                      <td className='px-4 py-2 text-sm text-gray-700'>{row.teamName}</td>
-                      <td className='px-4 py-2 text-sm text-gray-700'>{row.memberName}</td>
+                    <tr key={`${row.srNo}-${row.phoneNumber}`} className='hover:bg-gray-50 dark:hover:bg-neutral-700 odd:bg-gray-50/40 dark:odd:bg-neutral-900/40'>
+                      <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{row.srNo}</td>
+                      <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300 font-medium'>{row.phoneNumber}</td>
+                      <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{row.teamName}</td>
+                      <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{row.memberName}</td>
                       <td className='px-4 py-2 text-sm'>
                         <div className='flex items-center gap-2'>
                           <div 
-                            className='h-4 w-4 rounded-full border border-gray-300 flex-shrink-0'
+                            className='h-4 w-4 rounded-full border border-gray-300 dark:border-gray-600 flex-shrink-0'
                             style={{ backgroundColor: row.teamColor }}
                           />
-                          <span className='text-gray-700 capitalize'>{row.teamColor}</span>
+                          <span className='text-gray-700 dark:text-gray-300 capitalize'>{row.teamColor}</span>
                         </div>
                       </td>
                       <td className='px-4 py-2 text-sm'>
                         <span className={`inline-flex px-2 py-1 rounded-full text-xs font-semibold ${
                           row.role === 'TRAITOR' 
-                            ? 'bg-red-100 text-red-800' 
-                            : 'bg-green-100 text-green-800'
+                            ? 'bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-200' 
+                            : 'bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-200'
                         }`}>
                           {row.role}
                         </span>
@@ -396,9 +396,9 @@ export default function DoublerossTeamDashboard() {
 
 function Card({ title, value, color }: { title: string; value: number | string; color: string }) {
   return (
-    <div className={`rounded-lg p-3 sm:p-4 ${color} text-center`}> 
-      <div className='text-xs text-gray-600'>{title}</div>
-      <div className='text-2xl font-semibold'>{value}</div>
+    <div className={`rounded-lg p-3 sm:p-4 ${color} dark:bg-opacity-20 text-center`}> 
+      <div className='text-xs text-gray-600 dark:text-gray-400'>{title}</div>
+      <div className='text-2xl font-semibold dark:text-gray-200'>{value}</div>
     </div>
   )
 }
