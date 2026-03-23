@@ -68,8 +68,8 @@ export default function Events2027() {
           {events.map((event, index) => {
             const isEvenIndex = index % 2 === 0
             const headerColor = isEvenIndex ? 'from-emerald-500 to-blue-500' : 'from-blue-500 to-purple-500'
-            const isBonusId = typeof event.id === 'string' && event.id.toUpperCase().includes('BONUS')
             const idText = String(event.id).replace(/\.$/, '')
+            const isBonusId = idText.toUpperCase().includes('BONUS')
 
             return (
               <div key={event.id} className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
