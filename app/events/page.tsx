@@ -151,7 +151,7 @@ export default function Events() {
       time: '5:00 PM - 11:00 PM',
       venue: 'Aishwarya Lawns, Pune',
       description: 'Traitors vs Loyalists - A thrilling game of strategy, deception, and fun! Two teams battle it out in a series of challenges to uncover the traitors among them. Expect suspense, laughter, and unforgettable moments as alliances are formed and broken in this ultimate test of trust and wit.',
-      attendees: '200+',
+      attendees: '300+',
       highlights: ['Suspense', 'Bonding', 'Delicious Food', 'Mind Games'],
       galleryUrl: 'Coming Soon..!!'
     }
@@ -321,24 +321,26 @@ export default function Events() {
         <div className="mt-6 sm:mt-8 md:mt-10">
           <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border-2 border-gray-100">
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-yellow-600 mb-4 sm:mb-6">
-              Recent Events
+              Recent & Upcoming Events
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-
+              <Link href="/events/2026-2027-installation" className="inline-flex items-center justify-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
+                Installation 2026-27
+              </Link>
               <Link href="/spl02" className="inline-flex items-center justify-center rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
                 SPL 02
               </Link>
-              <Link href="/events/hurda-party" className="inline-flex items-center justify-center rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
+              <Link href="/events/hurda-party" className="inline-flex items-center justify-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
                 Hurda Party
                           </Link>
-                          <Link href="/events/goa-2026" className="inline-flex items-center justify-center rounded-lg bg-yellow-500 hover:bg-blue-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
+                          <Link href="/events/goa-2026" className="inline-flex items-center justify-center rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
                               Goa 2026
                           </Link>
-                          <Link href="/events/valentine-2026" className="inline-flex items-center justify-center rounded-lg bg-rose-500 hover:bg-rose-600 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
+                          <Link href="/events/valentine-2026" className="inline-flex items-center justify-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
                               Valentine Soiree
                           </Link>
-                          <Link href="/events/double-cross" className="inline-flex items-center justify-center rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
-                              Double Cross (Upcoming)
+                          <Link href="/events/double-cross" className="inline-flex items-center justify-center rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
+                              Double Cross
                           </Link>
             </div>
           </div>

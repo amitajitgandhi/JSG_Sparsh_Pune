@@ -39,11 +39,11 @@ export default function Hero() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 sm:mb-16 animate-slide-up px-2">
               <Link
-                href="/events"
+                href="/events2027"
                 className="group bg-white text-blue-700 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-yellow-50 transition-all duration-300 flex items-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
               >
                 <Calendar size={18} className="sm:w-6 sm:h-6" />
-                <span>Past Events</span>
+                <span>Events</span>
                 <ArrowRight size={16} className="sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
@@ -54,7 +54,7 @@ export default function Hero() {
                 <span>Membership Registration</span>
               </Link>
               <Link
-                href="/events/double-cross"
+                href="/events/2026-2027-installation"
                 className="group bg-white text-blue-700 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-yellow-50 transition-all duration-300 flex items-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
               >
                 <Calendar size={18} className="sm:w-6 sm:h-6" />
@@ -120,6 +120,16 @@ export default function Hero() {
               <p className="text-gray-700 font-medium">Choose an event to view details & register early.</p>
               <div className="grid gap-3">
                 <Link
+                  href="/events/2026-2027-installation"
+                  onClick={() => setShowUpcoming(false)}
+                  className="group rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-3 font-semibold text-emerald-700 flex items-center justify-between hover:bg-emerald-100 transition"
+                >
+                  <span>Installation Ceremony 2026-27</span>
+                  <span className="text-[11px] font-bold uppercase tracking-wide group-hover:translate-x-1 transition">
+                    View &rarr;
+                  </span>
+                </Link>
+                <Link
                   href="/events/valentine-2026"
                   onClick={() => setShowUpcoming(false)}
                   className="group rounded-xl border border-rose-300 bg-rose-50 px-4 py-3 font-semibold text-rose-700 flex items-center justify-between hover:bg-rose-100 transition"
@@ -127,16 +137,6 @@ export default function Hero() {
                   <span>Valentine Soirée 2026</span>
                   <span className="text-[11px] font-bold uppercase tracking-wide group-hover:translate-x-1 transition">
                     View &rarr;
-                  </span>
-                </Link>
-                <Link
-                  href="/events/goa"
-                  onClick={() => setShowUpcoming(false)}
-                  className="group rounded-xl border border-pink-300 bg-pink-50 px-4 py-3 font-semibold text-pink-700 flex items-center justify-between hover:bg-pink-100 transition"
-                >
-                  <span>Goa Escape</span>
-                  <span className="text-[11px] font-bold uppercase tracking-wide group-hover:translate-x-1 transition">
-                    Explore &rarr;
                   </span>
                 </Link>
               </div>
