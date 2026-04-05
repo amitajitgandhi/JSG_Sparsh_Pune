@@ -21,7 +21,7 @@ export default function AchievementsPage() {
             <div className="rounded-2xl bg-white border border-indigo-100 p-5 shadow-sm">
               <div className="flex items-center gap-3 mb-2">
                 <Award className="text-indigo-600" size={20} />
-                <h2 className="text-base font-bold">Best Debut Group Award</h2>
+                <h2 className="text-base font-bold">Best Debut Group Award - 2024</h2>
               </div>
               <p className="text-sm text-gray-700">Our biggest achievement so far – honored as the Best Debut Group, reflecting our impact and unity since inception.</p>
             </div>
@@ -29,9 +29,9 @@ export default function AchievementsPage() {
             <div className="rounded-2xl bg-white border border-indigo-100 p-5 shadow-sm">
               <div className="flex items-center gap-3 mb-2">
                 <Users className="text-indigo-600" size={20} />
-                <h2 className="text-base font-bold">Champions – Pune Parivaar Cricket Tournament</h2>
+                              <h2 className="text-base font-bold">Pune Parivar Cricket Tournament 2025-2026 </h2>
               </div>
-              <p className="text-sm text-gray-700">Crowned champions through teamwork, discipline, and sportsmanship.</p>
+              <p className="text-sm text-gray-700">Crowned champions in Male Category and Runner-Up in Kids Category through teamwork, discipline, and sportsmanship.</p>
             </div>
 
             <div className="rounded-2xl bg-white border border-indigo-100 p-5 shadow-sm">
@@ -39,15 +39,15 @@ export default function AchievementsPage() {
                 <Star className="text-indigo-600" size={20} />
                 <h2 className="text-base font-bold">State & Federation Representation</h2>
               </div>
-              <p className="text-sm text-gray-700">Four Sparsh players proudly represented at State and Federation level tournaments.</p>
+              <p className="text-sm text-gray-700">Four Sparsh players proudly represented at State and Federation level tournaments 2025 - 2026.</p>
             </div>
 
             <div className="rounded-2xl bg-white border border-indigo-100 p-5 shadow-sm">
               <div className="flex items-center gap-3 mb-2">
                 <Mic className="text-indigo-600" size={20} />
-                <h2 className="text-base font-bold">Voice of JSG – Top 3 Solo Performance</h2>
+                <h2 className="text-base font-bold">Voice of JSG</h2>
               </div>
-              <p className="text-sm text-gray-700">Achieved a Top 3 solo performance accolade in the prestigious Voice of JSG competition.</p>
+              <p className="text-sm text-gray-700">Runner-Up Team  + achieved a Top 3 solo performance accolade in the prestigious Voice of JSG competition.</p>
             </div>
           </div>
 

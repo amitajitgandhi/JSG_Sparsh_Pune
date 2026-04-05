@@ -107,6 +107,7 @@ export default function Footer() {
                   <span className="font-bold text-2xl bg-gradient-to-r from-yellow-300 to-yellow-400 bg-clip-text text-transparent">
                     JSG Pune Sparsh
                   </span>
+                  <span className="text-xs text-blue-200 mt-1">App Developer - AMIT GANDHI</span>
                 </div>
               </div>
               
@@ -208,9 +209,6 @@ export default function Footer() {
               <div className="text-center lg:text-left">
                 <p className="text-blue-200 text-sm">
                   Copyright {currentYear} JAIN SOCIAL GROUP PUNE SPARSH. All rights reserved.
-                </p>
-                <p className="text-blue-500 text-sm">
-                  App developer: AMIT GANDHI
                 </p>
               </div>
               

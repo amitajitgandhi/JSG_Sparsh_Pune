@@ -89,7 +89,7 @@ export default function Committee() {
       phone: '+91 9881874309',
       icon: Zap,
       category: 'leader',
-      color: 'from-green-500 to-green-600'
+          color: 'from-purple-500 to-purple-600'
     },
     {
       name: 'Khush Oswal',
