@@ -153,7 +153,7 @@ export default function Events() {
       description: 'Traitors vs Loyalists - A thrilling game of strategy, deception, and fun! Two teams battle it out in a series of challenges to uncover the traitors among them. Expect suspense, laughter, and unforgettable moments as alliances are formed and broken in this ultimate test of trust and wit.',
       attendees: '300+',
       highlights: ['Suspense', 'Bonding', 'Delicious Food', 'Mind Games'],
-      galleryUrl: 'Coming Soon..!!'
+        galleryUrl: 'https://www.facebook.com/media/set/?set=a.122233891274263798&type=3'
     }
   ]
 
@@ -321,12 +321,9 @@ export default function Events() {
         <div className="mt-6 sm:mt-8 md:mt-10">
           <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border-2 border-gray-100">
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-yellow-600 mb-4 sm:mb-6">
-              Recent & Upcoming Events
+              Recent Events
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              <Link href="/events/2026-2027-installation" className="inline-flex items-center justify-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
-                Installation 2026-27
-              </Link>
               <Link href="/spl02" className="inline-flex items-center justify-center rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
                 SPL 02
               </Link>

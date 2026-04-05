@@ -11,6 +11,7 @@ type Reg = {
   registration_for: 'Couple' | 'Individual'
   kids_count: number
   guest_count: number
+  transport_seats: number
   transaction_id: string
   total_amount: number
   screenshot_url: string | null
@@ -57,8 +58,10 @@ export default function Installation2026Dashboard() {
     const individuals = rows.filter(r => r.registration_for === 'Individual').length
     const kids = rows.reduce((sum, r) => sum + r.kids_count, 0)
     const guests = rows.reduce((sum, r) => sum + r.guest_count, 0)
+    const transportSeats = rows.reduce((sum, r) => sum + r.transport_seats, 0)
     const amount = rows.reduce((sum, r) => sum + r.total_amount, 0)
-    return { total, couples, individuals, kids, guests, amount }
+    const refundCount = rows.filter(r => r.transport_seats === 0).length
+    return { total, couples, individuals, kids, guests, transportSeats, amount, refundCount }
   }, [rows])
 
   const handleSort = (field: keyof Reg) => {
@@ -89,7 +92,7 @@ export default function Installation2026Dashboard() {
   }, [rows, sortField, sortDirection])
 
   const exportCsv = () => {
-    const headers = ['ID', 'Name', 'Mobile', 'Registration For', 'Kids (5+ yrs)', 'Guests', 'Transaction ID', 'Total Amount', 'Screenshot URL', 'Submitted At']
+    const headers = ['ID', 'Name', 'Mobile', 'Registration For', 'Kids (5+ yrs)', 'Guests', 'Transport Seats', 'Transaction ID', 'Total Amount', 'Refund', 'Screenshot URL', 'Submitted At']
     const csvRows = [headers.join(',')]
     sortedRows.forEach(r => {
       const row = [
@@ -99,8 +102,10 @@ export default function Installation2026Dashboard() {
         r.registration_for,
         r.kids_count,
         r.guest_count,
+        r.transport_seats,
         `"${r.transaction_id}"`,
         r.total_amount,
+        r.transport_seats === 0 ? 'Yes' : 'No',
         `"${r.screenshot_url || ''}"`,
         `"${new Date(r.created_at).toLocaleString()}"`
       ]
@@ -159,10 +164,12 @@ export default function Installation2026Dashboard() {
           <Card title='Individuals' value={stats.individuals} color='bg-purple-100 dark:bg-purple-900/40 text-purple-800 dark:text-purple-200'/>
         </div>
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6'>
+        <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6'>
           <Card title='Total Revenue (₹)' value={`₹${stats.amount.toLocaleString()}`} color='bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-200'/>
           <Card title='Kids (5+ yrs)' value={stats.kids} color='bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200'/>
           <Card title='Guests' value={stats.guests} color='bg-pink-100 dark:bg-pink-900/40 text-pink-800 dark:text-pink-200'/>
+          <Card title='Transport Seats' value={stats.transportSeats} color='bg-cyan-100 dark:bg-cyan-900/40 text-cyan-800 dark:text-cyan-200'/>
+          <Card title='Refund Count' value={stats.refundCount} color='bg-teal-100 dark:bg-teal-900/40 text-teal-800 dark:text-teal-200'/>
         </div>
 
         {rows.length === 0 ? (
@@ -195,12 +202,16 @@ export default function Installation2026Dashboard() {
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800' onClick={() => handleSort('guest_count')}>
                       Guests {sortField === 'guest_count' && (sortDirection === 'asc' ? '↑' : '↓')}
                     </th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800' onClick={() => handleSort('transport_seats')}>
+                      Transport {sortField === 'transport_seats' && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800' onClick={() => handleSort('transaction_id')}>
                       Txn ID {sortField === 'transaction_id' && (sortDirection === 'asc' ? '↑' : '↓')}
                     </th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800' onClick={() => handleSort('total_amount')}>
                       Total (₹) {sortField === 'total_amount' && (sortDirection === 'asc' ? '↑' : '↓')}
                     </th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Refund</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Screenshot</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800' onClick={() => handleSort('created_at')}>
                       Submitted At {sortField === 'created_at' && (sortDirection === 'asc' ? '↑' : '↓')}
@@ -216,8 +227,16 @@ export default function Installation2026Dashboard() {
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.registration_for}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.kids_count}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.guest_count}</td>
+                      <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.transport_seats}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300 break-all'>{r.transaction_id}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>₹{r.total_amount.toLocaleString()}</td>
+                      <td className='px-4 py-2 text-sm'>
+                        {r.transport_seats === 0 ? (
+                          <span className='inline-flex items-center rounded-full bg-teal-100 dark:bg-teal-900/40 px-2 py-0.5 text-xs font-semibold text-teal-800 dark:text-teal-200'>Yes</span>
+                        ) : (
+                          <span className='inline-flex items-center rounded-full bg-orange-100 dark:bg-orange-900/40 px-2 py-0.5 text-xs font-semibold text-orange-800 dark:text-orange-200'>No</span>
+                        )}
+                      </td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>
                         {r.screenshot_url ? (
                           <a href={r.screenshot_url} target='_blank' rel='noreferrer' className='inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline'>

@@ -13,11 +13,11 @@ export default function Events2027() {
       id: 1,
       title: 'Installation Ceremony 2026-27',
       date: '2026-04-26',
-      time: '5:00 PM Onwards',
+      time: '11:00 AM Onwards',
       venue: 'To be Decided',
-      description: 'The Installation Ceremony marks the beginning of a new chapter for JSG Pune Sparsh. This grand event brings together our community to witness the installation of the new committee members who will lead us through the year 2026-2027. Expect an evening filled with tradition, celebration, and entertainment.',
+      description: 'The Installation Ceremony marks the beginning of a new chapter for JSG Pune Sparsh. This grand event brings together our community to witness the installation of the new committee members who will lead us through the year 2026-2027. Expect an evening filled with fun, celebration, and entertainment.',
       attendees: 'Expected 200+',
-      highlights: ['Committee Installation', 'Mindblowing Performances', 'Oath-Taking Ceremony', 'Community Bonding'],
+      highlights: ['Committee Installation', 'Fun Activities', 'Adventure', 'Community Bonding'],
       galleryUrl: 'Coming Soon..!!'
     }
   ]
@@ -194,7 +194,7 @@ export default function Events2027() {
         <div className="mt-6 sm:mt-8 md:mt-10">
           <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border-2 border-gray-100">
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-blue-600 to-purple-600 mb-4 sm:mb-6">
-              Upcoming Events
+              Recent Events
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <Link href="/events/2026-2027-installation" className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-emerald-500 to-blue-500 hover:brightness-110 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">

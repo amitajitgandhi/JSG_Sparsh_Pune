@@ -29,18 +29,26 @@ export default function Committee() {
       category: 'core'
     },
     {
-      name: 'Bhavik Shah',
+      name: 'Amit Gandhi',
       position: 'Secretary',
       description: 'Managing administrative affairs, member communications, and maintaining records of all programs.',
-      phone: '+91 9158858777',
+      phone: '+91 7276319578',
       icon: User,
       category: 'core'
-    },
+      },
+      {
+          name: 'Vinod Jain',
+          position: 'Joint-Secretary',
+          description: 'Assisting the Secretary in managing administrative affairs and member communications.',
+          phone: '+91 9028847311',
+          icon: User,
+          category: 'core'
+      },
     {
-      name: 'Vinod Jain',
+        name: 'Jitendra Jain',
       position: 'Treasurer',
       description: 'Overseeing financial management and ensuring transparent fund allocation for community programs.',
-      phone: '+91 9028847311',
+        phone: '+91 9822519391',
       icon: User,
       category: 'core'
     }
@@ -53,14 +61,6 @@ export default function Committee() {
       description: 'Organizing sports activities, adventure trips like Aqua Magic, and promoting physical wellness within the community.',
       phone: '+91 9420277778',
       icon: Trophy,
-      category: 'pro'
-    },
-    {
-      name: 'Jitendra Jain',
-      position: 'PRO Business',
-      description: 'Facilitating business networking, professional growth opportunities, and collaborative ventures among members.',
-      phone: '+91 9822519391',
-      icon: Users,
       category: 'pro'
     },
     {
@@ -83,30 +83,8 @@ export default function Committee() {
 
   const groupLeaders = [
     {
-      name: 'Sachin Punamiya',
-      position: 'Group 1 Leader',
-      groupName: 'Gajab Toli',
-      description: 'Leading the energetic Gajab Toli group, organizing exciting activities and fostering strong bonds among group members.',
-      phone: '+91 9822014999',
-      icon: Zap,
-      category: 'leader',
-      color: 'from-red-500 to-red-600'
-    },
-    {
-      name: 'Amit Gandhi',
-      position: 'Group 2 Leader',
-      groupName: 'Tashan Gang',
-      description: 'Spearheading the stylish Tashan Gang, known for their cultural programs and vibrant participation in events.',
-      phone: '+91 7276319578',
-      icon: Zap,
-      category: 'leader',
-      color: 'from-blue-500 to-blue-600'
-    },
-    {
       name: 'Satish Jain',
-      position: 'Group 3 Leader',
-      groupName: 'Jhakaas Club',
-      description: 'Managing the fantastic Jhakaas Club, organizing fun-filled activities and maintaining high energy in all programs.',
+      description: 'Organizing fun-filled activities and maintaining high energy in all programs.',
       phone: '+91 9881874309',
       icon: Zap,
       category: 'leader',
@@ -114,9 +92,7 @@ export default function Committee() {
     },
     {
       name: 'Khush Oswal',
-      position: 'Group 4 Leader',
-      groupName: 'Bawaal Brigade',
-      description: 'Leading the dynamic Bawaal Brigade, known for creating excitement and memorable experiences in community events.',
+      description: 'Known for creating excitement and memorable experiences in community events.',
       phone: '+91 9028661666',
       icon: Zap,
       category: 'leader',
@@ -130,7 +106,7 @@ export default function Committee() {
         {/* Page Header */}
         <div className="text-center mb-12 sm:mb-16">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
-            Our Committee 2025-2026
+            Our Committee 2026-2027
           </h1>
           <p className="text-base sm:text-lg text-gray-600 max-w-4xl mx-auto px-2 leading-relaxed">
             Meet the dedicated team of JSG Pune Sparsh who work tirelessly to serve our community.
