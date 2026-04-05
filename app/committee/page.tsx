@@ -84,6 +84,7 @@ export default function Committee() {
   const groupLeaders = [
     {
       name: 'Satish Jain',
+      position: 'Group Leader',
       description: 'Organizing fun-filled activities and maintaining high energy in all programs.',
       phone: '+91 9881874309',
       icon: Zap,
@@ -92,6 +93,7 @@ export default function Committee() {
     },
     {
       name: 'Khush Oswal',
+      position: 'Group Leader',
       description: 'Known for creating excitement and memorable experiences in community events.',
       phone: '+91 9028661666',
       icon: Zap,
@@ -258,7 +260,6 @@ export default function Committee() {
                     </div>
                     <h3 className="text-lg sm:text-xl font-semibold mb-1 leading-tight">{member.name}</h3>
                     <p className="text-white/90 font-medium mb-1 text-sm sm:text-base">{member.position}</p>
-                    <p className="text-white/80 text-xs sm:text-sm font-bold">{member.groupName}</p>
                   </div>
                   <div className="p-4 sm:p-6">
                     <p className="text-gray-600 text-sm mb-3 sm:mb-4 leading-relaxed min-h-[4rem]">
