@@ -11,7 +11,7 @@ export default function Events2027() {
   const events = [
     {
       id: 1,
-      title: 'Installation Ceremony 2026-27',
+      title: 'Funverse',
       date: '2026-04-26',
       time: '11:00 AM Onwards',
       venue: 'To be Decided',

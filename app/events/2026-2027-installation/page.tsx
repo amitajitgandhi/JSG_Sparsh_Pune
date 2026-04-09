@@ -278,7 +278,7 @@ export default function Installation2026() {
             <div className="flex items-center justify-center w-full min-w-0">
               <span className="text-xl sm:text-5xl md:text-7xl text-emerald-500 dark:text-emerald-400 flex-shrink-0">✨</span>
               <h1 className="mx-1 sm:mx-3 leading-tight text-[clamp(1rem,5vw,6rem)] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-500 whitespace-nowrap animate-gradient">
-                INSTALLATION 2026-27
+                FUNVERSE
               </h1>
               <span className="text-xl sm:text-5xl md:text-7xl text-blue-500 dark:text-blue-400 flex-shrink-0">🎉</span>
             </div>
