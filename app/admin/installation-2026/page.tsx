@@ -5,11 +5,12 @@ import { supabase } from '../../../lib/supabase'
 import { RefreshCw, Download, Users, LinkIcon } from 'lucide-react'
 
 type Reg = {
-  id: number
+  id: string
   name: string
   mobile: string
   registration_for: 'Couple' | 'Individual'
   kids_count: number
+  kids_10plus_count: number
   guest_count: number
   transport_seats: number
   transaction_id: string
@@ -22,7 +23,7 @@ export default function Installation2026Dashboard() {
   const [rows, setRows] = useState<Reg[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [sortField, setSortField] = useState<keyof Reg>('id')
+  const [sortField, setSortField] = useState<keyof Reg>('created_at')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
 
   const load = async () => {
@@ -32,13 +33,14 @@ export default function Installation2026Dashboard() {
       const { data, error: err } = await supabase
         .from('installation_2026_registrations')
         .select('*')
-        .order('id', { ascending: false })
-      
+        .order('created_at', { ascending: false })
+
       if (err) {
         console.error('Installation load error:', err)
-        setError('Failed to load registrations')
+        setError(`Failed to load registrations: ${err.message}`)
         setRows([])
       } else {
+        console.log('Installation rows loaded:', data?.length ?? 0)
         setRows(data || [])
       }
     } catch (e) {
@@ -57,11 +59,12 @@ export default function Installation2026Dashboard() {
     const couples = rows.filter(r => r.registration_for === 'Couple').length
     const individuals = rows.filter(r => r.registration_for === 'Individual').length
     const kids = rows.reduce((sum, r) => sum + r.kids_count, 0)
+    const kids10Plus = rows.reduce((sum, r) => sum + (r.kids_10plus_count ?? 0), 0)
     const guests = rows.reduce((sum, r) => sum + r.guest_count, 0)
     const transportSeats = rows.reduce((sum, r) => sum + r.transport_seats, 0)
     const amount = rows.reduce((sum, r) => sum + r.total_amount, 0)
-    const refundCount = rows.filter(r => r.transport_seats === 0).length
-    return { total, couples, individuals, kids, guests, transportSeats, amount, refundCount }
+    const refundCount = rows.filter(r => r.transport_seats === 0 && r.kids_count === 0 && (r.kids_10plus_count ?? 0) === 0).length
+    return { total, couples, individuals, kids, kids10Plus, guests, transportSeats, amount, refundCount }
   }, [rows])
 
   const handleSort = (field: keyof Reg) => {
@@ -92,7 +95,7 @@ export default function Installation2026Dashboard() {
   }, [rows, sortField, sortDirection])
 
   const exportCsv = () => {
-    const headers = ['ID', 'Name', 'Mobile', 'Registration For', 'Kids (5+ yrs)', 'Guests', 'Transport Seats', 'Transaction ID', 'Total Amount', 'Refund', 'Screenshot URL', 'Submitted At']
+    const headers = ['ID', 'Name', 'Mobile', 'Registration For', 'Kids (5-10 yrs)', 'Kids (10+ yrs)', 'Guests', 'Transport Seats', 'Transaction ID', 'Total Amount', 'Refund', 'Screenshot URL', 'Submitted At']
     const csvRows = [headers.join(',')]
     sortedRows.forEach(r => {
       const row = [
@@ -101,11 +104,12 @@ export default function Installation2026Dashboard() {
         r.mobile,
         r.registration_for,
         r.kids_count,
+        r.kids_10plus_count ?? 0,
         r.guest_count,
         r.transport_seats,
         `"${r.transaction_id}"`,
         r.total_amount,
-        r.transport_seats === 0 ? 'Yes' : 'No',
+        r.transport_seats === 0 && r.kids_count === 0 && (r.kids_10plus_count ?? 0) === 0 ? 'Yes' : 'No',
         `"${r.screenshot_url || ''}"`,
         `"${new Date(r.created_at).toLocaleString()}"`
       ]
@@ -133,7 +137,7 @@ export default function Installation2026Dashboard() {
         <div className='mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'>
           <div>
             <h1 className='text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-blue-600 to-purple-600'>
-              Installation 2026-27 Dashboard
+              Funverse Dashboard
             </h1>
             <p className='text-sm text-gray-600 dark:text-gray-400 mt-1'>Manage event registrations and attendees</p>
           </div>
@@ -164,9 +168,10 @@ export default function Installation2026Dashboard() {
           <Card title='Individuals' value={stats.individuals} color='bg-purple-100 dark:bg-purple-900/40 text-purple-800 dark:text-purple-200'/>
         </div>
 
-        <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6'>
+        <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6'>
           <Card title='Total Revenue (₹)' value={`₹${stats.amount.toLocaleString()}`} color='bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-200'/>
-          <Card title='Kids (5+ yrs)' value={stats.kids} color='bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200'/>
+          <Card title='Kids (5-10 yrs)' value={stats.kids} color='bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200'/>
+          <Card title='Kids (10+ yrs)' value={stats.kids10Plus} color='bg-orange-100 dark:bg-orange-900/40 text-orange-800 dark:text-orange-200'/>
           <Card title='Guests' value={stats.guests} color='bg-pink-100 dark:bg-pink-900/40 text-pink-800 dark:text-pink-200'/>
           <Card title='Transport Seats' value={stats.transportSeats} color='bg-cyan-100 dark:bg-cyan-900/40 text-cyan-800 dark:text-cyan-200'/>
           <Card title='Refund Count' value={stats.refundCount} color='bg-teal-100 dark:bg-teal-900/40 text-teal-800 dark:text-teal-200'/>
@@ -177,6 +182,7 @@ export default function Installation2026Dashboard() {
             <Users className='mx-auto h-12 w-12 text-gray-400 dark:text-gray-600 mb-4'/>
             <h3 className='text-lg font-medium text-gray-900 dark:text-gray-100 mb-2'>No registrations yet</h3>
             <p className='text-gray-500 dark:text-gray-400'>Once attendees submit the registration form, entries will appear here.</p>
+            <p className='text-xs text-gray-400 dark:text-gray-600 mt-2'>If you expect data, check Supabase RLS policies for this table.</p>
           </div>
         ) : (
           <div className='bg-white dark:bg-neutral-800 rounded-lg shadow overflow-hidden'>
@@ -197,7 +203,10 @@ export default function Installation2026Dashboard() {
                       For {sortField === 'registration_for' && (sortDirection === 'asc' ? '↑' : '↓')}
                     </th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800' onClick={() => handleSort('kids_count')}>
-                      Kids (5+ yrs) {sortField === 'kids_count' && (sortDirection === 'asc' ? '↑' : '↓')}
+                      Kids (5-10 yrs) {sortField === 'kids_count' && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800' onClick={() => handleSort('kids_10plus_count')}>
+                      Kids (10+ yrs) {sortField === 'kids_10plus_count' && (sortDirection === 'asc' ? '↑' : '↓')}
                     </th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-800' onClick={() => handleSort('guest_count')}>
                       Guests {sortField === 'guest_count' && (sortDirection === 'asc' ? '↑' : '↓')}
@@ -226,12 +235,13 @@ export default function Installation2026Dashboard() {
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.mobile}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.registration_for}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.kids_count}</td>
+                      <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.kids_10plus_count ?? 0}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.guest_count}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.transport_seats}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300 break-all'>{r.transaction_id}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>₹{r.total_amount.toLocaleString()}</td>
                       <td className='px-4 py-2 text-sm'>
-                        {r.transport_seats === 0 ? (
+                        {r.transport_seats === 0 && r.kids_count === 0 && (r.kids_10plus_count ?? 0) === 0 ? (
                           <span className='inline-flex items-center rounded-full bg-teal-100 dark:bg-teal-900/40 px-2 py-0.5 text-xs font-semibold text-teal-800 dark:text-teal-200'>Yes</span>
                         ) : (
                           <span className='inline-flex items-center rounded-full bg-orange-100 dark:bg-orange-900/40 px-2 py-0.5 text-xs font-semibold text-orange-800 dark:text-orange-200'>No</span>

@@ -43,6 +43,7 @@ export default function Installation2026() {
   const [mobile, setMobile] = useState('')
   const [registrationFor, setRegistrationFor] = useState<'Individual' | 'Couple'>('Couple')
   const [kidsCount, setKidsCount] = useState<number>(0)
+  const [kids10PlusCount, setKids10PlusCount] = useState<number>(0)
   const [guestCount, setGuestCount] = useState<number>(0)
   const [transportSeats, setTransportSeats] = useState<number>(0)
   const [transactionId, setTransactionId] = useState('')
@@ -50,24 +51,28 @@ export default function Installation2026() {
   const [submitting, setSubmitting] = useState(false)
   const [showQR, setShowQR] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
-  const [confirmInfo, setConfirmInfo] = useState<{name:string;mobile:string;registrationFor:string;kids:number;guests:number;transport:number;total:number;txnId:string;img?:string} | null>(null)
+  const [confirmInfo, setConfirmInfo] = useState<{name:string;mobile:string;registrationFor:string;kids:number;kids10Plus:number;guests:number;transport:number;total:number;txnId:string;img?:string} | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [ocrProcessing, setOcrProcessing] = useState(false)
   const [ocrStatus, setOcrStatus] = useState<'idle' | 'processing' | 'success' | 'failed'>('idle')
 
   const KID_RATE = 1100
+  const KID_10PLUS_RATE = 1200
   const GUEST_RATE = 1500
   const TRANSPORT_RATE = 400
   const REFUNDABLE_DEPOSIT_PER_REGISTRATION = 500
 
   const totalAmount = useMemo(() => {
     const kidsTotal = kidsCount * KID_RATE
+    const kids10PlusTotal = kids10PlusCount * KID_10PLUS_RATE
     const guestTotal = guestCount * GUEST_RATE
-    if (transportSeats > 0) {
-      return kidsTotal + guestTotal + transportSeats * TRANSPORT_RATE
+    const needsDeposit = transportSeats === 0 && kidsCount === 0 && kids10PlusCount === 0
+    const base = kidsTotal + kids10PlusTotal + guestTotal
+    if (needsDeposit) {
+      return base + REFUNDABLE_DEPOSIT_PER_REGISTRATION
     }
-    return kidsTotal + guestTotal + REFUNDABLE_DEPOSIT_PER_REGISTRATION
-  }, [kidsCount, guestCount, transportSeats])
+    return base + transportSeats * TRANSPORT_RATE
+  }, [kidsCount, kids10PlusCount, guestCount, transportSeats])
 
   const extractTransactionId = async (file: File) => {
     setOcrProcessing(true)
@@ -171,6 +176,7 @@ export default function Installation2026() {
             mobile,
             registration_for: registrationFor,
             kids_count: kidsCount,
+            kids_10plus_count: kids10PlusCount,
             guest_count: guestCount,
             transport_seats: transportSeats,
             transaction_id: transactionId,
@@ -191,6 +197,7 @@ export default function Installation2026() {
         mobile,
         registrationFor,
         kids: kidsCount,
+        kids10Plus: kids10PlusCount,
         guests: guestCount,
         transport: transportSeats,
         total: totalAmount,
@@ -203,6 +210,7 @@ export default function Installation2026() {
       setMobile('')
       setRegistrationFor('Couple')
       setKidsCount(0)
+      setKids10PlusCount(0)
       setGuestCount(0)
       setTransportSeats(0)
       setTransactionId('')
@@ -301,14 +309,14 @@ export default function Installation2026() {
               <div className='flex flex-col items-center justify-center rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 border border-blue-200 sm:border-2 dark:border-blue-700 p-2 sm:p-4 md:p-5 text-center shadow-sm'>
                 <span className='text-xl sm:text-3xl md:text-4xl mb-1 sm:mb-2'>⏰</span>
                 <span className='text-[9px] sm:text-xs md:text-sm font-bold text-blue-700 dark:text-blue-300 uppercase tracking-tight sm:tracking-wider'>Time</span>
-                <span className='text-[10px] sm:text-sm md:text-base font-semibold text-gray-800 dark:text-blue-100 mt-0.5 sm:mt-1 leading-tight'>11:00 AM Onwards</span>
+                <span className='text-[10px] sm:text-sm md:text-base font-semibold text-gray-800 dark:text-blue-100 mt-0.5 sm:mt-1 leading-tight'>02:30 PM Onwards</span>
               </div>
 
               {/* Location Box */}
               <div className='flex flex-col items-center justify-center rounded-lg sm:rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 border border-purple-200 sm:border-2 dark:border-purple-700 p-2 sm:p-4 md:p-5 text-center shadow-sm'>
                 <span className='text-xl sm:text-3xl md:text-4xl mb-1 sm:mb-2'>📍</span>
                 <span className='text-[9px] sm:text-xs md:text-sm font-bold text-purple-700 dark:text-purple-300 uppercase tracking-tight sm:tracking-wider'>Location</span>
-                <span className='text-[10px] sm:text-sm md:text-base font-semibold text-gray-800 dark:text-purple-100 mt-0.5 sm:mt-1 leading-tight'>**Stay Tuned</span>
+                <span className='text-[10px] sm:text-sm md:text-base font-semibold text-gray-800 dark:text-purple-100 mt-0.5 sm:mt-1 leading-tight'>SNEH RESORT</span>
               </div>
             </div>
           </div>
@@ -380,21 +388,31 @@ export default function Installation2026() {
                               <span className='text-lg mt-0.5'>🚌</span>
                               <div>
                                   <span className='font-semibold'>Transport (Optional) : ₹400 per seat</span>
-                                  <p className='text-[11px] text-gray-400 dark:text-gray-500 mt-0.5'>To & fro</p>
+                                  <p className='text-[11px] text-gray-400 dark:text-gray-500 mt-0.5'>To & fro, including Lunch at Jain Mandir, Pachane</p>
                               </div>
                           </li>
                           <li className='flex items-start gap-3'>
                 <span className='text-lg mt-0.5'>💸</span>
                 <div>
                   <span className='font-semibold'>Members : ₹500 (Refundable deposit)</span>
-                  <p className='text-[11px] text-gray-400 dark:text-gray-500 mt-0.5'>Applicable only for members NOT opting Transport</p>
+                  <p className='text-[11px] text-gray-400 dark:text-gray-500 mt-0.5'>Only when NOT opting Transport or Kids</p>
                 </div>
               </li>
               <li className='flex items-start gap-3'>
                 <span className='text-lg mt-0.5'>👶</span>
-                <div>
-                  <span className='font-semibold'>Kids 5+ years : ₹1,100</span>
-                  <p className='text-[11px] text-gray-400 dark:text-gray-500 mt-0.5'>Excl. transport</p>
+                <div className='space-y-1'>
+                  <div>
+                                      <span className='font-semibold'>Kids upto 5 years : Free</span>
+                                      <p className='text-[11px] text-gray-400 dark:text-gray-500 mt-0.5'>-</p>
+                  </div>
+                  <div>
+                    <span className='font-semibold'>Kids 5-10 years : ₹1,100</span>
+                    <p className='text-[11px] text-gray-400 dark:text-gray-500 mt-0.5'>Excl. transport</p>
+                  </div>
+                  <div>
+                    <span className='font-semibold'>Kids 10+ years : ₹1,200</span>
+                    <p className='text-[11px] text-gray-400 dark:text-gray-500 mt-0.5'>Excl. transport</p>
+                  </div>
                 </div>
               </li>
               <li className='flex items-start gap-3'>
@@ -446,7 +464,7 @@ export default function Installation2026() {
 
               <div className='grid gap-3 sm:grid-cols-2 sm:gap-5'>
                 <div className='grid gap-1'>
-                  <label htmlFor='kids' className='text-sm font-medium text-gray-700 dark:text-gray-200'>Kids (5 yrs & above)</label>
+                  <label htmlFor='kids' className='text-sm font-medium text-gray-700 dark:text-gray-200'>Kids (5 - 10 yrs) — ₹1,100</label>
                   <select id='kids' name='kids' value={kidsCount} onChange={(e) => setKidsCount(parseInt(e.target.value, 10))} className={selectClass}>
                     <option value={0}>0</option>
                     <option value={1}>1</option>
@@ -457,7 +475,18 @@ export default function Installation2026() {
                 </div>
 
                 <div className='grid gap-1'>
-                  <label htmlFor='guests' className='text-sm font-medium text-gray-700 dark:text-gray-200'>Guest</label>
+                  <label htmlFor='kids10Plus' className='text-sm font-medium text-gray-700 dark:text-gray-200'>Kids (10 yrs & above) — ₹1,200</label>
+                  <select id='kids10Plus' name='kids10Plus' value={kids10PlusCount} onChange={(e) => setKids10PlusCount(parseInt(e.target.value, 10))} className={selectClass}>
+                    <option value={0}>0</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                  </select>
+                </div>
+
+                <div className='grid gap-1'>
+                  <label htmlFor='guests' className='text-sm font-medium text-gray-700 dark:text-gray-200'>Guest — ₹1,500</label>
                   <select id='guests' name='guests' value={guestCount} onChange={(e) => setGuestCount(parseInt(e.target.value, 10))} className={selectClass}>
                     <option value={0}>0</option>
                     <option value={1}>1</option>
@@ -561,15 +590,18 @@ export default function Installation2026() {
                     <div><span className='font-semibold'>Name:</span> {confirmInfo.name}</div>
                     <div><span className='font-semibold'>Mobile:</span> {confirmInfo.mobile}</div>
                     <div><span className='font-semibold'>For:</span> {confirmInfo.registrationFor}</div>
-                    <div><span className='font-semibold'>Kids (5-12):</span> {confirmInfo.kids}</div>
+                    <div><span className='font-semibold'>Kids (5-10 yrs):</span> {confirmInfo.kids}</div>
+                    <div><span className='font-semibold'>Kids (10+ yrs):</span> {confirmInfo.kids10Plus}</div>
                     <div><span className='font-semibold'>Guest:</span> {confirmInfo.guests}</div>
                     <div><span className='font-semibold'>Transport Seats:</span> {confirmInfo.transport}</div>
                     <div><span className='font-semibold'>Transaction ID:</span> {confirmInfo.txnId}</div>
                     <div className='sm:col-span-2'><span className='font-semibold'>Total Amount:</span> ₹{confirmInfo.total}</div>
                   </div>
+                  {confirmInfo.transport === 0 && confirmInfo.kids === 0 && confirmInfo.kids10Plus === 0 && (
                   <div className='bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700 rounded-lg p-3 mt-3'>
                     <p className='text-amber-800 dark:text-amber-200 text-xs font-medium'>⏰ Please note: Refundable deposit of ₹500 is valid till 8:00 PM</p>
                   </div>
+                  )}
                   <div className='pt-2 flex flex-col sm:flex-row gap-3'>
                     <button onClick={() => setShowConfirm(false)} className='flex-1 inline-flex items-center justify-center rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2'>Close</button>
                     <a href='tel:+917276319578' className='flex-1 inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-neutral-700 text-gray-700 dark:text-gray-200 font-semibold py-2 hover:bg-gray-50 dark:hover:bg-neutral-600'>Need Help?</a>

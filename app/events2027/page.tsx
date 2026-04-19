@@ -197,7 +197,7 @@ export default function Events2027() {
               Recent Events
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              <Link href="/events/2026-2027-installation" className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-emerald-500 to-blue-500 hover:brightness-110 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
+              <Link href="/events/Funverse" className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-emerald-500 to-blue-500 hover:brightness-110 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
                 Installation 2026-27
               </Link>
               <Link href="/events" className="inline-flex items-center justify-center rounded-lg bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">

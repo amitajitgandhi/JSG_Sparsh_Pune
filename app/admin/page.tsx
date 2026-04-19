@@ -11,40 +11,10 @@ export default function AdminIndex() {
           <p className='text-gray-600 text-sm'>Select a dashboard to manage registrations.</p>
         </div>
         <div className='grid gap-5'>
-          <Link href='/admin/membership-dashboard' className='group block rounded-2xl border border-blue-200 bg-white p-6 shadow hover:shadow-md transition'>
+         <Link href='/admin/installation-2026' className='group block rounded-2xl border border-emerald-200 bg-white p-6 shadow hover:shadow-md transition'>
             <div className='flex items-center justify-between'>
               <div>
-                <h2 className='text-xl font-semibold text-blue-700 group-hover:text-blue-800'>Membership Registration Dashboard</h2>
-                <p className='text-sm text-gray-600 mt-1'>View total registrations, Old/New break-up, age wise, and kids wise counts.</p>
-              </div>
-              <span className='text-blue-500 text-2xl'>&rarr;</span>
-            </div>
-          </Link>
-          
-          <Link href='/admin/double-cross' className='group block rounded-2xl border border-amber-200 bg-white p-6 shadow hover:shadow-md transition'>
-            <div className='flex items-center justify-between'>
-              <div>
-                <h2 className='text-xl font-semibold text-amber-700 group-hover:text-amber-800'>Double-Cross Registration Dashboard</h2>
-                <p className='text-sm text-gray-600 mt-1'>View Double-Cross event registrations, couples, individuals, kids, and payment status.</p>
-              </div>
-              <span className='text-amber-500 text-2xl'>&rarr;</span>
-            </div>
-          </Link>
-
-          <Link href='/admin/double-cross-teams' className='group block rounded-2xl border border-rose-200 bg-white p-6 shadow hover:shadow-md transition'>
-            <div className='flex items-center justify-between'>
-              <div>
-                <h2 className='text-xl font-semibold text-rose-700 group-hover:text-rose-800'>Double-Cross Teams Dashboard</h2>
-                <p className='text-sm text-gray-600 mt-1'>View complete team roster with roles, filter by team/role, and export team data.</p>
-              </div>
-              <span className='text-rose-500 text-2xl'>&rarr;</span>
-            </div>
-          </Link>
-
-          <Link href='/admin/installation-2026' className='group block rounded-2xl border border-emerald-200 bg-white p-6 shadow hover:shadow-md transition'>
-            <div className='flex items-center justify-between'>
-              <div>
-                <h2 className='text-xl font-semibold text-emerald-700 group-hover:text-emerald-800'>Installation 2026-27 Dashboard</h2>
+                <h2 className='text-xl font-semibold text-emerald-700 group-hover:text-emerald-800'>Funverse</h2>
                 <p className='text-sm text-gray-600 mt-1'>View Installation Ceremony registrations, couples, individuals, kids, guests, and payment status.</p>
               </div>
               <span className='text-emerald-500 text-2xl'>&rarr;</span>

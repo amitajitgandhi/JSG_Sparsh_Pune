@@ -54,7 +54,7 @@ export default function Hero() {
                 <span>Membership Registration</span>
               </Link>
               <Link
-                href="/events/2026-2027-installation"
+                href="/events/Funverse"
                 className="group bg-white text-blue-700 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-yellow-50 transition-all duration-300 flex items-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
               >
                 <Calendar size={18} className="sm:w-6 sm:h-6" />
