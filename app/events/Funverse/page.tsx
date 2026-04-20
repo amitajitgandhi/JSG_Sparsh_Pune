@@ -344,7 +344,7 @@ export default function Installation2026() {
               <div className='relative pb-6'>
                 <span className='absolute -left-[1.15rem] top-1 w-4 h-4 rounded-full bg-blue-500 border-2 border-white dark:border-neutral-900 shadow' />
                 <div className='ml-4'>
-                  <span className='text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider'>03:00 PM – 04:30 PM</span>
+                  <span className='text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider'>02:00 PM – 04:30 PM</span>
                   <p className='text-sm font-semibold text-gray-800 dark:text-gray-100 mt-0.5'>🌊 Raindance &amp; Waterpark</p>
                 </div>
               </div>
