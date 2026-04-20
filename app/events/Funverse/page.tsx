@@ -373,7 +373,7 @@ export default function Installation2026() {
                   </button>
                   {snehExpanded && (
                     <ul className='mt-2 grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs text-gray-600 dark:text-gray-400'>
-                      {['Photography Garden', 'Horror Room', 'Alien World Show', 'Operation Sindoor', 'Koun Banega Crorepati Show', 'Rocket Science Zone', 'Horror Show', '3D Painting Photography'].map(item => (
+                      {['Photography Garden', 'Horror Room', 'Alien World Show', 'Operation Sindoor', 'KBC Show', 'Rocket Science Zone', 'Horror Show', '3D Wall'].map(item => (
                         <li key={item} className='flex items-center gap-1.5 bg-purple-50 dark:bg-purple-900/20 rounded-md px-2 py-1'>
                           <span className='text-purple-400'>•</span> {item}
                         </li>
