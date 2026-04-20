@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState, useMemo } from 'react'
 import { supabase } from '../../../lib/supabase'
-import { Calendar, MapPin, Users, Sparkles, Trophy, Music, CheckCircle, AlertTriangle, Loader2 } from 'lucide-react'
+import { Users, CheckCircle, AlertTriangle, Loader2 } from 'lucide-react'
 import { createWorker } from 'tesseract.js'
 
 // Lazy native picker without bundling Capacitor plugins on web
@@ -55,6 +55,8 @@ export default function Installation2026() {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [ocrProcessing, setOcrProcessing] = useState(false)
   const [ocrStatus, setOcrStatus] = useState<'idle' | 'processing' | 'success' | 'failed'>('idle')
+  const [snehExpanded, setSnehExpanded] = useState(false)
+  const [activitiesExpanded, setActivitiesExpanded] = useState(false)
 
   const KID_RATE = 1100
   const KID_10PLUS_RATE = 1200
@@ -322,55 +324,130 @@ export default function Installation2026() {
           </div>
         </section>
 
-        {/* The Night Highlights */}
+        {/* Event Schedule */}
         <section className='group relative rounded-2xl sm:rounded-3xl p-[2px] bg-gradient-to-br from-emerald-400 via-blue-400 to-purple-400 shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-emerald-500'>
           <div className='absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-30 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.12),transparent_65%)] transition-opacity' />
           <div className='relative rounded-2xl bg-white/95 dark:bg-neutral-900/95 p-4 sm:p-6 md:p-8 shadow'>
-            <div className='relative flex items-center gap-3'>
-              <div className='h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-emerald-500 to-blue-500 flex items-center justify-center text-white font-bold shadow-md'>
-                <Trophy size={24} />
-              </div>
-              <h3 className='text-base sm:text-lg md:text-xl font-extrabold text-neutral-900 dark:text-emerald-200 tracking-wide'>A Fresh Beginning — Highlights</h3>
-            </div>
-            <ul className='mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-sm font-medium text-gray-700 dark:text-emerald-200'>
-              <li className='rounded-lg bg-white/90 dark:bg-neutral-800 border border-gray-200 dark:border-emerald-800 px-3 py-3 shadow-sm flex items-center gap-2'>
-                <Trophy className='text-emerald-500' size={18} />
-                <span>Committee Installation</span>
-              </li>
-              <li className='rounded-lg bg-white/90 dark:bg-neutral-800 border border-gray-200 dark:border-purple-800 px-3 py-3 shadow-sm flex items-center gap-2'>
-                <Sparkles className='text-purple-500' size={18} />
-                <span>Good Vibes</span>
-              </li>
-              <li className='rounded-lg bg-white/90 dark:bg-neutral-800 border border-gray-200 dark:border-emerald-800 px-3 py-3 shadow-sm flex items-center gap-2'>
-                <Users className='text-emerald-500' size={18} />
-                <span>Community Bonding</span>
-              </li>
-              <li className='rounded-lg bg-white/90 dark:bg-neutral-800 border border-gray-200 dark:border-blue-800 px-3 py-3 shadow-sm flex items-center gap-2'>
-                <Music className='text-blue-500' size={18} />
-                <span>Live Entertainment</span>
-              </li>
-              <li className='rounded-lg bg-white/90 dark:bg-neutral-800 border border-gray-200 dark:border-purple-800 px-3 py-3 shadow-sm flex items-center gap-2'>
-                <span className='text-lg'>🍽️</span>
-                <span>Delicious Dinner</span>
-              </li>
-            </ul>
-          </div>
-        </section>
+            <h3 className='text-base sm:text-lg md:text-xl font-extrabold text-neutral-900 dark:text-emerald-200 mb-5'>About the Event</h3>
+            <div className='relative pl-4 border-l-2 border-emerald-300 dark:border-emerald-700 space-y-0'>
 
-        {/* About the Event */}
-        <section className='group relative rounded-2xl sm:rounded-3xl p-[2px] bg-gradient-to-br from-emerald-400 via-blue-400 to-purple-400 shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-emerald-500'>
-          <div className='absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-30 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.12),transparent_65%)] transition-opacity' />
-          <div className='relative rounded-2xl bg-white/95 dark:bg-neutral-900/95 p-4 sm:p-6 md:p-8 shadow'>
-            <h3 className='text-base sm:text-lg md:text-xl font-extrabold text-neutral-900 dark:text-emerald-200 mb-4'>About the Event</h3>
-            <div className='prose prose-sm sm:prose-base dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 space-y-3'>
-              <p>
-                The Installation Ceremony marks the beginning of a new chapter for JSG Pune Sparsh. 
-                This grand event brings together our community to witness the installation of the new committee 
-                members who will lead us through the year 2026-2027.
-              </p>
-              <p>
-                Expect a day filled with fun, celebration, and entertainment.
-              </p>
+              {/* 1 */}
+              <div className='relative pb-6'>
+                <span className='absolute -left-[1.15rem] top-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white dark:border-neutral-900 shadow' />
+                <div className='ml-4'>
+                  <span className='text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider'>02:00 PM – 03:00 PM</span>
+                  <p className='text-sm font-semibold text-gray-800 dark:text-gray-100 mt-0.5'>🏨 Reporting at Sneh Resort</p>
+                </div>
+              </div>
+
+              {/* 2 */}
+              <div className='relative pb-6'>
+                <span className='absolute -left-[1.15rem] top-1 w-4 h-4 rounded-full bg-blue-500 border-2 border-white dark:border-neutral-900 shadow' />
+                <div className='ml-4'>
+                  <span className='text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider'>03:00 PM – 04:30 PM</span>
+                  <p className='text-sm font-semibold text-gray-800 dark:text-gray-100 mt-0.5'>🌊 Raindance &amp; Waterpark</p>
+                </div>
+              </div>
+
+              {/* 3 */}
+              <div className='relative pb-6'>
+                <span className='absolute -left-[1.15rem] top-1 w-4 h-4 rounded-full bg-amber-500 border-2 border-white dark:border-neutral-900 shadow' />
+                <div className='ml-4'>
+                  <span className='text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider'>04:30 PM – 05:00 PM</span>
+                  <p className='text-sm font-semibold text-gray-800 dark:text-gray-100 mt-0.5'>☕ High Tea / Refreshments</p>
+                </div>
+              </div>
+
+              {/* 4 — collapsible */}
+              <div className='relative pb-6'>
+                <span className='absolute -left-[1.15rem] top-1 w-4 h-4 rounded-full bg-purple-500 border-2 border-white dark:border-neutral-900 shadow' />
+                <div className='ml-4'>
+                  <span className='text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider'>05:00 PM – 07:00 PM</span>
+                  <button
+                    type='button'
+                    onClick={() => setSnehExpanded(v => !v)}
+                    className='flex items-center gap-2 mt-0.5 text-left w-full group/btn'
+                  >
+                    <p className='text-sm font-semibold text-gray-800 dark:text-gray-100'>🌍 Sneh Planet &amp; Pixel World</p>
+                    <span className={`ml-auto text-purple-500 transition-transform duration-200 ${snehExpanded ? 'rotate-180' : ''}`}>▾</span>
+                  </button>
+                  {snehExpanded && (
+                    <ul className='mt-2 grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs text-gray-600 dark:text-gray-400'>
+                      {['Photography Garden', 'Horror Room', 'Alien World Show', 'Operation Sindoor', 'Koun Banega Crorepati Show', 'Rocket Science Zone', 'Horror Show', '3D Painting Photography'].map(item => (
+                        <li key={item} className='flex items-center gap-1.5 bg-purple-50 dark:bg-purple-900/20 rounded-md px-2 py-1'>
+                          <span className='text-purple-400'>•</span> {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+
+              {/* 5 — collapsible */}
+              <div className='relative pb-6'>
+                <span className='absolute -left-[1.15rem] top-1 w-4 h-4 rounded-full bg-pink-500 border-2 border-white dark:border-neutral-900 shadow' />
+                <div className='ml-4'>
+                  <span className='text-xs font-bold text-pink-600 dark:text-pink-400 uppercase tracking-wider'>07:00 PM – 08:30 PM</span>
+                  <button
+                    type='button'
+                    onClick={() => setActivitiesExpanded(v => !v)}
+                    className='flex items-center gap-2 mt-0.5 text-left w-full group/btn'
+                  >
+                    <p className='text-sm font-semibold text-gray-800 dark:text-gray-100'>🎭 Activities &amp; Stage Performances</p>
+                    <span className={`ml-auto text-pink-500 transition-transform duration-200 ${activitiesExpanded ? 'rotate-180' : ''}`}>▾</span>
+                  </button>
+                  {activitiesExpanded && (
+                    <div className='mt-2 space-y-2 text-xs text-gray-600 dark:text-gray-400'>
+                      <div>
+                        <p className='font-semibold text-pink-600 dark:text-pink-400 mb-1'>Entertainment</p>
+                        <ul className='grid grid-cols-2 sm:grid-cols-3 gap-1.5'>
+                          {['Puppet Show', 'Magic Show', 'Folk Dance', 'Bioscope'].map(item => (
+                            <li key={item} className='flex items-center gap-1.5 bg-pink-50 dark:bg-pink-900/20 rounded-md px-2 py-1'><span className='text-pink-400'>•</span> {item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <p className='font-semibold text-orange-600 dark:text-orange-400 mb-1'>Traditional Arts</p>
+                        <ul className='grid grid-cols-2 sm:grid-cols-3 gap-1.5'>
+                          {['Mehndi', 'Pottery', 'Demo Farming'].map(item => (
+                            <li key={item} className='flex items-center gap-1.5 bg-orange-50 dark:bg-orange-900/20 rounded-md px-2 py-1'><span className='text-orange-400'>•</span> {item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <p className='font-semibold text-emerald-600 dark:text-emerald-400 mb-1'>Adventure</p>
+                        <ul className='grid grid-cols-2 sm:grid-cols-3 gap-1.5'>
+                          {['Camel Ride', 'Horse Ride', 'Flying Chair', 'Bird World'].map(item => (
+                            <li key={item} className='flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-900/20 rounded-md px-2 py-1'><span className='text-emerald-400'>•</span> {item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <p className='font-semibold text-blue-600 dark:text-blue-400 mb-1'>Kids&apos; Corner</p>
+                        <ul className='grid grid-cols-2 sm:grid-cols-3 gap-1.5'>
+                          {['Play Area', 'Chocolate Factory'].map(item => (
+                            <li key={item} className='flex items-center gap-1.5 bg-blue-50 dark:bg-blue-900/20 rounded-md px-2 py-1'><span className='text-blue-400'>•</span> {item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* 6 — last, no bottom border dot */}
+              <div className='relative'>
+                <span className='absolute -left-[1.15rem] top-1 w-4 h-4 rounded-full bg-green-500 border-2 border-white dark:border-neutral-900 shadow' />
+                <div className='ml-4'>
+                  <span className='text-xs font-bold text-green-600 dark:text-green-400 uppercase tracking-wider'>08:30 PM – 09:30 PM</span>
+                  <p className='text-sm font-semibold text-gray-800 dark:text-gray-100 mt-0.5'>🍽️ Dinner &amp; Installation</p>
+                </div>
+              </div>
+
+            </div>
+            <div className='mt-5 pt-3 border-t border-emerald-200 dark:border-emerald-800 space-y-1'>
+              <p className='text-xs text-emerald-600 dark:text-emerald-400 font-medium'>💰 Refunds will be provided during dinner.</p>
+              <p className='text-xs text-gray-400 dark:text-gray-500'>Sequence of activities may change based on crowd management.</p>
             </div>
           </div>
         </section>
