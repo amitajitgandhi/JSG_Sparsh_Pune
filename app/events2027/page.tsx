@@ -18,7 +18,7 @@ export default function Events2027() {
       description: 'The Installation Ceremony marks the beginning of a new chapter for JSG Pune Sparsh. This grand event brings together our community to witness the installation of the new committee members who will lead us through the year 2026-2027. Expect an evening filled with fun, celebration, and entertainment.',
       attendees: 'Expected 200+',
       highlights: ['Committee Installation', 'Fun Activities', 'Adventure', 'Community Bonding'],
-      galleryUrl: 'Coming Soon..!!'
+          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122238040520263798&type=3'
     }
   ]
 
@@ -198,7 +198,7 @@ export default function Events2027() {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <Link href="/events/Funverse" className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-emerald-500 to-blue-500 hover:brightness-110 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
-                Installation 2026-27
+                Funverse
               </Link>
               <Link href="/events" className="inline-flex items-center justify-center rounded-lg bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
                 View Past Events (2025-26)
