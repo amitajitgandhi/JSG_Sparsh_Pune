@@ -84,7 +84,7 @@ export default function Committee() {
   const groupLeaders = [
     {
       name: 'Satish Jain',
-      position: 'Group Leader',
+      position: 'Committee Member',
       description: 'Organizing fun-filled activities and maintaining high energy in all programs.',
       phone: '+91 9881874309',
       icon: Zap,
@@ -93,7 +93,7 @@ export default function Committee() {
     },
     {
       name: 'Khush Oswal',
-      position: 'Group Leader',
+      position: 'Committee Member',
       description: 'Known for creating excitement and memorable experiences in community events.',
       phone: '+91 9028661666',
       icon: Zap,
