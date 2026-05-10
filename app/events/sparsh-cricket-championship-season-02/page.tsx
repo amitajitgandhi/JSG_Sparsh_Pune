@@ -316,13 +316,6 @@ export default function SparshCricketChampionshipSeason02Page() {
       </section>
 
       <section className="mx-auto mt-6 w-full max-w-4xl px-4 sm:px-6">
-        <div className="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-          <h3 className="text-sm font-bold text-gray-900 dark:text-white">Organizer Contact</h3>
-          <a href="tel:+917276319578" className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-blue-700 dark:text-blue-300"><Phone size={15} /> +91 72763 19578</a>
-        </div>
-      </section>
-
-      <section className="mx-auto mt-6 w-full max-w-4xl px-4 sm:px-6">
         <h2 className="mb-3 text-lg font-bold text-gray-900 dark:text-white">FAQ</h2>
         <div className="space-y-2">
           {faqItems.map((item, index) => {
