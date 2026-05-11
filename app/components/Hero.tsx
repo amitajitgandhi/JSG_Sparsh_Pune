@@ -1,10 +1,25 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Calendar, Users, Heart } from 'lucide-react'
 
 export default function Hero() {
   const [showUpcoming, setShowUpcoming] = useState(false)
+  const [upcomingTarget, setUpcomingTarget] = useState('/events/upcoming')
+
+  useEffect(() => {
+    const loadUpcomingTarget = async () => {
+      try {
+        const res = await fetch('/api/admin/upcoming-event-target', { cache: 'no-store' })
+        const data = await res.json()
+        if (data?.target) setUpcomingTarget(data.target)
+      } catch {
+        setUpcomingTarget('/events/upcoming')
+      }
+    }
+
+    loadUpcomingTarget()
+  }, [])
 
   return (
     <>
@@ -47,8 +62,8 @@ export default function Hero() {
                 <ArrowRight size={16} className="sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                href="/events/upcoming"
-                className="group bg-yellow-500 hover:bg-yellow-600 text-blue-800 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-yellow-50 transition-all duration-300 flex items-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
+                href={upcomingTarget}
+                className="group bg-yellow-500 hover:bg-yellow-600 text-blue-800 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 flex items-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
               >
                 <Calendar size={18} className="sm:w-6 sm:h-6" />
                 <span>Upcoming Event</span>

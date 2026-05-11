@@ -1,7 +1,26 @@
+'use client'
+
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { Calendar, MapPin, Clock, ArrowRight } from 'lucide-react'
 
 export default function UpcomingEvents() {
+  const [upcomingTarget, setUpcomingTarget] = useState('/events/upcoming')
+
+  useEffect(() => {
+    const loadUpcomingTarget = async () => {
+      try {
+        const res = await fetch('/api/admin/upcoming-event-target', { cache: 'no-store' })
+        const data = await res.json()
+        if (data?.target) setUpcomingTarget(data.target)
+      } catch {
+        setUpcomingTarget('/events/upcoming')
+      }
+    }
+
+    loadUpcomingTarget()
+  }, [])
+
   const events = [
     {
       id: 1,
@@ -38,7 +57,6 @@ export default function UpcomingEvents() {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Upcoming Events
@@ -48,11 +66,10 @@ export default function UpcomingEvents() {
           </p>
         </div>
 
-        {/* Events Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {events.map((event, index) => (
-            <div 
-              key={event.id} 
+          {events.map((event) => (
+            <div
+              key={event.id}
               className={`bg-white rounded-xl shadow-lg overflow-hidden card-hover ${
                 event.featured ? 'lg:col-span-2 lg:row-span-1' : ''
               }`}
@@ -79,20 +96,20 @@ export default function UpcomingEvents() {
                   {event.title}
                 </h3>
               </div>
-              
+
               <div className="p-6">
                 <p className="text-gray-600 mb-4 leading-relaxed">
                   {event.description}
                 </p>
-                
+
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center text-gray-500 text-sm">
                     <Calendar size={16} className="mr-2" />
-                    <span>{new Date(event.date).toLocaleDateString('en-US', { 
-                      weekday: 'long', 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
+                    <span>{new Date(event.date).toLocaleDateString('en-US', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
                     })}</span>
                   </div>
                   <div className="flex items-center text-gray-500 text-sm">
@@ -104,7 +121,7 @@ export default function UpcomingEvents() {
                     <span>{event.venue}</span>
                   </div>
                 </div>
-                
+
                 <button className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors duration-200 flex items-center justify-center space-x-2">
                   <span>Learn More</span>
                   <ArrowRight size={16} />
@@ -114,10 +131,9 @@ export default function UpcomingEvents() {
           ))}
         </div>
 
-        {/* View All Events Link */}
         <div className="text-center mt-12">
-          <Link 
-            href="/events" 
+          <Link
+            href={upcomingTarget}
             className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-semibold"
           >
             <span>View All Events</span>

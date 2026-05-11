@@ -16,12 +16,9 @@ export const sparshCricketRegistrationSchema = z.object({
   cricheroes_link: z
     .string()
     .trim()
-    .optional()
-    .or(z.literal(''))
-    .transform((v) => v ?? '')
+    .min(1, 'CricHeroes link is required')
     .refine(
       (value) => {
-        if (!value) return true
         try {
           const url = new URL(value)
           return url.protocol === 'http:' || url.protocol === 'https:'
@@ -33,6 +30,9 @@ export const sparshCricketRegistrationSchema = z.object({
     ),
   cricketing_skill: z.enum(['Beginner', 'Intermediate', 'Advance', 'Pro'], {
     required_error: 'Please select cricketing skill'
+  }),
+  jersey_size: z.enum(['3XL - 46', 'XXL - 44', 'XL - 42', 'L - 40', 'M - 38', 'S - 36'], {
+    required_error: 'Please select jersey size'
   }),
   fees: z.literal('₹700'),
   transaction_reference_number: z
