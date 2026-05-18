@@ -1,43 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabaseServer, supabase } from '@/lib/supabase'
 
 export const dynamic = 'force-dynamic'
 
 const ALLOWED_TARGETS = ['/events/upcoming', '/events/sparsh-cricket-championship-season-02']
-const SETTING_KEY = 'upcoming_event_target'
+const DEFAULT_TARGET = '/events/upcoming'
 
-function getClient() {
-  return supabaseServer || supabase
-}
+let upcomingEventTarget: string = DEFAULT_TARGET
 
-function isMissingSettingsTable(error: any) {
-  const message = String(error?.message || '').toLowerCase()
-  const code = String(error?.code || '')
-  return code === 'PGRST205' || message.includes('app_navigation_settings') && message.includes('schema cache')
+function noStoreJson(body: any, status = 200) {
+  return NextResponse.json(body, {
+    status,
+    headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate' }
+  })
 }
 
 export async function GET() {
-  try {
-    const client = getClient()
-    const { data, error } = await client
-      .from('app_navigation_settings')
-      .select('setting_value')
-      .eq('setting_key', SETTING_KEY)
-      .maybeSingle()
-
-    if (error) {
-      return NextResponse.json({ target: '/events/upcoming' })
-    }
-
-    const target = data?.setting_value
-    if (!target || !ALLOWED_TARGETS.includes(target)) {
-      return NextResponse.json({ target: '/events/upcoming' })
-    }
-
-    return NextResponse.json({ target })
-  } catch {
-    return NextResponse.json({ target: '/events/upcoming' })
-  }
+  const target = ALLOWED_TARGETS.includes(upcomingEventTarget) ? upcomingEventTarget : DEFAULT_TARGET
+  return noStoreJson({ target, source: 'memory' })
 }
 
 export async function POST(req: NextRequest) {
@@ -46,32 +25,13 @@ export async function POST(req: NextRequest) {
     const target = String(body?.target || '').trim()
 
     if (!ALLOWED_TARGETS.includes(target)) {
-      return NextResponse.json({ error: 'Invalid target' }, { status: 400 })
+      return noStoreJson({ error: 'Invalid target' }, 400)
     }
 
-    const client = getClient()
-    const { error } = await client.from('app_navigation_settings').upsert(
-      {
-        setting_key: SETTING_KEY,
-        setting_value: target,
-        updated_at: new Date().toISOString()
-      },
-      { onConflict: 'setting_key' }
-    )
+    upcomingEventTarget = target
 
-    if (error) {
-      if (isMissingSettingsTable(error)) {
-        return NextResponse.json(
-          { error: 'Settings table is not created yet. Run migration 007_create_app_navigation_settings.sql and retry.' },
-          { status: 503 }
-        )
-      }
-
-      return NextResponse.json({ error: error.message || 'Failed to save target' }, { status: 500 })
-    }
-
-    return NextResponse.json({ success: true, target })
+    return noStoreJson({ success: true, target: upcomingEventTarget, source: 'memory' })
   } catch {
-    return NextResponse.json({ error: 'Unexpected error' }, { status: 500 })
+    return noStoreJson({ error: 'Unexpected error' }, 500)
   }
 }

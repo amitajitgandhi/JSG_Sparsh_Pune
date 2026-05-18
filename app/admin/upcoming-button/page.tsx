@@ -14,16 +14,22 @@ export default function UpcomingButtonAdminPage() {
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
 
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const res = await fetch('/api/admin/upcoming-event-target', { cache: 'no-store' })
-        const data = await res.json()
-        if (data?.target) setTarget(data.target)
-      } finally {
-        setLoading(false)
+  const load = async () => {
+    try {
+      const res = await fetch('/api/admin/upcoming-event-target', { cache: 'no-store' })
+      const data = await res.json()
+      if (data?.target) setTarget(data.target)
+      if (data?.source === 'fallback') {
+        setMessage(data?.error || 'Loaded fallback value. Please check database setting table.')
       }
+    } catch {
+      setMessage('Failed to load current setting')
+    } finally {
+      setLoading(false)
     }
+  }
+
+  useEffect(() => {
     load()
   }, [])
 
@@ -38,6 +44,8 @@ export default function UpcomingButtonAdminPage() {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data?.error || 'Failed to save')
+
+      await load()
       setMessage('Saved successfully')
     } catch (e: any) {
       setMessage(e?.message || 'Failed to save')
