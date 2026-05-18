@@ -1,7 +1,7 @@
 import { CalendarDays, Clock3, MapPin, Trophy, Drumstick, Shirt, Users2, CircleDot, Sparkles } from 'lucide-react'
 
 export const tournamentDetails = [
-  { label: 'Dates', value: '30-31 May (Sat-Sun)', icon: CalendarDays },
+  { label: 'Dates', value: '7 June Sunday', icon: CalendarDays },
   { label: 'Venue', value: 'Tembekar Ground', icon: MapPin },
   { label: 'Tournament Type', value: 'Full Pitch', icon: Trophy },
   { label: 'Fees', value: '₹700', icon: Sparkles }
