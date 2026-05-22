@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
 
-const ALLOWED_TARGETS = ['/events/upcoming', '/events/sparsh-cricket-championship-season-02']
+const ALLOWED_TARGETS = ['/events/upcoming', '/events/sparsh-cricket-championship-season-02', '/events/khelotsav-2026']
 const DEFAULT_TARGET = '/events/upcoming'
 
 let upcomingEventTarget: string = DEFAULT_TARGET

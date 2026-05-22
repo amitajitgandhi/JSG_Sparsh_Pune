@@ -5,7 +5,8 @@ import Link from 'next/link'
 
 const OPTIONS = [
   { label: 'events/upcoming', value: '/events/upcoming' },
-  { label: 'events/sparsh-cricket-championship-season-02', value: '/events/sparsh-cricket-championship-season-02' }
+  { label: 'events/sparsh-cricket-championship-season-02', value: '/events/sparsh-cricket-championship-season-02' },
+  { label: 'Khelotsav 2026', value: '/events/khelotsav-2026' }
 ]
 
 export default function UpcomingButtonAdminPage() {

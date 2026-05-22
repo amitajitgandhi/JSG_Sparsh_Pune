@@ -31,11 +31,11 @@ export default function AdminIndex() {
             </div>
           </Link>
 
-          <Link href='/admin/installation-2026' className='group block rounded-2xl border border-emerald-200 bg-white p-6 shadow hover:shadow-md transition'>
+          <Link href='/admin/khelotsav-2026' className='group block rounded-2xl border border-emerald-200 bg-white p-6 shadow hover:shadow-md transition'>
             <div className='flex items-center justify-between'>
               <div>
-                <h2 className='text-xl font-semibold text-emerald-700 group-hover:text-emerald-800'>Funverse</h2>
-                <p className='text-sm text-gray-600 mt-1'>View Installation Ceremony registrations, couples, individuals, kids, guests, and payment status.</p>
+                <h2 className='text-xl font-semibold text-emerald-700 group-hover:text-emerald-800'>Khelotsav 2026 Dashboard</h2>
+                <p className='text-sm text-gray-600 mt-1'>View SPARSH KHELOTSAV 2026 registrations, selected sports, ratings, and payment status.</p>
               </div>
               <span className='text-emerald-500 text-2xl'>&rarr;</span>
             </div>
