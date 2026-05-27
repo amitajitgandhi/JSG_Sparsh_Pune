@@ -347,7 +347,7 @@ export default function Khelotsav2026Page() {
                               </div>
                               <div className="flex items-center gap-2 rounded-xl border border-orange-100 bg-white/75 px-3 py-2 text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/65 dark:text-slate-100">
                                   <LocateIcon size={16} className="text-orange-500 dark:text-amber-300" />
-                                  <span>Venue: D7 Sports Arena</span>
+                                  <span>Venue: Downtown Sports Arena</span>
                               </div>
               </div>
             </div>
