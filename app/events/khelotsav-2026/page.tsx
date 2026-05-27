@@ -11,6 +11,7 @@ import {
   Dumbbell,
   Info,
   Loader2,
+  LocateIcon,
   Medal,
   Sparkles,
   Star,
@@ -52,6 +53,19 @@ function calculateAge(dateOfBirth: string): number {
   return age
 }
 
+function computeFee(category: string, gender: string, age: number | null): number {
+  if (category === 'Member') {
+    if (gender === 'Female') return 0
+    return 500
+  }
+  if (category === 'Kid') {
+    if (age === null || age < 5) return 0
+    if (age < 10) return 600
+    return 900
+  }
+  return 0
+}
+
 export default function Khelotsav2026Page() {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
@@ -70,7 +84,12 @@ export default function Khelotsav2026Page() {
 
   const selectedCount = formValues.selected_sports.length
   const age = formValues.date_of_birth ? calculateAge(formValues.date_of_birth) : null
-  const isKidBelowTen = formValues.category === 'Kid' && typeof age === 'number' && age < 10
+  const isKidBelowFive = formValues.category === 'Kid' && typeof age === 'number' && age < 5
+  // keep original name for existing guard used in JSX
+  const isKidBelowTen = isKidBelowFive
+  const isFemaleMember = formValues.gender === 'Female' && formValues.category === 'Member'
+  const computedFee = computeFee(formValues.category, formValues.gender, age)
+  const paymentRequired = computedFee > 0
 
   const showToast = (type: ToastState['type'], message: string) => {
     setToast({ open: true, type, message })
@@ -215,12 +234,13 @@ export default function Khelotsav2026Page() {
       })
     }
 
-    if (!paymentScreenshotFile || !paymentScreenshotUrl) {
-      nextErrors.payment_screenshot_url = 'Payment screenshot is required.'
-    }
-
-    if (!formValues.transaction_id.trim()) {
-      nextErrors.transaction_id = 'Transaction ID is required.'
+    if (paymentRequired) {
+      if (!paymentScreenshotFile || !paymentScreenshotUrl) {
+        nextErrors.payment_screenshot_url = 'Payment screenshot is required.'
+      }
+      if (!formValues.transaction_id.trim()) {
+        nextErrors.transaction_id = 'Transaction ID is required.'
+      }
     }
 
     if (formValues.selected_sports.length > 0) {
@@ -258,6 +278,7 @@ export default function Khelotsav2026Page() {
     setSubmitting(true)
     try {
       const participantAge = calculateAge(formValues.date_of_birth)
+      const feeForPayload = computeFee(formValues.category, formValues.gender, participantAge)
       const payload: KhelotsavRegistrationPayload = {
         event_name: EVENT_NAME,
         name: formValues.name.trim(),
@@ -268,10 +289,10 @@ export default function Khelotsav2026Page() {
         category: formValues.category as 'Member' | 'Kid',
         selected_sports: formValues.selected_sports,
         sport_ratings: formValues.sport_ratings,
-        fee_amount: EVENT_FEE,
-        is_refundable: formValues.category === 'Member',
-        transaction_id: formValues.transaction_id.trim(),
-        payment_screenshot_url: paymentScreenshotUrl,
+        fee_amount: feeForPayload,
+        is_refundable: formValues.category === 'Member' && formValues.gender !== 'Female',
+        transaction_id: paymentRequired ? formValues.transaction_id.trim() : '',
+        payment_screenshot_url: paymentRequired ? paymentScreenshotUrl : '',
         created_at: new Date().toISOString()
       }
 
@@ -321,9 +342,13 @@ export default function Khelotsav2026Page() {
                   <span>Date: 21 June 2026</span>
                 </div>
                 <div className="flex items-center gap-2 rounded-xl border border-orange-100 bg-white/75 px-3 py-2 text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/65 dark:text-slate-100">
-                  <Clock3 size={16} className="text-orange-500 dark:text-amber-300" />
+                  <Clock3 size={16} className="text-yellow-500 dark:text-amber-300" />
                   <span>Time: 8:00 AM onwards till 6:00 PM</span>
-                </div>
+                              </div>
+                              <div className="flex items-center gap-2 rounded-xl border border-orange-100 bg-white/75 px-3 py-2 text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/65 dark:text-slate-100">
+                                  <LocateIcon size={16} className="text-orange-500 dark:text-amber-300" />
+                                  <span>Venue: D7 Sports Arena</span>
+                              </div>
               </div>
             </div>
           </div>
@@ -477,44 +502,74 @@ export default function Khelotsav2026Page() {
 
           <section className="card-enter card-shell" style={{ animationDelay: '280ms' }}>
             <h2 className="section-title"><Wallet size={18} className="text-emerald-600 dark:text-emerald-300" /> 4. Fees</h2>
-            <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-100">
-              <p>For Member - Refundable 500Rs</p>
-              <p className="mt-1">For Kids - 500Rs</p>
+            <div className="mt-3 space-y-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-100">
+              <div className="flex items-center justify-between gap-2">
+                <span>👨 Member</span>
+                <span className="font-semibold">(Refundable) ₹500</span>
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <span>🧒 Kid (Age 10 &amp; above)</span>
+                <span className="font-semibold">₹900</span>
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <span>👶 Kid (Age 5 – 9)</span>
+                <span className="font-semibold">₹600</span>
+              </div>
             </div>
+            {(formValues.category || formValues.date_of_birth) && computedFee >= 0 && formValues.gender ? (
+              <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50 px-3 py-2 text-sm dark:border-sky-500/30 dark:bg-sky-500/15">
+                <span className="text-slate-600 dark:text-slate-300">Your fee: </span>
+                {computedFee === 0
+                  ? <span className="font-bold text-emerald-600 dark:text-emerald-300">Free</span>
+                  : <span className="font-bold text-sky-700 dark:text-sky-300">₹{computedFee}</span>}
+                {formValues.category === 'Member' && formValues.gender !== 'Female' && (
+                  <span className="ml-1 text-xs text-slate-500 dark:text-slate-400">(refundable on participation)</span>
+                )}
+              </div>
+            ) : null}
           </section>
 
-          <section className="card-enter card-shell" style={{ animationDelay: '330ms' }}>
-            <h2 className="section-title"><CreditCard size={18} className="text-sky-600 dark:text-cyan-300" /> 5. Payment</h2>
-            <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50 p-3 text-sm text-sky-700 dark:border-cyan-400/30 dark:bg-cyan-500/15 dark:text-cyan-100">
-              <div className="flex items-center gap-2"><Wallet size={16} /> Pay ₹500 via UPI and upload payment screenshot.</div>
-            </div>
+          {paymentRequired ? (
+            <section className="card-enter card-shell" style={{ animationDelay: '330ms' }}>
+              <h2 className="section-title"><CreditCard size={18} className="text-sky-600 dark:text-cyan-300" /> 5. Payment</h2>
+              <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50 p-3 text-sm text-sky-700 dark:border-cyan-400/30 dark:bg-cyan-500/15 dark:text-cyan-100">
+                <div className="flex items-center gap-2"><Wallet size={16} /> Pay <strong className="mx-1">₹{computedFee}</strong> via UPI and upload screenshot.</div>
+              </div>
 
-            <div className="mt-4 rounded-xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900/65">
-              <Image src="/images/SPARSH_QR_Code.jpeg" alt="UPI Payment QR Code" width={360} height={360} className="mx-auto h-auto w-full max-w-[260px] rounded-lg" priority />
-            </div>
+              <div className="mt-4 rounded-xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900/65">
+                <Image src="/images/SPARSH_QR_Code.jpeg" alt="UPI Payment QR Code" width={360} height={360} className="mx-auto h-auto w-full max-w-[260px] rounded-lg" priority />
+              </div>
 
-            <div className="mt-4">
-              <input ref={fileInputRef} type="file" accept="image/jpeg,image/jpg,image/png" className="hidden" onChange={(e) => handleScreenshotChange(e.target.files?.[0] ?? null)} />
-              <button type="button" onClick={() => fileInputRef.current?.click()} className="inline-flex min-h-[46px] items-center gap-2 rounded-2xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition duration-200 ease-out hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-md active:scale-[0.98] dark:border-slate-600 dark:bg-slate-900/80 dark:text-slate-100 dark:hover:border-cyan-300">
-                <Upload size={16} /> {paymentScreenshotFile ? 'Change screenshot' : 'Upload screenshot'}
-              </button>
-              {uploadingScreenshot ? <p className="mt-2 flex items-center gap-2 text-xs text-sky-700 dark:text-cyan-200"><Loader2 size={14} className="animate-spin" /> Uploading screenshot...</p> : null}
-              {previewUrl ? (
-                <div className="mt-3 rounded-xl border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-900/70">
-                  <Image src={previewUrl} alt="Payment screenshot preview" width={320} height={320} className="h-auto w-full rounded-lg object-cover" unoptimized />
-                </div>
-              ) : null}
-              {errors.payment_screenshot_url ? <p className="error-text mt-2 text-xs text-red-600 dark:text-red-300">{errors.payment_screenshot_url}</p> : null}
-            </div>
+              <div className="mt-4">
+                <input ref={fileInputRef} type="file" accept="image/jpeg,image/jpg,image/png" className="hidden" onChange={(e) => handleScreenshotChange(e.target.files?.[0] ?? null)} />
+                <button type="button" onClick={() => fileInputRef.current?.click()} className="inline-flex min-h-[46px] items-center gap-2 rounded-2xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition duration-200 ease-out hover:-translate-y-0.5 hover:border-sky-300 hover:shadow-md active:scale-[0.98] dark:border-slate-600 dark:bg-slate-900/80 dark:text-slate-100 dark:hover:border-cyan-300">
+                  <Upload size={16} /> {paymentScreenshotFile ? 'Change screenshot' : 'Upload screenshot'}
+                </button>
+                {uploadingScreenshot ? <p className="mt-2 flex items-center gap-2 text-xs text-sky-700 dark:text-cyan-200"><Loader2 size={14} className="animate-spin" /> Uploading screenshot...</p> : null}
+                {previewUrl ? (
+                  <div className="mt-3 rounded-xl border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-900/70">
+                    <Image src={previewUrl} alt="Payment screenshot preview" width={320} height={320} className="h-auto w-full rounded-lg object-cover" unoptimized />
+                  </div>
+                ) : null}
+                {errors.payment_screenshot_url ? <p className="error-text mt-2 text-xs text-red-600 dark:text-red-300">{errors.payment_screenshot_url}</p> : null}
+              </div>
 
-            <div className="mt-4">
-              <label className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-200"><CreditCard size={14} /> Transaction ID / UTR *</label>
-              <input value={formValues.transaction_id} onChange={(e) => updateField('transaction_id', e.target.value)} placeholder="Enter or edit transaction ID" className="input-base" />
-              {detectingReference ? <p className="mt-2 flex items-center gap-2 text-xs text-sky-700 dark:text-cyan-200"><Loader2 size={14} className="animate-spin" /> Detecting transaction ID from screenshot...</p> : null}
-              {ocrSuccess ? <p className="mt-2 flex items-center gap-2 text-xs text-emerald-700 dark:text-emerald-300"><CheckCircle2 size={14} /> Transaction ID detected successfully.</p> : null}
-              {errors.transaction_id ? <p className="error-text mt-1 text-xs text-red-600 dark:text-red-300">{errors.transaction_id}</p> : null}
-            </div>
-          </section>
+              <div className="mt-4">
+                <label className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-200"><CreditCard size={14} /> Transaction ID / UTR *</label>
+                <input value={formValues.transaction_id} onChange={(e) => updateField('transaction_id', e.target.value)} placeholder="Enter or edit transaction ID" className="input-base" />
+                {detectingReference ? <p className="mt-2 flex items-center gap-2 text-xs text-sky-700 dark:text-cyan-200"><Loader2 size={14} className="animate-spin" /> Detecting transaction ID from screenshot...</p> : null}
+                {ocrSuccess ? <p className="mt-2 flex items-center gap-2 text-xs text-emerald-700 dark:text-emerald-300"><CheckCircle2 size={14} /> Transaction ID detected successfully.</p> : null}
+                {errors.transaction_id ? <p className="error-text mt-1 text-xs text-red-600 dark:text-red-300">{errors.transaction_id}</p> : null}
+              </div>
+            </section>
+          ) : isFemaleMember ? (
+            <section className="card-enter card-shell" style={{ animationDelay: '330ms' }}>
+              <h2 className="section-title"><CreditCard size={18} className="text-emerald-600 dark:text-emerald-300" /> 5. Payment</h2>
+              <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-100">
+                <div className="flex items-center gap-2"><CheckCircle2 size={16} /> Female Members can register for free. No payment required.</div>
+              </div>
+            </section>
+          ) : null}
 
           <section className="card-enter card-shell" style={{ animationDelay: '380ms' }}>
             <h2 className="section-title"><Info size={18} className="text-violet-600 dark:text-violet-300" /> 6. Note</h2>
