@@ -532,7 +532,7 @@ export default function Khelotsav2026Page() {
               </div>
               <div className="flex items-center justify-between gap-2">
                 <span>👩 Member (Female)</span>
-                <span className="font-semibold text-emerald-600 dark:text-emerald-300">No Fees!</span>
+                <span className="font-semibold text-emerald-600 dark:text-emerald-300">Considered in Spouse Fees!</span>
               </div>
               <div className="flex items-center justify-between gap-2">
                 <span>🧒 Kid (Age 10 &amp; above)</span>
@@ -543,7 +543,7 @@ export default function Khelotsav2026Page() {
               <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50 px-3 py-2 text-sm dark:border-sky-500/30 dark:bg-sky-500/15">
                 <span className="text-slate-600 dark:text-slate-300">Your fee: </span>
                 {computedFee === 0
-                  ? <span className="font-bold text-emerald-600 dark:text-emerald-300">No Fees!</span>
+                  ? <span className="font-bold text-emerald-600 dark:text-emerald-300">No payment required.</span>
                   : <span className="font-bold text-sky-700 dark:text-sky-300">₹{computedFee}</span>}
                 {formValues.category === 'Member' && formValues.gender !== 'Female' && (
                   <span className="ml-1 text-xs text-slate-500 dark:text-slate-400">(refundable on participation)</span>
