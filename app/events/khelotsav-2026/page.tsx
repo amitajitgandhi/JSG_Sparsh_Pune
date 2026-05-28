@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import {
   AlertCircle,
     CalendarDays,
@@ -27,6 +28,7 @@ import {
 } from 'lucide-react'
 import { supabase, uploadRegistrationTransactionScreenshot } from '@/lib/supabase'
 import { detectTransactionReferenceFromImage } from '../sparsh-cricket-championship-season-02/utils'
+import SuccessModal from './components/SuccessModal'
 import { EVENT_NAME, eventHighlights, jerseySizes, sports } from './constants'
 import { khelotsavRegistrationSchema } from './schema'
 import { FormErrors, KhelotsavRegistrationFormValues, KhelotsavRegistrationPayload } from './types'
@@ -39,7 +41,7 @@ const initialValues: KhelotsavRegistrationFormValues = {
   category: '',
   jersey_size: '',
   selected_sports: [],
-  sport_ratings: {},
+  sport_ratings: {}",
   transaction_id: ''
 }
 
@@ -71,12 +73,14 @@ function computeFee(category: string, gender: string, age: number | null): numbe
 
 export default function Khelotsav2026Page() {
   const fileInputRef = React.useRef<HTMLInputElement | null>(null)
+  const router = useRouter()
 
   const [formValues, setFormValues] = React.useState<KhelotsavRegistrationFormValues>(initialValues)
   const [errors, setErrors] = React.useState<FormErrors>({})
   const [paymentScreenshotFile, setPaymentScreenshotFile] = React.useState<File | null>(null)
   const [paymentScreenshotUrl, setPaymentScreenshotUrl] = React.useState('')
   const [previewUrl, setPreviewUrl] = React.useState('')
+
   const [uploadingScreenshot, setUploadingScreenshot] = React.useState(false)
   const [detectingReference, setDetectingReference] = React.useState(false)
   const [ocrSuccess, setOcrSuccess] = React.useState(false)
@@ -84,6 +88,7 @@ export default function Khelotsav2026Page() {
   const [submitting, setSubmitting] = React.useState(false)
   const [successMessage, setSuccessMessage] = React.useState('')
   const [toast, setToast] = React.useState<ToastState>({ open: false, type: 'info', message: '' })
+  const [showSuccessModal, setShowSuccessModal] = React.useState(false)
 
   const selectedCount = formValues.selected_sports.length
   const age = formValues.date_of_birth ? calculateAge(formValues.date_of_birth) : null
@@ -147,6 +152,7 @@ export default function Khelotsav2026Page() {
       const nextRatings = { ...formValues.sport_ratings }
       delete nextRatings[sportName]
       setFormValues((prev) => ({ ...prev, selected_sports: nextSports, sport_ratings: nextRatings }))
+
       setErrors((prev) => ({ ...prev, selected_sports: '', sport_ratings: '' }))
       return
     }
@@ -350,6 +356,7 @@ export default function Khelotsav2026Page() {
       setPreviewUrl('')
       setGenderChangeNote('')
       setSuccessMessage('Registration submitted successfully for SPARSH KHELOTSAV 2026. Further details will be shared soon.')
+      setShowSuccessModal(true)
       showToast('success', 'Registration submitted successfully.')
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to submit registration. Please try again.'
@@ -690,7 +697,14 @@ export default function Khelotsav2026Page() {
         </div>
       ) : null}
 
-      <style jsx>{`
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        onGoHome={() => router.push('https://jsg-pune-sparsh.vercel.app/')}
+        onGoCommittee={() => router.push('https://jsg-pune-sparsh.vercel.app/committee')}
+      />
+
+      <style>{`
         .hero-enter {
           animation: fadeUp 520ms ease-out both;
         }
@@ -936,7 +950,7 @@ export default function Khelotsav2026Page() {
         }
         .hero-chip {
           border-radius: 9999px;
-          border: 1px solid rgb(186 230 253 / 0.95);
+          border: 1px solid rgb(186, 230, 253 / 0.95);
           background: rgba(255, 255, 255, 0.82);
           padding: 0.34rem 0.68rem;
           font-size: 0.72rem;

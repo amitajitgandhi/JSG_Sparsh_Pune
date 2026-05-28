@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { Calendar, MapPin, Clock, ArrowRight } from 'lucide-react'
 
 export default function UpcomingEvents() {
-  const [upcomingTarget, setUpcomingTarget] = useState('/events/upcoming')
+  const [upcomingTarget, setUpcomingTarget] = useState('/events/khelotsav-2026')
 
   useEffect(() => {
     const loadUpcomingTarget = async () => {
@@ -14,7 +14,7 @@ export default function UpcomingEvents() {
         const data = await res.json()
         if (data?.target) setUpcomingTarget(data.target)
       } catch {
-        setUpcomingTarget('/events/upcoming')
+        setUpcomingTarget('/events/khelotsav-2026')
       }
     }
 
