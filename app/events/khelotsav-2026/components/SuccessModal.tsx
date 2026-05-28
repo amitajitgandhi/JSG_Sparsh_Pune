@@ -48,10 +48,13 @@ export default function SuccessModal({ isOpen, onClose, onGoHome, onGoCommittee 
             </div>
             <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Registration Successful 🎉</h3>
             <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
-              Successful registration message and further details will be shared soon.
+              Your registration for SPARSH KHELOTSAV 2026 has been submitted successfully.
             </p>
             <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-              For any contact committee, use the button below.
+              Further details and event instructions will be shared soon.
+            </p>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+              For any queries, you can contact the committee using the button below.
             </p>
 
             <div className="mt-5 flex justify-center gap-2 text-amber-500">
