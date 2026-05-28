@@ -62,7 +62,8 @@ function computeFee(category: string, gender: string, age: number | null): numbe
     return 500
   }
   if (category === 'Kid') {
-    if (age === null || age < 10) return 0
+    if (age === null || age < 5) return 0
+    if (age < 10) return 600
     return 900
   }
   return 0
@@ -86,7 +87,7 @@ export default function Khelotsav2026Page() {
 
   const selectedCount = formValues.selected_sports.length
   const age = formValues.date_of_birth ? calculateAge(formValues.date_of_birth) : null
-  const isKidBelowTen = formValues.category === 'Kid' && typeof age === 'number' && age < 10
+  const isKidBelowTen = formValues.category === 'Kid' && typeof age === 'number' && age < 5
   const isFemaleMember = formValues.gender === 'Female' && formValues.category === 'Member'
   const computedFee = computeFee(formValues.category, formValues.gender, age)
   const paymentRequired = computedFee > 0
@@ -271,9 +272,9 @@ export default function Khelotsav2026Page() {
     if (isKidBelowTen) {
       setErrors((prev) => ({
         ...prev,
-        date_of_birth: 'Kids below 10 years can attend and enjoy the event, but registration is not required.'
+        date_of_birth: 'Kids below 5 years can attend and enjoy the event, but registration is not required.'
       }))
-      showToast('info', 'Registration is not required for kids below 10 years.')
+      showToast('info', 'Registration is not required for kids below 5 years.')
       return
     }
 
@@ -533,6 +534,10 @@ export default function Khelotsav2026Page() {
               <div className="flex items-center justify-between gap-2">
                 <span>👩 Member (Female)</span>
                 <span className="font-semibold text-emerald-600 dark:text-emerald-300">Considered in Spouse Fees!</span>
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <span>👶 Kid (Age 5 - 10)</span>
+                <span className="font-semibold">₹600</span>
               </div>
               <div className="flex items-center justify-between gap-2">
                 <span>🧒 Kid (Age 10 &amp; above)</span>

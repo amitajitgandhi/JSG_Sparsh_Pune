@@ -16,11 +16,11 @@ export const khelotsavRegistrationSchema = z
     age: z.number().int().min(1, 'Invalid age')
   })
   .superRefine((value, ctx) => {
-    if (value.category === 'Kid' && value.age < 10) {
+    if (value.category === 'Kid' && value.age < 5) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ['date_of_birth'],
-        message: 'Kids below 10 years can attend and enjoy the event, but registration is not required.'
+        message: 'Kids below 5 years can attend and enjoy the event, but registration is not required.'
       })
     }
 
