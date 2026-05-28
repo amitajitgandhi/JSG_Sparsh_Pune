@@ -41,7 +41,7 @@ const initialValues: KhelotsavRegistrationFormValues = {
   category: '',
   jersey_size: '',
   selected_sports: [],
-  sport_ratings: {}",
+  sport_ratings: {},
   transaction_id: ''
 }
 
