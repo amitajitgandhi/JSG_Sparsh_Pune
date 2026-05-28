@@ -9,6 +9,7 @@ export const khelotsavRegistrationSchema = z
     date_of_birth: z.string().min(1, 'Date of birth is required'),
     gender: z.enum(['Male', 'Female'], { required_error: 'Please select gender' }),
     category: z.enum(['Member', 'Kid'], { required_error: 'Please select category' }),
+    jersey_size: z.string().optional().default(''),
     selected_sports: z.array(z.string()).min(1, 'Select at least 1 sport').max(4, 'You can select maximum 4 sports'),
     sport_ratings: z.record(z.number().int().min(1).max(5)),
     transaction_id: z.string().trim().min(6, 'Transaction ID is required').max(40, 'Transaction ID is too long'),
@@ -20,6 +21,14 @@ export const khelotsavRegistrationSchema = z
         code: z.ZodIssueCode.custom,
         path: ['date_of_birth'],
         message: 'Kids below 10 years can attend and enjoy the event, but registration is not required.'
+      })
+    }
+
+    if (value.category === 'Member' && !value.jersey_size?.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['jersey_size'],
+        message: 'Please select jersey size'
       })
     }
 

@@ -28,3 +28,18 @@ export const sports = [
 ]
 
 export const sectionSteps = ['Event Details', 'Personal Details', 'Select Sports', 'Rate Your Selected Sports', 'Payment', 'Note']
+
+export const jerseySizes = [
+  { label: '5XL', value: '50' },
+  { label: '4XL', value: '48' },
+  { label: '3XL', value: '46' },
+  { label: '2XL', value: '44' },
+  { label: 'XL', value: '42' },
+  { label: 'L', value: '40' },
+  { label: 'M', value: '38' },
+  { label: 'S', value: '36' },
+  { label: 'XS', value: '34' },
+  { label: '32', value: '32' },
+  { label: '30', value: '30' },
+  { label: '28', value: '28' }
+]

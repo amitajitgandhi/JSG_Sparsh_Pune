@@ -7,6 +7,7 @@ export interface KhelotsavRegistrationFormValues {
   date_of_birth: string
   gender: Gender | ''
   category: Category | ''
+  jersey_size: string
   selected_sports: string[]
   sport_ratings: Record<string, number>
   transaction_id: string
@@ -20,6 +21,7 @@ export interface KhelotsavRegistrationPayload {
   age: number
   gender: Gender
   category: Category
+  jersey_size: string
   selected_sports: string[]
   sport_ratings: Record<string, number>
   fee_amount: number

@@ -1,18 +1,20 @@
 'use client'
 
-import { type FormEvent, useRef, useState } from 'react'
+import * as React from 'react'
 import Image from 'next/image'
 import {
   AlertCircle,
-  CalendarDays,
+    CalendarDays,
+
   CheckCircle2,
   Clock3,
   CreditCard,
   Dumbbell,
   Info,
   Loader2,
-  LocateIcon,
+  MapPinnedIcon,
   Medal,
+  Shirt,
   Sparkles,
   Star,
   Target,
@@ -25,7 +27,7 @@ import {
 } from 'lucide-react'
 import { supabase, uploadRegistrationTransactionScreenshot } from '@/lib/supabase'
 import { detectTransactionReferenceFromImage } from '../sparsh-cricket-championship-season-02/utils'
-import { EVENT_FEE, EVENT_NAME, eventHighlights, sports } from './constants'
+import { EVENT_NAME, eventHighlights, jerseySizes, sports } from './constants'
 import { khelotsavRegistrationSchema } from './schema'
 import { FormErrors, KhelotsavRegistrationFormValues, KhelotsavRegistrationPayload } from './types'
 
@@ -35,6 +37,7 @@ const initialValues: KhelotsavRegistrationFormValues = {
   date_of_birth: '',
   gender: '',
   category: '',
+  jersey_size: '',
   selected_sports: [],
   sport_ratings: {},
   transaction_id: ''
@@ -59,34 +62,31 @@ function computeFee(category: string, gender: string, age: number | null): numbe
     return 500
   }
   if (category === 'Kid') {
-    if (age === null || age < 5) return 0
-    if (age < 10) return 600
+    if (age === null || age < 10) return 0
     return 900
   }
   return 0
 }
 
 export default function Khelotsav2026Page() {
-  const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null)
 
-  const [formValues, setFormValues] = useState<KhelotsavRegistrationFormValues>(initialValues)
-  const [errors, setErrors] = useState<FormErrors>({}) 
-  const [paymentScreenshotFile, setPaymentScreenshotFile] = useState<File | null>(null)
-  const [paymentScreenshotUrl, setPaymentScreenshotUrl] = useState('')
-  const [previewUrl, setPreviewUrl] = useState('')
-  const [uploadingScreenshot, setUploadingScreenshot] = useState(false)
-  const [detectingReference, setDetectingReference] = useState(false)
-  const [ocrSuccess, setOcrSuccess] = useState(false)
-  const [genderChangeNote, setGenderChangeNote] = useState('')
-  const [submitting, setSubmitting] = useState(false)
-  const [successMessage, setSuccessMessage] = useState('')
-  const [toast, setToast] = useState<ToastState>({ open: false, type: 'info', message: '' })
+  const [formValues, setFormValues] = React.useState<KhelotsavRegistrationFormValues>(initialValues)
+  const [errors, setErrors] = React.useState<FormErrors>({})
+  const [paymentScreenshotFile, setPaymentScreenshotFile] = React.useState<File | null>(null)
+  const [paymentScreenshotUrl, setPaymentScreenshotUrl] = React.useState('')
+  const [previewUrl, setPreviewUrl] = React.useState('')
+  const [uploadingScreenshot, setUploadingScreenshot] = React.useState(false)
+  const [detectingReference, setDetectingReference] = React.useState(false)
+  const [ocrSuccess, setOcrSuccess] = React.useState(false)
+  const [genderChangeNote, setGenderChangeNote] = React.useState('')
+  const [submitting, setSubmitting] = React.useState(false)
+  const [successMessage, setSuccessMessage] = React.useState('')
+  const [toast, setToast] = React.useState<ToastState>({ open: false, type: 'info', message: '' })
 
   const selectedCount = formValues.selected_sports.length
   const age = formValues.date_of_birth ? calculateAge(formValues.date_of_birth) : null
-  const isKidBelowFive = formValues.category === 'Kid' && typeof age === 'number' && age < 5
-  // keep original name for existing guard used in JSX
-  const isKidBelowTen = isKidBelowFive
+  const isKidBelowTen = formValues.category === 'Kid' && typeof age === 'number' && age < 10
   const isFemaleMember = formValues.gender === 'Female' && formValues.category === 'Member'
   const computedFee = computeFee(formValues.category, formValues.gender, age)
   const paymentRequired = computedFee > 0
@@ -97,7 +97,13 @@ export default function Khelotsav2026Page() {
   }
 
   const updateField = <K extends keyof KhelotsavRegistrationFormValues>(field: K, value: KhelotsavRegistrationFormValues[K]) => {
-    setFormValues((prev) => ({ ...prev, [field]: value }))
+    setFormValues((prev) => {
+      const next = { ...prev, [field]: value }
+      if (field === 'category' && value === 'Kid') {
+        next.jersey_size = ''
+      }
+      return next
+    })
     setErrors((prev) => ({ ...prev, [field]: '' }))
   }
 
@@ -238,6 +244,7 @@ export default function Khelotsav2026Page() {
       if (!paymentScreenshotFile || !paymentScreenshotUrl) {
         nextErrors.payment_screenshot_url = 'Payment screenshot is required.'
       }
+
       if (!formValues.transaction_id.trim()) {
         nextErrors.transaction_id = 'Transaction ID is required.'
       }
@@ -257,7 +264,7 @@ export default function Khelotsav2026Page() {
     return Object.keys(nextErrors).length === 0
   }
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSuccessMessage('')
 
@@ -287,6 +294,7 @@ export default function Khelotsav2026Page() {
         age: participantAge,
         gender: formValues.gender as 'Male' | 'Female',
         category: formValues.category as 'Member' | 'Kid',
+        jersey_size: formValues.category === 'Member' ? formValues.jersey_size : '',
         selected_sports: formValues.selected_sports,
         sport_ratings: formValues.sport_ratings,
         fee_amount: feeForPayload,
@@ -332,6 +340,7 @@ export default function Khelotsav2026Page() {
             <div className="rounded-3xl border border-white/70 bg-white/70 p-5 text-center shadow-2xl backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-900/55 sm:p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-sky-700 dark:text-cyan-200">Indoor Sports Festival</p>
               <h1 className="hero-title title-shine mt-2 inline-flex items-center justify-center gap-2 bg-clip-text text-3xl font-black tracking-[0.02em] text-transparent sm:text-5xl">
+                <Sparkles size={26} className="title-pop text-orange-500 dark:text-orange-300" />
                 {EVENT_NAME}
               </h1>
               <div className="energy-streak mx-auto mt-2 h-1.5 w-48 rounded-full bg-gradient-to-r from-orange-400 via-sky-500 to-emerald-400 sm:w-56" />
@@ -342,12 +351,12 @@ export default function Khelotsav2026Page() {
                   <span>Date: 21 June 2026</span>
                 </div>
                 <div className="flex items-center gap-2 rounded-xl border border-orange-100 bg-white/75 px-3 py-2 text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/65 dark:text-slate-100">
-                  <Clock3 size={16} className="text-yellow-500 dark:text-amber-300" />
+                  <Clock3 size={16} className="text-green-500 dark:text-amber-300" />
                   <span>Time: 8:00 AM onwards till 6:00 PM</span>
                               </div>
                               <div className="flex items-center gap-2 rounded-xl border border-orange-100 bg-white/75 px-3 py-2 text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/65 dark:text-slate-100">
-                                  <LocateIcon size={16} className="text-orange-500 dark:text-amber-300" />
-                                  <span>Venue: Downtown Sports Arena</span>
+                                  <MapPinnedIcon size={16} className="text-orange-500 dark:text-amber-300" />
+                                  <span>Venue: Downtown Sports Complex</span>
                               </div>
               </div>
             </div>
@@ -436,6 +445,21 @@ export default function Khelotsav2026Page() {
                 </div>
                 {errors.category ? <p className="error-text mt-1 text-xs text-red-600 dark:text-red-300">{errors.category}</p> : null}
               </div>
+
+              {formValues.category === 'Member' ? (
+                <div className="sm:col-span-2">
+                  <label className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-200"><Shirt size={14} /> Jersey Size *</label>
+                  <select value={formValues.jersey_size} onChange={(e) => updateField('jersey_size', e.target.value)} className="input-base">
+                    <option value="">Select jersey size</option>
+                    {jerseySizes.map((size) => (
+                      <option key={size.label} value={`${size.label} - ${size.value}`}>
+                        {size.label} - {size.value}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.jersey_size ? <p className="error-text mt-1 text-xs text-red-600 dark:text-red-300">{errors.jersey_size}</p> : null}
+                </div>
+              ) : null}
             </div>
 
             {isKidBelowTen ? (
@@ -484,7 +508,6 @@ export default function Khelotsav2026Page() {
                     <div className="flex flex-wrap gap-2">
                       {[1, 2, 3, 4, 5].map((rating) => (
                         <button
-                          key={rating}
                           type="button"
                           onClick={() => setSportRating(sportName, rating)}
                           className={`rating-chip ${formValues.sport_ratings[sportName] === rating ? 'rating-chip-active' : 'rating-chip-idle'}`}
@@ -504,23 +527,23 @@ export default function Khelotsav2026Page() {
             <h2 className="section-title"><Wallet size={18} className="text-emerald-600 dark:text-emerald-300" /> 4. Fees</h2>
             <div className="mt-3 space-y-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-100">
               <div className="flex items-center justify-between gap-2">
-                <span>👨 Member</span>
-                <span className="font-semibold">(Refundable) ₹500</span>
+                <span>👨 Member (Male)</span>
+                <span className="font-semibold">₹500 <span className="text-xs font-normal opacity-80">(Refundable)</span></span>
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <span>👩 Member (Female)</span>
+                <span className="font-semibold text-emerald-600 dark:text-emerald-300">No Fees!</span>
               </div>
               <div className="flex items-center justify-between gap-2">
                 <span>🧒 Kid (Age 10 &amp; above)</span>
                 <span className="font-semibold">₹900</span>
-              </div>
-              <div className="flex items-center justify-between gap-2">
-                <span>👶 Kid (Age 5 – 9)</span>
-                <span className="font-semibold">₹600</span>
               </div>
             </div>
             {(formValues.category || formValues.date_of_birth) && computedFee >= 0 && formValues.gender ? (
               <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50 px-3 py-2 text-sm dark:border-sky-500/30 dark:bg-sky-500/15">
                 <span className="text-slate-600 dark:text-slate-300">Your fee: </span>
                 {computedFee === 0
-                  ? <span className="font-bold text-emerald-600 dark:text-emerald-300">Free</span>
+                  ? <span className="font-bold text-emerald-600 dark:text-emerald-300">No Fees!</span>
                   : <span className="font-bold text-sky-700 dark:text-sky-300">₹{computedFee}</span>}
                 {formValues.category === 'Member' && formValues.gender !== 'Female' && (
                   <span className="ml-1 text-xs text-slate-500 dark:text-slate-400">(refundable on participation)</span>
@@ -533,7 +556,7 @@ export default function Khelotsav2026Page() {
             <section className="card-enter card-shell" style={{ animationDelay: '330ms' }}>
               <h2 className="section-title"><CreditCard size={18} className="text-sky-600 dark:text-cyan-300" /> 5. Payment</h2>
               <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50 p-3 text-sm text-sky-700 dark:border-cyan-400/30 dark:bg-cyan-500/15 dark:text-cyan-100">
-                <div className="flex items-center gap-2"><Wallet size={16} /> Pay <strong className="mx-1">₹{computedFee}</strong> via UPI and upload screenshot.</div>
+                <div className="flex items-center gap-2"><Wallet size={16} /> Pay <strong className="mx-1">₹{computedFee}</strong> via UPI and upload payment screenshot.</div>
               </div>
 
               <div className="mt-4 rounded-xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900/65">
@@ -566,10 +589,28 @@ export default function Khelotsav2026Page() {
             <section className="card-enter card-shell" style={{ animationDelay: '330ms' }}>
               <h2 className="section-title"><CreditCard size={18} className="text-emerald-600 dark:text-emerald-300" /> 5. Payment</h2>
               <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-100">
-                <div className="flex items-center gap-2"><CheckCircle2 size={16} /> Female Members can register for free. No payment required.</div>
+                <div className="flex items-center gap-2"><CheckCircle2 size={16} /> No payment required.</div>
               </div>
             </section>
           ) : null}
+
+          <section className="card-enter rounded-3xl border border-amber-200 bg-gradient-to-r from-amber-50 via-white to-sky-50 p-4 shadow-sm dark:border-amber-500/30 dark:from-amber-500/10 dark:via-slate-900 dark:to-sky-500/10" style={{ animationDelay: '360ms' }}>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-200">Participant Perks</p>
+                <h3 className="mt-1 text-lg font-bold text-slate-800 dark:text-slate-100">Jersey & Trophy for Every Participant</h3>
+                <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Every registered participant will receive an event jersey and a trophy to celebrate their sporting spirit.</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="rounded-2xl border border-amber-200 bg-white/85 p-3 text-amber-600 shadow-sm dark:border-amber-400/30 dark:bg-slate-800/70 dark:text-amber-300">
+                  <Shirt size={22} />
+                </div>
+                <div className="rounded-2xl border border-sky-200 bg-white/85 p-3 text-sky-600 shadow-sm dark:border-sky-400/30 dark:bg-slate-800/70 dark:text-sky-300">
+                  <Trophy size={22} />
+                </div>
+              </div>
+            </div>
+          </section>
 
           <section className="card-enter card-shell" style={{ animationDelay: '380ms' }}>
             <h2 className="section-title"><Info size={18} className="text-violet-600 dark:text-violet-300" /> 6. Note</h2>
@@ -836,6 +877,52 @@ export default function Khelotsav2026Page() {
         :global(.dark) .title-shine::after {
           opacity: 0.45;
         }
+        .title-pop {
+          animation: popIn 420ms ease-out both;
+        }
+        .energy-streak {
+          position: relative;
+          overflow: hidden;
+          animation: streakGlow 2.4s ease-in-out infinite;
+        }
+        .energy-streak::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+          transform: translateX(-130%);
+          animation: streakSweep 2.1s ease-in-out infinite;
+        }
+        .hero-chip {
+          border-radius: 9999px;
+          border: 1px solid rgb(186 230 253 / 0.95);
+          background: rgba(255, 255, 255, 0.82);
+          padding: 0.34rem 0.68rem;
+          font-size: 0.72rem;
+          font-weight: 600;
+          color: rgb(30 41 59);
+          box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+          backdrop-filter: blur(4px);
+        }
+        :global(.dark) .hero-chip {
+          border-color: rgba(71, 85, 105, 0.85);
+          background: rgba(15, 23, 42, 0.72);
+          color: rgb(226 232 240);
+          box-shadow: 0 6px 16px rgba(2, 6, 23, 0.35);
+        }
+        @media (min-width: 640px) {
+          .hero-chip {
+            font-size: 0.78rem;
+            padding: 0.38rem 0.75rem;
+          }
+        }
+        .float-sport {
+          animation: floatY 3.6s ease-in-out infinite;
+        }
+        .delay-1 { animation-delay: 300ms; }
+        .delay-2 { animation-delay: 600ms; }
+        .delay-3 { animation-delay: 900ms; }
+        .delay-4 { animation-delay: 1200ms; }
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(14px); }
           to { opacity: 1; transform: translateY(0); }
@@ -843,27 +930,6 @@ export default function Khelotsav2026Page() {
         @keyframes errorIn {
           from { opacity: 0; transform: translateY(-4px); }
           to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes shimmer {
-          0% { background-position: 0% 50%; }
-          100% { background-position: 100% 50%; }
-        }
-        @keyframes titleRise {
-          0% { opacity: 0; transform: translateY(18px) scale(0.98); }
-          80% { transform: translateY(-2px) scale(1.01); }
-          100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes popIn {
-          from { opacity: 0; transform: scale(0.7); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes streak {
-          0% { opacity: 0; transform: scaleX(0.3); }
-          100% { opacity: 1; transform: scaleX(1); }
-        }
-        @keyframes floatY {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-6px); }
         }
         @keyframes titleShine {
           0% {
@@ -878,6 +944,15 @@ export default function Khelotsav2026Page() {
             background-position: 0% 50%;
             filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.22));
           }
+        }
+        @keyframes titleRise {
+          0% { opacity: 0; transform: translateY(18px) scale(0.98); }
+          80% { transform: translateY(-2px) scale(1.01); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes popIn {
+          from { opacity: 0; transform: scale(0.7); }
+          to { opacity: 1; transform: scale(1); }
         }
         @keyframes glossSweep {
           0% { transform: translateX(-130%); opacity: 0; }
@@ -901,20 +976,22 @@ export default function Khelotsav2026Page() {
           0% { transform: translateX(-130%); }
           100% { transform: translateX(130%); }
         }
+        @keyframes floatY {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
+        }
         @media (prefers-reduced-motion: reduce) {
           .hero-title,
           .title-pop,
           .title-shine::after,
-          .title-shine::before {
+          .title-shine::before,
+          .energy-streak,
+          .energy-streak::after {
             animation: none !important;
           }
           .hero-title {
             filter: none;
             background-position: 50% 50%;
-          }
-          .energy-streak,
-          .energy-streak::after {
-            animation: none !important;
           }
         }
       `}</style>
