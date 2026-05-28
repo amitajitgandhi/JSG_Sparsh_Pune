@@ -224,7 +224,28 @@ export default function Khelotsav2026Page() {
     }
   }
 
-  const validateForm = (): boolean => {
+  function getValidationSummary(nextErrors: FormErrors): string {
+    const fieldLabels: Record<string, string> = {
+      name: 'Name',
+      mobile: 'Mobile Number',
+      date_of_birth: 'Date of Birth',
+      gender: 'Gender',
+      category: 'Category',
+      jersey_size: 'Jersey Size',
+      selected_sports: 'Selected Sports',
+      sport_ratings: 'Sport Ratings',
+      payment_screenshot_url: 'Payment Screenshot',
+      transaction_id: 'Transaction ID / UTR'
+    }
+
+    const keys = Object.keys(nextErrors)
+    if (keys.length === 0) return 'Please fix validation errors and try again.'
+
+    const labels = keys.map((key) => fieldLabels[key] || key)
+    return `Please check: ${labels.join(', ')}.`
+  }
+
+  const validateForm = () => {
     const computedAge = formValues.date_of_birth ? calculateAge(formValues.date_of_birth) : NaN
 
     const parsed = khelotsavRegistrationSchema.safeParse({
@@ -262,7 +283,21 @@ export default function Khelotsav2026Page() {
     }
 
     setErrors(nextErrors)
-    return Object.keys(nextErrors).length === 0
+
+    if (Object.keys(nextErrors).length > 0) {
+      console.group('[Khelotsav 2026] Validation failed')
+      console.log('Form values:', formValues)
+      console.log('Computed age:', computedAge)
+      console.log('Computed fee:', computedFee)
+      console.log('Payment required:', paymentRequired)
+      console.log('Validation errors:', nextErrors)
+      console.groupEnd()
+    }
+
+    return {
+      isValid: Object.keys(nextErrors).length === 0,
+      nextErrors
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -278,8 +313,9 @@ export default function Khelotsav2026Page() {
       return
     }
 
-    if (!validateForm()) {
-      showToast('error', 'Please fix validation errors and try again.')
+    const validation = validateForm()
+    if (!validation.isValid) {
+      showToast('error', getValidationSummary(validation.nextErrors))
       return
     }
 

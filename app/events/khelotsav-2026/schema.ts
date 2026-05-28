@@ -12,7 +12,7 @@ export const khelotsavRegistrationSchema = z
     jersey_size: z.string().optional().default(''),
     selected_sports: z.array(z.string()).min(1, 'Select at least 1 sport').max(4, 'You can select maximum 4 sports'),
     sport_ratings: z.record(z.number().int().min(1).max(5)),
-    transaction_id: z.string().trim().min(6, 'Transaction ID is required').max(40, 'Transaction ID is too long'),
+    transaction_id: z.string().trim().max(40, 'Transaction ID is too long').optional().default(''),
     age: z.number().int().min(1, 'Invalid age')
   })
   .superRefine((value, ctx) => {
