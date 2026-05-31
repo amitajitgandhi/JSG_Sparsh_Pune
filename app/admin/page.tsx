@@ -40,6 +40,16 @@ export default function AdminIndex() {
               <span className='text-emerald-500 text-2xl'>&rarr;</span>
             </div>
           </Link>
+
+          <Link href='/admin/k26-stats' className='group block rounded-2xl border border-violet-200 bg-white p-6 shadow hover:shadow-md transition'>
+            <div className='flex items-center justify-between'>
+              <div>
+                <h2 className='text-xl font-semibold text-violet-700 group-hover:text-violet-800'>K26 Stats</h2>
+                <p className='text-sm text-gray-600 mt-1'>Sport-wise charts, age & jersey analytics, and per-sport player lists with export.</p>
+              </div>
+              <span className='text-violet-500 text-2xl'>&rarr;</span>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

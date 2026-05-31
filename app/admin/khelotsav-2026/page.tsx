@@ -13,6 +13,7 @@ type Reg = {
   age: number
   gender: 'Male' | 'Female'
   category: 'Member' | 'Kid'
+  jersey_size: string
   selected_sports: string[]
   sport_ratings: Record<string, number>
   fee_amount: number
@@ -112,6 +113,7 @@ export default function Khelotsav2026Dashboard() {
       'Age',
       'Gender',
       'Category',
+      'Jersey Size',
       'Selected Sports',
       'Sport Ratings',
       'Fee Amount',
@@ -136,6 +138,7 @@ export default function Khelotsav2026Dashboard() {
         r.age ?? '',
         `"${r.gender || ''}"`,
         `"${r.category || ''}"`,
+        `"${r.jersey_size || ''}"`,
         `"${selectedSports}"`,
         `"${sportRatings}"`,
         r.fee_amount ?? '',
@@ -238,6 +241,7 @@ export default function Khelotsav2026Dashboard() {
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Gender</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Category</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Age</th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Jersey Size</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Sports</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Ratings</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Fee (₹)</th>
@@ -258,6 +262,7 @@ export default function Khelotsav2026Dashboard() {
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.gender}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.category}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.age}</td>
+                      <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.jersey_size || '—'}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{Array.isArray(r.selected_sports) ? r.selected_sports.join(', ') : '—'}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300 break-words'>{r.sport_ratings ? JSON.stringify(r.sport_ratings) : '—'}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.fee_amount}</td>

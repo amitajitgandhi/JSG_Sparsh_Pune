@@ -32,6 +32,14 @@ export const khelotsavRegistrationSchema = z
       })
     }
 
+    if (value.category === 'Kid' && value.age >= 10 && !value.jersey_size?.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['jersey_size'],
+        message: 'Please select jersey size'
+      })
+    }
+
     for (const sport of value.selected_sports) {
       if (!value.sport_ratings[sport]) {
         ctx.addIssue({

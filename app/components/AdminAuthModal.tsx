@@ -26,7 +26,7 @@ export default function AdminAuthModal({
 
   // Admin credentials (in production, these should be environment variables)
   const ADMIN_USERNAME = 'admin'
-  const ADMIN_PASSWORD = 'ilovesparsh'
+  const ADMIN_PASSWORD = 'jsgpunesparsh'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

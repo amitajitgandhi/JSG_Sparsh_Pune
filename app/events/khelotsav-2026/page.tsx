@@ -106,7 +106,11 @@ export default function Khelotsav2026Page() {
     setFormValues((prev) => {
       const next = { ...prev, [field]: value }
       if (field === 'category' && value === 'Kid') {
-        next.jersey_size = ''
+        // Clear jersey size only if current age is below 10 (or not yet entered)
+        const currentAge = prev.date_of_birth ? calculateAge(prev.date_of_birth) : null
+        if (currentAge === null || currentAge < 10) {
+          next.jersey_size = ''
+        }
       }
       return next
     })
@@ -337,7 +341,9 @@ export default function Khelotsav2026Page() {
         age: participantAge,
         gender: formValues.gender as 'Male' | 'Female',
         category: formValues.category as 'Member' | 'Kid',
-        jersey_size: formValues.category === 'Member' ? formValues.jersey_size : '',
+        jersey_size: (formValues.category === 'Member' || (formValues.category === 'Kid' && participantAge >= 10))
+          ? formValues.jersey_size
+          : '',
         selected_sports: formValues.selected_sports,
         sport_ratings: formValues.sport_ratings,
         fee_amount: feeForPayload,
@@ -490,7 +496,7 @@ export default function Khelotsav2026Page() {
                 {errors.category ? <p className="error-text mt-1 text-xs text-red-600 dark:text-red-300">{errors.category}</p> : null}
               </div>
 
-              {formValues.category === 'Member' ? (
+              {(formValues.category === 'Member' || (formValues.category === 'Kid' && typeof age === 'number' && age >= 10)) ? (
                 <div className="sm:col-span-2">
                   <label className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-200"><Shirt size={14} /> Jersey Size *</label>
                   <select value={formValues.jersey_size} onChange={(e) => updateField('jersey_size', e.target.value)} className="input-base">
