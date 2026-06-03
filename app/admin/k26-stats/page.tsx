@@ -237,10 +237,11 @@ export default function K26StatsPage() {
       const players = rows.filter(r => r.selected_sports?.includes(sport))
       const entry: Record<string, string | number> = { sport }
       AGE_GROUPS.forEach(g => {
-        entry[g.label] = players.filter(r => r.age >= g.min && r.age <= g.max).length
+        entry[`${g.label} Male`] = players.filter(r => r.gender === 'Male' && r.age >= g.min && r.age <= g.max).length
+        entry[`${g.label} Female`] = players.filter(r => r.gender === 'Female' && r.age >= g.min && r.age <= g.max).length
       })
       return entry
-    }).filter(d => AGE_GROUPS.some(g => (d[g.label] as number) > 0))
+    }).filter(d => AGE_GROUPS.some(g => ((d[`${g.label} Male`] as number) > 0) || ((d[`${g.label} Female`] as number) > 0)))
   }, [rows])
 
   const ageBarData = useMemo(() => {
@@ -368,13 +369,19 @@ export default function K26StatsPage() {
     csvRows.push(`"Sports Available",${SPORTS.length}`)
     csvRows.push('')
 
-    // Sport-wise participation by age group chart
-    csvRows.push('Sport-wise Participation (by Age Group)')
-    csvRows.push(['Sport', ...AGE_GROUPS.map(g => g.label)].join(','))
+    // Sport-wise participation by age group + gender chart
+    csvRows.push('Sport-wise Participation (by Age Group + Gender wise)')
+    csvRows.push([
+      'Sport',
+      ...AGE_GROUPS.flatMap(g => [`${g.label} Male`, `${g.label} Female`]),
+    ].join(','))
     sportAgeData.forEach((row) => {
       csvRows.push([
         `"${String(row.sport)}"`,
-        ...AGE_GROUPS.map(g => String(row[g.label] ?? 0)),
+        ...AGE_GROUPS.flatMap(g => [
+          String(row[`${g.label} Male`] ?? 0),
+          String(row[`${g.label} Female`] ?? 0),
+        ]),
       ].join(','))
     })
     csvRows.push('')
@@ -531,11 +538,11 @@ export default function K26StatsPage() {
             </div>
 
             {/* Row 1: Sport participation by age group (horizontal stacked bar) */}
-            <ChartCard title='🏅 Sport-wise Participation (by Age Group)'>
+            <ChartCard title='🏅 Sport-wise Participation (by Age Group + Gender wise)'>
               {sportAgeData.length === 0 ? (
                 <p className='text-sm text-gray-400 text-center py-8'>No data yet</p>
               ) : (
-                <ResponsiveContainer width='100%' height={420}>
+                <ResponsiveContainer width='100%' height={440}>
                   <BarChart
                     layout='vertical'
                     data={sportAgeData}
@@ -549,7 +556,7 @@ export default function K26StatsPage() {
                         if (!active || !payload?.length) return null
                         const total = payload.reduce((s, p) => s + ((p.value as number) || 0), 0)
                         return (
-                          <div className='bg-white dark:bg-neutral-700 border border-gray-200 dark:border-neutral-600 rounded-lg px-3 py-2 shadow text-sm'>
+                          <div className='bg-white dark:bg-neutral-700 border border-gray-200 dark:border-neutral-600 rounded-lg px-3 py-2 shadow text-sm max-h-72 overflow-y-auto'>
                             <p className='font-semibold text-gray-800 dark:text-gray-100 mb-1'>{label} <span className='text-gray-400 font-normal'>({total} total)</span></p>
                             {payload.map((p, i) => (p.value as number) > 0 ? (
                               <p key={i} style={{ color: p.fill }} className='font-medium'>{p.name}: <span className='font-bold'>{p.value}</span></p>
@@ -558,15 +565,23 @@ export default function K26StatsPage() {
                         )
                       }}
                     />
-                    <Legend verticalAlign='top' />
+                    <Legend verticalAlign='top' wrapperStyle={{ fontSize: '11px' }} />
                     {AGE_GROUPS.map((g, i) => (
-                      <Bar key={g.label} dataKey={g.label} stackId='a' fill={CHART_COLORS[i % CHART_COLORS.length]}
-                        radius={i === AGE_GROUPS.length - 1 ? [0, 4, 4, 0] : [0, 0, 0, 0]}
-                      >
+                      <Bar key={`${g.label}-male`} dataKey={`${g.label} Male`} stackId='a' fill={CHART_COLORS[(i * 2) % CHART_COLORS.length]} name={`${g.label} Male`}>
                         <LabelList
-                          dataKey={g.label}
+                          dataKey={`${g.label} Male`}
                           position='inside'
-                          style={{ fill: '#fff', fontSize: 11, fontWeight: 600 }}
+                          style={{ fill: '#fff', fontSize: 10, fontWeight: 600 }}
+                          formatter={(v: unknown) => (typeof v === 'number' && v > 0 ? String(v) : '')}
+                        />
+                      </Bar>
+                    ))}
+                    {AGE_GROUPS.map((g, i) => (
+                      <Bar key={`${g.label}-female`} dataKey={`${g.label} Female`} stackId='a' fill={CHART_COLORS[(i * 2 + 1) % CHART_COLORS.length]} name={`${g.label} Female`} radius={i === AGE_GROUPS.length - 1 ? [0, 4, 4, 0] : [0, 0, 0, 0]}>
+                        <LabelList
+                          dataKey={`${g.label} Female`}
+                          position='inside'
+                          style={{ fill: '#fff', fontSize: 10, fontWeight: 600 }}
                           formatter={(v: unknown) => (typeof v === 'number' && v > 0 ? String(v) : '')}
                         />
                       </Bar>
