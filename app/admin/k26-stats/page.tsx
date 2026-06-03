@@ -321,6 +321,17 @@ export default function K26StatsPage() {
 
   // ── Export CSV for active sport tab ────────────────────────────────────────
 
+  const downloadCsv = (fileName: string, csvRows: string[]) => {
+    const csv = csvRows.join('\n')
+    const blob = new Blob([csv], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = fileName
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   const exportCsv = () => {
     if (activeTab === 'overview') return
     const headers = ['Sr. No.', 'Player Name', 'Mobile Number', 'Age', 'Jersey Size', 'Rating', 'Gender']
@@ -337,14 +348,84 @@ export default function K26StatsPage() {
         `"${r.gender || ''}"`,
       ].join(','))
     })
-    const csv = csvRows.join('\n')
-    const blob = new Blob([csv], { type: 'text/csv' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `k26-${activeTab.toLowerCase().replace(/\s+/g, '-')}-players-${new Date().toISOString().split('T')[0]}.csv`
-    a.click()
-    URL.revokeObjectURL(url)
+
+    downloadCsv(`k26-${activeTab.toLowerCase().replace(/\s+/g, '-')}-players-${new Date().toISOString().split('T')[0]}.csv`, csvRows)
+  }
+
+  const exportOverviewCsv = () => {
+    const csvRows: string[] = []
+
+    // Summary cards
+    csvRows.push('Overview Summary')
+    csvRows.push('Metric,Value')
+    csvRows.push(`"Total Registrations",${overviewStats.total}`)
+    csvRows.push(`"Males",${overviewStats.males}`)
+    csvRows.push(`"Females",${overviewStats.females}`)
+    csvRows.push(`"Members",${overviewStats.members}`)
+    csvRows.push(`"Kids",${overviewStats.kids}`)
+    csvRows.push(`"Most Selected Sport","${overviewStats.mostSelected ? `${overviewStats.mostSelected.sport} (${overviewStats.mostSelected.count})` : '—'}"`)
+    csvRows.push(`"Least Selected Sport","${overviewStats.leastSelected ? `${overviewStats.leastSelected.sport} (${overviewStats.leastSelected.count})` : '—'}"`)
+    csvRows.push(`"Sports Available",${SPORTS.length}`)
+    csvRows.push('')
+
+    // Sport-wise participation by age group chart
+    csvRows.push('Sport-wise Participation (by Age Group)')
+    csvRows.push(['Sport', ...AGE_GROUPS.map(g => g.label)].join(','))
+    sportAgeData.forEach((row) => {
+      csvRows.push([
+        `"${String(row.sport)}"`,
+        ...AGE_GROUPS.map(g => String(row[g.label] ?? 0)),
+      ].join(','))
+    })
+    csvRows.push('')
+
+    // Age-wise registrations chart
+    csvRows.push('Age-wise Registrations')
+    csvRows.push('Age Group,Count')
+    ageBarData.forEach((r) => {
+      csvRows.push(`"${r.label}",${r.count}`)
+    })
+    csvRows.push('')
+
+    // Jersey size distribution chart
+    csvRows.push('Jersey Size Distribution')
+    csvRows.push('Jersey Size,Count')
+    jerseyBarData.forEach((r) => {
+      csvRows.push(`"${r.label}",${r.count}`)
+    })
+    csvRows.push('')
+
+    // Gender breakdown per sport chart
+    csvRows.push('Gender Breakdown per Sport')
+    csvRows.push('Sport,Male,Female')
+    genderPerSportData.forEach((r) => {
+      csvRows.push(`"${r.fullName}",${r.Male},${r.Female}`)
+    })
+    csvRows.push('')
+
+    // Sport popularity radar chart
+    csvRows.push('Sport Popularity Radar')
+    csvRows.push('Sport,Count')
+    sportRadarData.forEach((r) => {
+      csvRows.push(`"${r.fullName}",${r.count}`)
+    })
+    csvRows.push('')
+
+    // Gender split + Member vs Kid pies
+    csvRows.push('Gender Split')
+    csvRows.push('Category,Count')
+    genderPieData.forEach((r) => {
+      csvRows.push(`"${r.name}",${r.value}`)
+    })
+    csvRows.push('')
+
+    csvRows.push('Member vs Kid Registrations')
+    csvRows.push('Category,Count')
+    categoryPieData.forEach((r) => {
+      csvRows.push(`"${r.name}",${r.value}`)
+    })
+
+    downloadCsv(`k26-overview-graphs-${new Date().toISOString().split('T')[0]}.csv`, csvRows)
   }
 
   // ── Render ──────────────────────────────────────────────────────────────────
@@ -370,9 +451,9 @@ export default function K26StatsPage() {
               <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
               Refresh
             </button>
-            {activeTab !== 'overview' && sortedSportPlayers.length > 0 && (
+            {(activeTab === 'overview' ? rows.length > 0 : sortedSportPlayers.length > 0) && (
               <button
-                onClick={exportCsv}
+                onClick={activeTab === 'overview' ? exportOverviewCsv : exportCsv}
                 className='inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-blue-700'
               >
                 <Download size={16} />

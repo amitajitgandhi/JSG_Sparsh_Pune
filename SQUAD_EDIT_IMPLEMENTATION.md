@@ -5,7 +5,7 @@
 ### **1. Admin Authentication Modal**
 - **File**: `app/components/AdminAuthModal.tsx`
 - **Purpose**: Secure authentication before allowing squad editing
-- **Credentials**: Username: `admin`, Password: `ilovesparsh` (same as existing admin system)
+- **Credentials**: Username: `admin`, Password: `jsgpunesparsh` (same as existing admin system)
 - **Features**:
   - Professional modal UI with security icons
   - Password visibility toggle
@@ -59,7 +59,7 @@
 ### **Successful Edit Process:**
 1. **Click Edit Button** ? Player row shows "Edit" button
 2. **Admin Authentication** ? Modal asks for credentials if not authenticated
-3. **Enter Credentials** ? Username: `admin`, Password: `ilovesparsh`
+3. **Enter Credentials** ? Username: `admin`, Password: `jsgpunesparsh`
 4. **Edit Modal Opens** ? Shows current jersey details in editable form
 5. **Make Changes** ? Update jersey name, number, size, color, or CricHeroes link
 6. **Save Changes** ? API validates and updates the JSON file
@@ -154,7 +154,7 @@ const response = await fetch('/api/update-squad', {
 
 - ? **Edit button** visible in each squad member row
 - ? **Admin authentication** modal opens on first edit
-- ? **Correct credentials** (`admin`/`ilovesparsh`) allow access
+- ? **Correct credentials** (`admin`/`jsgpunesparsh`) allow access
 - ? **Incorrect credentials** show error message
 - ? **Edit modal** opens with current member data
 - ? **Form validation** works (required fields)
@@ -182,4 +182,4 @@ The squad editing functionality is now fully implemented and ready for productio
 
 **Admin Credentials for Testing:**
 - Username: `admin`
-- Password: `ilovesparsh`
+- Password: `jsgpunesparsh`

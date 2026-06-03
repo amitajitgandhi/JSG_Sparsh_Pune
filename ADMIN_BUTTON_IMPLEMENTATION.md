@@ -17,12 +17,12 @@
 ### **3. Hardcoded Credentials**
 ```typescript
 const ADMIN_USERNAME = 'admin'
-const ADMIN_PASSWORD = 'ilovesparsh'
+const ADMIN_PASSWORD = 'jsgpunesparsh'
 ```
 
 ### **4. Login Flow**
 1. **Click Admin Button** ? Opens login modal
-2. **Enter Credentials** ? Username: `admin`, Password: `ilovesparsh`
+2. **Enter Credentials** ? Username: `admin`, Password: `jsgpunesparsh`
 3. **Submit Form** ? Validates credentials
 4. **Success** ? Redirects to `/admin` page (existing admin dashboard)
 5. **Error** ? Shows "Invalid username or password" message
@@ -89,7 +89,7 @@ Home | About | Committee | Events | SPL 02 | Social | Admin | [Join Us]
 ### **Successful Login:**
 1. Click "Admin" button
 2. Modal opens with login form
-3. Enter: `admin` / `ilovesparsh`
+3. Enter: `admin` / `jsgpunesparsh`
 4. Click "Sign In"
 5. Loading state shows
 6. Modal closes
