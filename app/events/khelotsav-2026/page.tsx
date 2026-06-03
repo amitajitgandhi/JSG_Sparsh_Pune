@@ -89,6 +89,7 @@ export default function Khelotsav2026Page() {
   const [successMessage, setSuccessMessage] = React.useState('')
   const [toast, setToast] = React.useState<ToastState>({ open: false, type: 'info', message: '' })
   const [showSuccessModal, setShowSuccessModal] = React.useState(false)
+  const [showClosedModal, setShowClosedModal] = React.useState(true)
 
   const selectedCount = formValues.selected_sports.length
   const age = formValues.date_of_birth ? calculateAge(formValues.date_of_birth) : null
@@ -710,6 +711,36 @@ export default function Khelotsav2026Page() {
         onGoCommittee={() => router.push('https://jsg-pune-sparsh.vercel.app/committee')}
       />
 
+      {/* Registration Closed Modal */}
+      {showClosedModal && (
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4'>
+          <div className='max-w-md rounded-2xl bg-white p-6 shadow-2xl dark:bg-slate-900'>
+            <div className='mb-4 flex items-center justify-center'>
+              <div className='rounded-full bg-red-100 dark:bg-red-900/30 p-3'>
+                <AlertCircle size={28} className='text-red-600 dark:text-red-400' />
+              </div>
+            </div>
+            <h2 className='text-center text-xl font-bold text-gray-900 dark:text-gray-100 mb-2'>Registration Closed</h2>
+            <p className='text-center text-sm text-gray-600 dark:text-gray-300 mb-6'>
+              Registrations for this event are now closed. Kindly contact the committee for more details.
+            </p>
+            <div className='flex gap-3'>
+              <button
+                onClick={() => setShowClosedModal(false)}
+                className='flex-1 rounded-lg bg-gray-200 dark:bg-gray-700 px-4 py-2.5 text-sm font-semibold text-gray-800 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600 transition'
+              >
+                Close
+              </button>
+              <button
+                onClick={() => router.push('/committee')}
+                className='flex-1 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 transition'
+              >
+                Contact Committee
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <style>{`
         .hero-enter {
           animation: fadeUp 520ms ease-out both;
