@@ -29,7 +29,7 @@ import {
 import { supabase, uploadRegistrationTransactionScreenshot } from '@/lib/supabase'
 import { detectTransactionReferenceFromImage } from '../sparsh-cricket-championship-season-02/utils'
 import SuccessModal from './components/SuccessModal'
-import { EVENT_NAME, eventHighlights, jerseySizes, sports } from './constants'
+import { EVENT_NAME, REGISTRATION_CLOSED_STATUS, eventHighlights, jerseySizes, sports } from './constants'
 import { khelotsavRegistrationSchema } from './schema'
 import { FormErrors, KhelotsavRegistrationFormValues, KhelotsavRegistrationPayload } from './types'
 
@@ -89,7 +89,9 @@ export default function Khelotsav2026Page() {
   const [successMessage, setSuccessMessage] = React.useState('')
   const [toast, setToast] = React.useState<ToastState>({ open: false, type: 'info', message: '' })
   const [showSuccessModal, setShowSuccessModal] = React.useState(false)
-  const [showClosedModal, setShowClosedModal] = React.useState(true)
+  const [showClosedModal, setShowClosedModal] = React.useState(
+    String(REGISTRATION_CLOSED_STATUS || '').trim().toUpperCase() === 'YES'
+  )
 
   const selectedCount = formValues.selected_sports.length
   const age = formValues.date_of_birth ? calculateAge(formValues.date_of_birth) : null
@@ -991,7 +993,7 @@ export default function Khelotsav2026Page() {
           background: rgba(255, 255, 255, 0.82);
           padding: 0.34rem 0.68rem;
           font-size: 0.72rem;
-          font-weight: 600;
+          font-weight: 600,
           color: rgb(30 41 59);
           box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
           backdrop-filter: blur(4px);
