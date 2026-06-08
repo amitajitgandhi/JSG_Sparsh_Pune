@@ -50,6 +50,26 @@ export default function AdminIndex() {
               <span className='text-violet-500 text-2xl'>&rarr;</span>
             </div>
           </Link>
+
+          <Link href='/admin/tournament' className='group block rounded-2xl border border-orange-200 bg-white p-6 shadow hover:shadow-md transition'>
+            <div className='flex items-center justify-between'>
+              <div>
+                <h2 className='text-xl font-semibold text-orange-700 group-hover:text-orange-800'>Tournament Management</h2>
+                <p className='text-sm text-gray-600 mt-1'>Create tournaments, manage teams, configure events, enter results, and view live leaderboard.</p>
+              </div>
+              <span className='text-orange-500 text-2xl'>&rarr;</span>
+            </div>
+          </Link>
+
+          <Link href='/admin/khelotsav-players' className='group block rounded-2xl border border-violet-200 bg-white p-6 shadow hover:shadow-md transition'>
+            <div className='flex items-center justify-between'>
+              <div>
+                <h2 className='text-xl font-semibold text-violet-700 group-hover:text-violet-800'>Khelotsav Players</h2>
+                <p className='text-sm text-gray-600 mt-1'>Upload team-wise player data via CSV for the public teams page.</p>
+              </div>
+              <span className='text-violet-500 text-2xl'>&rarr;</span>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

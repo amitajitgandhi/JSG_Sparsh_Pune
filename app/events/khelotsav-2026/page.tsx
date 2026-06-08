@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import * as React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -418,6 +419,7 @@ export default function Khelotsav2026Page() {
       </section>
 
       <main className="mx-auto mt-6 w-full max-w-5xl space-y-5 px-4 sm:px-6">
+
         <div className="card-enter card-shell" style={{ animationDelay: '80ms' }}>
           <p className="text-sm text-slate-700 dark:text-slate-200 sm:text-base">
             Gear up for an action-packed day filled with spirited indoor games, vibrant energy, healthy rivalry, stronger bonds, and nonstop celebration.
