@@ -30,7 +30,7 @@ const ctaLinks = [
     label:   'Register Now',
     sub:     'Fill in your details & secure your spot',
     emoji:   '📝',
-    badge:   'Open',
+    badge:   'Closed',
     gradient:'from-orange-500 to-orange-600',
     glow:    'hover:shadow-orange-200',
   },
