@@ -21,16 +21,6 @@ export default function AdminIndex() {
             </div>
           </Link>
 
-          <Link href='/admin/scc-dashboard' className='group block rounded-2xl border border-cyan-200 bg-white p-6 shadow hover:shadow-md transition'>
-            <div className='flex items-center justify-between'>
-              <div>
-                <h2 className='text-xl font-semibold text-cyan-700 group-hover:text-cyan-800'>SCC Admin Dashboard</h2>
-                <p className='text-sm text-gray-600 mt-1'>View Sparsh Cricket Championship registrations and export participant data.</p>
-              </div>
-              <span className='text-cyan-500 text-2xl'>&rarr;</span>
-            </div>
-          </Link>
-
           <Link href='/admin/khelotsav-2026' className='group block rounded-2xl border border-emerald-200 bg-white p-6 shadow hover:shadow-md transition'>
             <div className='flex items-center justify-between'>
               <div>

@@ -305,6 +305,10 @@ export default function TournamentAdminPage() {
                     <input value={teamForm.short_name ?? ''} onChange={e => setTeamForm(f => ({ ...f!, short_name: e.target.value }))} className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm' placeholder='TMA' />
                   </div>
                   <div>
+                    <label className='block text-xs font-semibold text-gray-600 mb-1'>Team Owner Name</label>
+                    <input value={teamForm.owner_name ?? ''} onChange={e => setTeamForm(f => ({ ...f!, owner_name: e.target.value }))} className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm' placeholder='Owner Name' />
+                  </div>
+                  <div>
                     <label className='block text-xs font-semibold text-gray-600 mb-1'>Color</label>
                     <div className='flex items-center gap-2'>
                       <input type='color' value={teamForm.color ?? '#10b981'} onChange={e => setTeamForm(f => ({ ...f!, color: e.target.value }))} className='h-9 w-14 rounded border border-gray-300 cursor-pointer' />
@@ -345,6 +349,7 @@ export default function TournamentAdminPage() {
                     <div className='flex-1 min-w-0'>
                       <p className='font-semibold text-gray-900 truncate'>{t.name}</p>
                       <p className='text-xs text-gray-500'>{t.short_name} · Order: {t.display_order}</p>
+                      {t.owner_name && <p className='text-xs text-gray-600 mt-0.5'>Owner: {t.owner_name}</p>}
                     </div>
                     <div className='flex gap-1.5'>
                       <button onClick={() => { setTeamForm(t); setTeamError('') }} className='rounded-lg border p-1.5 text-gray-500 hover:bg-gray-50'><Pencil size={13} /></button>

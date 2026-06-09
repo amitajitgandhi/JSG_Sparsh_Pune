@@ -4,9 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 const OPTIONS = [
-  { label: 'events/upcoming', value: '/events/upcoming' },
-  { label: 'events/sparsh-cricket-championship-season-02', value: '/events/sparsh-cricket-championship-season-02' },
-  { label: 'Khelotsav 2026', value: '/events/khelotsav-2026' }
+  { label: 'events/upcoming', value: '/events/upcoming' }
 ]
 
 export default function UpcomingButtonAdminPage() {
@@ -14,17 +12,22 @@ export default function UpcomingButtonAdminPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
+  const [isCustom, setIsCustom] = useState(false)
 
   const load = async () => {
     try {
       const res = await fetch('/api/admin/upcoming-event-target', { cache: 'no-store' })
-      const data = await res.json()
-      if (data?.target) setTarget(data.target)
-      if (data?.source === 'fallback') {
-        setMessage(data?.error || 'Loaded fallback value. Please check database setting table.')
+      if (!res.ok) {
+        throw new Error('Failed to fetch setting')
       }
-    } catch {
-      setMessage('Failed to load current setting')
+      const data = await res.json()
+      if (data?.target) {
+        setTarget(data.target)
+        const isOptionValue = OPTIONS.some(opt => opt.value === data.target)
+        setIsCustom(!isOptionValue)
+      }
+    } catch (err: any) {
+      setMessage(err?.message || 'Failed to load current setting')
     } finally {
       setLoading(false)
     }
@@ -38,16 +41,24 @@ export default function UpcomingButtonAdminPage() {
     setSaving(true)
     setMessage('')
     try {
+      if (!target || !target.trim()) {
+        throw new Error('Target URL cannot be empty')
+      }
+      if (!target.startsWith('/')) {
+        throw new Error('Target URL must start with /')
+      }
+      
       const res = await fetch('/api/admin/upcoming-event-target', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ target })
+        body: JSON.stringify({ target: target.trim() })
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data?.error || 'Failed to save')
 
       await load()
-      setMessage('Saved successfully')
+      setMessage('Saved successfully! ✓')
+      setTimeout(() => setMessage(''), 3000)
     } catch (e: any) {
       setMessage(e?.message || 'Failed to save')
     } finally {
@@ -69,12 +80,37 @@ export default function UpcomingButtonAdminPage() {
                   type="radio"
                   name="upcoming-target"
                   checked={target === option.value}
-                  onChange={() => setTarget(option.value)}
+                  onChange={() => {
+                    setTarget(option.value)
+                    setIsCustom(false)
+                  }}
                   disabled={loading || saving}
                 />
                 <span className="text-sm font-medium text-gray-800">{option.label}</span>
               </label>
             ))}
+
+            {/* Custom URL input */}
+            <label className="flex items-center gap-3 rounded-xl border border-gray-200 p-3">
+              <input
+                type="radio"
+                name="upcoming-target"
+                checked={isCustom}
+                onChange={() => setIsCustom(true)}
+                disabled={loading || saving}
+              />
+              <span className="text-sm font-medium text-gray-800">Custom URL</span>
+            </label>
+            {isCustom && (
+              <input
+                type="text"
+                value={target}
+                onChange={(e) => setTarget(e.target.value)}
+                placeholder="Enter custom URL (e.g., /events/my-event)"
+                disabled={loading || saving}
+                className="ml-7 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 focus:border-blue-500 focus:outline-none"
+              />
+            )}
           </div>
 
           <button
@@ -85,7 +121,15 @@ export default function UpcomingButtonAdminPage() {
             {saving ? 'Saving...' : 'Save'}
           </button>
 
-          {message ? <p className="mt-3 text-sm text-gray-700">{message}</p> : null}
+          {message ? (
+            <div className={`mt-3 rounded-lg px-3 py-2 text-sm font-medium ${
+              message.includes('✓') || message.includes('successfully')
+                ? 'bg-green-50 text-green-800'
+                : 'bg-red-50 text-red-800'
+            }`}>
+              {message}
+            </div>
+          ) : null}
         </div>
 
         <Link href="/admin" className="inline-block text-sm font-semibold text-blue-700 hover:text-blue-800">

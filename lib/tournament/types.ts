@@ -24,6 +24,7 @@ export interface Team {
   display_order: number
   is_active: boolean
   created_at: string
+  owner_name?: string | null
 }
 
 export interface Sport {

@@ -79,24 +79,24 @@ const actionLinks: CtaItem[] = [
     label: 'Team Players',
     sub: 'Browse participants team-wise',
     icon: <Users size={20} />,
-    gradient: 'from-violet-500 to-violet-600',
-      glow: 'hover:shadow-violet-200 dark:hover:shadow-violet-900/30',
+    gradient: 'from-sky-500 to-blue-600',
+    glow: 'hover:shadow-sky-200 dark:hover:shadow-sky-900/30',
   },
   {
     href: '/events/tournament/khelotsav-2026/leaderboard',
     label: 'Leaderboard',
     sub: 'Standings & medal tally',
     icon: <Trophy size={20} />,
-    gradient: 'from-emerald-500 to-emerald-600',
-    glow: 'hover:shadow-emerald-200 dark:hover:shadow-emerald-900/30',
+    gradient: 'from-orange-500 to-orange-600',
+    glow: 'hover:shadow-orange-200 dark:hover:shadow-orange-900/30',
   },
   {
     href: '/events/tournament/khelotsav-2026/results',
     label: 'Event Results',
     sub: 'Scores by sport & category',
     icon: <Medal size={20} />,
-    gradient: 'from-sky-500 to-sky-600',
-    glow: 'hover:shadow-sky-200 dark:hover:shadow-sky-900/30',
+    gradient: 'from-emerald-500 to-emerald-600',
+    glow: 'hover:shadow-emerald-200 dark:hover:shadow-emerald-900/30',
   },
 ]
 
@@ -143,24 +143,27 @@ function CtaTile({ cta }: { cta: CtaItem }) {
 export default function KhelotsavHubPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-orange-50 pb-8 text-slate-800 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100 sm:pb-10">
-      {/* Banner + overlapping title tile */}
-      <section className="relative w-full shrink-0">
-        <div className="relative h-[200px] w-full overflow-hidden sm:h-[240px] md:h-[280px]">
-          <Image
-            src="/images/khelotsav-indoor-sports.svg"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover object-center"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-sky-900/45 via-slate-900/55 to-slate-900/75 dark:from-slate-950/75 dark:via-slate-950/85 dark:to-slate-950" />
-          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-sky-50 via-sky-50/60 to-transparent dark:from-slate-950 dark:via-slate-950/70" />
-        </div>
+      {/* Banner + Title Tile Container */}
+      <section className="relative w-full shrink-0 overflow-hidden rounded-b-2xl">
+        {/* Background blue tile container */}
+        <div className="relative w-full bg-gradient-to-b from-sky-900/45 via-slate-900/55 to-slate-900/75 dark:from-slate-950/75 dark:via-slate-950/85 dark:to-slate-950">
+          {/* Banner with image */}
+          <div className="relative flex h-[200px] w-full items-center justify-center overflow-hidden sm:h-[240px] md:h-[280px]">
+            <Image
+              src="/images/khelotsav-indoor-sports.svg"
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover object-center"
+              priority
+            />
 
-        <header className="relative z-10 mx-auto w-full max-w-lg -mt-[5.5rem] px-4 sm:max-w-2xl sm:-mt-28 sm:px-6 md:-mt-32 lg:max-w-5xl">
-          <HeroTitleCard />
-        </header>
+            {/* Title tile - centered on banner */}
+            <header className="relative z-10 w-full max-w-lg px-4 sm:max-w-2xl sm:px-6 lg:max-w-5xl">
+              <HeroTitleCard />
+            </header>
+          </div>
+        </div>
       </section>
 
       <div className="mx-auto w-full max-w-lg px-4 sm:max-w-2xl sm:px-6 lg:max-w-5xl">

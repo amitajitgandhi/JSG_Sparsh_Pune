@@ -45,15 +45,15 @@ export default function LeaderboardPage() {
           <Link href={`/events/khelotsav`} className='inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-3'>
             <ArrowLeft size={14} /> Back to Khelotsav
           </Link>
-          <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3'>
+          <div className='flex items-center justify-between gap-3'>
             <div>
               <h1 className='text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-blue-600 to-purple-600'>
-                🏆 Leaderboard
+                🏆 K-26 Leaderboard
               </h1>
               {tournament && <p className='text-sm text-gray-500 mt-0.5'>{tournament.name}</p>}
             </div>
-            <button onClick={refresh} disabled={loading} className='inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 self-start sm:self-auto'>
-              <RefreshCw size={15} className={loading ? 'animate-spin' : ''} /> Refresh
+            <button onClick={refresh} disabled={loading} className='inline-flex items-center justify-center rounded-lg bg-emerald-600 p-2.5 text-white hover:bg-emerald-700 disabled:opacity-50 shrink-0'>
+              <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
             </button>
           </div>
         </div>
@@ -74,31 +74,48 @@ export default function LeaderboardPage() {
           <>
             {/* ── Podium ─────────────────────────────────────────────────── */}
             {top3.length >= 2 && (
-              <div className='mb-8'>
-                <h2 className='text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 text-center'>🏅 Top 3</h2>
-                <div className='flex items-end justify-center gap-3 sm:gap-6'>
+              <div className='mb-8 rounded-2xl bg-gradient-to-b from-amber-50 via-white to-gray-50 p-8 shadow-lg border border-amber-100'>
+                                      <h2 className='text-sm font-semibold text-gray-600 uppercase tracking-widest mb-8 text-center'>🏆 Champions 🏆</h2>
+                <div className='flex items-end justify-center gap-4 sm:gap-8'>
                   {/* Render: 2nd, 1st, 3rd */}
                   {[top3[1], top3[0], top3[2]].map((row, podiumIdx) => {
-                    if (!row) return <div key={podiumIdx} className='w-24' />
+                    if (!row) return <div key={podiumIdx} className='w-20 sm:w-28' />
                     const actualRank = row.rank
-                    const heights = ['h-28', 'h-36', 'h-24']
+                    const heights = ['h-32 sm:h-28', 'h-40 sm:h-40', 'h-28 sm:h-24']
+                    const widths = ['w-20 sm:w-24', 'w-24 sm:w-28', 'w-20 sm:w-24']
+                    const colors = [
+                      'from-amber-300 via-yellow-300 to-amber-400',
+                      'from-gray-300 via-gray-400 to-slate-400',
+                      'from-amber-600 via-orange-600 to-amber-700',
+                    ]
+                    const shadows = ['shadow-xl', 'shadow-2xl', 'shadow-xl']
+                    
                     return (
-                      <div key={row.team.id} className='flex flex-col items-center gap-2'>
-                        <div className='text-2xl'>{MEDAL[actualRank - 1] ?? '🏅'}</div>
-                        <div className={`w-20 sm:w-24 ${heights[podiumIdx]} bg-gradient-to-t ${PODIUM_BG[actualRank - 1] ?? PODIUM_BG[2]} rounded-t-2xl flex flex-col items-center justify-center shadow-lg gap-1 px-2`}>
+                      <div key={row.team.id} className='flex flex-col items-center gap-3 sm:gap-4'>
+                        {/* Medal emoji */}
+                        <div className='text-3xl sm:text-4xl drop-shadow-lg'>{MEDAL[actualRank - 1] ?? '🏅'}</div>
+                        
+                        {/* Podium */}
+                        <div className={`${widths[podiumIdx]} ${heights[podiumIdx]} bg-gradient-to-t ${colors[actualRank - 1]} rounded-t-2xl sm:rounded-t-3xl flex flex-col items-center justify-start ${shadows[podiumIdx]} gap-1.5 px-2 sm:px-4 relative pt-3 sm:pt-4`}>
+                          {/* Top decoration */}
+                          <div className='absolute -top-1 left-0 right-0 h-1 bg-white/50 rounded-full'></div>
+                          
+                          {/* Initials circle */}
                           <div
-                            className='h-10 w-10 rounded-full border-2 border-white shadow flex items-center justify-center text-white text-sm font-bold'
-                            style={{ backgroundColor: row.team.color }}
+                            className='h-10 sm:h-12 w-10 sm:w-12 rounded-full border-3 border-white shadow-lg flex items-center justify-center text-white text-xs sm:text-sm font-bold flex-shrink-0'
+                            style={{ 
+                              backgroundColor: row.team.color
+                            }}
                           >
                             {row.team.logo_url
-                              ? <img src={row.team.logo_url} alt={row.team.name} className='h-10 w-10 rounded-full object-cover' />
-                              : row.team.short_name.slice(0, 2)
+                              ? <img src={row.team.logo_url} alt={row.team.name} className='h-10 sm:h-12 w-10 sm:w-12 rounded-full object-cover' />
+                              : row.team.short_name.slice(0, 2).toUpperCase()
                             }
                           </div>
-                          <p className='text-white text-xs font-bold text-center leading-tight'>{row.team.name}</p>
-                          <p className='text-white text-sm font-extrabold'>{row.total_points}pts</p>
+                          
+                          {/* Team name */}
+                          <p className='text-white text-xs sm:text-sm font-bold text-center leading-tight line-clamp-2'>{row.team.name}</p>
                         </div>
-                        <span className='text-xs font-semibold text-gray-600'>#{actualRank}</span>
                       </div>
                     )
                   })}
@@ -149,8 +166,8 @@ export default function LeaderboardPage() {
                               }
                             </div>
                             <div>
-                              <p className='font-semibold text-gray-900 text-sm'>{row.team.name}</p>
-                              <p className='text-xs text-gray-400'>{row.team.short_name}</p>
+                              <p className='font-semibold text-gray-900 text-sm truncate'>{row.team.name}</p>
+                              {row.team.owner_name && <p className='text-xs text-gray-600 mt-0.5 truncate'>{row.team.owner_name}</p>}
                             </div>
                           </div>
                         </td>

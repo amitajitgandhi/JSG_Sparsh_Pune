@@ -35,15 +35,6 @@ export default function HeroTitleCard() {
               <span className="hero-pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" aria-hidden="true" />
             </div>
 
-            {/* Icon row */}
-            <div className="mt-3 flex items-center justify-center gap-3">
-              <Trophy size={18} className="hero-float text-sky-500/80 dark:text-cyan-400/80" aria-hidden="true" />
-              <div className="hero-sparkle flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-400/20 via-sky-400/20 to-emerald-400/20 shadow-inner ring-1 ring-white/50 dark:from-orange-500/25 dark:via-sky-500/20 dark:to-emerald-500/25 dark:ring-slate-600/50 sm:h-11 sm:w-11">
-                <Sparkles size={20} className="text-orange-500 dark:text-orange-300" aria-hidden="true" />
-              </div>
-              <Trophy size={18} className="hero-float-delay text-emerald-500/80 dark:text-emerald-400/80" aria-hidden="true" />
-            </div>
-
             {/* Title */}
             <h1 className="mt-3 text-center">
               <span className="hero-title-shine block text-[1.4rem] font-black leading-tight tracking-tight sm:text-[1.75rem] lg:text-[2rem]">
@@ -60,10 +51,6 @@ export default function HeroTitleCard() {
             <div className="mx-auto mt-4 h-1 w-24 overflow-hidden rounded-full bg-slate-200/80 dark:bg-slate-700/80 sm:w-32">
               <div className="hero-streak h-full w-full rounded-full bg-gradient-to-r from-orange-400 via-sky-500 to-emerald-400" />
             </div>
-
-            <p className="mt-3 text-[11px] font-medium text-slate-500 dark:text-slate-400 sm:text-xs">
-              Pune&apos;s biggest indoor sports celebration
-            </p>
           </div>
         </div>
       </div>
