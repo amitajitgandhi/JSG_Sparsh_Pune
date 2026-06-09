@@ -241,7 +241,7 @@ export default function Committee() {
         {/* Group Leaders */}
         <div className="mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8 text-center">
-            Group Leaders
+            Committee Members
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {groupLeaders.map((member, index) => {
