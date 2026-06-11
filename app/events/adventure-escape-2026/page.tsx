@@ -188,7 +188,7 @@ export default function AdventureEscape2026Page() {
           <p className='text-sm font-semibold text-slate-700'>💵 Fees to be paid in cash on or before <span className='text-red-600'>Monday 15 June</span> at either:</p>
           <ul className='mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700'>
             <li><strong>Dr. Ashika Rathod</strong>, Jain Denticure, Kondhwa, Pune</li>
-            <li><strong>Mukesh Oswal</strong>, M.A. Hardware, Ravivar Peth, Pune</li>
+            <li><strong>Mukesh Jain</strong>, M.A. Hardware, Guruwar Peth, Pune</li>
           </ul>
         </section>
 
@@ -356,7 +356,7 @@ export default function AdventureEscape2026Page() {
               <p className='font-semibold'>💵 Fees to be paid in cash on or before <span className='text-red-600'>Monday 15 June</span> at either:</p>
               <ul className='mt-2 list-disc space-y-1 pl-4'>
                 <li><strong>Dr. Ashika Rathod</strong>, Jain Denticure, Kondhwa, Pune</li>
-                <li><strong>Mukesh Oswal</strong>, M.A. Hardware, Ravivar Peth, Pune</li>
+                <li><strong>Mukesh Jain</strong>, M.A. Hardware, Guruwar Peth, Pune</li>
               </ul>
               <p className='mt-2 font-medium text-orange-800'>Registration will be confirmed once your payment is received.</p>
             </div>
@@ -375,7 +375,7 @@ export default function AdventureEscape2026Page() {
             <p className='mt-3 text-sm font-semibold text-slate-700'>💵 Fees to be paid in cash on or before <span className='text-red-600'>Monday 15 June</span> at either:</p>
             <ul className='mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700'>
               <li><strong>Dr. Ashika Rathod</strong>, Jain Denticure, Kondhwa, Pune</li>
-              <li><strong>Mukesh Oswal</strong>, M.A. Hardware, Ravivar Peth, Pune</li>
+              <li><strong>Mukesh Jain</strong>, M.A. Hardware, Guruwar Peth, Pune</li>
             </ul>
             <p className='mt-2 text-sm font-medium text-emerald-700'>Registration will be confirmed once your payment is received.</p>
             <button onClick={() => setSuccess(false)} className='mt-5 w-full rounded-xl bg-gradient-to-r from-sky-500 via-emerald-500 to-orange-500 px-4 py-2.5 text-sm font-semibold text-white'>Close</button>
