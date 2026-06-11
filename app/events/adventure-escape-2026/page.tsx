@@ -282,7 +282,6 @@ export default function AdventureEscape2026Page() {
           <p className='mt-1 text-sm text-slate-600'>Package is from Kolad to Kolad. Transportation has to be managed by self.</p>
 
           <form onSubmit={submit} className='mt-5 space-y-4'>
-            {error && <div className='rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700'>{error}</div>}
 
             <div className='grid gap-4 md:grid-cols-2'>
               <input name='fullName' value={form.fullName} onChange={onChange} placeholder='Full Name' className='rounded-xl border border-slate-300 px-3 py-2 text-sm' required />
@@ -364,6 +363,8 @@ export default function AdventureEscape2026Page() {
             <button type='submit' disabled={submitting} className='w-full rounded-xl bg-gradient-to-r from-sky-500 via-emerald-500 to-orange-500 px-4 py-3 text-sm font-bold text-white shadow-md disabled:opacity-60'>
               {submitting ? 'Submitting...' : 'Register for Adventure Escape'}
             </button>
+
+            {error && <div className='rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700'>{error}</div>}
           </form>
         </section>
       </main>
