@@ -5,7 +5,7 @@ export const EVENT_FEE = 500
 
 // Set to "YES" to block registrations and show closed modal.
 // Any other value will keep registrations open.
-export const REGISTRATION_CLOSED_STATUS = 'YES'
+export const REGISTRATION_CLOSED_STATUS = 'NO'
 
 export const eventHighlights = [
   { icon: Flame, label: 'Sports', emoji: '🔥' },
