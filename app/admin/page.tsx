@@ -60,6 +60,16 @@ export default function AdminIndex() {
               <span className='text-violet-500 text-2xl'>&rarr;</span>
             </div>
           </Link>
+
+          <Link href='/admin/adventure-escape-dashboard' className='group block rounded-2xl border border-sky-200 bg-white p-6 shadow hover:shadow-md transition'>
+            <div className='flex items-center justify-between'>
+              <div>
+                <h2 className='text-xl font-semibold text-sky-700 group-hover:text-sky-800'>Adventure Escape Dashboard</h2>
+                <p className='text-sm text-gray-600 mt-1'>View Adventure Escape 2026 registrations, rafting add-ons, and export participant data.</p>
+              </div>
+              <span className='text-sky-500 text-2xl'>&rarr;</span>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
