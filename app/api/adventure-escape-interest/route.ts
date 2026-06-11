@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
     const raftingAmount = raftingCount * 1200
     const amountTotal = baseAmount + kidsAmount + guestAmount + raftingAmount
 
-    const payload = {
+    const payload: Record<string, any> = {
       full_name: String(body.fullName).trim(),
       employee_id: null,
       mobile: String(body.mobile).trim(),
@@ -88,11 +88,35 @@ export async function POST(req: NextRequest) {
       payment_note: 'Fees to be paid in cash on or before Monday 15 June at Dr. Ashika Rathod, Jain Denticure, Kondhwa, Pune OR Mukesh Oswal, M.A. Hardware, Ravivar Peth, Pune.',
     }
 
-    const { data, error } = await supabase
-      .from('adventure_escape_interest')
-      .insert(payload)
-      .select()
-      .single()
+    // Handle environments where some optional columns are not migrated yet
+    // (e.g., coming_by_own_car). Retry by removing unknown column names.
+    let insertPayload = { ...payload }
+    let data: any = null
+    let error: any = null
+
+    for (let i = 0; i < 6; i++) {
+      const result = await supabase
+        .from('adventure_escape_interest')
+        .insert(insertPayload)
+        .select()
+        .single()
+
+      data = result.data
+      error = result.error
+
+      if (!error) break
+
+      const isUndefinedColumn = error.code === '42703' || /column .* does not exist/i.test(error.message || '')
+      if (!isUndefinedColumn) break
+
+      const match = String(error.message || '').match(/column\s+"?([a-zA-Z0-9_]+)"?\s+of relation/i)
+        || String(error.message || '').match(/column\s+"?([a-zA-Z0-9_]+)"?\s+does not exist/i)
+
+      const missingColumn = match?.[1]
+      if (!missingColumn || !(missingColumn in insertPayload)) break
+
+      delete insertPayload[missingColumn]
+    }
 
     if (error) {
       return NextResponse.json({ error: error.message, details: error.details, hint: error.hint }, { status: 500 })
