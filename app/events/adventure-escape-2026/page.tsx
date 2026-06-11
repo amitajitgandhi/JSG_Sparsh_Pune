@@ -165,15 +165,13 @@ export default function AdventureEscape2026Page() {
       )}
 
       <section className='relative h-[74vh] min-h-[540px] w-full overflow-hidden'>
-        <Image src='/images/GOA.jpg' alt='Adventure Escape 2026' fill priority className='object-cover object-center scale-105' />
+        <Image src='/images/KOLAD.jpg' alt='Adventure Escape 2026' fill priority className='object-cover object-center scale-105' />
         <div className='absolute inset-0 bg-gradient-to-b from-slate-900/60 via-emerald-900/45 to-sky-900/70' />
         <div className='absolute inset-0 flex items-center'>
           <div className='mx-auto w-full max-w-6xl px-4 sm:px-6'>
             <div className='max-w-3xl rounded-[1.8rem] border border-white/35 bg-white/12 p-6 shadow-2xl backdrop-blur-xl sm:p-8'>
               <p className='mb-2 inline-flex rounded-full bg-orange-500/95 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white'>Weekend Trip</p>
               <h1 className='text-3xl font-black leading-tight text-white drop-shadow sm:text-5xl'>🏕️ Adventure Escape 2026</h1>
-              <p className='mt-3 text-lg font-semibold text-sky-100'>Pack your bags and leave the ordinary behind!</p>
-              <p className='mt-3 text-sm text-white/90 sm:text-base'>Get ready for an unforgettable getaway filled with adventure, laughter, bonding, and memories that will last a lifetime.</p>
               <div className='mt-5 grid gap-2 text-sm text-white sm:grid-cols-3'>
                 <p className='inline-flex items-center gap-1.5'><Calendar size={15} /> 4th - 5th July 2026</p>
                 <p className='inline-flex items-center gap-1.5'><Clock3 size={15} /> 1 Night, 2 Days</p>
