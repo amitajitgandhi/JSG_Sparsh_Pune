@@ -187,7 +187,7 @@ export default function AdventureEscape2026Page() {
         <section className='rounded-2xl border border-sky-200 bg-white/80 p-4 shadow-sm backdrop-blur'>
           <p className='text-sm font-semibold text-slate-700'>💵 Fees to be paid in cash on or before <span className='text-red-600'>Monday 15 June</span> at either:</p>
           <ul className='mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700'>
-            <li><strong>Dr. Ashika Rathod</strong>, Jain Denticure, Kondhwa, Pune</li>
+            <li><strong>Dr. Ashika Rathod</strong>, Jain Denticure, Kondhwa, Pune (Only on 15th June 7pm - 10pm)</li>
             <li><strong>Mukesh Jain</strong>, M.A. Hardware, Guruwar Peth, Pune</li>
           </ul>
         </section>
@@ -355,7 +355,7 @@ export default function AdventureEscape2026Page() {
             <div className='rounded-xl border border-orange-200 bg-orange-50 p-3 text-xs text-orange-900'>
               <p className='font-semibold'>💵 Fees to be paid in cash on or before <span className='text-red-600'>Monday 15 June</span> at either:</p>
               <ul className='mt-2 list-disc space-y-1 pl-4'>
-                <li><strong>Dr. Ashika Rathod</strong>, Jain Denticure, Kondhwa, Pune</li>
+                              <li><strong>Dr. Ashika Rathod</strong>, Jain Denticure, Kondhwa, Pune (Only on 15th June 7pm - 10pm)</li>
                 <li><strong>Mukesh Jain</strong>, M.A. Hardware, Guruwar Peth, Pune</li>
               </ul>
               <p className='mt-2 font-medium text-orange-800'>Registration will be confirmed once your payment is received.</p>
@@ -374,7 +374,7 @@ export default function AdventureEscape2026Page() {
             <h3 className='text-xl font-extrabold text-emerald-700'>Thanks for registering! ✅</h3>
             <p className='mt-3 text-sm font-semibold text-slate-700'>💵 Fees to be paid in cash on or before <span className='text-red-600'>Monday 15 June</span> at either:</p>
             <ul className='mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700'>
-              <li><strong>Dr. Ashika Rathod</strong>, Jain Denticure, Kondhwa, Pune</li>
+                          <li><strong>Dr. Ashika Rathod</strong>, Jain Denticure, Kondhwa, Pune (Only on 15th June 7pm - 10pm)</li>
               <li><strong>Mukesh Jain</strong>, M.A. Hardware, Guruwar Peth, Pune</li>
             </ul>
             <p className='mt-2 text-sm font-medium text-emerald-700'>Registration will be confirmed once your payment is received.</p>
