@@ -63,7 +63,7 @@ const PALETTE_BORDER = [
   'border-l-teal-500',    'border-l-rose-500',    'border-l-indigo-500',  'border-l-lime-500',
 ]
 
-// ── Player card ───────────────────────────────────────────────────────────────
+// ── Player card (kept for potential reuse) ──────────────────────────────────
 
 function PlayerCard({ player, gradient }: { player: Player; gradient: string }) {
   return (
@@ -343,13 +343,78 @@ export default function KhelotsavTeamsPage() {
                   </div>
                 </button>
 
-                {/* Player grid */}
+                {/* Player table - responsive for mobile */}
                 {isOpen && (
                   <div className="p-3 sm:p-4 md:p-6">
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
-                      {teamPlayers.map(player => (
-                        <PlayerCard key={player.id} player={player} gradient={gradient} />
-                      ))}
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full border-collapse">
+                        <thead className="hidden sm:table-header-group">
+                          <tr className="text-left text-xs text-gray-500 uppercase tracking-wider">
+                            <th className="px-3 py-2">#</th>
+                            <th className="px-3 py-2">Player</th>
+                            <th className="px-3 py-2">Age</th>
+                            <th className="px-3 py-2">Gender</th>
+                            <th className="px-3 py-2">Category</th>
+                            <th className="px-3 py-2">Jersey</th>
+                            <th className="px-3 py-2">Mobile</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-100">
+                          {teamPlayers.map(player => (
+                            <tr key={player.id} className="bg-white dark:bg-gray-800">
+                              {/* Sr No */}
+                              <td className="px-3 py-3 align-top w-12 text-sm font-medium text-gray-700 dark:text-gray-200">
+                                <span className="sm:hidden text-xs text-gray-500">#</span>
+                                #{player.sr_no}
+                              </td>
+
+                              {/* Player name + compact labels for mobile */}
+                              <td className="px-3 py-3 align-top text-sm">
+                                <div className="font-semibold text-gray-900 dark:text-white">{player.player_name}</div>
+                                <div className="text-xs text-gray-500 mt-0.5 sm:hidden">
+                                  {player.category ? `${player.category} · ` : ''}
+                                  {player.age ? `${player.age} yrs · ` : ''}
+                                  {player.gender ? `${player.gender}` : ''}
+                                </div>
+                              </td>
+
+                              {/* Age */}
+                              <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">
+                                <span className="sm:hidden text-xs text-gray-500">Age</span>
+                                {player.age ? `${player.age} yrs` : '—'}
+                              </td>
+
+                              {/* Gender */}
+                              <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">
+                                <span className="sm:hidden text-xs text-gray-500">Gender</span>
+                                {player.gender ?? '—'}
+                              </td>
+
+                              {/* Category */}
+                              <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">
+                                <span className="sm:hidden text-xs text-gray-500">Category</span>
+                                {player.category ?? '—'}
+                              </td>
+
+                              {/* Jersey */}
+                              <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">
+                                <span className="sm:hidden text-xs text-gray-500">Jersey</span>
+                                {player.jersey_size ?? '—'}
+                              </td>
+
+                              {/* Mobile */}
+                              <td className="px-3 py-3 align-top text-sm text-sky-600 dark:text-sky-300">
+                                <span className="sm:hidden text-xs text-gray-500">Mobile</span>
+                                {player.mobile ? (
+                                  <a href={`tel:${player.mobile}`} className="inline-flex items-center gap-1">
+                                    <Phone size={12} /> {player.mobile}
+                                  </a>
+                                ) : '—'}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 )}
