@@ -23,9 +23,27 @@ const registrationClosed =
   String(REGISTRATION_CLOSED_STATUS || '').trim().toUpperCase() === 'YES'
 
 const quickStats = [
-  { value: '12+', label: 'Sports', gradient: 'from-sky-500 to-sky-600' },
-  { value: '8', label: 'Teams', gradient: 'from-emerald-500 to-emerald-600' },
-  { value: '250+', label: 'Players', gradient: 'from-orange-500 to-orange-600' },
+  {
+    icon: Activity,
+    iconClass: 'text-sky-500 dark:text-cyan-400',
+    borderClass: 'border-sky-200 dark:border-sky-800',
+    label: 'Sports',
+    value: '12+',
+  },
+  {
+    icon: Users,
+    iconClass: 'text-emerald-500 dark:text-emerald-400',
+    borderClass: 'border-emerald-200 dark:border-emerald-800',
+    label: 'Teams',
+    value: '8',
+  },
+  {
+    icon: ClipboardList,
+    iconClass: 'text-orange-500 dark:text-orange-400',
+    borderClass: 'border-orange-200 dark:border-orange-800',
+    label: 'Players',
+    value: '250+',
+  },
 ]
 
 const eventDetails = [
@@ -199,18 +217,28 @@ export default function KhelotsavHubPage() {
         </p>
 
         {/* Quick stats */}
-        <div className="mt-6 grid grid-cols-3 gap-2 sm:mt-8 sm:gap-3">
-          {quickStats.map((stat) => (
-            <div
-              key={stat.label}
-              className={`rounded-xl bg-gradient-to-br ${stat.gradient} p-2.5 text-center text-white shadow-md sm:p-4`}
-            >
-              <div className="text-lg font-bold sm:text-2xl">{stat.value}</div>
-              <div className="mt-0.5 text-[11px] font-medium leading-tight opacity-90 sm:text-xs">
-                {stat.label}
+        <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:grid sm:grid-cols-3 sm:gap-3">
+          {quickStats.map((stat) => {
+            const Icon = stat.icon
+            return (
+              <div
+                key={stat.label}
+                className={`flex w-full items-center gap-3 rounded-xl border bg-white px-4 py-3.5 shadow-sm dark:bg-slate-900/90 ${stat.borderClass}`}
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800">
+                  <Icon size={18} className={stat.iconClass} />
+                </span>
+                <div className="min-w-0 flex-1 text-left">
+                  <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                    {stat.label}
+                  </p>
+                  <p className="text-sm font-semibold leading-snug text-slate-800 dark:text-slate-100">
+                    {stat.value}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
 
         {/* Action tiles — 2×2 on mobile */}
