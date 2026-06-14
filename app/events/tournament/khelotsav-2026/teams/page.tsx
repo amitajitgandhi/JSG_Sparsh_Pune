@@ -76,10 +76,10 @@ function PlayerCard({ player, gradient }: { player: Player; gradient: string }) 
               <Users size={18} className="text-white" />
             </div>
             <h3 className="font-bold text-sm sm:text-base leading-tight line-clamp-1">
-              {player.player_name}
+              {player.player_name.toUpperCase()}
             </h3>
           </div>
-          <div className="bg-white/20 px-2 py-0.5 rounded-full text-xs font-bold">#{player.sr_no}</div>
+          {/* removed serial number display */}
         </div>
       </div>
 
@@ -165,8 +165,40 @@ export default function KhelotsavTeamsPage() {
 
   const grouped: Record<string, Player[]> = {}
   Object.values(groupedByKey).forEach(g => {
-    grouped[g.name] = g.players.sort((a, b) => (a.sr_no ?? 0) - (b.sr_no ?? 0)
-      || a.player_name.localeCompare(b.player_name))
+    // Sort players by custom priority: Male Member, Male Kid, Female Member, Female Kid, then sr_no then name
+    function normalizeGender(gen?: string) {
+      if (!gen) return ''
+      const g = gen.toLowerCase().trim()
+      if (g === 'male' || g === 'm') return 'male'
+      if (g === 'female' || g === 'f') return 'female'
+      return g
+    }
+    function normalizeCategory(cat?: string) {
+      if (!cat) return ''
+      const c = cat.toLowerCase().trim()
+      if (c.includes('kid') || c.includes('child')) return 'kid'
+      if (c.includes('member')) return 'member'
+      return c
+    }
+    function priorityFor(p: Player) {
+      const g = normalizeGender(p.gender)
+      const c = normalizeCategory(p.category)
+      if (g === 'male' && c === 'member') return 0
+      if (g === 'male' && c === 'kid') return 1
+      if (g === 'female' && c === 'member') return 2
+      if (g === 'female' && c === 'kid') return 3
+      return 4
+    }
+
+    grouped[g.name] = g.players.sort((a, b) => {
+      const pa = priorityFor(a)
+      const pb = priorityFor(b)
+      if (pa !== pb) return pa - pb
+      const sa = a.sr_no ?? 0
+      const sb = b.sr_no ?? 0
+      if (sa !== sb) return sa - sb
+      return a.player_name.localeCompare(b.player_name)
+    })
   })
 
   const teamNames = Object.keys(grouped).sort((a, b) => a.localeCompare(b))
@@ -346,75 +378,82 @@ export default function KhelotsavTeamsPage() {
                 {/* Player table - responsive for mobile */}
                 {isOpen && (
                   <div className="p-3 sm:p-4 md:p-6">
-                    <div className="overflow-x-auto">
-                      <table className="min-w-full border-collapse">
-                        <thead className="hidden sm:table-header-group">
-                          <tr className="text-left text-xs text-gray-500 uppercase tracking-wider">
-                            <th className="px-3 py-2">#</th>
-                            <th className="px-3 py-2">Player</th>
-                            <th className="px-3 py-2">Age</th>
-                            <th className="px-3 py-2">Gender</th>
-                            <th className="px-3 py-2">Category</th>
-                            <th className="px-3 py-2">Jersey</th>
-                            <th className="px-3 py-2">Mobile</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                          {teamPlayers.map(player => (
-                            <tr key={player.id} className="bg-white dark:bg-gray-800">
-                              {/* Sr No */}
-                              <td className="px-3 py-3 align-top w-12 text-sm font-medium text-gray-700 dark:text-gray-200">
-                                <span className="sm:hidden text-xs text-gray-500">#</span>
-                                #{player.sr_no}
-                              </td>
+                    <div>
+                      {/* Mobile list (visible on small screens) */}
+                      <div className="sm:hidden space-y-3">
+                        {teamPlayers.map(player => (
+                          <div key={player.id} className="bg-white dark:bg-gray-800 rounded-lg p-3 flex items-start justify-between border border-gray-100 dark:border-gray-700">
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-2">
+                                <div className="text-sm font-semibold text-gray-900 dark:text-white truncate">{player.player_name.toUpperCase()}</div>
+                              </div>
+                              <div className="mt-1 text-xs text-gray-500">
+                                {player.category ? <span className="inline-block mr-2">{player.category}</span> : null}
+                                <span className="inline-block mr-2">
+                                  {(() => {
+                                    const g = (player.gender || '').toLowerCase().trim()
+                                    if (g === 'male' || g === 'm') return 'M'
+                                    if (g === 'female' || g === 'f') return 'F'
+                                    return player.gender ?? '—'
+                                  })()}
+                                </span>
+                                <span className="inline-block">{player.jersey_size ?? '—'}</span>
+                              </div>
+                            </div>
 
-                              {/* Player name + compact labels for mobile */}
-                              <td className="px-3 py-3 align-top text-sm">
-                                <div className="font-semibold text-gray-900 dark:text-white">{player.player_name}</div>
-                                <div className="text-xs text-gray-500 mt-0.5 sm:hidden">
-                                  {player.category ? `${player.category} · ` : ''}
-                                  {player.age ? `${player.age} yrs · ` : ''}
-                                  {player.gender ? `${player.gender}` : ''}
-                                </div>
-                              </td>
+                            <div className="text-right ml-3 shrink-0">
+                              {player.mobile ? (
+                                <a href={`tel:${player.mobile}`} className="inline-flex items-center gap-1 text-sky-600 dark:text-sky-300 text-sm">
+                                  <Phone size={14} /> {player.mobile}
+                                </a>
+                              ) : (
+                                <div className="text-xs text-gray-400">—</div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
 
-                              {/* Age */}
-                              <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">
-                                <span className="sm:hidden text-xs text-gray-500">Age</span>
-                                {player.age ? `${player.age} yrs` : '—'}
-                              </td>
+                      {/* Desktop/table view (visible on sm+ screens) */}
+                      <div className="hidden sm:block overflow-x-auto">
+                        <table className="min-w-full border-collapse">
+                          <thead className="table-header-group">
+                            <tr className="text-left text-xs text-gray-500 uppercase tracking-wider">
+                              <th className="px-3 py-2">Player</th>
+                              <th className="px-3 py-2">Gender</th>
+                              <th className="px-3 py-2">Category</th>
+                              <th className="px-3 py-2">Jersey</th>
+                              <th className="px-3 py-2">Mobile</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-100">
+                            {teamPlayers.map(player => (
+                              <tr key={player.id} className="bg-white dark:bg-gray-800">
+                                <td className="px-3 py-3 align-top text-sm">
+                                  <div className="font-semibold text-gray-900 dark:text-white">{player.player_name.toUpperCase()}</div>
+                                </td>
 
-                              {/* Gender */}
-                              <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">
-                                <span className="sm:hidden text-xs text-gray-500">Gender</span>
-                                {player.gender ?? '—'}
-                              </td>
+                                <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">{(() => {
+                                  const g = (player.gender || '').toLowerCase().trim()
+                                  if (g === 'male' || g === 'm') return 'M'
+                                  if (g === 'female' || g === 'f') return 'F'
+                                  return player.gender ?? '—'
+                                })()}</td>
 
-                              {/* Category */}
-                              <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">
-                                <span className="sm:hidden text-xs text-gray-500">Category</span>
-                                {player.category ?? '—'}
-                              </td>
+                                <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">{player.category ?? '—'}</td>
 
-                              {/* Jersey */}
-                              <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">
-                                <span className="sm:hidden text-xs text-gray-500">Jersey</span>
-                                {player.jersey_size ?? '—'}
-                              </td>
+                                <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">{player.jersey_size ?? '—'}</td>
 
-                              {/* Mobile */}
-                              <td className="px-3 py-3 align-top text-sm text-sky-600 dark:text-sky-300">
-                                <span className="sm:hidden text-xs text-gray-500">Mobile</span>
-                                {player.mobile ? (
+                                <td className="px-3 py-3 align-top text-sm text-sky-600 dark:text-sky-300">{player.mobile ? (
                                   <a href={`tel:${player.mobile}`} className="inline-flex items-center gap-1">
                                     <Phone size={12} /> {player.mobile}
                                   </a>
-                                ) : '—'}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                                ) : '—'}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 )}
