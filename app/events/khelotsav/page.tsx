@@ -87,7 +87,7 @@ const actionLinks: CtaItem[] = [
     label: 'Leaderboard',
     sub: 'Standings & medal tally',
     icon: <Trophy size={20} />,
-    gradient: 'from-orange-500 to-orange-600',
+    gradient: 'from-purple-500 to-purple-600',
     glow: 'hover:shadow-orange-200 dark:hover:shadow-orange-900/30',
   },
   {
