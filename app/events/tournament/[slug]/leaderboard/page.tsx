@@ -73,7 +73,7 @@ export default function LeaderboardPage() {
         ) : (
           <>
             {/* ── Podium ─────────────────────────────────────────────────── */}
-            {top3.length >= 2 && (
+            {top3.length === 3 && top3[0].rank === 1 && top3[1].rank === 2 && top3[2].rank === 3 && (
               <div className='mb-8 rounded-2xl bg-gradient-to-b from-amber-50 via-white to-gray-50 p-8 shadow-lg border border-amber-100'>
                                       <h2 className='text-sm font-semibold text-gray-600 uppercase tracking-widest mb-8 text-center'>🏆 Champions 🏆</h2>
                 <div className='flex items-end justify-center gap-4 sm:gap-8'>
