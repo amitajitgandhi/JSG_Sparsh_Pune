@@ -62,16 +62,12 @@ function parseCsv(text: string): Record<string, string>[] {
 }
 
 function normalizeTeamKey(value: string): string {
-  return value.trim().replace(/\s+/g, ' ').toLowerCase()
-}
-
-function toDisplayTeamName(value: string): string {
   return value
+    .normalize('NFKC')
     .trim()
     .replace(/\s+/g, ' ')
-    .split(' ')
-    .map(w => (w ? w[0].toUpperCase() + w.slice(1).toLowerCase() : w))
-    .join(' ')
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, '')
 }
 
 // ── Admin component ───────────────────────────────────────────────────────────
@@ -122,9 +118,9 @@ export default function KhelotsavPlayersAdmin() {
         if (!parsed.length) { setStatus('error'); setMsg('No valid rows found. Check your CSV format.'); return }
         const teamMap = new Map<string, string>()
         const players: KhelotsavPlayer[] = parsed.map((r, i) => {
-          const rawTeam = r['team_name'] || ''
+          const rawTeam = (r['team_name'] || '').trim().replace(/\s+/g, ' ')
           const key = normalizeTeamKey(rawTeam)
-          const canonicalTeam = teamMap.get(key) ?? toDisplayTeamName(rawTeam)
+          const canonicalTeam = teamMap.get(key) ?? rawTeam
           if (!teamMap.has(key)) teamMap.set(key, canonicalTeam)
 
           return {

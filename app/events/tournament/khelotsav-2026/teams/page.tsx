@@ -19,6 +19,17 @@ interface Player {
   category?: string
 }
 
+// ── Normalize team key ──────────────────────────────────────────────────────────
+
+function normalizeTeamKey(value: string): string {
+  return value
+    .normalize('NFKC')
+    .trim()
+    .replace(/\s+/g, ' ')
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, '')
+}
+
 // ── Team colour palette (cycles through teams) ────────────────────────────────
 
 const PALETTE = [
@@ -144,13 +155,21 @@ export default function KhelotsavTeamsPage() {
   // Reset expanded when data loads
   useEffect(() => { setExpanded({}) }, [players.length])
 
-  // Group by team
-  const grouped: Record<string, Player[]> = {}
+  // Group by team (case-insensitive)
+  const groupedByKey: Record<string, { name: string; players: Player[] }> = {}
   players.forEach(p => {
-    if (!grouped[p.team_name]) grouped[p.team_name] = []
-    grouped[p.team_name].push(p)
+    const key = normalizeTeamKey(p.team_name)
+    if (!groupedByKey[key]) groupedByKey[key] = { name: p.team_name.trim().replace(/\s+/g, ' '), players: [] }
+    groupedByKey[key].players.push(p)
   })
-  const teamNames = Object.keys(grouped).sort()
+
+  const grouped: Record<string, Player[]> = {}
+  Object.values(groupedByKey).forEach(g => {
+    grouped[g.name] = g.players.sort((a, b) => (a.sr_no ?? 0) - (b.sr_no ?? 0)
+      || a.player_name.localeCompare(b.player_name))
+  })
+
+  const teamNames = Object.keys(grouped).sort((a, b) => a.localeCompare(b))
 
   const toggle = (team: string) => {
     setExpanded(prev => {
