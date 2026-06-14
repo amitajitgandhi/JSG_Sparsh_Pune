@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Users, Phone, ChevronDown, ChevronUp, Loader2, Trophy } from 'lucide-react'
+import { Users, Phone, ChevronDown, ChevronUp, Loader2, Trophy, Download } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -164,6 +164,32 @@ export default function KhelotsavTeamsPage() {
     })
   }
 
+  const exportTeamCsv = (team: string, teamPlayers: Player[]) => {
+    const headers = ['sr_no', 'team_name', 'player_name', 'mobile', 'age', 'gender', 'category', 'jersey_size']
+    const lines = [
+      headers.join(','),
+      ...teamPlayers.map((p) => [
+        p.sr_no ?? '',
+        p.team_name ?? '',
+        p.player_name ?? '',
+        p.mobile ?? '',
+        p.age ?? '',
+        p.gender ?? '',
+        p.category ?? '',
+        p.jersey_size ?? '',
+      ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')),
+    ]
+
+    const blob = new Blob([lines.join('\n')], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    const safeTeam = team.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+    a.download = `khelotsav-2026-${safeTeam || 'team'}-players.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   // ── Loading ────────────────────────────────────────────────────────────────
   if (loading) return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-emerald-50 flex items-center justify-center">
@@ -278,8 +304,23 @@ export default function KhelotsavTeamsPage() {
                       <p className={`text-xs sm:text-sm opacity-70 mt-0.5`}>{teamPlayers.length} player{teamPlayers.length !== 1 ? 's' : ''}</p>
                     </div>
                   </div>
-                  <div className={`relative z-10 ${textCls} p-1 rounded-full group-hover:bg-white/30 transition-colors`}>
-                    {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+
+                  {/* Export button */}
+                  <div className="flex items-center gap-2 relative z-10">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        exportTeamCsv(team, teamPlayers)
+                      }}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-white/50 bg-white/60 px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-white transition"
+                      title={`Export ${team} players`}
+                    >
+                      <Download size={14} /> Export
+                    </button>
+                    <div className={`${textCls} p-1 rounded-full group-hover:bg-white/30 transition-colors`}>
+                      {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                    </div>
                   </div>
                 </button>
 
