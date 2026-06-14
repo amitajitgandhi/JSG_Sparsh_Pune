@@ -16,8 +16,7 @@ interface Player {
   age?: number
   gender?: string
   jersey_size?: string
-  sport?: string
-  photo_url?: string
+  category?: string
 }
 
 // ── Team colour palette (cycles through teams) ────────────────────────────────
@@ -56,38 +55,25 @@ const PALETTE_BORDER = [
 // ── Player card ───────────────────────────────────────────────────────────────
 
 function PlayerCard({ player, gradient }: { player: Player; gradient: string }) {
-  const [imgError, setImgError] = useState(false)
-
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl dark:shadow-gray-900/20 transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 hover:scale-105 active:scale-95">
-      {/* Photo */}
-      <div className="aspect-square relative overflow-hidden bg-gray-100 dark:bg-gray-700">
-        {player.photo_url && !imgError ? (
-          <img
-            src={player.photo_url}
-            alt={player.player_name}
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-            onError={() => setImgError(true)}
-          />
-        ) : (
-          <div className={`w-full h-full flex items-center justify-center bg-gradient-to-br ${gradient} opacity-20`}>
-            <Users size={40} className="text-gray-400" />
+      {/* Header with avatar placeholder + sr no */}
+      <div className={`relative p-3 bg-gradient-to-r ${gradient} text-white`}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="h-9 w-9 rounded-full bg-white/20 flex items-center justify-center">
+              <Users size={18} className="text-white" />
+            </div>
+            <h3 className="font-bold text-sm sm:text-base leading-tight line-clamp-1">
+              {player.player_name}
+            </h3>
           </div>
-        )}
-        {/* Sr. No. badge */}
-        <div className={`absolute top-1.5 left-1.5 bg-gradient-to-r ${gradient} text-white px-1.5 py-0.5 rounded-full text-xs font-bold shadow-lg`}>
-          #{player.sr_no}
+          <div className="bg-white/20 px-2 py-0.5 rounded-full text-xs font-bold">#{player.sr_no}</div>
         </div>
       </div>
 
       {/* Info */}
       <div className="p-3 sm:p-4 space-y-2 bg-white dark:bg-gray-800">
-        <h3 className="font-bold text-sm sm:text-base text-gray-900 dark:text-white leading-tight line-clamp-2">
-          {player.player_name}
-        </h3>
-
         <div className="space-y-1 text-xs sm:text-sm">
           {player.age && (
             <div className="flex justify-between items-center">
@@ -101,10 +87,10 @@ function PlayerCard({ player, gradient }: { player: Player; gradient: string }) 
               <span className="font-semibold text-gray-800 dark:text-white">{player.gender}</span>
             </div>
           )}
-          {player.sport && (
+          {player.category && (
             <div className="flex justify-between items-center">
-              <span className="text-gray-500 dark:text-gray-400">Sport</span>
-              <span className="font-semibold text-gray-800 dark:text-white text-right ml-1 line-clamp-1">{player.sport}</span>
+              <span className="text-gray-500 dark:text-gray-400">Category</span>
+              <span className="font-semibold text-gray-800 dark:text-white text-right ml-1 line-clamp-1">{player.category}</span>
             </div>
           )}
           {player.jersey_size && (

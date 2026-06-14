@@ -15,7 +15,7 @@ interface KhelotsavPlayer {
   age?: number | string
   gender?: string
   jersey_size?: string
-  sport?: string
+  category?: string
   photo_url?: string
   sr_no?: number | string
 }
@@ -25,13 +25,13 @@ type UploadStatus = 'idle' | 'parsing' | 'uploading' | 'done' | 'error'
 // ── CSV template columns (must match DB) ─────────────────────────────────────
 const TEMPLATE_HEADERS = [
   'sr_no', 'team_name', 'player_name', 'mobile', 'age',
-  'gender', 'jersey_size', 'sport', 'photo_url',
+  'gender', 'jersey_size', 'category', 'photo_url',
 ]
 
 const TEMPLATE_SAMPLE_ROWS = [
-  ['1', 'Team Alpha', 'Rahul Jain', '9876543210', '28', 'Male', 'L - 40', 'Badminton', ''],
-  ['2', 'Team Alpha', 'Priya Shah', '9123456789', '24', 'Female', 'S - 36', 'Chess', ''],
-  ['3', 'Team Beta',  'Amit Mehta', '9988776655', '32', 'Male', 'XL - 42', 'Table Tennis', ''],
+  ['1', 'Team Alpha', 'Rahul Jain', '9876543210', '28', 'Male', 'L - 40', 'Member', ''],
+  ['2', 'Team Alpha', 'Priya Shah', '9123456789', '24', 'Female', 'S - 36', 'Member', ''],
+  ['3', 'Team Beta',  'Amit Mehta', '9988776655', '13', 'Male', 'M - 38', 'Kid', ''],
 ]
 
 function downloadTemplate() {
@@ -59,6 +59,19 @@ function parseCsv(text: string): Record<string, string>[] {
     })
     return row
   }).filter(r => r['player_name'] && r['team_name'])
+}
+
+function normalizeTeamKey(value: string): string {
+  return value.trim().replace(/\s+/g, ' ').toLowerCase()
+}
+
+function toDisplayTeamName(value: string): string {
+  return value
+    .trim()
+    .replace(/\s+/g, ' ')
+    .split(' ')
+    .map(w => (w ? w[0].toUpperCase() + w.slice(1).toLowerCase() : w))
+    .join(' ')
 }
 
 // ── Admin component ───────────────────────────────────────────────────────────
@@ -107,18 +120,26 @@ export default function KhelotsavPlayersAdmin() {
       try {
         const parsed = parseCsv(e.target?.result as string)
         if (!parsed.length) { setStatus('error'); setMsg('No valid rows found. Check your CSV format.'); return }
-        const players: KhelotsavPlayer[] = parsed.map((r, i) => ({
-          tournament:  TOURNAMENT,
-          sr_no:       r['sr_no'] ? parseInt(r['sr_no']) : i + 1,
-          team_name:   r['team_name'],
-          player_name: r['player_name'],
-          mobile:      r['mobile']      || undefined,
-          age:         r['age']         ? parseInt(r['age']) : undefined,
-          gender:      r['gender']      || undefined,
-          jersey_size: r['jersey_size'] || undefined,
-          sport:       r['sport']       || undefined,
-          photo_url:   r['photo_url']   || undefined,
-        }))
+        const teamMap = new Map<string, string>()
+        const players: KhelotsavPlayer[] = parsed.map((r, i) => {
+          const rawTeam = r['team_name'] || ''
+          const key = normalizeTeamKey(rawTeam)
+          const canonicalTeam = teamMap.get(key) ?? toDisplayTeamName(rawTeam)
+          if (!teamMap.has(key)) teamMap.set(key, canonicalTeam)
+
+          return {
+            tournament:  TOURNAMENT,
+            sr_no:       r['sr_no'] ? parseInt(r['sr_no']) : i + 1,
+            team_name:   canonicalTeam,
+            player_name: r['player_name'],
+            mobile:      r['mobile']      || undefined,
+            age:         r['age']         ? parseInt(r['age']) : undefined,
+            gender:      r['gender']      || undefined,
+            jersey_size: r['jersey_size'] || undefined,
+            category:    r['category']    || undefined,
+            photo_url:   r['photo_url']   || undefined,
+          }
+        })
         setPreview(players)
         setStatus('idle')
         setMsg(`${players.length} players parsed from CSV. Review below and click Upload.`)
@@ -172,7 +193,7 @@ export default function KhelotsavPlayersAdmin() {
       headers.join(','),
       ...rows.map(r => [
         r.sr_no ?? '', r.team_name, r.player_name, r.mobile ?? '',
-        r.age ?? '', r.gender ?? '', r.jersey_size ?? '', r.sport ?? '', r.photo_url ?? '',
+        r.age ?? '', r.gender ?? '', r.jersey_size ?? '', r.category ?? '', r.photo_url ?? '',
       ].map(c => `"${c}"`).join(','))
     ]
     const blob = new Blob([lines.join('\n')], { type: 'text/csv' })
@@ -295,7 +316,7 @@ export default function KhelotsavPlayersAdmin() {
               <div className="overflow-x-auto rounded-xl border border-gray-200">
                 <table className="min-w-full text-xs">
                   <thead className="bg-gray-50">
-                    <tr>{['#', 'Team', 'Player', 'Mobile', 'Age', 'Gender', 'Sport'].map(h => (
+                    <tr>{['#', 'Team', 'Player', 'Mobile', 'Age', 'Gender', 'Category'].map(h => (
                       <th key={h} className="px-3 py-2 text-left font-semibold text-gray-600">{h}</th>
                     ))}</tr>
                   </thead>
@@ -308,7 +329,7 @@ export default function KhelotsavPlayersAdmin() {
                         <td className="px-3 py-1.5 text-gray-500">{p.mobile}</td>
                         <td className="px-3 py-1.5 text-gray-500">{p.age}</td>
                         <td className="px-3 py-1.5 text-gray-500">{p.gender}</td>
-                        <td className="px-3 py-1.5 text-gray-500">{p.sport}</td>
+                        <td className="px-3 py-1.5 text-gray-500">{p.category}</td>
                       </tr>
                     ))}
                   </tbody>
