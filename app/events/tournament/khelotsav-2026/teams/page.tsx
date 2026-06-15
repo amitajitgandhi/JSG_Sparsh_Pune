@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Users, Phone, ChevronDown, ChevronUp, Loader2, Trophy, Download } from 'lucide-react'
+import { Users, Phone, ChevronDown, ChevronUp, Loader2, Trophy, Download, Pencil, Plus, Check, X, Search } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -135,6 +135,38 @@ export default function KhelotsavTeamsPage() {
   const [error,    setError]    = useState<string | null>(null)
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
 
+  // ── Find My Team state ─────────────────────────────────────────────────────
+  const [findQuery,   setFindQuery]   = useState('')
+  const [findResults, setFindResults] = useState<Player[] | null>(null)
+
+  const handleFind = () => {
+    const q = findQuery.trim().toLowerCase()
+    if (!q) { setFindResults(null); return }
+    const matches = players.filter(p =>
+      p.player_name.toLowerCase().includes(q) ||
+      (p.mobile ?? '').replace(/\s/g, '').includes(q.replace(/\s/g, ''))
+    )
+    setFindResults(matches)
+  }
+
+  const clearFind = () => { setFindQuery(''); setFindResults(null) }
+
+  // ── Admin / edit state ─────────────────────────────────────────────────────
+  const [isAdminAuthed, setIsAdminAuthed] = useState(false)
+  const [authTarget, setAuthTarget] = useState<
+    { type: 'edit'; playerId: string } | { type: 'add'; teamName: string } | null
+  >(null)
+  const [authInput, setAuthInput]   = useState('')
+  const [authError, setAuthError]   = useState(false)
+
+  const [editingPlayerId, setEditingPlayerId] = useState<string | null>(null)
+  const [editJersey,      setEditJersey]      = useState('')
+
+  const [addingToTeam, setAddingToTeam] = useState<string | null>(null)
+  const [newName,      setNewName]      = useState('')
+  const [newJersey,    setNewJersey]    = useState('')
+  const [saving,       setSaving]       = useState(false)
+
   const TOURNAMENT = 'khelotsav-2026'
 
   useEffect(() => {
@@ -154,6 +186,125 @@ export default function KhelotsavTeamsPage() {
 
   // Reset expanded when data loads
   useEffect(() => { setExpanded({}) }, [players.length])
+
+  // ── Admin handlers ─────────────────────────────────────────────────────────
+
+  const handleEditClick = (player: Player) => {
+    if (isAdminAuthed) {
+      setEditingPlayerId(player.id)
+      setEditJersey(player.jersey_size ?? '')
+      setAuthTarget(null)
+    } else {
+      setAuthTarget({ type: 'edit', playerId: player.id })
+      setAuthInput('')
+      setAuthError(false)
+      setEditingPlayerId(null)
+    }
+  }
+
+  const handleAddClick = (teamName: string) => {
+    // Always expand the team
+    setExpanded(prev => ({ ...prev, [teamName]: true }))
+    if (isAdminAuthed) {
+      setAddingToTeam(teamName)
+      setNewName('')
+      setNewJersey('')
+      setAuthTarget(null)
+    } else {
+      setAuthTarget({ type: 'add', teamName })
+      setAuthInput('')
+      setAuthError(false)
+      setAddingToTeam(null)
+    }
+  }
+
+  const handleAuthSubmit = () => {
+    if (authInput === 'admin123') {
+      setIsAdminAuthed(true)
+      setAuthError(false)
+      if (authTarget?.type === 'edit') {
+        const player = players.find(p => p.id === authTarget.playerId)
+        if (player) {
+          setEditingPlayerId(player.id)
+          setEditJersey(player.jersey_size ?? '')
+        }
+      } else if (authTarget?.type === 'add') {
+        setAddingToTeam(authTarget.teamName)
+        setNewName('')
+        setNewJersey('')
+      }
+      setAuthTarget(null)
+      setAuthInput('')
+    } else {
+      setAuthError(true)
+    }
+  }
+
+  const saveEditJersey = async (playerId: string) => {
+    setSaving(true)
+    const { error: err } = await supabase
+      .from('khelotsav_players')
+      .update({ jersey_size: editJersey.trim() || null })
+      .eq('id', playerId)
+    if (!err) {
+      setPlayers(prev => prev.map(p => p.id === playerId ? { ...p, jersey_size: editJersey.trim() || undefined } : p))
+      setEditingPlayerId(null)
+    }
+    setSaving(false)
+  }
+
+  const saveNewPlayer = async (teamName: string) => {
+    if (!newName.trim()) return
+    setSaving(true)
+    const teamKey = normalizeTeamKey(teamName)
+    const teamPlayers = players.filter(p => normalizeTeamKey(p.team_name) === teamKey)
+    const maxSr = teamPlayers.reduce((max, p) => Math.max(max, p.sr_no ?? 0), 0)
+    const { data, error: err } = await supabase
+      .from('khelotsav_players')
+      .insert({
+        team_name: teamName,
+        player_name: newName.trim(),
+        jersey_size: newJersey.trim() || null,
+        tournament: TOURNAMENT,
+        sr_no: maxSr + 1,
+      })
+      .select()
+      .single()
+    if (!err && data) {
+      setPlayers(prev => [...prev, data as Player])
+      setAddingToTeam(null)
+      setNewName('')
+      setNewJersey('')
+    }
+    setSaving(false)
+  }
+
+  // ── Inline password prompt component ──────────────────────────────────────
+
+  const AuthPrompt = ({ onCancel }: { onCancel: () => void }) => (
+    <div className="flex items-center gap-1.5 flex-wrap">
+      <input
+        type="password"
+        value={authInput}
+        onChange={e => { setAuthInput(e.target.value); setAuthError(false) }}
+        onKeyDown={e => { if (e.key === 'Enter') handleAuthSubmit(); if (e.key === 'Escape') onCancel() }}
+        className={`border rounded px-2 py-1 text-xs w-24 focus:outline-none focus:ring-1 focus:ring-sky-400 ${authError ? 'border-red-400' : 'border-gray-300'}`}
+        placeholder="Password"
+        autoFocus
+      />
+      <button
+        onClick={handleAuthSubmit}
+        className="p-1 rounded bg-green-100 text-green-700 hover:bg-green-200 transition"
+        title="Confirm"
+      ><Check size={13} /></button>
+      <button
+        onClick={onCancel}
+        className="p-1 rounded bg-gray-100 text-gray-500 hover:bg-gray-200 transition"
+        title="Cancel"
+      ><X size={13} /></button>
+      {authError && <span className="text-red-500 text-xs">Wrong password</span>}
+    </div>
+  )
 
   // Group by team (case-insensitive)
   const groupedByKey: Record<string, { name: string; players: Player[] }> = {}
@@ -318,6 +469,67 @@ export default function KhelotsavTeamsPage() {
           </div>
         </div>
 
+        {/* Find My Team */}
+        <div className="max-w-xl mx-auto mb-8 px-2">
+          <div className="bg-white rounded-2xl shadow-md border border-sky-100 p-4 sm:p-5">
+            <h3 className="text-base sm:text-lg font-bold text-sky-700 mb-3 flex items-center gap-2">
+              <Search size={18} /> Find My Team
+            </h3>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={findQuery}
+                onChange={e => { setFindQuery(e.target.value); if (!e.target.value.trim()) setFindResults(null) }}
+                onKeyDown={e => { if (e.key === 'Enter') handleFind() }}
+                placeholder="Enter your name or mobile number…"
+                className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent"
+              />
+              <button
+                onClick={handleFind}
+                className="bg-sky-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-sky-700 transition shrink-0"
+              >
+                Search
+              </button>
+              {findResults !== null && (
+                <button
+                  onClick={clearFind}
+                  className="p-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition shrink-0"
+                  title="Clear"
+                ><X size={16} /></button>
+              )}
+            </div>
+
+            {/* Results */}
+            {findResults !== null && (
+              <div className="mt-4">
+                {findResults.length === 0 ? (
+                  <p className="text-sm text-gray-500 text-center py-3">No player found matching <span className="font-semibold">&ldquo;{findQuery}&rdquo;</span>. Try a different name or number.</p>
+                ) : (
+                  <div className="space-y-2">
+                    <p className="text-xs text-gray-500 mb-2">{findResults.length} result{findResults.length !== 1 ? 's' : ''} found</p>
+                    {findResults.map(p => (
+                      <div key={p.id} className="flex items-center justify-between bg-sky-50 border border-sky-100 rounded-xl px-4 py-3">
+                        <div>
+                          <div className="font-bold text-gray-900 text-sm">{p.player_name.toUpperCase()}</div>
+                          <div className="text-xs text-gray-500 mt-0.5 space-x-2">
+                            {p.category && <span>{p.category}</span>}
+                            {p.gender && <span>{(() => { const g = (p.gender || '').toLowerCase().trim(); if (g === 'male' || g === 'm') return 'Male'; if (g === 'female' || g === 'f') return 'Female'; return p.gender })()}</span>}
+                            {p.jersey_size && <span>Jersey: {p.jersey_size}</span>}
+                          </div>
+                        </div>
+                        <div className="text-right ml-4 shrink-0">
+                          <div className="text-sm font-bold text-sky-700">{p.team_name}</div>
+                          {p.mobile && <div className="text-xs text-gray-400 mt-0.5">{p.mobile}</div>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Hint */}
         <div className="text-center mb-5 px-4">
           <p className="text-sm sm:text-base text-gray-600 font-medium">👇 Click on a team to see its players 👇</p>
@@ -333,6 +545,9 @@ export default function KhelotsavTeamsPage() {
             const borderCls = PALETTE_BORDER[colIdx]
             const isOpen    = !!expanded[team]
             const teamPlayers = grouped[team]
+
+            const isAddingAuth = authTarget?.type === 'add' && authTarget.teamName === team
+            const isAddingForm = addingToTeam === team
 
             return (
               <div
@@ -356,7 +571,7 @@ export default function KhelotsavTeamsPage() {
                     </div>
                   </div>
 
-                  {/* Export button */}
+                  {/* Export + Add buttons */}
                   <div className="flex items-center gap-2 relative z-10">
                     <button
                       type="button"
@@ -368,6 +583,17 @@ export default function KhelotsavTeamsPage() {
                       title={`Export ${team} players`}
                     >
                       <Download size={14} /> Export
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleAddClick(team)
+                      }}
+                      className="inline-flex items-center gap-1 rounded-lg border border-white/50 bg-white/60 px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-white transition"
+                      title={`Add player to ${team}`}
+                    >
+                      <Plus size={14} /> Add
                     </button>
                     <div className={`${textCls} p-1 rounded-full group-hover:bg-white/30 transition-colors`}>
                       {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
@@ -383,7 +609,7 @@ export default function KhelotsavTeamsPage() {
                       <div className="sm:hidden space-y-3">
                         {teamPlayers.map(player => (
                           <div key={player.id} className="bg-white dark:bg-gray-800 rounded-lg p-3 flex items-start justify-between border border-gray-100 dark:border-gray-700">
-                            <div className="min-w-0">
+                            <div className="min-w-0 flex-1">
                               <div className="flex items-center gap-2">
                                 <div className="text-sm font-semibold text-gray-900 dark:text-white truncate">{player.player_name.toUpperCase()}</div>
                               </div>
@@ -397,11 +623,34 @@ export default function KhelotsavTeamsPage() {
                                     return player.gender ?? '—'
                                   })()}
                                 </span>
-                                <span className="inline-block">{player.jersey_size ?? '—'}</span>
+                                {/* Jersey inline edit (mobile) */}
+                                {editingPlayerId === player.id ? (
+                                  <span className="inline-flex items-center gap-1">
+                                    <input
+                                      type="text"
+                                      value={editJersey}
+                                      onChange={e => setEditJersey(e.target.value)}
+                                      onKeyDown={e => { if (e.key === 'Enter') saveEditJersey(player.id); if (e.key === 'Escape') setEditingPlayerId(null) }}
+                                      className="border border-sky-400 rounded px-1.5 py-0.5 text-xs w-16 focus:outline-none focus:ring-1 focus:ring-sky-400"
+                                      placeholder="Jersey"
+                                      autoFocus
+                                    />
+                                    <button onClick={() => saveEditJersey(player.id)} disabled={saving} className="text-green-600 hover:text-green-700"><Check size={13} /></button>
+                                    <button onClick={() => setEditingPlayerId(null)} className="text-gray-400 hover:text-gray-600"><X size={13} /></button>
+                                  </span>
+                                ) : (
+                                  <span className="inline-block">{player.jersey_size ?? '—'}</span>
+                                )}
                               </div>
+                              {/* Inline auth prompt (mobile) */}
+                              {authTarget?.type === 'edit' && authTarget.playerId === player.id && (
+                                <div className="mt-1.5">
+                                  <AuthPrompt onCancel={() => setAuthTarget(null)} />
+                                </div>
+                              )}
                             </div>
 
-                            <div className="text-right ml-3 shrink-0">
+                            <div className="flex flex-col items-end ml-3 shrink-0 gap-1.5">
                               {player.mobile ? (
                                 <a href={`tel:${player.mobile}`} className="inline-flex items-center gap-1 text-sky-600 dark:text-sky-300 text-sm">
                                   <Phone size={14} /> {player.mobile}
@@ -409,9 +658,64 @@ export default function KhelotsavTeamsPage() {
                               ) : (
                                 <div className="text-xs text-gray-400">—</div>
                               )}
+                              {/* Edit button (mobile) */}
+                              {editingPlayerId !== player.id && !(authTarget?.type === 'edit' && authTarget.playerId === player.id) && (
+                                <button
+                                  onClick={() => handleEditClick(player)}
+                                  className="inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs text-gray-500 border border-gray-200 hover:bg-gray-50 hover:text-sky-600 transition"
+                                  title="Edit jersey size"
+                                >
+                                  <Pencil size={11} /> Edit
+                                </button>
+                              )}
                             </div>
                           </div>
                         ))}
+
+                        {/* Mobile: add player auth prompt */}
+                        {isAddingAuth && (
+                          <div className="rounded-lg p-3 border border-yellow-200 bg-yellow-50 flex flex-col gap-2">
+                            <p className="text-xs text-yellow-800 font-medium">Enter admin password to add a player:</p>
+                            <AuthPrompt onCancel={() => setAuthTarget(null)} />
+                          </div>
+                        )}
+
+                        {/* Mobile: add player form */}
+                        {isAddingForm && (
+                          <div className="rounded-lg p-3 border border-emerald-200 bg-emerald-50 space-y-2">
+                            <p className="text-xs font-semibold text-emerald-800">New Player</p>
+                            <input
+                              type="text"
+                              value={newName}
+                              onChange={e => setNewName(e.target.value)}
+                              placeholder="Player name *"
+                              className="w-full border border-emerald-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400"
+                              autoFocus
+                            />
+                            <input
+                              type="text"
+                              value={newJersey}
+                              onChange={e => setNewJersey(e.target.value)}
+                              placeholder="Jersey size"
+                              className="w-full border border-emerald-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400"
+                            />
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => saveNewPlayer(team)}
+                                disabled={saving || !newName.trim()}
+                                className="flex-1 bg-emerald-600 text-white rounded px-3 py-1.5 text-xs font-semibold hover:bg-emerald-700 disabled:opacity-50 transition"
+                              >
+                                {saving ? 'Saving…' : 'Add Player'}
+                              </button>
+                              <button
+                                onClick={() => setAddingToTeam(null)}
+                                className="px-3 py-1.5 text-xs rounded border border-gray-300 text-gray-600 hover:bg-gray-50 transition"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                       {/* Desktop/table view (visible on sm+ screens) */}
@@ -424,35 +728,121 @@ export default function KhelotsavTeamsPage() {
                               <th className="px-3 py-2">Category</th>
                               <th className="px-3 py-2">Jersey</th>
                               <th className="px-3 py-2">Mobile</th>
+                              <th className="px-3 py-2"></th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-gray-100">
                             {teamPlayers.map(player => (
                               <tr key={player.id} className="bg-white dark:bg-gray-800">
-                                <td className="px-3 py-3 align-top text-sm">
+                                <td className="px-3 py-3 align-middle text-sm">
                                   <div className="font-semibold text-gray-900 dark:text-white">{player.player_name.toUpperCase()}</div>
                                 </td>
 
-                                <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">{(() => {
+                                <td className="px-3 py-3 align-middle text-sm text-gray-700 dark:text-gray-200">{(() => {
                                   const g = (player.gender || '').toLowerCase().trim()
                                   if (g === 'male' || g === 'm') return 'M'
                                   if (g === 'female' || g === 'f') return 'F'
                                   return player.gender ?? '—'
                                 })()}</td>
 
-                                <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">{player.category ?? '—'}</td>
+                                <td className="px-3 py-3 align-middle text-sm text-gray-700 dark:text-gray-200">{player.category ?? '—'}</td>
 
-                                <td className="px-3 py-3 align-top text-sm text-gray-700 dark:text-gray-200">{player.jersey_size ?? '—'}</td>
+                                {/* Jersey cell - editable */}
+                                <td className="px-3 py-3 align-middle text-sm text-gray-700 dark:text-gray-200">
+                                  {editingPlayerId === player.id ? (
+                                    <input
+                                      type="text"
+                                      value={editJersey}
+                                      onChange={e => setEditJersey(e.target.value)}
+                                      onKeyDown={e => { if (e.key === 'Enter') saveEditJersey(player.id); if (e.key === 'Escape') setEditingPlayerId(null) }}
+                                      className="border border-sky-400 rounded px-2 py-1 text-sm w-20 focus:outline-none focus:ring-1 focus:ring-sky-400"
+                                      placeholder="e.g. M"
+                                      autoFocus
+                                    />
+                                  ) : (
+                                    player.jersey_size ?? '—'
+                                  )}
+                                </td>
 
-                                <td className="px-3 py-3 align-top text-sm text-sky-600 dark:text-sky-300">{player.mobile ? (
+                                <td className="px-3 py-3 align-middle text-sm text-sky-600 dark:text-sky-300">{player.mobile ? (
                                   <a href={`tel:${player.mobile}`} className="inline-flex items-center gap-1">
                                     <Phone size={12} /> {player.mobile}
                                   </a>
                                 ) : '—'}</td>
+
+                                {/* Actions cell */}
+                                <td className="px-3 py-3 align-middle text-sm">
+                                  {editingPlayerId === player.id ? (
+                                    <div className="flex items-center gap-1">
+                                      <button
+                                        onClick={() => saveEditJersey(player.id)}
+                                        disabled={saving}
+                                        className="p-1 rounded bg-green-100 text-green-700 hover:bg-green-200 disabled:opacity-50 transition"
+                                        title="Save"
+                                      ><Check size={14} /></button>
+                                      <button
+                                        onClick={() => setEditingPlayerId(null)}
+                                        className="p-1 rounded bg-gray-100 text-gray-500 hover:bg-gray-200 transition"
+                                        title="Cancel"
+                                      ><X size={14} /></button>
+                                    </div>
+                                  ) : authTarget?.type === 'edit' && authTarget.playerId === player.id ? (
+                                    <AuthPrompt onCancel={() => setAuthTarget(null)} />
+                                  ) : (
+                                    <button
+                                      onClick={() => handleEditClick(player)}
+                                      className="p-1 rounded text-gray-400 hover:text-sky-600 hover:bg-sky-50 transition"
+                                      title="Edit jersey size"
+                                    ><Pencil size={14} /></button>
+                                  )}
+                                </td>
                               </tr>
                             ))}
                           </tbody>
                         </table>
+
+                        {/* Desktop: add player auth prompt */}
+                        {isAddingAuth && (
+                          <div className="mt-3 flex items-center gap-2 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                            <span className="text-xs text-yellow-800 font-medium shrink-0">Admin password:</span>
+                            <AuthPrompt onCancel={() => setAuthTarget(null)} />
+                          </div>
+                        )}
+
+                        {/* Desktop: add player form */}
+                        {isAddingForm && (
+                          <div className="mt-3 flex items-center gap-3 p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+                            <span className="text-xs font-semibold text-emerald-800 shrink-0">New Player:</span>
+                            <input
+                              type="text"
+                              value={newName}
+                              onChange={e => setNewName(e.target.value)}
+                              onKeyDown={e => { if (e.key === 'Enter' && newName.trim()) saveNewPlayer(team); if (e.key === 'Escape') setAddingToTeam(null) }}
+                              placeholder="Player name *"
+                              className="border border-emerald-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400 flex-1 min-w-0"
+                              autoFocus
+                            />
+                            <input
+                              type="text"
+                              value={newJersey}
+                              onChange={e => setNewJersey(e.target.value)}
+                              onKeyDown={e => { if (e.key === 'Enter' && newName.trim()) saveNewPlayer(team); if (e.key === 'Escape') setAddingToTeam(null) }}
+                              placeholder="Jersey size"
+                              className="border border-emerald-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400 w-28"
+                            />
+                            <button
+                              onClick={() => saveNewPlayer(team)}
+                              disabled={saving || !newName.trim()}
+                              className="inline-flex items-center gap-1 bg-emerald-600 text-white rounded px-3 py-1.5 text-xs font-semibold hover:bg-emerald-700 disabled:opacity-50 transition shrink-0"
+                            >
+                              <Check size={13} /> {saving ? 'Saving…' : 'Add'}
+                            </button>
+                            <button
+                              onClick={() => setAddingToTeam(null)}
+                              className="p-1.5 rounded border border-gray-300 text-gray-500 hover:bg-gray-50 transition shrink-0"
+                            ><X size={14} /></button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
