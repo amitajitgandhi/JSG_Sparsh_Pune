@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { RefreshCw, Trophy, ArrowLeft } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
+import { getResultsByTournament } from '@/lib/tournament/service'
 import type { Tournament, Result, EventCategory, Sport } from '@/lib/tournament/types'
 
 const MEDAL_LABEL: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' }
@@ -20,22 +21,11 @@ export default function ResultsPage() {
 
   const load = async (tid: string) => {
     setLoading(true)
-    const { data, error: err } = await supabase
-      .from('sports_results')
-      .select(`
-        *,
-        team:sports_teams(*),
-        event_category:sports_event_categories(*, sport:sports(*))
-      `)
-      .order('rank', { ascending: true })
-
+    // Use server-side filtering by tournament — avoids fetching all results globally
+    // and handles the join correctly even with RLS on the category table
+    const { data, error: err } = await getResultsByTournament(tid)
     if (err) { setError(err.message); setLoading(false); return }
-
-    // Filter to this tournament
-    const filtered = (data ?? []).filter(
-      (r: Result) => (r.event_category as EventCategory & { tournament_id: string })?.tournament_id === tid
-    )
-    setResults(filtered as Result[])
+    setResults(data)
     setError(null)
     setLoading(false)
   }
@@ -161,29 +151,52 @@ export default function ResultsPage() {
                         )}
                       </div>
                       <div className='divide-y divide-gray-50'>
-                        {catResults.sort((a, b) => a.rank - b.rank).map(r => {
-                          const team = r.team as { id: string; name: string; short_name: string; color: string; logo_url: string | null }
-                          return (
-                            <div key={r.id} className='flex items-center gap-3 px-4 py-3'>
-                              <span className='text-lg w-7 text-center'>{MEDAL_LABEL[r.rank] ?? `#${r.rank}`}</span>
-                              <div className='h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0'
-                                style={{ backgroundColor: team?.color ?? '#10b981' }}>
-                                {team?.logo_url
-                                  ? <img src={team.logo_url} alt={team.name} className='h-8 w-8 rounded-full object-cover' />
-                                  : team?.short_name?.slice(0, 2) ?? '?'
-                                }
+                        {(() => {
+                          const sorted = [...catResults].sort((a, b) => {
+                            if (a.rank == null && b.rank == null) return (a.match_number ?? 0) - (b.match_number ?? 0)
+                            if (a.rank == null) return 1
+                            if (b.rank == null) return -1
+                            return a.rank - b.rank
+                          })
+                          const rows: React.ReactNode[] = []
+                          let lastMatchNum = -1
+                          for (const r of sorted) {
+                            const team = r.team as { id: string; name: string; short_name: string; color: string; logo_url: string | null }
+                            const isLeague = r.rank == null
+                            const mn = r.match_number ?? 0
+                            if (isLeague && mn !== lastMatchNum) {
+                              lastMatchNum = mn
+                              rows.push(
+                                <div key={`mh-${r.event_category_id}-${mn}`} className='px-4 py-1.5 bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wide border-t border-gray-100'>
+                                  Match {mn}
+                                </div>
+                              )
+                            }
+                            rows.push(
+                              <div key={r.id} className='flex items-center gap-3 px-4 py-3'>
+                                <span className='text-lg w-7 text-center'>
+                                  {isLeague ? '⚡' : r.rank != null ? (MEDAL_LABEL[r.rank] ?? `#${r.rank}`) : '—'}
+                                </span>
+                                <div className='h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0'
+                                  style={{ backgroundColor: team?.color ?? '#10b981' }}>
+                                  {team?.logo_url
+                                    ? <img src={team.logo_url} alt={team.name} className='h-8 w-8 rounded-full object-cover' />
+                                    : team?.short_name?.slice(0, 2) ?? '?'
+                                  }
+                                </div>
+                                <div className='flex-1 min-w-0'>
+                                  <p className='text-sm font-semibold text-gray-900'>{team?.name ?? '—'}</p>
+                                  {r.player_names && r.player_names.length > 0 && (
+                                    <p className='text-xs text-gray-500 mt-0.5 truncate'>{r.player_names.join(' & ')}</p>
+                                  )}
+                                  {r.remarks && <p className='text-xs text-gray-400 italic mt-0.5'>{r.remarks}</p>}
+                                </div>
+                                <span className='text-sm font-bold text-emerald-600 shrink-0'>{r.points_awarded} pts</span>
                               </div>
-                              <div className='flex-1 min-w-0'>
-                                <p className='text-sm font-semibold text-gray-900'>{team?.name ?? '—'}</p>
-                                {r.player_names && r.player_names.length > 0 && (
-                                  <p className='text-xs text-gray-500 mt-0.5 truncate'>{r.player_names.join(' & ')}</p>
-                                )}
-                                {r.remarks && <p className='text-xs text-gray-400 italic mt-0.5'>{r.remarks}</p>}
-                              </div>
-                              <span className='text-sm font-bold text-emerald-600 shrink-0'>{r.points_awarded} pts</span>
-                            </div>
-                          )
-                        })}
+                            )
+                          }
+                          return rows
+                        })()}
                       </div>
                     </div>
                   ))}

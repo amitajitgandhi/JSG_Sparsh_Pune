@@ -44,6 +44,7 @@ export interface EventCategory {
   event_type: string
   gender_category: string
   age_category: string
+  round_type: string | null   // 'league' | 'quarter_final' | 'semi_final' | 'final'
   display_order: number
   is_completed: boolean
   created_at: string
@@ -63,12 +64,12 @@ export interface Result {
   id: string
   event_category_id: string
   team_id: string
-  rank: number
+  rank: number | null             // null for league rows (no medal); 1/2/3 for knockout
   points_awarded: number
   remarks: string | null
   player_names: string[] | null   // for Individual / Doubles events
+  match_number: number | null     // for league stage matches; groups two rows per match
   created_at: string
-  updated_at: string
   // joined
   team?: Team
   event_category?: EventCategory
@@ -90,7 +91,7 @@ export interface EventBreakdownItem {
   event_category_id: string
   event_name: string
   sport_name: string
-  rank: number
+  rank: number | null
   points_awarded: number
 }
 

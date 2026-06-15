@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { RefreshCw, ArrowLeft, Users, Dumbbell, LayoutList, Trophy, Plus, Pencil, Trash2, Check, X, Save, Star } from 'lucide-react'
+import { RefreshCw, ArrowLeft, Users, Dumbbell, LayoutList, Trophy, Plus, Pencil, Trash2, Check, X, Save, Star, BarChart2 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import type { Tournament, Team, Sport, EventCategory, ScoringRule, Result } from '@/lib/tournament/types'
 import {
@@ -11,19 +11,47 @@ import {
   getCategoriesByTournament, upsertCategory, deleteCategory, markCategoryCompleted,
   getScoringRules, replaceScoringRules,
   getResultsByCategory, upsertResult, deleteResultsByCategory,
+  getResultsByTournament,
 } from '@/lib/tournament/service'
 
-type Tab = 'teams' | 'sports' | 'events' | 'results'
+type Tab = 'teams' | 'sports' | 'events' | 'results' | 'tracking'
 
 const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
-  { key: 'teams',   label: 'Teams',   icon: <Users size={15} /> },
-  { key: 'sports',  label: 'Sports',  icon: <Dumbbell size={15} /> },
-  { key: 'events',  label: 'Events',  icon: <LayoutList size={15} /> },
-  { key: 'results', label: 'Results', icon: <Trophy size={15} /> },
+  { key: 'teams',    label: 'Teams',    icon: <Users size={15} /> },
+  { key: 'sports',   label: 'Sports',   icon: <Dumbbell size={15} /> },
+  { key: 'events',   label: 'Events',   icon: <LayoutList size={15} /> },
+  { key: 'results',  label: 'Results',  icon: <Trophy size={15} /> },
+  { key: 'tracking', label: 'Tracking', icon: <BarChart2 size={15} /> },
 ]
 
 const MEDAL_COLORS = ['', 'bg-yellow-100 text-yellow-700', 'bg-gray-100 text-gray-600', 'bg-orange-100 text-orange-700']
 const MEDAL_LABELS = ['', '🥇 Gold', '🥈 Silver', '🥉 Bronze']
+
+const ROUND_TYPE_OPTIONS = [
+  { value: 'league',        label: 'League Stage' },
+  { value: 'quarter_final', label: 'Quarter Final' },
+  { value: 'semi_final',    label: 'Semi Final' },
+  { value: 'final',         label: 'Final' },
+]
+const roundLabel = (v?: string | null) =>
+  ROUND_TYPE_OPTIONS.find(o => o.value === v)?.label ?? (v ?? '—')
+
+// ── Per-player-count helpers ──────────────────────────────────────────────────
+const needsPlayerNames = (eventType: string) => /individual|doubles/i.test(eventType)
+const isDoublesType   = (eventType: string) => /doubles/i.test(eventType)
+const playerSlots     = (eventType: string) => isDoublesType(eventType) ? 2 : 1
+
+// ── League match types ────────────────────────────────────────────────────────
+type LeagueRow   = { team_id: string; player_names: string[]; points: number }
+type LeagueMatch = { match_number: number; rows: LeagueRow[] }
+
+const emptyLeagueMatch = (n: number): LeagueMatch => ({
+  match_number: n,
+  rows: [
+    { team_id: '', player_names: [], points: 0 },
+    { team_id: '', player_names: [], points: 0 },
+  ],
+})
 
 export default function TournamentAdminPage() {
   const { id } = useParams<{ id: string }>()
@@ -55,10 +83,10 @@ export default function TournamentAdminPage() {
   const [rulesSaving,  setRulesSaving]  = useState(false)
   const [rulesInput,   setRulesInput]   = useState<Array<{ rank: number; points: number }>>([])
 
-  // ── Results state ─────────────────────────────────────────────────────────
-  const [selCatId,     setSelCatId]     = useState('')
-  const [results,      setResults]      = useState<Result[]>([])
-  const [resultSaving, setResultSaving] = useState(false)
+  // ── Results state — knockout ───────────────────────────────────────────────
+  const [selCatId,      setSelCatId]      = useState('')
+  const [results,       setResults]       = useState<Result[]>([])
+  const [resultSaving,  setResultSaving]  = useState(false)
   const [resultEntries, setResultEntries] = useState<Array<{ rank: number; team_id: string; points: number; remarks: string; player_names: string[] }>>([
     { rank: 1, team_id: '', points: 0, remarks: '', player_names: [] },
     { rank: 2, team_id: '', points: 0, remarks: '', player_names: [] },
@@ -66,34 +94,54 @@ export default function TournamentAdminPage() {
   ])
   const [resultError, setResultError] = useState('')
   const [resultMsg,   setResultMsg]   = useState('')
+
+  // ── Results state — league ────────────────────────────────────────────────
+  // Entry area: matches being entered (starts empty; user clicks "Add Match")
+  const [leagueMatches,   setLeagueMatches]   = useState<LeagueMatch[]>([])
+  // Snapshot of the just-saved batch for post-save confirmation display
+  const [lastSavedBatch,  setLastSavedBatch]  = useState<LeagueMatch[]>([])
+
   // players per team for the current tournament, keyed by team_id
   const [playersByTeam, setPlayersByTeam] = useState<Record<string, string[]>>({})
 
-  // ── Load tournament ───────────────────────────────────────────────────────
-  const loadTournament = useCallback(async () => {
-    const { data } = await supabase.from('sports_tournaments').select('*').eq('id', id).single()
-    setTournament(data as Tournament)
-  }, [id])
+  // ── Tracking tab state ────────────────────────────────────────────────────
+  const [trackResults,     setTrackResults]     = useState<Result[]>([])
+  const [trackLoading,     setTrackLoading]     = useState(false)
+  const [trackSportFilter, setTrackSportFilter] = useState('')
 
+  // ── Load all data ─────────────────────────────────────────────────────────
   const loadAll = useCallback(async () => {
     setLoading(true)
+
+    // Load tournament FIRST to get its actual slug (never hardcode)
+    const { data: tData } = await supabase
+      .from('sports_tournaments').select('*').eq('id', id).single()
+    const tourney = tData as Tournament | null
+    setTournament(tourney)
+    const tourneySlug = tourney?.slug ?? ''
+
     await Promise.all([
-      loadTournament(),
       getTeamsByTournament(id).then(async r => {
         setTeams(r.data)
-        // Load khelotsav players grouped by team for player name dropdown
+        if (!r.data.length || !tourneySlug) return
+        // Load player names grouped by team for the player dropdowns
         const { data: kp } = await supabase
           .from('khelotsav_players')
           .select('team_name, player_name')
-          .eq('tournament', 'khelotsav-2026')
+          .eq('tournament', tourneySlug)
           .order('sr_no', { ascending: true })
-        if (kp && r.data.length) {
+        if (kp) {
+          // Strip trailing "(Owner Name)" from khelotsav_players.team_name before comparing
+          const norm = (s: string) => s.toLowerCase().trim().replace(/\s*\(.*\)\s*$/, '').replace(/\s+/g, ' ')
+          const kpTyped = kp as { team_name: string; player_name: string }[]
           const map: Record<string, string[]> = {}
           for (const team of r.data) {
-            const names = (kp as { team_name: string; player_name: string }[])
-              .filter(p => p.team_name === team.name)
+            const teamNorm = norm(team.name)
+            const names = kpTyped
+              .filter(p => norm(p.team_name) === teamNorm)
               .map(p => p.player_name)
-            if (names.length) map[team.id] = names
+            // Always store the entry so we can distinguish "team exists but no players"
+            map[team.id] = names
           }
           setPlayersByTeam(map)
         }
@@ -102,35 +150,51 @@ export default function TournamentAdminPage() {
       getCategoriesByTournament(id).then(r => setCategories(r.data)),
     ])
     setLoading(false)
-  }, [id, loadTournament])
+  }, [id])
 
   useEffect(() => { loadAll() }, [loadAll])
 
-  // Returns true when the event type requires individual player name selection
-  // (Singles or Doubles → 1-2 players per result row)
-  const needsPlayerNames = (eventType: string) =>
-    /singles|doubles/i.test(eventType)
+  // ── Determine if selected category is league ──────────────────────────────
+  const selCat = categories.find(c => c.id === selCatId)
+  // All round types (league, quarter_final, semi_final, final) use the
+  // match-based entry UI; categories without a round_type use the rank-based UI
+  const isLeagueMode = !!selCat?.round_type
 
-  // ── Auto-load points from scoring rules ───────────────────────────────────
+  // ── Load existing results when category selected ──────────────────────────
   const loadScoringForEntry = useCallback(async (catId: string) => {
     if (!catId) return
-    const { data: rules } = await getScoringRules(catId)
-    setResultEntries(prev => prev.map(e => {
-      const rule = rules.find(r => r.rank === e.rank)
-      return rule ? { ...e, points: rule.points } : e
-    }))
-    const existingResults = await getResultsByCategory(catId)
-    setResults(existingResults.data)
-    // Pre-fill player_names from existing saved results
-    setResultEntries(prev => prev.map(e => {
-      const existing = existingResults.data.find(r => r.rank === e.rank)
-      return existing
-        ? { ...e, team_id: existing.team_id, points: existing.points_awarded, remarks: existing.remarks ?? '', player_names: existing.player_names ?? [] }
-        : e
-    }))
-  }, [])
+    const cat = categories.find(c => c.id === catId)
+    const existingRes = await getResultsByCategory(catId)
+    setResults(existingRes.data)
 
-  useEffect(() => { if (selCatId) loadScoringForEntry(selCatId) }, [selCatId, loadScoringForEntry])
+    if (cat?.round_type) {
+      // Any round type: results go to display-only state; entry area stays empty
+      setLeagueMatches([])
+    } else {
+      // Knockout: load scoring rules + pre-fill
+      const { data: rules } = await getScoringRules(catId)
+      const defaultEntries = [
+        { rank: 1, team_id: '', points: 0, remarks: '', player_names: [] },
+        { rank: 2, team_id: '', points: 0, remarks: '', player_names: [] },
+        { rank: 3, team_id: '', points: 0, remarks: '', player_names: [] },
+      ]
+      setResultEntries(defaultEntries.map(e => {
+        const rule    = rules.find(r => r.rank === e.rank)
+        const existing = existingRes.data.find(r => r.rank === e.rank)
+        return {
+          ...e,
+          points:       existing?.points_awarded  ?? rule?.points ?? 0,
+          team_id:      existing?.team_id         ?? '',
+          remarks:      existing?.remarks         ?? '',
+          player_names: existing?.player_names    ?? [],
+        }
+      }))
+    }
+  }, [categories])
+
+  useEffect(() => {
+    if (selCatId) loadScoringForEntry(selCatId)
+  }, [selCatId, loadScoringForEntry])
 
   // ── Load rules for event expansion ───────────────────────────────────────
   const loadCatRules = useCallback(async (catId: string) => {
@@ -140,6 +204,18 @@ export default function TournamentAdminPage() {
   }, [])
 
   useEffect(() => { if (expandedCat) loadCatRules(expandedCat) }, [expandedCat, loadCatRules])
+
+  // ── Tracking data ─────────────────────────────────────────────────────────
+  const loadTrackResults = useCallback(async () => {
+    setTrackLoading(true)
+    const { data } = await getResultsByTournament(id)
+    setTrackResults(data)
+    setTrackLoading(false)
+  }, [id])
+
+  useEffect(() => {
+    if (tab === 'tracking') loadTrackResults()
+  }, [tab, loadTrackResults])
 
   // ─────────────────────────────────────────────────────────────────────────
   // TEAM HANDLERS
@@ -217,37 +293,162 @@ export default function TournamentAdminPage() {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // RESULT HANDLERS
+  // RESULT HANDLERS — KNOCKOUT
   // ─────────────────────────────────────────────────────────────────────────
   const saveResults = async () => {
     setResultError(''); setResultMsg('')
     const filled = resultEntries.filter(e => e.team_id)
     if (filled.length === 0) { setResultError('Select at least one team.'); return }
-    // Validate no duplicate teams
     const teamIds = filled.map(e => e.team_id)
     if (new Set(teamIds).size !== teamIds.length) { setResultError('Duplicate teams selected.'); return }
 
     setResultSaving(true)
-    // Delete old then insert fresh
     await deleteResultsByCategory(selCatId)
     for (const e of filled) {
-      const selCat = categories.find(c => c.id === selCatId)
-      const pnames = selCat && needsPlayerNames(selCat.event_type) ? e.player_names : []
-      await upsertResult({
+      const pnames = selCat && needsPlayerNames(selCat.event_type) ? e.player_names.filter(Boolean) : []
+      const { error: saveErr } = await upsertResult({
         event_category_id: selCatId,
-        team_id: e.team_id,
-        rank: e.rank,
-        points_awarded: e.points,
-        remarks: e.remarks || null,
-        player_names: pnames.length ? pnames : null,
+        team_id:           e.team_id,
+        rank:              e.rank,
+        points_awarded:    e.points,
+        remarks:           e.remarks || null,
+        player_names:      pnames.length ? pnames : null,
+        match_number:      null,
       })
+      if (saveErr) { setResultError(`Save failed: ${saveErr.message}`); setResultSaving(false); return }
     }
     setResultSaving(false)
     setResultMsg('Results saved successfully.')
     loadScoringForEntry(selCatId)
-    // Mark category completed
     await markCategoryCompleted(selCatId, true)
     getCategoriesByTournament(id).then(r => setCategories(r.data))
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // RESULT HANDLERS — LEAGUE
+  // ─────────────────────────────────────────────────────────────────────────
+  const saveLeagueResults = async () => {
+    setResultError(''); setResultMsg('')
+    const hasAny = leagueMatches.some(m => m.rows.some(r => r.team_id))
+    if (!hasAny) { setResultError('Enter at least one team in a match.'); return }
+
+    setResultSaving(true)
+
+    // INSERT-only — Results tab only adds new matches; Tracking handles edits
+    for (const match of leagueMatches) {
+      for (const row of match.rows) {
+        if (!row.team_id) continue
+        const pnames = selCat && needsPlayerNames(selCat.event_type)
+          ? row.player_names.filter(Boolean)
+          : []
+        const { error: rowErr } = await upsertResult({
+          event_category_id: selCatId,
+          team_id:           row.team_id,
+          rank:              null,
+          points_awarded:    row.points,
+          remarks:           null,
+          player_names:      pnames.length ? pnames : null,
+          match_number:      match.match_number,
+        })
+        if (rowErr) { setResultError(`Save failed: ${rowErr.message}`); setResultSaving(false); return }
+      }
+    }
+
+    setResultSaving(false)
+    setResultMsg('Saved.')
+    setLastSavedBatch([...leagueMatches])  // keep a snapshot for confirmation display
+    setLeagueMatches([])                   // clear entry area
+    // Reload results silently (for match-number sequencing only, not displayed)
+    loadScoringForEntry(selCatId)
+    await markCategoryCompleted(selCatId, true)
+    getCategoriesByTournament(id).then(r => setCategories(r.data))
+  }
+
+  // ── League match helpers ──────────────────────────────────────────────────
+  const updateLeagueRow = (matchIdx: number, rowIdx: number, patch: Partial<LeagueRow>) => {
+    setLeagueMatches(prev => prev.map((m, mi) =>
+      mi !== matchIdx ? m : {
+        ...m,
+        rows: m.rows.map((r, ri) => ri !== rowIdx ? r : { ...r, ...patch }),
+      }
+    ))
+  }
+
+  const addLeagueMatch = () => {
+    // Next number accounts for saved (in DB via results state) + in-entry + last saved batch
+    const savedNums  = results.map(r => r.match_number ?? 0)
+    const entryNums  = leagueMatches.map(m => m.match_number)
+    const batchNums  = lastSavedBatch.map(m => m.match_number)
+    const nextNum    = Math.max(0, ...[...savedNums, ...entryNums, ...batchNums]) + 1
+    setLastSavedBatch([])   // clear confirmation when starting a new entry
+    setResultMsg('')
+    setLeagueMatches(prev => [...prev, emptyLeagueMatch(nextNum)])
+  }
+
+  const removeLeagueMatch = (matchIdx: number) => {
+    setLeagueMatches(prev => prev.filter((_, i) => i !== matchIdx))
+  }
+
+  // Move a saved match back into the entry area for editing
+  const editSavedMatch = (matchNum: number) => {
+    const matchRows = results.filter(r => (r.match_number ?? 0) === matchNum)
+    const rows: LeagueRow[] = matchRows.map(r => ({
+      team_id:      r.team_id,
+      player_names: r.player_names ?? [],
+      points:       r.points_awarded,
+    }))
+    while (rows.length < 2) rows.push({ team_id: '', player_names: [], points: 0 })
+    setLeagueMatches(prev => [...prev, { match_number: matchNum, rows }])
+    setResults(prev => prev.filter(r => (r.match_number ?? 0) !== matchNum))
+  }
+
+  // Navigate to Results tab with a specific category pre-selected
+  const goToResultsTab = (catId: string) => {
+    setTab('results')
+    setSelCatId(catId)
+    setResultMsg(''); setResultError('')
+    setLeagueMatches([])
+  }
+
+  // ── Player dropdown helper ────────────────────────────────────────────────
+  const PlayerDropdowns = ({
+    teamId, playerNames, slots,
+    onChange,
+  }: {
+    teamId: string
+    playerNames: string[]
+    slots: number
+    onChange: (names: string[]) => void
+  }) => {
+    const options = teamId ? (playersByTeam[teamId] ?? []) : []
+    const teamName = teams.find(t => t.id === teamId)?.name ?? ''
+    if (!teamId) return null
+    if (options.length === 0) {
+      return (
+        <p className='mt-1 text-xs text-orange-500'>
+          No players found for &quot;{teamName}&quot; in khelotsav_players — check that the team name matches exactly.
+        </p>
+      )
+    }
+    return (
+      <div className='flex gap-2 flex-wrap mt-1'>
+        {Array.from({ length: slots }).map((_, si) => (
+          <select
+            key={si}
+            value={playerNames[si] ?? ''}
+            onChange={e => {
+              const next = [...playerNames]
+              next[si] = e.target.value
+              onChange(next.filter(Boolean))
+            }}
+            className='rounded-lg border border-gray-300 px-2 py-1.5 text-xs min-w-[150px]'
+          >
+            <option value=''>— Player {slots > 1 ? si + 1 : ''} —</option>
+            {options.map(n => <option key={n} value={n}>{n}</option>)}
+          </select>
+        ))}
+      </div>
+    )
   }
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -443,7 +644,7 @@ export default function TournamentAdminPage() {
           <div className='space-y-4'>
             <div className='flex justify-between items-center'>
               <h2 className='font-bold text-gray-800'>Event Categories ({categories.length})</h2>
-              <button onClick={() => setCatForm({ event_type: 'Individual', gender_category: 'Open', age_category: 'Open', display_order: categories.length })}
+              <button onClick={() => setCatForm({ event_type: 'Individual', gender_category: 'Open', age_category: 'Open', round_type: null, display_order: categories.length })}
                 className='inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-700'>
                 <Plus size={14} /> Add Event
               </button>
@@ -462,6 +663,17 @@ export default function TournamentAdminPage() {
                     <select value={catForm.sport_id ?? ''} onChange={e => setCatForm(f => ({ ...f!, sport_id: e.target.value }))} className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm'>
                       <option value=''>Select sport</option>
                       {sports.filter(s => s.is_active).map(s => <option key={s.id} value={s.id}>{s.icon} {s.name}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className='block text-xs font-semibold text-gray-600 mb-1'>Round</label>
+                    <select
+                      value={catForm.round_type ?? ''}
+                      onChange={e => setCatForm(f => ({ ...f!, round_type: e.target.value || null }))}
+                      className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm'
+                    >
+                      <option value=''>— Select round —</option>
+                      {ROUND_TYPE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
                     </select>
                   </div>
                   <div>
@@ -504,7 +716,21 @@ export default function TournamentAdminPage() {
                     <span className='text-lg'>{cat.sport?.icon ?? '🏅'}</span>
                     <div className='flex-1 min-w-0'>
                       <p className='font-semibold text-gray-900 truncate'>{cat.name}</p>
-                      <p className='text-xs text-gray-500'>{cat.sport?.name} · {cat.event_type} · {cat.gender_category} · {cat.age_category}</p>
+                      <p className='text-xs text-gray-500 flex flex-wrap gap-x-1.5'>
+                        <span>{cat.sport?.name}</span>
+                        <span>·</span>
+                        {cat.round_type && (
+                          <>
+                            <span className='font-medium text-indigo-600'>{roundLabel(cat.round_type)}</span>
+                            <span>·</span>
+                          </>
+                        )}
+                        <span>{cat.event_type}</span>
+                        <span>·</span>
+                        <span>{cat.gender_category}</span>
+                        <span>·</span>
+                        <span>{cat.age_category}</span>
+                      </p>
                     </div>
                     <button onClick={() => toggleCompleted(cat)} className={`rounded-full px-2 py-0.5 text-xs font-semibold ${cat.is_completed ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
                       {cat.is_completed ? '✓ Completed' : 'Pending'}
@@ -560,6 +786,122 @@ export default function TournamentAdminPage() {
           </div>
         )}
 
+        {/* ══ TRACKING TAB ═══════════════════════════════════════════════════ */}
+        {tab === 'tracking' && (
+          <div className='space-y-4'>
+            <div className='flex items-center justify-between flex-wrap gap-3'>
+              <h2 className='font-bold text-gray-800'>Results Tracker</h2>
+              <div className='flex items-center gap-2'>
+                <select
+                  value={trackSportFilter}
+                  onChange={e => setTrackSportFilter(e.target.value)}
+                  className='rounded-lg border border-gray-300 px-3 py-2 text-sm'
+                >
+                  <option value=''>All Sports</option>
+                  {sports.filter(s => s.is_active).map(s => (
+                    <option key={s.id} value={s.id}>{s.icon} {s.name}</option>
+                  ))}
+                </select>
+                <button onClick={loadTrackResults} disabled={trackLoading} className='rounded-lg border border-gray-300 p-2 hover:bg-gray-100'>
+                  <RefreshCw size={14} className={trackLoading ? 'animate-spin' : ''} />
+                </button>
+              </div>
+            </div>
+
+            {trackLoading ? (
+              <div className='text-center py-16 text-gray-400 text-sm'><RefreshCw className='mx-auto h-8 w-8 animate-spin mb-2' />Loading…</div>
+            ) : (() => {
+              // Group by category
+              const catMap = new Map<string, { cat: EventCategory & { sport?: Sport }; results: Result[] }>()
+              for (const r of trackResults) {
+                const cat = r.event_category as EventCategory & { sport?: Sport }
+                if (!cat) continue
+                if (trackSportFilter && cat.sport_id !== trackSportFilter) continue
+                if (!catMap.has(cat.id)) catMap.set(cat.id, { cat, results: [] })
+                catMap.get(cat.id)!.results.push(r)
+              }
+              const grouped = [...catMap.values()]
+              if (grouped.length === 0) return (
+                <div className='text-center py-16 bg-white rounded-2xl border border-gray-200'>
+                  <BarChart2 className='mx-auto h-10 w-10 text-gray-300 mb-3' />
+                  <p className='text-gray-500 text-sm'>No results recorded yet.</p>
+                </div>
+              )
+              return (
+                <div className='space-y-4'>
+                  {grouped.map(({ cat, results: catResults }) => {
+                    const matchNums = Array.from(new Set(catResults.map(r => r.match_number ?? 0))).sort((a, b) => a - b)
+                    const isLeague = cat.round_type === 'league'
+                    return (
+                      <div key={cat.id} className='bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden'>
+                        <div className='flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-100'>
+                          <div>
+                            <p className='font-semibold text-gray-800 text-sm'>{cat.sport?.icon} {cat.name}</p>
+                            <p className='text-xs text-gray-500 mt-0.5'>
+                              {cat.event_type} · {roundLabel(cat.round_type)}
+                              {cat.is_completed && <span className='ml-2 text-emerald-600'>✓ Completed</span>}
+                            </p>
+                          </div>
+                          <button
+                            onClick={() => goToResultsTab(cat.id)}
+                            className='inline-flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-100 hover:text-emerald-700'
+                            title='Edit in Results tab'
+                          >
+                            <Pencil size={11} /> Edit
+                          </button>
+                        </div>
+
+                        {isLeague ? (
+                          <div className='divide-y divide-gray-50'>
+                            {matchNums.map(mn => {
+                              const rows = catResults.filter(r => (r.match_number ?? 0) === mn)
+                              return (
+                                <div key={mn} className='px-4 py-3'>
+                                  <p className='text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2'>Match {mn}</p>
+                                  {rows.map(r => (
+                                    <div key={r.id} className='flex items-center justify-between py-1 text-sm'>
+                                      <div>
+                                        <span className='font-medium text-gray-800'>
+                                          {(r as Result & { team?: Team }).team?.name ?? r.team_id}
+                                        </span>
+                                        {r.player_names && r.player_names.length > 0 && (
+                                          <span className='ml-2 text-xs text-gray-500'>({r.player_names.join(' & ')})</span>
+                                        )}
+                                      </div>
+                                      <span className='font-semibold text-emerald-600 text-sm'>{r.points_awarded} pts</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )
+                            })}
+                          </div>
+                        ) : (
+                          <div className='divide-y divide-gray-50'>
+                            {catResults.sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99)).map(r => (
+                              <div key={r.id} className='flex items-center gap-3 px-4 py-3 text-sm'>
+                                <span className='text-base w-7 text-center'>
+                                  {r.rank === 1 ? '🥇' : r.rank === 2 ? '🥈' : r.rank === 3 ? '🥉' : `#${r.rank}`}
+                                </span>
+                                <span className='font-medium text-gray-800 flex-1'>
+                                  {(r as Result & { team?: Team }).team?.name ?? r.team_id}
+                                  {r.player_names && r.player_names.length > 0 && (
+                                    <span className='ml-2 text-xs text-gray-500'>({r.player_names.join(' & ')})</span>
+                                  )}
+                                </span>
+                                <span className='font-semibold text-emerald-600'>{r.points_awarded} pts</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              )
+            })()}
+          </div>
+        )}
+
         {/* ══ RESULTS TAB ════════════════════════════════════════════════════ */}
         {tab === 'results' && (
           <div className='space-y-4'>
@@ -567,152 +909,276 @@ export default function TournamentAdminPage() {
 
             <div>
               <label className='block text-xs font-semibold text-gray-600 mb-1'>Select Event Category</label>
-              <select value={selCatId} onChange={e => { setSelCatId(e.target.value); setResultMsg(''); setResultError('') }} className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm max-w-md'>
+              <select
+                value={selCatId}
+                onChange={e => {
+                  setSelCatId(e.target.value)
+                  setResultMsg(''); setResultError('')
+                  setLeagueMatches([])
+                  setLastSavedBatch([])
+                  setResultEntries([
+                    { rank: 1, team_id: '', points: 0, remarks: '', player_names: [] },
+                    { rank: 2, team_id: '', points: 0, remarks: '', player_names: [] },
+                    { rank: 3, team_id: '', points: 0, remarks: '', player_names: [] },
+                  ])
+                }}
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm max-w-md'
+              >
                 <option value=''>— Choose event —</option>
                 {categories.map(c => (
-                  <option key={c.id} value={c.id}>{c.sport?.icon} {c.name} {c.is_completed ? '✓' : ''}</option>
+                  <option key={c.id} value={c.id}>
+                    {c.sport?.icon} {c.name}
+                    {c.round_type ? ` · ${roundLabel(c.round_type)}` : ''}
+                    {c.is_completed ? ' ✓' : ''}
+                  </option>
                 ))}
               </select>
             </div>
 
-            {selCatId && (
+            {selCatId && selCat && (
               <div className='bg-white rounded-2xl border border-gray-200 shadow p-5'>
-                <h3 className='font-semibold text-gray-800 mb-4'>
-                  {categories.find(c => c.id === selCatId)?.name}
-                  <span className='ml-2 text-xs font-normal text-gray-400'>(points auto-loaded from scoring rules)</span>
-                </h3>
+                <div className='flex flex-wrap items-center gap-2 mb-4'>
+                  <h3 className='font-semibold text-gray-800'>{selCat.name}</h3>
+                  {selCat.round_type && (
+                    <span className='rounded-full bg-indigo-100 text-indigo-700 text-xs font-semibold px-2 py-0.5'>
+                      {roundLabel(selCat.round_type)}
+                    </span>
+                  )}
+                  <span className='rounded-full bg-gray-100 text-gray-600 text-xs font-semibold px-2 py-0.5'>
+                    {selCat.event_type}
+                  </span>
+                </div>
 
-                <div className='space-y-3'>
-                  {resultEntries.map((entry, idx) => {
-                    const selCat = categories.find(c => c.id === selCatId)
-                    const showPlayers = selCat && needsPlayerNames(selCat.event_type)
-                    const teamPlayers = entry.team_id ? (playersByTeam[entry.team_id] ?? []) : []
+                {/* ── LEAGUE MODE ─────────────────────────────────────────── */}
+                {isLeagueMode ? (
+                  <div className='space-y-4'>
 
-                    return (
-                      <div key={idx} className='flex flex-col gap-2 p-3 rounded-xl border border-gray-100 bg-gray-50'>
-                        {/* Row 1: medal · team · points · remarks */}
-                        <div className='flex flex-wrap items-center gap-3'>
-                          <span className={`rounded-full px-2 py-0.5 text-xs font-semibold min-w-[72px] text-center ${MEDAL_COLORS[entry.rank] || 'bg-gray-100 text-gray-600'}`}>
-                            {MEDAL_LABELS[entry.rank] || `Rank ${entry.rank}`}
-                          </span>
-                          <select
-                            value={entry.team_id}
-                            onChange={e => setResultEntries(prev => prev.map((en, i) =>
-                              i === idx ? { ...en, team_id: e.target.value, player_names: [] } : en
-                            ))}
-                            className='flex-1 min-w-[140px] rounded-lg border border-gray-300 px-3 py-2 text-sm'
-                          >
-                            <option value=''>— Select team —</option>
-                            {teams.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
-                          </select>
-                          <div className='flex items-center gap-1'>
-                            <input
-                              type='number'
-                              value={entry.points}
-                              min={0}
-                              onChange={e => setResultEntries(prev => prev.map((en, i) => i === idx ? { ...en, points: Number(e.target.value) } : en))}
-                              className='w-16 rounded-lg border border-gray-300 px-2 py-2 text-sm text-center'
-                            />
-                            <span className='text-xs text-gray-400'>pts</span>
-                          </div>
-                          <input
-                            type='text'
-                            placeholder='Remarks (optional)'
-                            value={entry.remarks}
-                            onChange={e => setResultEntries(prev => prev.map((en, i) => i === idx ? { ...en, remarks: e.target.value } : en))}
-                            className='flex-1 min-w-[120px] rounded-lg border border-gray-300 px-3 py-2 text-sm'
-                          />
-                        </div>
+                    {/* ── Entry area: new / being-edited matches ──────────── */}
+                    {leagueMatches.length > 0 && (
+                      <div className='space-y-3'>
+                        {leagueMatches.map((match, mi) => (
+                          <div key={`entry-${match.match_number}`} className='rounded-xl border border-emerald-200 bg-emerald-50/40 p-4'>
+                            <div className='flex items-center justify-between mb-3'>
+                              <span className='text-xs font-semibold text-emerald-700 uppercase tracking-wide'>
+                                Match {match.match_number}
+                              </span>
+                              <button
+                                onClick={() => removeLeagueMatch(mi)}
+                                className='rounded p-1 text-red-400 hover:bg-red-50'
+                                title='Remove'
+                              ><X size={13} /></button>
+                            </div>
 
-                        {/* Row 2: player name selector (Individual / Doubles only) */}
-                        {showPlayers && entry.team_id && (
-                          <div className='pl-1'>
-                            <label className='block text-xs font-semibold text-gray-500 mb-1.5'>
-                              Player{selCat.event_type.toLowerCase().includes('doubles') ? 's (select 2)' : ' name'}
-                              {teamPlayers.length === 0 && <span className='ml-1 font-normal text-orange-500'>(no players uploaded for this team)</span>}
-                            </label>
-                            {teamPlayers.length > 0 ? (
-                              <div className='flex flex-wrap gap-1.5'>
-                                {teamPlayers.map(name => {
-                                  const selected = entry.player_names.includes(name)
-                                  return (
-                                    <button
-                                      key={name}
-                                      type='button'
-                                      onClick={() => setResultEntries(prev => prev.map((en, i) => {
-                                        if (i !== idx) return en
-                                        const isDoubles = selCat.event_type.toLowerCase().includes('doubles')
-                                        if (selected) return { ...en, player_names: en.player_names.filter(n => n !== name) }
-                                        // Singles: allow only 1; Doubles: allow max 2
-                                        if (!isDoubles && en.player_names.length >= 1) return { ...en, player_names: [name] }
-                                        if (isDoubles  && en.player_names.length >= 2) return en
-                                        return { ...en, player_names: [...en.player_names, name] }
-                                      }))}
-                                      className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${
-                                        selected
-                                          ? 'border-emerald-500 bg-emerald-100 text-emerald-800'
-                                          : 'border-gray-300 bg-white text-gray-600 hover:border-emerald-300'
-                                      }`}
-                                    >
-                                      {name}
-                                    </button>
-                                  )
-                                })}
+                            {match.rows.map((row, ri) => (
+                              <div key={ri} className='mb-3 last:mb-0'>
+                                {ri === 1 && (
+                                  <div className='text-center my-1'>
+                                    <span className='text-xs font-bold text-gray-400'>VS</span>
+                                  </div>
+                                )}
+                                <div className='flex flex-wrap items-center gap-2'>
+                                  <select
+                                    value={row.team_id}
+                                    onChange={e => updateLeagueRow(mi, ri, { team_id: e.target.value, player_names: [] })}
+                                    className='flex-1 min-w-[140px] rounded-lg border border-gray-300 px-3 py-2 text-sm'
+                                  >
+                                    <option value=''>— Select team —</option>
+                                    {teams.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
+                                  </select>
+                                  <div className='flex items-center gap-1'>
+                                    <input
+                                      type='number'
+                                      min={0}
+                                      value={row.points}
+                                      onChange={e => updateLeagueRow(mi, ri, { points: Number(e.target.value) })}
+                                      className='w-16 rounded-lg border border-gray-300 px-2 py-2 text-sm text-center'
+                                    />
+                                    <span className='text-xs text-gray-400'>pts</span>
+                                  </div>
+                                </div>
+                                {needsPlayerNames(selCat.event_type) && row.team_id && (
+                                  <PlayerDropdowns
+                                    teamId={row.team_id}
+                                    playerNames={row.player_names}
+                                    slots={playerSlots(selCat.event_type)}
+                                    onChange={names => updateLeagueRow(mi, ri, { player_names: names })}
+                                  />
+                                )}
                               </div>
-                            ) : (
+                            ))}
+                          </div>
+                        ))}
+
+                        {resultError && <p className='text-xs text-red-600'>{resultError}</p>}
+                        {resultMsg   && <p className='text-xs text-emerald-600 font-semibold'>{resultMsg}</p>}
+
+                        <div className='flex gap-2'>
+                          <button
+                            onClick={saveLeagueResults}
+                            disabled={resultSaving}
+                            className='inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60'
+                          >
+                            {resultSaving ? 'Saving…' : <><Save size={13} />Save</>}
+                          </button>
+                          <button
+                            onClick={addLeagueMatch}
+                            className='inline-flex items-center gap-1.5 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50'
+                          >
+                            <Plus size={13} /> Add Match
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ── Add first match button (when entry area is empty) ── */}
+                    {leagueMatches.length === 0 && (
+                      <div>
+                        {resultError && <p className='mb-2 text-xs text-red-600'>{resultError}</p>}
+                        {resultMsg   && <p className='mb-2 text-xs text-emerald-600 font-semibold'>{resultMsg}</p>}
+                        <button
+                          onClick={addLeagueMatch}
+                          className='inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700'
+                        >
+                          <Plus size={13} /> Add Match
+                        </button>
+                      </div>
+                    )}
+
+                    {/* ── Post-save confirmation (just the batch that was saved) ── */}
+                    {lastSavedBatch.length > 0 && (
+                      <div className='mt-2 rounded-xl border border-emerald-200 bg-emerald-50/50 p-3'>
+                        <p className='text-xs font-semibold text-emerald-700 uppercase tracking-wide mb-2'>Just saved ✓</p>
+                        <div className='space-y-2'>
+                          {lastSavedBatch.map(match => (
+                            <div key={match.match_number}>
+                              <p className='text-xs font-medium text-gray-500 mb-1'>Match {match.match_number}</p>
+                              {match.rows.filter(r => r.team_id).map((row, ri) => {
+                                const teamName = teams.find(t => t.id === row.team_id)?.name ?? row.team_id
+                                return (
+                                  <div key={ri} className='flex items-center justify-between text-sm py-0.5'>
+                                    <span className='font-medium text-gray-800'>
+                                      {teamName}
+                                      {row.player_names.length > 0 && (
+                                        <span className='ml-2 text-xs text-gray-500'>({row.player_names.join(' & ')})</span>
+                                      )}
+                                    </span>
+                                    <span className='text-emerald-600 font-semibold shrink-0'>{row.points} pts</span>
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  /* ── KNOCKOUT MODE ──────────────────────────────────────── */
+                  <div>
+                    <p className='text-xs text-gray-400 mb-3'>Points auto-loaded from scoring rules</p>
+                    <div className='space-y-3'>
+                      {resultEntries.map((entry, idx) => {
+                        const showPlayers = needsPlayerNames(selCat.event_type)
+                        const slots       = playerSlots(selCat.event_type)
+
+                        return (
+                          <div key={idx} className='flex flex-col gap-2 p-3 rounded-xl border border-gray-100 bg-gray-50'>
+                            <div className='flex flex-wrap items-center gap-3'>
+                              <span className={`rounded-full px-2 py-0.5 text-xs font-semibold min-w-[72px] text-center ${MEDAL_COLORS[entry.rank] || 'bg-gray-100 text-gray-600'}`}>
+                                {MEDAL_LABELS[entry.rank] || `Rank ${entry.rank}`}
+                              </span>
+                              <select
+                                value={entry.team_id}
+                                onChange={e => setResultEntries(prev => prev.map((en, i) =>
+                                  i === idx ? { ...en, team_id: e.target.value, player_names: [] } : en
+                                ))}
+                                className='flex-1 min-w-[140px] rounded-lg border border-gray-300 px-3 py-2 text-sm'
+                              >
+                                <option value=''>— Select team —</option>
+                                {teams.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
+                              </select>
+                              <div className='flex items-center gap-1'>
+                                <input
+                                  type='number'
+                                  value={entry.points}
+                                  min={0}
+                                  onChange={e => setResultEntries(prev => prev.map((en, i) => i === idx ? { ...en, points: Number(e.target.value) } : en))}
+                                  className='w-16 rounded-lg border border-gray-300 px-2 py-2 text-sm text-center'
+                                />
+                                <span className='text-xs text-gray-400'>pts</span>
+                              </div>
                               <input
                                 type='text'
-                                placeholder='Enter player name manually'
-                                value={entry.player_names.join(', ')}
-                                onChange={e => setResultEntries(prev => prev.map((en, i) =>
-                                  i === idx ? { ...en, player_names: e.target.value.split(',').map(s => s.trim()).filter(Boolean) } : en
-                                ))}
-                                className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm'
+                                placeholder='Remarks (optional)'
+                                value={entry.remarks}
+                                onChange={e => setResultEntries(prev => prev.map((en, i) => i === idx ? { ...en, remarks: e.target.value } : en))}
+                                className='flex-1 min-w-[120px] rounded-lg border border-gray-300 px-3 py-2 text-sm'
                               />
+                            </div>
+
+                            {/* Player dropdowns */}
+                            {showPlayers && entry.team_id && (
+                              <div className='pl-1'>
+                                <label className='block text-xs font-semibold text-gray-500 mb-1'>
+                                  {slots === 1 ? 'Player' : `Players (${slots})`}
+                                  {entry.team_id && (playersByTeam[entry.team_id] ?? []).length === 0 && (
+                                    <span className='ml-1 font-normal text-orange-500'>(no players uploaded)</span>
+                                  )}
+                                </label>
+                                <PlayerDropdowns
+                                  teamId={entry.team_id}
+                                  playerNames={entry.player_names}
+                                  slots={slots}
+                                  onChange={names => setResultEntries(prev => prev.map((en, i) =>
+                                    i === idx ? { ...en, player_names: names } : en
+                                  ))}
+                                />
+                              </div>
                             )}
                           </div>
-                        )}
-                      </div>
-                    )
-                  })}
-                </div>
-
-                {/* Add more ranks */}
-                <button onClick={() => setResultEntries(prev => [...prev, { rank: prev.length + 1, team_id: '', points: 0, remarks: '', player_names: [] }])}
-                  className='mt-3 inline-flex items-center gap-1 text-xs text-emerald-600 hover:underline'>
-                  <Plus size={12} /> Add rank
-                </button>
-
-                {resultError && <p className='mt-3 text-xs text-red-600'>{resultError}</p>}
-                {resultMsg   && <p className='mt-3 text-xs text-emerald-600 font-semibold'>{resultMsg}</p>}
-
-                <div className='mt-4 flex gap-2'>
-                  <button onClick={saveResults} disabled={resultSaving} className='inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60'>
-                    {resultSaving ? 'Saving…' : <><Save size={13} />Save Results</>}
-                  </button>
-                </div>
-
-                {/* Existing results */}
-                {results.length > 0 && (
-                  <div className='mt-5'>
-                    <p className='text-xs font-semibold text-gray-600 mb-2'>Saved Results</p>
-                    <div className='space-y-1'>
-                      {results.map(r => (
-                        <div key={r.id} className='flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-3 py-2 text-sm'>
-                          <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${MEDAL_COLORS[r.rank] || 'bg-gray-100 text-gray-600'}`}>
-                            {MEDAL_LABELS[r.rank] || `Rank ${r.rank}`}
-                          </span>
-                          <div className='flex-1 min-w-0'>
-                            <span className='font-medium text-gray-800'>{(r as Result & { team?: Team }).team?.name ?? r.team_id}</span>
-                            {r.player_names && r.player_names.length > 0 && (
-                              <span className='ml-2 text-xs text-gray-500'>({r.player_names.join(', ')})</span>
-                            )}
-                            {r.remarks && <span className='ml-1 text-gray-400 text-xs italic'>{r.remarks}</span>}
-                          </div>
-                          <span className='text-gray-500 shrink-0'>{r.points_awarded} pts</span>
-                        </div>
-                      ))}
+                        )
+                      })}
                     </div>
+
+                    <button
+                      onClick={() => setResultEntries(prev => [...prev, { rank: prev.length + 1, team_id: '', points: 0, remarks: '', player_names: [] }])}
+                      className='mt-3 inline-flex items-center gap-1 text-xs text-emerald-600 hover:underline'
+                    >
+                      <Plus size={12} /> Add rank
+                    </button>
+
+                    {resultError && <p className='mt-3 text-xs text-red-600'>{resultError}</p>}
+                    {resultMsg   && <p className='mt-3 text-xs text-emerald-600 font-semibold'>{resultMsg}</p>}
+
+                    <div className='mt-4 flex gap-2'>
+                      <button onClick={saveResults} disabled={resultSaving} className='inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60'>
+                        {resultSaving ? 'Saving…' : <><Save size={13} />Save Results</>}
+                      </button>
+                    </div>
+
+                    {/* Saved results */}
+                    {results.length > 0 && (
+                      <div className='mt-5'>
+                        <p className='text-xs font-semibold text-gray-600 mb-2'>Saved Results</p>
+                        <div className='space-y-1'>
+                          {results.map(r => (
+                            <div key={r.id} className='flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-3 py-2 text-sm'>
+                              <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${r.rank != null ? (MEDAL_COLORS[r.rank] || 'bg-gray-100 text-gray-600') : 'bg-gray-100 text-gray-600'}`}>
+                                {r.rank != null ? (MEDAL_LABELS[r.rank] || `Rank ${r.rank}`) : '—'}
+                              </span>
+                              <div className='flex-1 min-w-0'>
+                                <span className='font-medium text-gray-800'>{(r as Result & { team?: Team }).team?.name ?? r.team_id}</span>
+                                {r.player_names && r.player_names.length > 0 && (
+                                  <span className='ml-2 text-xs text-gray-500'>({r.player_names.join(' & ')})</span>
+                                )}
+                                {r.remarks && <span className='ml-1 text-gray-400 text-xs italic'>{r.remarks}</span>}
+                              </div>
+                              <span className='text-gray-500 shrink-0'>{r.points_awarded} pts</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

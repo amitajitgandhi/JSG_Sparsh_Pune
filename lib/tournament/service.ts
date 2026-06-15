@@ -188,7 +188,7 @@ export async function upsertResult(r: Partial<Result>) {
   const { team: _t, event_category: _ec, ...payload } = r as Result & { team?: Team; event_category?: EventCategory }
   const { data, error } = await supabase
     .from('sports_results')
-    .upsert({ ...payload, updated_at: new Date().toISOString() })
+    .upsert(payload)
     .select()
     .single()
   return { data: data as Result | null, error }

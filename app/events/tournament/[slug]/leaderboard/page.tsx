@@ -1,40 +1,65 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { RefreshCw, Trophy, Medal, ArrowLeft } from 'lucide-react'
+import { RefreshCw, Trophy, ArrowLeft } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { useRealtimeLeaderboard } from '@/lib/tournament/useRealtimeLeaderboard'
+import { calculateLeaderboard } from '@/lib/tournament/leaderboard'
 import type { Tournament } from '@/lib/tournament/types'
 
 const MEDAL = ['🥇', '🥈', '🥉']
-const PODIUM_BG = [
-  'from-yellow-400 to-amber-500',
-  'from-gray-300 to-gray-400',
-  'from-orange-400 to-amber-600',
-]
 
 export default function LeaderboardPage() {
   const { slug } = useParams<{ slug: string }>()
-  const [tournament, setTournament] = useState<Tournament | null>(null)
-  const [search, setSearch] = useState('')
+  const [tournament,   setTournament]   = useState<Tournament | null>(null)
+  const [search,       setSearch]       = useState('')
+  const [sportFilter,  setSportFilter]  = useState('')   // '' = Total Points
 
   useEffect(() => {
     supabase.from('sports_tournaments').select('*').eq('slug', slug).single()
       .then(({ data }) => setTournament(data as Tournament))
   }, [slug])
 
-  const { rows, loading, error, refresh } = useRealtimeLeaderboard({
+  const { rows, rawData, loading, error, refresh } = useRealtimeLeaderboard({
     tournament_id: tournament?.id ?? '',
     enabled: !!tournament?.id,
   })
 
-  const filtered = search.trim()
-    ? rows.filter(r => r.team.name.toLowerCase().includes(search.toLowerCase()))
-    : rows
+  // ── Sport-filtered leaderboard ────────────────────────────────────────────
+  const displayRows = useMemo(() => {
+    if (!sportFilter || !rawData) return rows
+    const catIds = new Set(
+      rawData.categories
+        .filter(c => c.sport_id === sportFilter)
+        .map(c => c.id)
+    )
+    const filteredResults = rawData.results.filter(r => catIds.has(r.event_category_id))
+    return calculateLeaderboard({
+      teams:      rawData.teams,
+      results:    filteredResults,
+      categories: rawData.categories,
+      sports:     rawData.sports,
+    })
+  }, [rows, sportFilter, rawData])
 
-  const top3 = rows.slice(0, 3)
+  // Derive sport list from raw data (only sports that have results)
+  const activeSports = useMemo(() => {
+    if (!rawData) return []
+    const sportIdsWithResults = new Set(
+      rawData.categories
+        .filter(c => rawData.results.some(r => r.event_category_id === c.id))
+        .map(c => c.sport_id)
+    )
+    return rawData.sports.filter(s => sportIdsWithResults.has(s.id))
+  }, [rawData])
+
+  const filtered = search.trim()
+    ? displayRows.filter(r => r.team.name.toLowerCase().includes(search.toLowerCase()))
+    : displayRows
+
+  const top3 = displayRows.slice(0, 3)
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-emerald-50 via-white to-sky-50 p-4 sm:p-6 md:p-8'>
@@ -60,60 +85,64 @@ export default function LeaderboardPage() {
 
         {error && <div className='mb-4 rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700'>{error}</div>}
 
+        {/* ── Sport filter dropdown ───────────────────────────────────────── */}
+        {!loading && activeSports.length > 0 && (
+          <div className='mb-5'>
+            <select
+              value={sportFilter}
+              onChange={e => setSportFilter(e.target.value)}
+              className='rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500'
+            >
+              <option value=''>🏆 Total Points</option>
+              {activeSports.map(s => (
+                <option key={s.id} value={s.id}>{s.icon} {s.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
+
         {loading ? (
           <div className='text-center py-20 bg-white rounded-2xl shadow'>
             <RefreshCw className='mx-auto h-10 w-10 animate-spin text-gray-400 mb-3' />
             <p className='text-gray-500'>Loading leaderboard…</p>
           </div>
-        ) : rows.length === 0 ? (
+        ) : displayRows.length === 0 ? (
           <div className='text-center py-20 bg-white rounded-2xl shadow'>
             <Trophy className='mx-auto h-12 w-12 text-gray-300 mb-4' />
             <p className='text-gray-500'>No results yet. Check back soon.</p>
           </div>
         ) : (
           <>
-            {/* ── Podium ─────────────────────────────────────────────────── */}
-            {top3.length === 3 && top3[0].rank === 1 && top3[1].rank === 2 && top3[2].rank === 3 && (
+            {/* ── Podium (only on Total Points, no sport filter) ─────────── */}
+            {!sportFilter && top3.length === 3 && top3[0].rank === 1 && top3[1].rank === 2 && top3[2].rank === 3 && (
               <div className='mb-8 rounded-2xl bg-gradient-to-b from-amber-50 via-white to-gray-50 p-8 shadow-lg border border-amber-100'>
-                                      <h2 className='text-sm font-semibold text-gray-600 uppercase tracking-widest mb-8 text-center'>🏆 Champions 🏆</h2>
+                <h2 className='text-sm font-semibold text-gray-600 uppercase tracking-widest mb-8 text-center'>🏆 Champions 🏆</h2>
                 <div className='flex items-end justify-center gap-4 sm:gap-8'>
-                  {/* Render: 2nd, 1st, 3rd */}
                   {[top3[1], top3[0], top3[2]].map((row, podiumIdx) => {
                     if (!row) return <div key={podiumIdx} className='w-20 sm:w-28' />
                     const actualRank = row.rank
                     const heights = ['h-32 sm:h-28', 'h-40 sm:h-40', 'h-28 sm:h-24']
-                    const widths = ['w-20 sm:w-24', 'w-24 sm:w-28', 'w-20 sm:w-24']
-                    const colors = [
+                    const widths  = ['w-20 sm:w-24', 'w-24 sm:w-28', 'w-20 sm:w-24']
+                    const colors  = [
                       'from-amber-300 via-yellow-300 to-amber-400',
                       'from-gray-300 via-gray-400 to-slate-400',
                       'from-amber-600 via-orange-600 to-amber-700',
                     ]
                     const shadows = ['shadow-xl', 'shadow-2xl', 'shadow-xl']
-                    
                     return (
                       <div key={row.team.id} className='flex flex-col items-center gap-3 sm:gap-4'>
-                        {/* Medal emoji */}
                         <div className='text-3xl sm:text-4xl drop-shadow-lg'>{MEDAL[actualRank - 1] ?? '🏅'}</div>
-                        
-                        {/* Podium */}
                         <div className={`${widths[podiumIdx]} ${heights[podiumIdx]} bg-gradient-to-t ${colors[actualRank - 1]} rounded-t-2xl sm:rounded-t-3xl flex flex-col items-center justify-start ${shadows[podiumIdx]} gap-1.5 px-2 sm:px-4 relative pt-3 sm:pt-4`}>
-                          {/* Top decoration */}
-                          <div className='absolute -top-1 left-0 right-0 h-1 bg-white/50 rounded-full'></div>
-                          
-                          {/* Initials circle */}
+                          <div className='absolute -top-1 left-0 right-0 h-1 bg-white/50 rounded-full' />
                           <div
                             className='h-10 sm:h-12 w-10 sm:w-12 rounded-full border-3 border-white shadow-lg flex items-center justify-center text-white text-xs sm:text-sm font-bold flex-shrink-0'
-                            style={{ 
-                              backgroundColor: row.team.color
-                            }}
+                            style={{ backgroundColor: row.team.color }}
                           >
                             {row.team.logo_url
                               ? <img src={row.team.logo_url} alt={row.team.name} className='h-10 sm:h-12 w-10 sm:w-12 rounded-full object-cover' />
                               : row.team.short_name.slice(0, 2).toUpperCase()
                             }
                           </div>
-                          
-                          {/* Team name */}
                           <p className='text-white text-xs sm:text-sm font-bold text-center leading-tight line-clamp-2'>{row.team.name}</p>
                         </div>
                       </div>
@@ -135,6 +164,14 @@ export default function LeaderboardPage() {
 
             {/* ── Table ──────────────────────────────────────────────────── */}
             <div className='bg-white rounded-2xl shadow overflow-hidden'>
+              {sportFilter && (
+                <div className='px-4 py-2.5 bg-emerald-50 border-b border-emerald-100'>
+                  <p className='text-xs font-semibold text-emerald-700'>
+                    {activeSports.find(s => s.id === sportFilter)?.icon}{' '}
+                    {activeSports.find(s => s.id === sportFilter)?.name} — points only
+                  </p>
+                </div>
+              )}
               <div className='overflow-x-auto'>
                 <table className='min-w-full divide-y divide-gray-200'>
                   <thead className='bg-gray-50'>

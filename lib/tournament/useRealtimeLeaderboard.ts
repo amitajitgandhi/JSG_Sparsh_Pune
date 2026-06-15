@@ -2,24 +2,32 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // lib/tournament/useRealtimeLeaderboard.ts
 // Subscribes to sports_results changes and recalculates leaderboard.
-// Uses Supabase Realtime — no polling.
+// Returns rawData so the page can recalculate for per-sport filters.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useRef, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { calculateLeaderboard } from './leaderboard'
 import { getLeaderboardData } from './service'
-import type { LeaderboardRow } from './types'
+import type { Team, Sport, EventCategory, Result, LeaderboardRow } from './types'
 
 interface Options {
   tournament_id: string
   enabled?: boolean
 }
 
+export interface LeaderboardRawData {
+  teams:      Team[]
+  results:    Result[]
+  categories: EventCategory[]
+  sports:     Sport[]
+}
+
 export function useRealtimeLeaderboard({ tournament_id, enabled = true }: Options) {
-  const [rows, setRows]       = useState<LeaderboardRow[]>([])
+  const [rows,    setRows]    = useState<LeaderboardRow[]>([])
+  const [rawData, setRawData] = useState<LeaderboardRawData | null>(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError]     = useState<string | null>(null)
+  const [error,   setError]   = useState<string | null>(null)
   const channelRef            = useRef<ReturnType<typeof supabase.channel> | null>(null)
 
   const refresh = async () => {
@@ -28,6 +36,7 @@ export function useRealtimeLeaderboard({ tournament_id, enabled = true }: Option
       setError(fetchErr.message)
       return
     }
+    setRawData({ teams, results, categories, sports })
     setRows(calculateLeaderboard({ teams, results, categories, sports }))
     setError(null)
   }
@@ -36,9 +45,10 @@ export function useRealtimeLeaderboard({ tournament_id, enabled = true }: Option
     if (!enabled || !tournament_id) return
 
     setLoading(true)
-    refresh().finally(() => setLoading(false))
+    refresh()
+      .catch(err => setError(err?.message ?? 'Failed to load leaderboard'))
+      .finally(() => setLoading(false))
 
-    // Subscribe to realtime changes on sports_results
     const channel = supabase
       .channel(`leaderboard:${tournament_id}`)
       .on(
@@ -50,11 +60,9 @@ export function useRealtimeLeaderboard({ tournament_id, enabled = true }: Option
 
     channelRef.current = channel
 
-    return () => {
-      channel.unsubscribe()
-    }
+    return () => { channel.unsubscribe() }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tournament_id, enabled])
 
-  return { rows, loading, error, refresh }
+  return { rows, rawData, loading, error, refresh }
 }
