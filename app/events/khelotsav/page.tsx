@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import {
   CalendarDays, Clock3, MapPinnedIcon,
-  Trophy, Users, ClipboardList, Lock, ArrowRight, Medal,
+  Trophy, Users, ClipboardList, Lock, ArrowRight, Medal, Users2,
 } from 'lucide-react'
 import {
   REGISTRATION_CLOSED_STATUS,
@@ -33,43 +33,41 @@ const sportEmojis: Record<string, string> = {
 }
 
 // ── CTA cards ────────────────────────────────────────────────────────────────
+const registerLink = {
+  href: registrationClosed ? '#' : '/events/khelotsav-2026',
+  label: registrationClosed ? 'Registration Closed' : 'Register Now',
+  sub: registrationClosed ? 'No longer accepting registrations' : 'Secure your spot today',
+  disabled: registrationClosed,
+}
+
 const actionLinks = [
   {
-    href: registrationClosed ? '#' : '/events/khelotsav-2026',
-    label: registrationClosed ? 'Registration Closed' : 'Register Now',
-    sub: registrationClosed ? 'No longer accepting registrations' : 'Secure your spot today',
-    icon: registrationClosed ? <Lock size={22} /> : <ClipboardList size={22} />,
-    accent: registrationClosed ? 'from-slate-400 to-slate-500' : 'from-orange-500 to-amber-400',
-    glow: registrationClosed ? 'none' : '0 8px 32px rgba(249,115,22,0.35)',
-    color: registrationClosed ? '#94a3b8' : '#f97316',
-    disabled: registrationClosed,
+    href: '/events/tournament/khelotsav-2026/teams',
+    label: 'Teams',
+    sub: 'Browse all teams',
+    icon: <Users size={22} />,
+    accent: 'from-sky-500 to-blue-600',
   },
   {
-    href: '/events/tournament/khelotsav-2026/teams',
-    label: 'Team Players',
+    href: '/events/tournament/khelotsav-2026/players',
+    label: 'Players',
     sub: 'Browse all participants',
-    icon: <Users size={22} />,
-    accent: 'from-sky-500 to-blue-500',
-    glow: '0 8px 32px rgba(14,165,233,0.35)',
-    color: '#0ea5e9',
+    icon: <Users2 size={22} />,
+    accent: 'from-emerald-500 to-teal-600',
   },
   {
     href: '/events/tournament/khelotsav-2026/leaderboard',
     label: 'Leaderboard',
     sub: 'Live standings & medal tally',
     icon: <Trophy size={22} />,
-    accent: 'from-violet-500 to-purple-500',
-    glow: '0 8px 32px rgba(139,92,246,0.35)',
-    color: '#8b5cf6',
+    accent: 'from-violet-500 to-purple-600',
   },
   {
     href: '/events/tournament/khelotsav-2026/results',
     label: 'Event Results',
     sub: 'Scores by sport & category',
     icon: <Medal size={22} />,
-    accent: 'from-emerald-500 to-teal-500',
-    glow: '0 8px 32px rgba(16,185,129,0.35)',
-    color: '#10b981',
+    accent: 'from-orange-500 to-rose-500',
   },
 ]
 
@@ -235,21 +233,33 @@ export default function KhelotsavHubPage() {
           ))}
         </div>
 
+        {/* ── Register link ───────────────────────────────────────────────── */}
+        <div className="mt-8 flex justify-center">
+          {registerLink.disabled ? (
+            <div className="inline-flex cursor-not-allowed items-center gap-2 rounded-full bg-slate-200 px-6 py-2.5 text-sm font-semibold text-slate-500">
+              <Lock size={15} /> {registerLink.label}
+            </div>
+          ) : (
+            <Link
+              href={registerLink.href}
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-2.5 text-sm font-bold text-white shadow-md hover:brightness-105 transition-all active:scale-95"
+            >
+              <ClipboardList size={15} /> {registerLink.label} — {registerLink.sub}
+            </Link>
+          )}
+        </div>
+
         {/* ── CTA cards ───────────────────────────────────────────────────── */}
-        <section className="mt-10">
+        <section className="mt-8">
           <h2 className="kh-section-label mb-5 text-center text-base font-black uppercase tracking-widest text-slate-800 sm:text-lg">
             Explore the Event
           </h2>
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-            {actionLinks.map(cta => {
-              const inner = (
-                <div className={`kh-cta group relative flex min-h-[168px] flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl bg-gradient-to-br p-5 text-white sm:p-6 ${cta.accent} ${cta.disabled ? 'opacity-70' : ''}`}
-                  style={{ '--cta-glow': cta.glow } as React.CSSProperties}>
-                  {/* Noise/grain texture */}
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            {actionLinks.map(cta => (
+              <Link key={cta.label} href={cta.href}>
+                <div className={`kh-cta group relative flex min-h-[148px] flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl bg-gradient-to-br p-5 text-white sm:p-6 ${cta.accent}`}>
                   <div className="kh-cta-grain absolute inset-0" />
-                  {/* Shimmer on hover */}
                   <div className="kh-cta-sheen pointer-events-none absolute inset-0" />
-
                   <div className="relative z-10 flex flex-col items-center gap-3 text-center">
                     <div className="kh-cta-icon flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20">
                       {cta.icon}
@@ -258,18 +268,13 @@ export default function KhelotsavHubPage() {
                       <p className="text-sm font-extrabold leading-tight">{cta.label}</p>
                       <p className="mt-1 text-[11px] text-white/75">{cta.sub}</p>
                     </div>
-                    {!cta.disabled && (
-                      <div className="kh-cta-arrow flex h-7 w-7 items-center justify-center rounded-full bg-white/25">
-                        <ArrowRight size={13} />
-                      </div>
-                    )}
+                    <div className="kh-cta-arrow flex h-7 w-7 items-center justify-center rounded-full bg-white/25">
+                      <ArrowRight size={13} />
+                    </div>
                   </div>
                 </div>
-              )
-              return cta.disabled
-                ? <div key={cta.label} className="cursor-not-allowed">{inner}</div>
-                : <Link key={cta.label} href={cta.href}>{inner}</Link>
-            })}
+              </Link>
+            ))}
           </div>
         </section>
 

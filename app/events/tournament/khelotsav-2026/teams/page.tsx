@@ -440,7 +440,7 @@ export default function KhelotsavTeamsPage() {
             SPARSH KHELOTSAV 2026
           </h1>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-6 px-4">
-            Meet the participants competing team-wise at the indoor sports festival.
+            Meet the teams competing team-wise at the indoor sports festival.
           </p>
 
           {/* Stats */}
