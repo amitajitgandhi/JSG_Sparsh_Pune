@@ -182,11 +182,37 @@ export default function PlayersPage() {
           </div>
 
           {/* Back link */}
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link href="/events/khelotsav" className="bg-white text-sky-600 border border-sky-200 px-4 py-2 rounded-lg hover:bg-sky-50 transition shadow-sm text-sm font-semibold">
-              ← Back
-            </Link>
-          </div>
+        <div className="flex flex-wrap justify-center gap-3">
+  <Link
+    href="/events/khelotsav"
+    className="bg-white text-sky-600 border border-sky-200 px-4 py-2 rounded-lg hover:bg-sky-50 transition shadow-sm text-sm font-semibold"
+  >
+    ← Back
+  </Link>
+
+  <button
+    onClick={() => exportCSV(filtered, teamFilter, sportFilter)}
+    disabled={filtered.length === 0}
+    className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-semibold hover:bg-sky-700 disabled:opacity-40 transition shadow-sm"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <polyline points="7 10 12 15 17 10" />
+      <line x1="12" y1="15" x2="12" y2="3" />
+    </svg>
+    Export
+  </button>
+</div>
         </div>
 
         {/* Sticky filter + export bar */}
@@ -214,16 +240,6 @@ export default function PlayersPage() {
                 <option key={s} value={s}>{s}</option>
               ))}
             </select>
-            <button
-              onClick={() => exportCSV(filtered, teamFilter, sportFilter)}
-              disabled={filtered.length === 0}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-sky-600 text-white text-xs font-semibold hover:bg-sky-700 disabled:opacity-40 transition flex-shrink-0"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
-              Export
-            </button>
           </div>
           {(teamFilter !== ALL || sportFilter !== ALL) && (
             <p className="text-[11px] text-gray-400 mt-1.5 px-0.5">
