@@ -5,11 +5,8 @@ import Link from 'next/link'
 import { Plus, RefreshCw, Pencil, Trophy, CalendarDays, CheckCircle2, XCircle } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import type { Tournament } from '@/lib/tournament/types'
-import AdminAuthModal from '@/app/components/AdminAuthModal'
 
 export default function TournamentListPage() {
-  const [authed,    setAuthed]    = useState(false)
-  const [showAuth,  setShowAuth]  = useState(false)
   const [rows,      setRows]      = useState<Tournament[]>([])
   const [loading,   setLoading]   = useState(true)
   const [error,     setError]     = useState<string | null>(null)
@@ -49,22 +46,6 @@ export default function TournamentListPage() {
   const toggleActive = async (t: Tournament) => {
     await supabase.from('sports_tournaments').update({ is_active: !t.is_active }).eq('id', t.id)
     load()
-  }
-
-  if (!authed) {
-    return (
-      <div className='min-h-screen bg-gray-50 flex items-center justify-center p-4'>
-        <div className='bg-white rounded-2xl shadow p-8 text-center max-w-sm w-full'>
-          <Trophy className='mx-auto mb-3 text-emerald-600' size={36} />
-          <h2 className='text-xl font-bold text-gray-900 mb-2'>Tournament Management</h2>
-          <p className='text-sm text-gray-500 mb-5'>Admin access required.</p>
-          <button onClick={() => setShowAuth(true)} className='w-full rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 transition'>
-            Login as Admin
-          </button>
-        </div>
-        <AdminAuthModal isOpen={showAuth} onClose={() => setShowAuth(false)} onAuthenticated={() => { setAuthed(true); setShowAuth(false) }} />
-      </div>
-    )
   }
 
   return (

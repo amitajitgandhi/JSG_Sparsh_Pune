@@ -87,7 +87,7 @@ export default function ResultsPage() {
         {/* Header */}
         <div className='mb-6'>
           <Link href={`/events/khelotsav`} className='inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-3'>
-            <ArrowLeft size={14} /> Back to Khelotsav
+            <ArrowLeft size={14} /> Back
           </Link>
           <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3'>
             <div>

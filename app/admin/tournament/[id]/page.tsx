@@ -10,7 +10,7 @@ import {
   getSports, upsertSport, deleteSport,
   getCategoriesByTournament, upsertCategory, deleteCategory, markCategoryCompleted,
   getScoringRules, replaceScoringRules,
-  getResultsByCategory, upsertResult, deleteResultsByCategory,
+  getResultsByCategory, upsertResult, deleteResult, deleteResultsByCategory,
   getResultsByTournament,
 } from '@/lib/tournament/service'
 
@@ -108,6 +108,15 @@ export default function TournamentAdminPage() {
   const [trackResults,     setTrackResults]     = useState<Result[]>([])
   const [trackLoading,     setTrackLoading]     = useState(false)
   const [trackSportFilter, setTrackSportFilter] = useState('')
+  const [trackSaving,      setTrackSaving]      = useState(false)
+  // Edit: which match is being edited inline
+  const [trackEditKey,     setTrackEditKey]     = useState<string | null>(null)  // `${catId}__${matchNum}`
+  const [trackEditRows,    setTrackEditRows]    = useState<LeagueRow[]>([])
+  // Delete: which match is pending deletion (awaiting password)
+  const [trackDelKey,      setTrackDelKey]      = useState<string | null>(null)  // `${catId}__${matchNum}`
+  const [trackDelIds,      setTrackDelIds]      = useState<string[]>([])
+  const [trackAuthInput,   setTrackAuthInput]   = useState('')
+  const [trackAuthError,   setTrackAuthError]   = useState(false)
 
   // ── Load all data ─────────────────────────────────────────────────────────
   const loadAll = useCallback(async () => {
@@ -408,6 +417,81 @@ export default function TournamentAdminPage() {
     setSelCatId(catId)
     setResultMsg(''); setResultError('')
     setLeagueMatches([])
+  }
+
+  // ── Tracking: inline edit ─────────────────────────────────────────────────
+  const startTrackEdit = (catId: string, matchNum: number, results: Result[]) => {
+    const rows: LeagueRow[] = results.map(r => ({
+      team_id:      r.team_id,
+      player_names: r.player_names ?? [],
+      points:       r.points_awarded,
+    }))
+    while (rows.length < 2) rows.push({ team_id: '', player_names: [], points: 0 })
+    setTrackEditKey(`${catId}__${matchNum}`)
+    setTrackEditRows(rows)
+  }
+
+  const cancelTrackEdit = () => {
+    setTrackEditKey(null)
+    setTrackEditRows([])
+  }
+
+  const updateTrackEditRow = (ri: number, patch: Partial<LeagueRow>) => {
+    setTrackEditRows(prev => prev.map((r, i) => i !== ri ? r : { ...r, ...patch }))
+  }
+
+  const saveTrackEdit = async (catId: string, matchNum: number, oldIds: string[]) => {
+    setTrackSaving(true)
+    // Delete old rows for this match
+    for (const oid of oldIds) {
+      const { error: delErr } = await deleteResult(oid)
+      if (delErr) { alert(`Delete failed: ${delErr.message}`); setTrackSaving(false); return }
+    }
+    // Re-insert updated rows
+    for (const row of trackEditRows) {
+      if (!row.team_id) continue
+      const { error: insErr } = await upsertResult({
+        event_category_id: catId,
+        team_id:           row.team_id,
+        rank:              null,
+        points_awarded:    row.points,
+        remarks:           null,
+        player_names:      row.player_names.filter(Boolean).length ? row.player_names.filter(Boolean) : null,
+        match_number:      matchNum,
+      })
+      if (insErr) { alert(`Save failed: ${insErr.message}`); setTrackSaving(false); return }
+    }
+    setTrackSaving(false)
+    setTrackEditKey(null)
+    setTrackEditRows([])
+    loadTrackResults()
+  }
+
+  // ── Tracking: inline delete ───────────────────────────────────────────────
+  const startTrackDelete = (catId: string, matchNum: number, ids: string[]) => {
+    setTrackDelKey(`${catId}__${matchNum}`)
+    setTrackDelIds(ids)
+    setTrackAuthInput('')
+    setTrackAuthError(false)
+  }
+
+  const cancelTrackDelete = () => {
+    setTrackDelKey(null)
+    setTrackDelIds([])
+    setTrackAuthInput('')
+    setTrackAuthError(false)
+  }
+
+  const confirmTrackDelete = async () => {
+    if (trackAuthInput !== 'admin123') { setTrackAuthError(true); return }
+    setTrackSaving(true)
+    for (const oid of trackDelIds) {
+      const { error: delErr } = await deleteResult(oid)
+      if (delErr) { alert(`Delete failed: ${delErr.message}`); setTrackSaving(false); return }
+    }
+    setTrackSaving(false)
+    cancelTrackDelete()
+    loadTrackResults()
   }
 
   // ── Player dropdown helper ────────────────────────────────────────────────
@@ -830,10 +914,12 @@ export default function TournamentAdminPage() {
               return (
                 <div className='space-y-4'>
                   {grouped.map(({ cat, results: catResults }) => {
+                    // All round types use match-based display (same as Results tab)
+                    const isLeague = !!cat.round_type
                     const matchNums = Array.from(new Set(catResults.map(r => r.match_number ?? 0))).sort((a, b) => a - b)
-                    const isLeague = cat.round_type === 'league'
                     return (
                       <div key={cat.id} className='bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden'>
+                        {/* Category header */}
                         <div className='flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-100'>
                           <div>
                             <p className='font-semibold text-gray-800 text-sm'>{cat.sport?.icon} {cat.name}</p>
@@ -842,23 +928,108 @@ export default function TournamentAdminPage() {
                               {cat.is_completed && <span className='ml-2 text-emerald-600'>✓ Completed</span>}
                             </p>
                           </div>
-                          <button
-                            onClick={() => goToResultsTab(cat.id)}
-                            className='inline-flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-100 hover:text-emerald-700'
-                            title='Edit in Results tab'
-                          >
-                            <Pencil size={11} /> Edit
-                          </button>
                         </div>
 
+                        {/* Matches */}
                         {isLeague ? (
-                          <div className='divide-y divide-gray-50'>
+                          <div className='divide-y divide-gray-100'>
                             {matchNums.map(mn => {
-                              const rows = catResults.filter(r => (r.match_number ?? 0) === mn)
+                              const matchKey  = `${cat.id}__${mn}`
+                              const matchRows = catResults.filter(r => (r.match_number ?? 0) === mn)
+                              const isEditing = trackEditKey === matchKey
+                              const isDeleting = trackDelKey === matchKey
+
                               return (
                                 <div key={mn} className='px-4 py-3'>
-                                  <p className='text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2'>Match {mn}</p>
-                                  {rows.map(r => (
+                                  {/* Match header row */}
+                                  <div className='flex items-center justify-between mb-2'>
+                                    <p className='text-xs font-semibold text-gray-500 uppercase tracking-wide'>Match {mn}</p>
+                                    {!isEditing && !isDeleting && (
+                                      <div className='flex items-center gap-1'>
+                                        <button
+                                          onClick={() => startTrackEdit(cat.id, mn, matchRows)}
+                                          className='rounded p-1 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50'
+                                          title='Edit this match'
+                                        ><Pencil size={12} /></button>
+                                        <button
+                                          onClick={() => startTrackDelete(cat.id, mn, matchRows.map(r => r.id))}
+                                          className='rounded p-1 text-gray-400 hover:text-red-600 hover:bg-red-50'
+                                          title='Delete this match'
+                                        ><X size={12} /></button>
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {/* Delete confirmation */}
+                                  {isDeleting && (
+                                    <div className='rounded-lg border border-red-200 bg-red-50 p-3 space-y-2'>
+                                      <p className='text-xs font-semibold text-red-700'>Delete Match {mn}? Enter admin password:</p>
+                                      <input
+                                        type='password'
+                                        value={trackAuthInput}
+                                        onChange={e => { setTrackAuthInput(e.target.value); setTrackAuthError(false) }}
+                                        placeholder='Password'
+                                        className={`w-full rounded border px-2 py-1.5 text-sm ${trackAuthError ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
+                                        onKeyDown={e => e.key === 'Enter' && confirmTrackDelete()}
+                                      />
+                                      {trackAuthError && <p className='text-xs text-red-600'>Wrong password.</p>}
+                                      <div className='flex gap-2'>
+                                        <button
+                                          onClick={confirmTrackDelete}
+                                          disabled={trackSaving}
+                                          className='rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700 disabled:opacity-50'
+                                        >{trackSaving ? 'Deleting…' : 'Delete'}</button>
+                                        <button onClick={cancelTrackDelete} className='rounded-lg border border-gray-300 px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-100'>Cancel</button>
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {/* Inline edit */}
+                                  {isEditing && (
+                                    <div className='rounded-lg border border-emerald-200 bg-emerald-50/40 p-3 space-y-2'>
+                                      {trackEditRows.map((row, ri) => (
+                                        <div key={ri}>
+                                          {ri === 1 && <div className='text-center my-1 text-xs font-bold text-gray-400'>VS</div>}
+                                          <div className='flex flex-wrap gap-2 items-center'>
+                                            <select
+                                              value={row.team_id}
+                                              onChange={e => updateTrackEditRow(ri, { team_id: e.target.value, player_names: [] })}
+                                              className='flex-1 min-w-[140px] rounded-lg border border-gray-300 px-2 py-1.5 text-sm'
+                                            >
+                                              <option value=''>— Team —</option>
+                                              {teams.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
+                                            </select>
+                                            <input
+                                              type='number'
+                                              value={row.points}
+                                              onChange={e => updateTrackEditRow(ri, { points: Number(e.target.value) })}
+                                              className='w-20 rounded-lg border border-gray-300 px-2 py-1.5 text-sm'
+                                              placeholder='pts'
+                                            />
+                                          </div>
+                                          {needsPlayerNames(cat.event_type) && row.team_id && (
+                                            <PlayerDropdowns
+                                              teamId={row.team_id}
+                                              playerNames={row.player_names}
+                                              slots={/doubles/i.test(cat.event_type) ? 2 : 1}
+                                              onChange={names => updateTrackEditRow(ri, { player_names: names })}
+                                            />
+                                          )}
+                                        </div>
+                                      ))}
+                                      <div className='flex gap-2 pt-1'>
+                                        <button
+                                          onClick={() => saveTrackEdit(cat.id, mn, matchRows.map(r => r.id))}
+                                          disabled={trackSaving}
+                                          className='rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700 disabled:opacity-50'
+                                        >{trackSaving ? 'Saving…' : 'Save'}</button>
+                                        <button onClick={cancelTrackEdit} className='rounded-lg border border-gray-300 px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-100'>Cancel</button>
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {/* Read-only view */}
+                                  {!isEditing && !isDeleting && matchRows.map(r => (
                                     <div key={r.id} className='flex items-center justify-between py-1 text-sm'>
                                       <div>
                                         <span className='font-medium text-gray-800'>

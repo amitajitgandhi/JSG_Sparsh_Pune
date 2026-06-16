@@ -424,7 +424,7 @@ export default function KhelotsavTeamsPage() {
         <h2 className="text-xl font-bold text-gray-700 mb-2">Teams Coming Soon</h2>
         <p className="text-gray-500 text-sm">Team data will be published here before the event. Check back soon!</p>
         <Link href="/events/khelotsav" className="mt-5 inline-block bg-sky-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-sky-700 transition">
-          ← Back to Khelotsav
+          ← Back
         </Link>
       </div>
     </div>
@@ -464,7 +464,7 @@ export default function KhelotsavTeamsPage() {
           {/* Back link */}
           <div className="flex flex-wrap justify-center gap-3">
             <Link href="/events/khelotsav" className="bg-white text-sky-600 border border-sky-200 px-4 py-2 rounded-lg hover:bg-sky-50 transition shadow-sm text-sm font-semibold">
-              ← Back to Khelotsav
+                          ← Back
             </Link>
           </div>
         </div>
