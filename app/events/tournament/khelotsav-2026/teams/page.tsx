@@ -566,8 +566,15 @@ export default function KhelotsavTeamsPage() {
                       <Trophy size={20} />
                     </div>
                     <div className="text-left">
-                      <h2 className={`text-lg sm:text-xl font-bold leading-tight ${textCls}`}>{team}</h2>
-                      <p className={`text-xs sm:text-sm opacity-70 mt-0.5`}>{teamPlayers.length} player{teamPlayers.length !== 1 ? 's' : ''}</p>
+                      <h2 className={`text-sm font-bold leading-tight ${textCls}`}>
+                        {team.replace(/\s*\(.*\)\s*$/, '')}
+                      </h2>
+                      {team.includes('(') && (
+                        <p className={`text-[11px] font-normal opacity-60 mt-0.5`}>
+                          ({team.replace(/^[^(]*\(/, '').replace(/\)\s*$/, '')})
+                        </p>
+                      )}
+                      <p className={`text-xs opacity-70 mt-0.5`}>{teamPlayers.length} player{teamPlayers.length !== 1 ? 's' : ''}</p>
                     </div>
                   </div>
 
@@ -579,10 +586,10 @@ export default function KhelotsavTeamsPage() {
                         e.stopPropagation()
                         exportTeamCsv(team, teamPlayers)
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-white/50 bg-white/60 px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-white transition"
+                      className="inline-flex items-center justify-center rounded-lg border border-white/50 bg-white/60 p-1.5 text-slate-700 hover:bg-white transition"
                       title={`Export ${team} players`}
                     >
-                      <Download size={14} /> Export
+                      <Download size={15} />
                     </button>
                     <button
                       type="button"
@@ -590,10 +597,10 @@ export default function KhelotsavTeamsPage() {
                         e.stopPropagation()
                         handleAddClick(team)
                       }}
-                      className="inline-flex items-center gap-1 rounded-lg border border-white/50 bg-white/60 px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-white transition"
+                      className="inline-flex items-center justify-center rounded-lg border border-white/50 bg-white/60 p-1.5 text-slate-700 hover:bg-white transition"
                       title={`Add player to ${team}`}
                     >
-                      <Plus size={14} /> Add
+                      <Plus size={15} />
                     </button>
                     <div className={`${textCls} p-1 rounded-full group-hover:bg-white/30 transition-colors`}>
                       {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
@@ -856,3 +863,4 @@ export default function KhelotsavTeamsPage() {
     </div>
   )
 }
+              
