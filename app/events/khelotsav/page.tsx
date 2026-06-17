@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import {
   CalendarDays, Clock3, MapPinnedIcon,
-  Trophy, Users, ClipboardList, Lock, ArrowRight, Medal, Users2,
+  Trophy, Users, ClipboardList, Lock, ArrowRight, Medal, Users2, BookOpen,
 } from 'lucide-react'
 import {
   REGISTRATION_CLOSED_STATUS,
@@ -33,14 +33,15 @@ const sportEmojis: Record<string, string> = {
 }
 
 // ── CTA cards ────────────────────────────────────────────────────────────────
-const registerLink = {
-  href: registrationClosed ? '#' : '/events/khelotsav-2026',
-  label: registrationClosed ? 'Registration Closed' : 'Register Now',
-  sub: registrationClosed ? 'No longer accepting registrations' : 'Secure your spot today',
-  disabled: registrationClosed,
-}
-
 const actionLinks = [
+  {
+    href: registrationClosed ? '#' : '/events/khelotsav-2026',
+    label: registrationClosed ? 'Registration Closed' : 'Register Now',
+    sub: registrationClosed ? 'No longer accepting entries' : 'Secure your spot today',
+    icon: registrationClosed ? <Lock size={22} /> : <ClipboardList size={22} />,
+    accent: registrationClosed ? 'from-slate-400 to-gray-500' : 'from-orange-500 to-amber-400',
+    disabled: registrationClosed,
+  },
   {
     href: '/events/tournament/khelotsav-2026/teams',
     label: 'Teams',
@@ -67,7 +68,14 @@ const actionLinks = [
     label: 'Event Results',
     sub: 'Scores by sport & category',
     icon: <Medal size={22} />,
-    accent: 'from-orange-500 to-rose-500',
+    accent: 'from-rose-500 to-pink-600',
+  },
+  {
+    href: '/events/khelotsav/rules-regulations',
+    label: 'Rules & Regs',
+    sub: 'Game rules for all sports',
+    icon: <BookOpen size={22} />,
+    accent: 'from-gray-700 to-red-300',
   },
 ]
 
@@ -233,47 +241,48 @@ export default function KhelotsavHubPage() {
           ))}
         </div>
 
-        {/* ── Register link ───────────────────────────────────────────────── */}
-        <div className="mt-8 flex justify-center">
-          {registerLink.disabled ? (
-            <div className="inline-flex cursor-not-allowed items-center gap-2 rounded-full bg-slate-200 px-6 py-2.5 text-sm font-semibold text-slate-500">
-              <Lock size={15} /> {registerLink.label}
-            </div>
-          ) : (
-            <Link
-              href={registerLink.href}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-2.5 text-sm font-bold text-white shadow-md hover:brightness-105 transition-all active:scale-95"
-            >
-              <ClipboardList size={15} /> {registerLink.label} — {registerLink.sub}
-            </Link>
-          )}
-        </div>
-
         {/* ── CTA cards ───────────────────────────────────────────────────── */}
         <section className="mt-8">
           <h2 className="kh-section-label mb-5 text-center text-base font-black uppercase tracking-widest text-slate-800 sm:text-lg">
             Explore the Event
           </h2>
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
             {actionLinks.map(cta => (
-              <Link key={cta.label} href={cta.href}>
-                <div className={`kh-cta group relative flex min-h-[148px] flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl bg-gradient-to-br p-5 text-white sm:p-6 ${cta.accent}`}>
-                  <div className="kh-cta-grain absolute inset-0" />
-                  <div className="kh-cta-sheen pointer-events-none absolute inset-0" />
-                  <div className="relative z-10 flex flex-col items-center gap-3 text-center">
-                    <div className="kh-cta-icon flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20">
-                      {cta.icon}
-                    </div>
-                    <div>
-                      <p className="text-sm font-extrabold leading-tight">{cta.label}</p>
-                      <p className="mt-1 text-[11px] text-white/75">{cta.sub}</p>
-                    </div>
-                    <div className="kh-cta-arrow flex h-7 w-7 items-center justify-center rounded-full bg-white/25">
-                      <ArrowRight size={13} />
+              cta.disabled ? (
+                <div key={cta.label} className="cursor-not-allowed opacity-60">
+                  <div className={`kh-cta group relative flex min-h-[140px] flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-br p-4 text-white sm:p-5 ${cta.accent}`}>
+                    <div className="kh-cta-grain absolute inset-0" />
+                    <div className="relative z-10 flex flex-col items-center gap-2.5 text-center">
+                      <div className="kh-cta-icon flex h-11 w-11 items-center justify-center rounded-2xl bg-white/20">
+                        {cta.icon}
+                      </div>
+                      <div>
+                        <p className="text-sm font-extrabold leading-tight">{cta.label}</p>
+                        <p className="mt-0.5 text-[11px] text-white/70">{cta.sub}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </Link>
+              ) : (
+                <Link key={cta.label} href={cta.href}>
+                  <div className={`kh-cta group relative flex min-h-[140px] flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-br p-4 text-white sm:p-5 ${cta.accent}`}>
+                    <div className="kh-cta-grain absolute inset-0" />
+                    <div className="kh-cta-sheen pointer-events-none absolute inset-0" />
+                    <div className="relative z-10 flex flex-col items-center gap-2.5 text-center">
+                      <div className="kh-cta-icon flex h-11 w-11 items-center justify-center rounded-2xl bg-white/20">
+                        {cta.icon}
+                      </div>
+                      <div>
+                        <p className="text-sm font-extrabold leading-tight">{cta.label}</p>
+                        <p className="mt-0.5 text-[11px] text-white/75">{cta.sub}</p>
+                      </div>
+                      <div className="kh-cta-arrow flex h-6 w-6 items-center justify-center rounded-full bg-white/25">
+                        <ArrowRight size={12} />
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              )
             ))}
           </div>
         </section>
