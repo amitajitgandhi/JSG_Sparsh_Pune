@@ -1,256 +1,254 @@
-Name,Mobile,Gender,Category,Selected Sports,Sport Ratings,Team Name,,,,,,,
-Aarti Nikhil Sanghvi,8087816078,Female,Member,Dodge Ball | Badminton | Lemon & Spoon Race | Sack Race,"{""Badminton"":4,""Sack Race"":4,""Dodge Ball"":5,""Lemon & Spoon Race"":5}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Anju Shah,8087600124,Female,Member,Carrom | Badminton | Lemon & Spoon Race | Kho Kho,"{""Carrom"":3,""Kho Kho"":3,""Badminton"":4,""Lemon & Spoon Race"":4}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Anuja Shah,7744947529,Female,Member,Carrom | Table Tennis | Pickle Ball | Three-Legged Race,"{""Carrom"":2,""Pickle Ball"":2,""Table Tennis"":2,""Three-Legged Race"":2}",Aarohi Enterprises (Rohan Shah),,,,,,Row Labels,Count of Name
-Ashika Rathod,9819723151,Female,Member,Lemon & Spoon Race | Chess | Dodge Ball | Kho Kho,"{""Chess"":2,""Kho Kho"":2,""Dodge Ball"":2,""Lemon & Spoon Race"":3}",Aarohi Enterprises (Rohan Shah),,,,,,Aarohi Enterprises (Rohan Shah),32
-Chetna Yogesh Bafna,9881666663,Female,Member,Carrom | Badminton | Kho Kho | Lemon & Spoon Race,"{""Carrom"":5,""Kho Kho"":4,""Badminton"":4,""Lemon & Spoon Race"":4}",Aarohi Enterprises (Rohan Shah),,,,,,Arihant Warlocks (Sunil Patni),32
-Khushbu patni,9673318915,Female,Member,Badminton | Lemon & Spoon Race | Dodge Ball,"{""Badminton"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Aarohi Enterprises (Rohan Shah),,,,,,Katariya Smashers (Mayur Katariya),32
-Reema Jitendra Jain,9822722277,Female,Member,Carrom | Badminton | Lemon & Spoon Race | Dodge Ball,"{""Carrom"":2,""Badminton"":2,""Dodge Ball"":2,""Lemon & Spoon Race"":2}",Aarohi Enterprises (Rohan Shah),,,,,,Lunkad Lions (Vipul Lunkad),31
-Rinkal Shah,9420177141,Female,Member,Three-Legged Race | Badminton | Kho Kho | Sack Race,"{""Kho Kho"":3,""Badminton"":3,""Sack Race"":3,""Three-Legged Race"":3}",Aarohi Enterprises (Rohan Shah),,,,,,Osian Super Kings (Dilip Jain),31
-Sarika Bora,7020961041,Female,Member,Carrom,"{""Carrom"":1}",Aarohi Enterprises (Rohan Shah),,,,,,Saiyam Finpro (Piyush Rakhecha),31
-Sarika jain,9822450288,Female,Member,Carrom | Lemon & Spoon Race | Tug of War | Sack Race,"{""Carrom"":2,""Sack Race"":3,""Tug of War"":3,""Lemon & Spoon Race"":2}",Aarohi Enterprises (Rohan Shah),,,,,,Shanti Warriors (Nikhil Oswal),33
-Shraddha Shah,7709016411,Female,Member,Chess | Badminton | Lemon & Spoon Race,"{""Chess"":3,""Badminton"":3,""Lemon & Spoon Race"":3}",Aarohi Enterprises (Rohan Shah),,,,,,Water World Warriors (Dilip Jain),31
-Sonal parmar,9822999220,Female,Member,Badminton,"{""Badminton"":5}",Aarohi Enterprises (Rohan Shah),,,,,,(blank),
-Snehal Patni,9860555821,Female,Member,Carrom | Badminton,"{""Carrom"":3,""Badminton"":4}",Aarohi Enterprises (Rohan Shah),,,,,,Grand Total,253
-Aarohi Shah,9823162182,Female,Kid,,,Aarohi Enterprises (Rohan Shah),,,,,,,
-Naksh Jain,9158090113,Male,Kid,Badminton | Pickle Ball | Tug of War | Kho Kho,"{""Kho Kho"":2,""Badminton"":5,""Tug of War"":2,""Pickle Ball"":2}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Nivaan Jain,9322496634,Male,Kid,Table Tennis | Badminton | Pickle Ball | Tug of War,"{""Badminton"":2,""Tug of War"":2,""Pickle Ball"":2,""Table Tennis"":2}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Sammyak Bora,7057517076,Male,Kid,Carrom | Badminton | Pickle Ball | Volleyball,"{""Carrom"":2,""Badminton"":3,""Volleyball"":3,""Pickle Ball"":2}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Sujal Bora,7875083737,Male,Kid,Badminton | Pickle Ball | Table Tennis | Volleyball,"{""Badminton"":2,""Volleyball"":3,""Pickle Ball"":3,""Table Tennis"":2}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Virag lalit oswal,8698222122,Male,Kid,Carrom,"{""Carrom"":3}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Ganesh Oswal,9822334470,Male,Member,Carrom | Tug of War | Chess | Badminton,"{""Chess"":4,""Carrom"":5,""Badminton"":3,""Tug of War"":3}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Himanshu bafna,9960429494,Male,Member,Kho Kho | Lemon & Spoon Race | Tug of War | Three-Legged Race,"{""Kho Kho"":5,""Tug of War"":5,""Three-Legged Race"":5,""Lemon & Spoon Race"":5}",Aarohi Enterprises (Rohan Shah),,,,,,,
-JINESH GAJRAJ JAIN,9890377803,Male,Member,Carrom | Table Tennis | Badminton,"{""Carrom"":4,""Badminton"":4,""Table Tennis"":4}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Lalit babulal oswal,8698222122,Male,Member,Volleyball,"{""Volleyball"":5}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Paras,9822450288,Male,Member,Kho Kho | Lemon & Spoon Race | Tug of War | Sack Race,"{""Kho Kho"":3,""Sack Race"":3,""Tug of War"":2,""Lemon & Spoon Race"":3}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Pranil Shah,9822251329,Male,Member,Carrom | Chess | Badminton | Pickle Ball,"{""Chess"":3,""Carrom"":3,""Badminton"":4,""Pickle Ball"":1}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Rohan Shah,9823162182,Male,Member,Table Tennis | Pickle Ball | Volleyball | Kho Kho,"{""Kho Kho"":3,""Volleyball"":3,""Pickle Ball"":3,""Table Tennis"":4}",Aarohi Enterprises (Rohan Shah),,,,,,,
-SACHIN BABULAL OSWAL,7276647350,Male,Member,Badminton | Chess | Volleyball,"{""Chess"":5,""Badminton"":5,""Volleyball"":5}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Shreyank rajesh shah,8446444010,Male,Member,Carrom | Badminton | Pickle Ball | Lemon & Spoon Race,"{""Carrom"":2,""Badminton"":3,""Pickle Ball"":3,""Lemon & Spoon Race"":3}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Ashish Shah,7769039941,Male,Member,Badminton | Sack Race | Volleyball,"{"" Sack Race"":3,""Badminton"":3,""Volleyball"":3}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Nikhil Oswal,8956774747,Male,Member,,,Aarohi Enterprises (Rohan Shah),,,,,,,
-TIMMEER SANGHAVI,,Male,Member,,,Aarohi Enterprises (Rohan Shah),,,,,,,
-Vikram oswal,9890124140,Male,Member,Kho Kho | Sack Race | Tug of War | Three-Legged Race,"{""Kho Kho"":5,""Sack Race"":5,""Tug of War"":3,""Three-Legged Race"":5}",Aarohi Enterprises (Rohan Shah),,,,,,,
-Hitvi Sheetal Gundecha,9881387771,Female,Kid,Pickle Ball | Kho Kho | Dodge Ball | Tug of War,"{""Kho Kho"":4,""Dodge Ball"":4,""Tug of War"":4,""Pickle Ball"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Jinisha Shah,7709015299,Female,Kid,Chess | Badminton | Kho Kho | Lemon & Spoon Race,"{""Chess"":3,""Kho Kho"":3,""Badminton"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Moksha Shah,7709015299,Female,Kid,Chess | Dodge Ball | Kho Kho | Lemon & Spoon Race,"{""Chess"":3,""Kho Kho"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Asmita shah,7709003791,Female,Member,Dodge Ball | Tug of War | Lemon & Spoon Race | Carrom,"{""Carrom"":3,""Dodge Ball"":3,""Tug of War"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Gunvanti oswal,9420496795,Female,Member,Lemon & Spoon Race | Badminton | Pickle Ball | Tug of War,"{""Badminton"":4,""Tug of War"":4,""Pickle Ball"":4,""Lemon & Spoon Race"":4}",Arihant Warlocks (Sunil Patni),,,,,,,
-Kavita J oswal,9921094100,Female,Member,Carrom | Kho Kho | Lemon & Spoon Race | Dodge Ball,"{""Carrom"":3,""Kho Kho"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Lalita Oswal,9021178911,Female,Member,Carrom | Chess | Lemon & Spoon Race | Dodge Ball,"{""Chess"":3,""Carrom"":4,""Dodge Ball"":4,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Laxmi Jain,9370069687,Female,Member,Lemon & Spoon Race | Sack Race | Three-Legged Race,"{""Sack Race"":3,""Three-Legged Race"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Pallavi Timir Sanghavi,9422313107,Female,Member,Carrom | Badminton,"{""Carrom"":2,""Badminton"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Rakhi Arvind Jain,9822046376,Female,Member,Carrom,"{""Carrom"":2}",Arihant Warlocks (Sunil Patni),,,,,,,
-Rashmi Gandhi,9970585889,Female,Member,Badminton | Pickle Ball | Lemon & Spoon Race | Dodge Ball,"{""Badminton"":3,""Dodge Ball"":3,""Pickle Ball"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Snehal shah,9561457474,Female,Member,Lemon & Spoon Race | Tug of War | Three-Legged Race,"{""Tug of War"":3,""Three-Legged Race"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Soniya Oswal,9370573040,Female,Member,Badminton,"{""Badminton"":5}",Arihant Warlocks (Sunil Patni),,,,,,,
-Vaishali jain,9423571432,Female,Member,Carrom,"{""Carrom"":1}",Arihant Warlocks (Sunil Patni),,,,,,,
-Deepa Yuvraj Shah,,Female,Member,,,Arihant Warlocks (Sunil Patni),,,,,,,
-Kavya Sanghavi,,Female,Kid,,,Arihant Warlocks (Sunil Patni),,,,,,,
-Chirag Vinod Jain,8888822333,Male,Kid,Kho Kho | Chess | Three-Legged Race | Badminton,"{""Chess"":4,""Kho Kho"":4,""Badminton"":4,""Three-Legged Race"":4}",Arihant Warlocks (Sunil Patni),,,,,,,
-Dhruv oswal,9112211123,Male,Kid,Chess | Table Tennis | Pickle Ball | Tug of War,"{""Chess"":2,""Tug of War"":3,""Pickle Ball"":2,""Table Tennis"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Mokshit Jayesh Oswal,9423450123,Male,Kid,Table Tennis | Pickle Ball | Volleyball | Badminton,"{""Badminton"":2,""Volleyball"":2,""Pickle Ball"":3,""Table Tennis"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-SAMYAK HITESH JAIN,9096319394,Male,Kid,Pickle Ball | Kho Kho | Volleyball | Tug of War,"{""Kho Kho"":5,""Tug of War"":5,""Volleyball"":5,""Pickle Ball"":5}",Arihant Warlocks (Sunil Patni),,,,,,,
-Shaurya Sumit Talesara,9823859453,Male,Kid,Carrom | Chess | Lemon & Spoon Race | Tug of War,"{""Chess"":5,""Carrom"":5,""Tug of War"":3,""Lemon & Spoon Race"":4}",Arihant Warlocks (Sunil Patni),,,,,,,
-Vidhan patni,9049057671,Male,Kid,Table Tennis | Kho Kho | Badminton | Sack Race,"{""Kho Kho"":4,""Badminton"":3,""Sack Race"":4,""Table Tennis"":4}",Arihant Warlocks (Sunil Patni),,,,,,,
-Hitesh Medtia,8766422772,Male,Member,Carrom | Chess | Badminton | Volleyball,"{""Chess"":4,""Carrom"":2,""Badminton"":4,""Volleyball"":2}",Arihant Warlocks (Sunil Patni),,,,,,,
-Jitendra Ashok Jain,9822519391,Male,Member,Carrom | Table Tennis | Pickle Ball | Volleyball,"{""Carrom"":3,""Volleyball"":4,""Pickle Ball"":1,""Table Tennis"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Nilesh Bora,9326243737,Male,Member,Carrom,"{""Carrom"":1}",Arihant Warlocks (Sunil Patni),,,,,,,
-Paresh lilachand rathod,9657134803,Male,Member,Chess | Badminton | Kho Kho | Volleyball,"{""Chess"":4,""Kho Kho"":4,""Badminton"":3,""Volleyball"":4}",Arihant Warlocks (Sunil Patni),,,,,,,
-Pintukumar shah,8668597785,Male,Member,Kho Kho | Tug of War | Sack Race | Carrom,"{""Carrom"":4,""Kho Kho"":3,""Sack Race"":3,""Tug of War"":4}",Arihant Warlocks (Sunil Patni),,,,,,,
-Rakesh Kumar Jain,8888998928,Male,Member,Table Tennis | Badminton | Carrom | Chess,"{""Chess"":4,""Carrom"":3,""Badminton"":1,""Table Tennis"":2}",Arihant Warlocks (Sunil Patni),,,,,,,
-Sandeep mehta,9921356606,Male,Member,Chess | Volleyball | Tug of War | Kho Kho,"{""Chess"":3,""Kho Kho"":2,""Tug of War"":3,""Volleyball"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Sunil patni,9049057671,Male,Member,Carrom | Badminton | Volleyball | Tug of War,"{""Carrom"":3,""Badminton"":3,""Tug of War"":4,""Volleyball"":3}",Arihant Warlocks (Sunil Patni),,,,,,,
-Umesh Porwal,9822541922,Male,Member,Badminton,"{""Badminton"":2}",Arihant Warlocks (Sunil Patni),,,,,,,
-Vidyut jain,9422322202,Male,Member,Badminton,"{""Badminton"":1}",Arihant Warlocks (Sunil Patni),,,,,,,
-Niyati Gundecha,9881387771,Female,Kid,Chess | Badminton | Dodge Ball | Kho Kho,"{""Chess"":4,""Kho Kho"":3,""Badminton"":4,""Dodge Ball"":4}",Katariya Smashers (Mayur Katariya),,,,,,,
-Bhavana Nikhil Jain,8446540424,Female,Member,Lemon & Spoon Race | Sack Race | Tug of War | Three-Legged Race,"{""Sack Race"":4,""Tug of War"":4,""Three-Legged Race"":4,""Lemon & Spoon Race"":4}",Katariya Smashers (Mayur Katariya),,,,,,,
-Deepa Jain,9011042332,Female,Member,Carrom | Chess | Table Tennis,"{""Chess"":3,""Carrom"":3,""Table Tennis"":3}",Katariya Smashers (Mayur Katariya),,,,,,,
-Jinal Shreyank shah,9420094536,Female,Member,Lemon & Spoon Race | Kho Kho | Dodge Ball | Pickle Ball,"{""Kho Kho"":1,""Dodge Ball"":1,""Pickle Ball"":4,""Lemon & Spoon Race"":1}",Katariya Smashers (Mayur Katariya),,,,,,,
-Namita Nehal Shah,7028989249,Female,Member,Tug of War | Lemon & Spoon Race,"{""Tug of War"":3,""Lemon & Spoon Race"":3}",Katariya Smashers (Mayur Katariya),,,,,,,
-Neetu jain,9595343898,Female,Member,Carrom | Badminton | Lemon & Spoon Race | Dodge Ball,"{""Carrom"":4,""Badminton"":4,""Dodge Ball"":4,""Lemon & Spoon Race"":4}",Katariya Smashers (Mayur Katariya),,,,,,,
-Pooja Abhinav Shaha,9637860005,Female,Member,Carrom | Chess | Badminton | Lemon & Spoon Race,"{""Chess"":3,""Carrom"":3,""Badminton"":3,""Lemon & Spoon Race"":5}",Katariya Smashers (Mayur Katariya),,,,,,,
-Pooja Dheeraj Desarda,8087214333,Female,Member,Kho Kho | Lemon & Spoon Race | Tug of War | Dodge Ball,"{""Kho Kho"":3,""Dodge Ball"":3,""Tug of War"":3,""Lemon & Spoon Race"":3}",Katariya Smashers (Mayur Katariya),,,,,,,
-Ruchika Bhandari,9090881008,Female,Member,Carrom | Badminton | Dodge Ball | Kho Kho,"{""Carrom"":5,""Kho Kho"":5,""Badminton"":5,""Dodge Ball"":5}",Katariya Smashers (Mayur Katariya),,,,,,,
-Sarita Setiya,9850854855,Female,Member,Lemon & Spoon Race | Sack Race | Dodge Ball | Three-Legged Race,"{""Sack Race"":4,""Dodge Ball"":4,""Three-Legged Race"":4,""Lemon & Spoon Race"":4}",Katariya Smashers (Mayur Katariya),,,,,,,
-Shilpa satish jain,7620085357,Female,Member,Carrom | Badminton | Three-Legged Race | Lemon & Spoon Race,"{""Carrom"":4,""Badminton"":4,""Three-Legged Race"":3,""Lemon & Spoon Race"":4}",Katariya Smashers (Mayur Katariya),,,,,,,
-Shilpa vinod jain,9881287771,Female,Member,Tug of War | Badminton | Carrom | Lemon & Spoon Race,"{""Carrom"":3,""Badminton"":3,""Tug of War"":3,""Lemon & Spoon Race"":3}",Katariya Smashers (Mayur Katariya),,,,,,,
-Sneha,7276469999,Female,Member,Pickle Ball | Kho Kho | Dodge Ball,"{""Kho Kho"":5,""Dodge Ball"":5,""Pickle Ball"":5}",Katariya Smashers (Mayur Katariya),,,,,,,
-Vima jain,8007499776,Female,Member,Badminton | Dodge Ball | Tug of War | Lemon & Spoon Race,"{""Badminton"":4,""Dodge Ball"":5,""Tug of War"":5,""Lemon & Spoon Race"":5}",Katariya Smashers (Mayur Katariya),,,,,,,
-Yogita paresh rathod,7709739883,Female,Member,Badminton | Lemon & Spoon Race | Carrom | Three-Legged Race,"{""Carrom"":3,""Badminton"":3,""Three-Legged Race"":4,""Lemon & Spoon Race"":3}",Katariya Smashers (Mayur Katariya),,,,,,,
-Dhruvin singhvi,8619210054,Male,Kid,Badminton | Chess | Kho Kho | Three-Legged Race,"{""Chess"":3,""Kho Kho"":5,""Badminton"":5,""Three-Legged Race"":2}",Katariya Smashers (Mayur Katariya),,,,,,,
-Hridhan Rathod,9819723151,Male,Kid,Chess | Badminton | Kho Kho | Tug of War,"{""Chess"":2,""Kho Kho"":2,""Badminton"":2,""Tug of War"":2}",Katariya Smashers (Mayur Katariya),,,,,,,
-Miray,7276469999,Male,Kid,Pickle Ball | Table Tennis | Badminton | Volleyball,"{""Badminton"":5,""Volleyball"":5,""Pickle Ball"":5,""Table Tennis"":5}",Katariya Smashers (Mayur Katariya),,,,,,,
-Pratham Vikram Oswal,9922496794,Male,Kid,Carrom | Tug of War | Badminton | Lemon & Spoon Race,"{""Carrom"":4,""Badminton"":4,""Tug of War"":4,""Lemon & Spoon Race"":4}",Katariya Smashers (Mayur Katariya),,,,,,,
-Amit Gandhi,7276319578,Male,Member,Table Tennis | Chess | Badminton | Pickle Ball,"{""Chess"":3,""Badminton"":3,""Pickle Ball"":3,""Table Tennis"":4}",Katariya Smashers (Mayur Katariya),,,,,,,
-Anup Meher,9011090203,Male,Member,Table Tennis | Badminton | Pickle Ball,"{""Badminton"":3,""Pickle Ball"":2,""Table Tennis"":5}",Katariya Smashers (Mayur Katariya),,,,,,,
-Jeetu k oswal,9822094100,Male,Member,Carrom | Volleyball | Kho Kho | Three-Legged Race,"{""Carrom"":3,""Kho Kho"":3,""Volleyball"":3,""Three-Legged Race"":3}",Katariya Smashers (Mayur Katariya),,,,,,,
-Ketan Setiya,9422083792,Male,Member,Badminton | Pickle Ball | Table Tennis,"{""Badminton"":4,""Pickle Ball"":4,""Table Tennis"":3}",Katariya Smashers (Mayur Katariya),,,,,,,
-MAYUR KATARIYA,8446535244,Male,Member,Pickle Ball | Badminton | Volleyball | Kho Kho,"{""Kho Kho"":3,""Badminton"":3,""Volleyball"":3,""Pickle Ball"":3}",Katariya Smashers (Mayur Katariya),,,,,,,
-Mitesh Shaha,8073005510,Male,Member,Badminton | Pickle Ball | Carrom | Volleyball,"{""Carrom"":3,""Badminton"":3,""Volleyball"":3,""Pickle Ball"":3}",Katariya Smashers (Mayur Katariya),,,,,,,
-Nikhil parmar,9822999220,Male,Member,Chess | Volleyball,"{""Chess"":5,""Volleyball"":5}",Katariya Smashers (Mayur Katariya),,,,,,,
-Nikhil Suresh Jain,8806507775,Male,Member,Carrom | Table Tennis | Kho Kho | Lemon & Spoon Race,"{""Carrom"":4,""Kho Kho"":4,""Table Tennis"":4,""Lemon & Spoon Race"":4}",Katariya Smashers (Mayur Katariya),,,,,,,
-Pritesh K Waghresha,9049233328,Male,Member,Carrom | Chess | Volleyball | Tug of War,"{""Chess"":3,""Carrom"":3,""Tug of War"":3,""Volleyball"":4}",Katariya Smashers (Mayur Katariya),,,,,,,
-Rinesh Parekh,9373002007,Male,Member,Badminton | Pickle Ball | Chess | Carrom,"{""Chess"":3,""Carrom"":3,""Badminton"":3,""Pickle Ball"":3}",Katariya Smashers (Mayur Katariya),,,,,,,
-Ritesh K Oswal,9822207209,Male,Member,Badminton | Kho Kho,"{""Kho Kho"":2,""Badminton"":2}",Katariya Smashers (Mayur Katariya),,,,,,,
-Saket Shah,9970797374,Male,Member,Carrom | Tug of War | Volleyball | Lemon & Spoon Race,"{""Carrom"":3,""Tug of War"":3,""Volleyball"":3,""Lemon & Spoon Race"":3}",Katariya Smashers (Mayur Katariya),,,,,,,
-Vikram Indermal Oswal,9420496794,Male,Member,Carrom | Pickle Ball | Lemon & Spoon Race | Tug of War,"{""Carrom"":3,""Tug of War"":3,""Pickle Ball"":3,""Lemon & Spoon Race"":3}",Katariya Smashers (Mayur Katariya),,,,,,,
-Maitri Dhariwal,9766393033,Female,Kid,Pickle Ball | Badminton | Dodge Ball,"{""Badminton"":3,""Dodge Ball"":3,""Pickle Ball"":2}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Dimple kuwad,9028483433,Female,Member,Lemon & Spoon Race | Dodge Ball | Kho Kho,"{""Kho Kho"":3,""Dodge Ball"":4,""Lemon & Spoon Race"":4}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Jinal shah,8698986355,Female,Member,Badminton | Lemon & Spoon Race | Tug of War,"{""Badminton"":5,""Tug of War"":5,""Lemon & Spoon Race"":5}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Kalpana m oswal,9373667222,Female,Member,Carrom | Badminton | Tug of War,"{""Carrom"":2,""Badminton"":2,""Tug of War"":3}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Kanchan vinod shah,7972880425,Female,Member,Badminton | Kho Kho | Lemon & Spoon Race,"{""Kho Kho"":5,""Badminton"":5,""Lemon & Spoon Race"":5}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Khushi Sanghavi,9850151300,Female,Member,Kho Kho | Lemon & Spoon Race,"{""Kho Kho"":1,""Lemon & Spoon Race"":1}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Mamta pintukumar shah,7276130769,Female,Member,Kho Kho | Badminton | Carrom | Tug of War,"{""Carrom"":3,""Kho Kho"":3,""Badminton"":4,""Tug of War"":4}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Mamta shah,9307091902,Female,Member,Lemon & Spoon Race | Dodge Ball | Carrom,"{""Carrom"":2,""Dodge Ball"":4,""Lemon & Spoon Race"":4}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Mayuri shah,9284904668,Female,Member,Carrom | Lemon & Spoon Race | Dodge Ball | Badminton,"{""Carrom"":3,""Badminton"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Pina kawad,7276766438,Female,Member,Kho Kho | Lemon & Spoon Race | Badminton,"{""Kho Kho"":3,""Badminton"":4,""Lemon & Spoon Race"":4}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Poonam Hitesh Mutha,9422322285,Female,Member,Lemon & Spoon Race | Sack Race | Tug of War | Kho Kho,"{""Kho Kho"":4,""Sack Race"":4,""Tug of War"":4,""Lemon & Spoon Race"":4}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Rekha bafna,9270453888,Female,Member,Chess | Carrom | Kho Kho | Lemon & Spoon Race,"{""Chess"":5,""Carrom"":5,""Kho Kho"":5,""Lemon & Spoon Race"":5}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Rekha Shah,9764273377,Female,Member,Carrom | Dodge Ball | Lemon & Spoon Race | Table Tennis,"{""Carrom"":3,""Dodge Ball"":3,""Table Tennis"":2,""Lemon & Spoon Race"":5}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Ronak Jain,8888870864,Female,Member,Lemon & Spoon Race | Carrom | Chess | Tug of War,"{""Chess"":3,""Carrom"":2,""Tug of War"":4,""Lemon & Spoon Race"":1}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Nittyam Hitesh Mutha,9422322285,Male,Kid,Carrom | Badminton | Three-Legged Race | Kho Kho,"{""Carrom"":4,""Kho Kho"":4,""Badminton"":4,""Three-Legged Race"":4}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Sayyam Oswal,9158529012,Male,Kid,Table Tennis | Badminton | Pickle Ball | Volleyball,"{""Badminton"":3,""Volleyball"":3,""Pickle Ball"":3,""Table Tennis"":3}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Yuvaan mehta,9921356606,Male,Kid,Chess | Pickle Ball | Kho Kho | Tug of War,"{""Chess"":3,""Kho Kho"":4,""Tug of War"":4,""Pickle Ball"":3}",Lunkad Lions (Vipul Lunkad),,,,,,,
-RUSHANK JAIN,9423571432,Male,Kid,,,Lunkad Lions (Vipul Lunkad),,,,,,,
-Abhinva Bharatkunar Shaha,9766367227,Male,Member,Badminton | Tug of War | Volleyball | Three-Legged Race,"{""Badminton"":3,""Tug of War"":3,""Volleyball"":3,""Three-Legged Race"":3}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Ankit pramod shah,9860892404,Male,Member,Chess | Table Tennis,"{""Chess"":4,""Table Tennis"":4}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Dheeraj Desarda,9028883918,Male,Member,Carrom | Badminton | Kho Kho | Volleyball,"{""Carrom"":5,""Kho Kho"":4,""Badminton"":4,""Volleyball"":5}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Hasmukhlal,9881766789,Male,Member,Carrom | Badminton | Volleyball | Table Tennis,"{""Carrom"":3,""Badminton"":3,""Volleyball"":3,""Table Tennis"":2}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Manoj oswal,8087549644,Male,Member,Volleyball | Table Tennis | Badminton | Tug of War,"{""Badminton"":3,""Tug of War"":3,""Volleyball"":5,""Table Tennis"":3}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Nehal Shah,9890990249,Male,Member,Badminton | Volleyball,"{""Badminton"":2,""Volleyball"":2}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Pankaj Jain,7798983029,Male,Member,Badminton | Pickle Ball | Tug of War | Volleyball,"{""Badminton"":3,""Tug of War"":2,""Volleyball"":2,""Pickle Ball"":3}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Rahul kawad,9423205257,Male,Member,Carrom,"{""Carrom"":4}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Rushank jain,9423571432,Male,Member,Badminton,"{""Badminton"":1}",Lunkad Lions (Vipul Lunkad),,,,,,,
-saumil shah,9094250250,Male,Member,Volleyball | Pickle Ball | Lemon & Spoon Race | Chess,"{""Chess"":4,""Volleyball"":4,""Pickle Ball"":4,""Lemon & Spoon Race"":3}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Vinod Jain,9028847311,Male,Member,Pickle Ball | Volleyball,"{""Volleyball"":5,""Pickle Ball"":5}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Vipul Mahendra Shah,9158095026,Male,Member,Carrom | Chess | Kho Kho | Badminton,"{""Chess"":4,""Carrom"":2,""Kho Kho"":5,""Badminton"":2}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Pakshal Shah,,Male,Member,Badminton,"{""Badminton"":2}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Vipul shah,7020629707,Male,Member,Carrom | Badminton | Lemon & Spoon Race | Kho Kho,"{""Carrom"":4,""Kho Kho"":4,""Badminton"":3,""Lemon & Spoon Race"":4}",Lunkad Lions (Vipul Lunkad),,,,,,,
-Prisha Santosh Solanki,9372455441,Female,Kid,Badminton | Lemon & Spoon Race | Tug of War | Three-Legged Race,"{""Badminton"":3,""Tug of War"":3,""Three-Legged Race"":4,""Lemon & Spoon Race"":4}",Osian Super Kings (Dilip Jain),,,,,,,
-Siyal oswal,8446735443,Female,Kid,Kho Kho | Lemon & Spoon Race | Dodge Ball | Three-Legged Race,"{""Kho Kho"":2,""Dodge Ball"":3,""Three-Legged Race"":3,""Lemon & Spoon Race"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Bhavana manoj jain,9422354665,Female,Member,Three-Legged Race | Dodge Ball | Kho Kho | Badminton,"{""Kho Kho"":4,""Badminton"":4,""Dodge Ball"":5,""Three-Legged Race"":4}",Osian Super Kings (Dilip Jain),,,,,,,
-Dipika Oswal,7798485444,Female,Member,Badminton | Pickle Ball | Carrom | Table Tennis,"{""Carrom"":3,""Badminton"":5,""Pickle Ball"":3,""Table Tennis"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Disha sheetal Gundecha,9881387771,Female,Member,Badminton | Chess | Dodge Ball | Kho Kho,"{""Chess"":3,""Kho Kho"":3,""Badminton"":4,""Dodge Ball"":4}",Osian Super Kings (Dilip Jain),,,,,,,
-Divisha,9881766789,Female,Member,Badminton | Lemon & Spoon Race | Dodge Ball | Pickle Ball,"{""Badminton"":3,""Dodge Ball"":2,""Pickle Ball"":2,""Lemon & Spoon Race"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Geetanjali Shingavi,8600993761,Female,Member,Carrom | Lemon & Spoon Race | Dodge Ball | Kho Kho,"{""Carrom"":3,""Kho Kho"":2,""Dodge Ball"":2,""Lemon & Spoon Race"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Jaishika v parmar,8975222111,Female,Member,Badminton,"{""Badminton"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Komal M Jain,7020570519,Female,Member,Lemon & Spoon Race | Dodge Ball | Kho Kho | Badminton,"{""Kho Kho"":3,""Badminton"":2,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Priya,7058083651,Female,Member,Chess | Lemon & Spoon Race | Tug of War | Dodge Ball,"{""Chess"":3,""Dodge Ball"":3,""Tug of War"":4,""Lemon & Spoon Race"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Priyanka Shah,9881456031,Female,Member,Carrom | Dodge Ball,"{""Carrom"":4,""Dodge Ball"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Rupal singhvi,8619210054,Female,Member,Lemon & Spoon Race | Tug of War | Carrom,"{""Carrom"":5,""Tug of War"":5,""Lemon & Spoon Race"":5}",Osian Super Kings (Dilip Jain),,,,,,,
-Mamta Vikram Oswal,,Female,Member,,"""Badminton"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":4}",Osian Super Kings (Dilip Jain),,,,,,,
-Roshni Shah,,Female,Member,,,Osian Super Kings (Dilip Jain),,,,,,,
-Aarav M Jain,9420277778,Male,Kid,Carrom | Chess | Tug of War,"{""Chess"":3,""Carrom"":3,""Tug of War"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Aksh Rathod,7480097480,Male,Kid,Chess | Badminton | Pickle Ball | Volleyball,"{""Chess"":3,""Badminton"":2,""Volleyball"":2,""Pickle Ball"":2}",Osian Super Kings (Dilip Jain),,,,,,,
-Ajay Jain,9372799099,Male,Member,Carrom | Badminton,"{""Carrom"":4,""Badminton"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Amit S Chopda,9372471068,Male,Member,Carrom | Badminton | Volleyball | Kho Kho,"{""Carrom"":5,""Kho Kho"":4,""Badminton"":3,""Volleyball"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Arvind Jain,7776906124,Male,Member,Table Tennis | Badminton,"{""Badminton"":2,""Table Tennis"":2}",Osian Super Kings (Dilip Jain),,,,,,,
-DILIP JAIN,9822566111,Male,Member,Tug of War | Volleyball | Badminton,"{""Badminton"":3,""Tug of War"":3,""Volleyball"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Dilip Jain,9028590888,Male,Member,Pickle Ball | Volleyball,"{""Volleyball"":3,""Pickle Ball"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Hitesh,8600930308,Male,Member,Chess | Badminton | Volleyball | Tug of War,"{""Chess"":5,""Badminton"":4,""Tug of War"":5,""Volleyball"":4}",Osian Super Kings (Dilip Jain),,,,,,,
-Jayesh Jain,9822093368,Male,Member,Badminton | Tug of War | Volleyball | Pickle Ball,"{""Badminton"":1,""Tug of War"":1,""Volleyball"":1,""Pickle Ball"":1}",Osian Super Kings (Dilip Jain),,,,,,,
-Kalpak Manish Masalia,7276581680,Male,Member,Table Tennis | Badminton | Pickle Ball | Chess,"{""Chess"":3,""Badminton"":3,""Pickle Ball"":1,""Table Tennis"":1}",Osian Super Kings (Dilip Jain),,,,,,,
-Mukesh Jain,9420277778,Male,Member,Carrom | Tug of War | Volleyball | Three-Legged Race,"{""Carrom"":4,""Tug of War"":4,""Volleyball"":4,""Three-Legged Race"":4}",Osian Super Kings (Dilip Jain),,,,,,,
-Mukesh Oswal,9326166622,Male,Member,Badminton | Tug of War | Volleyball,"{""Badminton"":2,""Tug of War"":4,""Volleyball"":4}",Osian Super Kings (Dilip Jain),,,,,,,
-Nishith Sanghavi,9850140222,Male,Member,Carrom | Badminton,"{""Carrom"":1,""Badminton"":1}",Osian Super Kings (Dilip Jain),,,,,,,
-Pankaj Shah,9028774197,Male,Member,Badminton | Pickle Ball | Volleyball | Table Tennis,"{""Badminton"":3,""Volleyball"":3,""Pickle Ball"":3,""Table Tennis"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Sheetal Gundecha,9822287771,Male,Member,Carrom | Volleyball | Tug of War,"{""Carrom"":5,""Tug of War"":5,""Volleyball"":5}",Osian Super Kings (Dilip Jain),,,,,,,
-Vinod,9028716622,Male,Member,Badminton,"{""Badminton"":4}",Osian Super Kings (Dilip Jain),,,,,,,
-Vinod Parasmal Jain,8888822333,Male,Member,Tug of War | Volleyball | Carrom | Pickle Ball,"{""Carrom"":4,""Tug of War"":4,""Volleyball"":5,""Pickle Ball"":4}",Osian Super Kings (Dilip Jain),,,,,,,
-Viral P Shrishrimal,8087463664,Male,Member,Carrom | Badminton | Pickle Ball,"{""Carrom"":3,""Badminton"":2,""Pickle Ball"":3}",Osian Super Kings (Dilip Jain),,,,,,,
-Aashta Rakhecha,7276764444,Female,Kid,Carrom | Badminton | Dodge Ball | Lemon & Spoon Race,"{""Carrom"":3,""Badminton"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Siona vipul shah,9764273377,Female,Kid,Carrom | Chess | Lemon & Spoon Race | Kho Kho,"{""Chess"":3,""Carrom"":3,""Kho Kho"":4,""Lemon & Spoon Race"":5}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Harshita Meet Jain,8767743681,Female,Member,Badminton | Pickle Ball | Carrom | Chess,"{""Chess"":2,""Carrom"":3,""Badminton"":3,""Pickle Ball"":1}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Heena Santosh Solanki,9503300027,Female,Member,Badminton | Three-Legged Race | Carrom | Lemon & Spoon Race,"{""Carrom"":3,""Badminton"":3,""Three-Legged Race"":3,""Lemon & Spoon Race"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Madhuri Punmiya,9766490160,Female,Member,Table Tennis | Badminton | Kho Kho | Lemon & Spoon Race,"{""Kho Kho"":1,""Badminton"":1,""Table Tennis"":1,""Lemon & Spoon Race"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Niragi Mehta,7798792634,Female,Member,Badminton | Dodge Ball,"{""Badminton"":2,""Dodge Ball"":2}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Pinky Anil Chhajed,9762444488,Female,Member,Dodge Ball | Tug of War | Sack Race,"{""Sack Race"":2,""Dodge Ball"":2,""Tug of War"":2}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Priya pokharna,9198220751,Female,Member,Badminton | Lemon & Spoon Race | Tug of War | Carrom,"{""Carrom"":3,""Badminton"":1,""Tug of War"":1,""Lemon & Spoon Race"":4}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Puja Piyush Rakhecha,9405656887,Female,Member,Carrom | Badminton | Tug of War | Sack Race,"{""Carrom"":3,""Badminton"":3,""Sack Race"":3,""Tug of War"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Saroj jain,7798830424,Female,Member,Lemon & Spoon Race | Dodge Ball | Three-Legged Race | Tug of War,"{""Dodge Ball"":2,""Tug of War"":3,""Three-Legged Race"":3,""Lemon & Spoon Race"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Shefali Umesh Porwal,8956450890,Female,Member,Carrom | Badminton | Tug of War | Dodge Ball,"{""Carrom"":4,""Badminton"":5,""Dodge Ball"":4,""Tug of War"":4}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Payal Shah,8408931404,Female,Member,Carrom | Lemon & Spoon Race,"{""Carrom"":2,""Lemon & Spoon Race"":2}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Aditya rinesh parekh,9373002007,Male,Kid,Badminton | Pickle Ball,"{""Badminton"":4,""Pickle Ball"":4}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Jineet m oswal,9326166622,Male,Kid,Carrom | Chess | Badminton | Tug of War,"{""Chess"":2,""Carrom"":2,""Badminton"":2,""Tug of War"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Jinendra oswal,9420496794,Male,Kid,Tug of War | Sack Race | Lemon & Spoon Race | Kho Kho,"{""Kho Kho"":4,""Sack Race"":4,""Tug of War"":4,""Lemon & Spoon Race"":4}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Saiyam Rakhecha,9421775083,Male,Kid,Badminton | Pickle Ball | Tug of War | Volleyball,"{""Badminton"":5,""Tug of War"":3,""Volleyball"":1,""Pickle Ball"":5}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Ankit Subhash Jain,9637898033,Male,Member,Carrom | Table Tennis | Badminton | Pickle Ball,"{""Carrom"":2,""Badminton"":3,""Pickle Ball"":3,""Table Tennis"":2}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Chirag Bharat Shah,9561023455,Male,Member,Kho Kho | Tug of War,"{""Kho Kho"":4,""Tug of War"":4}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Darshan Raju Mehta,7588554097,Male,Member,Table Tennis | Badminton,"{""Badminton"":3,""Table Tennis"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Dhiraj Parasmal Oswal,9921595714,Male,Member,Carrom | Badminton | Pickle Ball | Volleyball,"{""Carrom"":3,""Badminton"":3,""Volleyball"":3,""Pickle Ball"":2}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Dipal Dinesh Shah,7709015299,Male,Member,Carrom,"{""Carrom"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Hitesh Jain,9096319394,Male,Member,Badminton | Tug of War | Volleyball | Lemon & Spoon Race,"{""Badminton"":5,""Tug of War"":5,""Volleyball"":4,""Lemon & Spoon Race"":5}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Jitendra kawad,9890265366,Male,Member,Kho Kho,"{""Kho Kho"":4}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Jitendra Shingavi,9423003761,Male,Member,Tug of War | Volleyball | Pickle Ball | Table Tennis,"{""Tug of War"":4,""Volleyball"":3,""Pickle Ball"":4,""Table Tennis"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Meet N Jain,9518967701,Male,Member,Badminton | Table Tennis | Pickle Ball | Chess,"{""Chess"":2,""Badminton"":3,""Pickle Ball"":1,""Table Tennis"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Navin Shah,9371234228,Male,Member,Chess | Kho Kho | Three-Legged Race | Tug of War,"{""Chess"":3,""Kho Kho"":4,""Tug of War"":3,""Three-Legged Race"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Nikhil Devichand Sanghvi,9028968741,Male,Member,Carrom | Badminton | Volleyball | Pickle Ball,"{""Carrom"":3,""Badminton"":3,""Volleyball"":2,""Pickle Ball"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Nikhil kothari,9822193393,Male,Member,Badminton,"{""Badminton"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Piyush Rakhecha,7276764444,Male,Member,Carrom | Badminton | Tug of War | Sack Race,"{""Carrom"":3,""Badminton"":3,""Sack Race"":3,""Tug of War"":3}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Satish Jain,,Male,Member,,,Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Yukit Oswal,9890564634,Male,Member,Carrom | Chess | Kho Kho | Tug of War,"{""Chess"":5,""Carrom"":3,""Kho Kho"":4,""Tug of War"":4}",Saiyam Finpro (Piyush Rakhecha),,,,,,,
-Aarushi Jain,8263925654,Female,Kid,Badminton | Carrom | Lemon & Spoon Race | Tug of War,"{""Carrom"":2,""Badminton"":2,""Tug of War"":2,""Lemon & Spoon Race"":2}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Dhara oswal,8446735443,Female,Kid,Lemon & Spoon Race | Sack Race | Dodge Ball,"{""Sack Race"":1,""Dodge Ball"":1,""Lemon & Spoon Race"":1}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Abhilasha Jain,9538915854,Female,Member,Carrom | Badminton | Dodge Ball | Kho Kho,"{""Carrom"":2,""Kho Kho"":3,""Badminton"":1,""Dodge Ball"":2}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Bhavana Mutha,9764608988,Female,Member,Badminton | Carrom | Lemon & Spoon Race | Dodge Ball,"{""Carrom"":3,""Badminton"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Harsha Hitesh Medtia,7709966953,Female,Member,Carrom | Chess | Badminton | Lemon & Spoon Race,"{""Chess"":2,""Carrom"":4,""Badminton"":4,""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Khushbu Nikhil oswal,9970959797,Female,Member,Sack Race | Lemon & Spoon Race | Dodge Ball,"{""Sack Race"":3,""Dodge Ball"":4,""Lemon & Spoon Race"":3}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Kinjal Shah,9970797374,Female,Member,Chess | Badminton | Carrom | Lemon & Spoon Race,"{""Chess"":3,""Carrom"":3,""Badminton"":3,""Lemon & Spoon Race"":3}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Mittali Ritesh Oswal,9356199199,Female,Member,Kho Kho | Lemon & Spoon Race | Tug of War,"{""Kho Kho"":4,""Tug of War"":4,""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Nikita yukit oswal,9604964097,Female,Member,Lemon & Spoon Race | Sack Race | Tug of War | Dodge Ball,"{""Sack Race"":3,""Dodge Ball"":4,""Tug of War"":4,""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Preeti lalit oswal,9191675609,Female,Member,Lemon & Spoon Race,"{""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Sejal akshay oswal,8169382853,Female,Member,Carrom | Badminton | Lemon & Spoon Race | Tug of War,"{""Carrom"":2,""Badminton"":2,""Tug of War"":2,""Lemon & Spoon Race"":2}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Sneha patani,9766306821,Female,Member,Badminton | Lemon & Spoon Race | Sack Race | Tug of War,"{""Badminton"":1,""Sack Race"":3,""Tug of War"":2,""Lemon & Spoon Race"":1}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Sonal Mahesh Oswal,9420277089,Female,Member,Carrom | Lemon & Spoon Race | Sack Race,"{""Carrom"":2,""Sack Race"":2,""Lemon & Spoon Race"":2}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Vijeta Nikhil oswal,9021255258,Female,Member,Kho Kho | Badminton | Lemon & Spoon Race | Dodge Ball,"{""Kho Kho"":3,""Badminton"":3,""Dodge Ball"":4,""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal),,,,,,,
-RACHITA JINESH JAIN,9673748667,Female,Member,Carrom | Badminton | Table Tennis,"{""Badminton"":2,""Carrom"":3,""Table Tennis"":3}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Aksh Jain,9890164120,Male,Kid,Badminton | Pickle Ball | Tug of War | Table Tennis,"{""Badminton"":2,""Tug of War"":3,""Pickle Ball"":3,""Table Tennis"":3}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Vandit patni,9049057671,Male,Kid,Carrom | Pickle Ball | Kho Kho | Tug of War,"{""Carrom"":3,""Kho Kho"":4,""Tug of War"":4,""Pickle Ball"":4}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Vivaan Kalpesh Dhoka,9850204067,Male,Kid,Chess | Sack Race | Kho Kho,"{""Chess"":3,""Kho Kho"":3,""Sack Race"":3}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Akshay kantilal oswal,7020501466,Male,Member,Carrom | Badminton | Tug of War | Lemon & Spoon Race,"{""Carrom"":2,""Badminton"":2,""Tug of War"":2,""Lemon & Spoon Race"":2}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Ankit Punmiya,9168914537,Male,Member,Badminton | Lemon & Spoon Race | Carrom | Table Tennis,"{""Carrom"":2,""Badminton"":2,""Table Tennis"":2,""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Hitesh Mutha,9422322285,Male,Member,Carrom | Badminton,"{""Carrom"":4,""Badminton"":3}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Jeet Shah,8975774197,Male,Member,Badminton | Pickle Ball | Volleyball | Three-Legged Race,"{""Badminton"":3,""Volleyball"":4,""Pickle Ball"":3,""Three-Legged Race"":1}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Kunal Bhandari,9545075151,Male,Member,Badminton | Kho Kho | Tug of War | Carrom,"{""Carrom"":4,""Kho Kho"":5,""Badminton"":5,""Tug of War"":5}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Mahesh OSWAL,9130128128,Male,Member,Tug of War | Carrom | Kho Kho | Badminton,"{""Carrom"":4,""Kho Kho"":4,""Badminton"":4,""Tug of War"":4}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Manish Jain,9538976945,Male,Member,Table Tennis | Pickle Ball | Carrom | Badminton,"{""Carrom"":3,""Badminton"":2,""Pickle Ball"":1,""Table Tennis"":3}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Nikhil Oswal,9823036132,Male,Member,Volleyball | Lemon & Spoon Race | Pickle Ball | Carrom,"{""Carrom"":3,""Volleyball"":4,""Pickle Ball"":3,""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal),,,,,,,
-NIKHIL M OSWAL,8446735443,Male,Member,Badminton | Kho Kho | Volleyball | Three-Legged Race,"{""Kho Kho"":4,""Badminton"":3,""Volleyball"":4,""Three-Legged Race"":4}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Nilesh pokharna,9765130077,Male,Member,Carrom | Chess | Table Tennis | Pickle Ball,"{""Chess"":2,""Carrom"":1,""Pickle Ball"":4,""Table Tennis"":3}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Ritesh singhvi,9595598181,Male,Member,Chess | Tug of War | Volleyball,"{""Chess"":5,""Tug of War"":5,""Volleyball"":4}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Vinod Kumar sukhraj shah,9421011909,Male,Member,Volleyball | Kho Kho | Tug of War | Badminton,"{""Kho Kho"":4,""Badminton"":3,""Tug of War"":5,""Volleyball"":5}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Vishal sohanlal parmar,8308222111,Male,Member,Chess | Volleyball,"{""Chess"":4,""Volleyball"":3}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Yogesh Bafna,9021212125,Male,Member,Badminton | Volleyball,"{""Badminton"":2,""Volleyball"":1}",Shanti Warriors (Nikhil Oswal),,,,,,,
-Yuvraj Shah,,Male,Member,,,Shanti Warriors (Nikhil Oswal),,,,,,,
-Ciya Shah,,Female,Kid,,,Water World Warriors (Dilip Jain),,,,,,,
-Harshita Vinod Jain,8888822333,Female,Kid,Badminton | Dodge Ball | Kho Kho | Three-Legged Race,"{""Kho Kho"":4,""Badminton"":4,""Dodge Ball"":4,""Three-Legged Race"":4}",Water World Warriors (Dilip Jain),,,,,,,
-Bhakti Kalpak Masalia,8380809596,Female,Member,Carrom | Chess,"{""Chess"":1,""Carrom"":4}",Water World Warriors (Dilip Jain),,,,,,,
-Dhara Shah,9940425690,Female,Member,Carrom | Chess | Badminton | Lemon & Spoon Race,"{""Chess"":5,""Carrom"":4,""Badminton"":4,""Lemon & Spoon Race"":5}",Water World Warriors (Dilip Jain),,,,,,,
-Karishma Oswal,7776906778,Female,Member,Carrom | Badminton,"{""Carrom"":5,""Badminton"":5}",Water World Warriors (Dilip Jain),,,,,,,
-Namrata Shrishrimal,8830154890,Female,Member,Kho Kho | Tug of War | Badminton,"{""Kho Kho"":4,""Badminton"":4,""Tug of War"":4}",Water World Warriors (Dilip Jain),,,,,,,
-Neelam Sachin oswal,8999589287,Female,Member,Lemon & Spoon Race,"{""Lemon & Spoon Race"":5}",Water World Warriors (Dilip Jain),,,,,,,
-Poonam Sumit Talesara,9370223446,Female,Member,Carrom | Kho Kho | Lemon & Spoon Race | Tug of War,"{""Carrom"":5,""Kho Kho"":5,""Tug of War"":4,""Lemon & Spoon Race"":5}",Water World Warriors (Dilip Jain),,,,,,,
-Preeti P Waghresha,8796209968,Female,Member,Lemon & Spoon Race | Dodge Ball | Three-Legged Race | Tug of War,"{""Dodge Ball"":2,""Tug of War"":2,""Three-Legged Race"":2,""Lemon & Spoon Race"":2}",Water World Warriors (Dilip Jain),,,,,,,
-Priyanka mehta,8669094479,Female,Member,Pickle Ball | Dodge Ball | Kho Kho | Badminton,"{""Kho Kho"":3,""Badminton"":3,""Dodge Ball"":4,""Pickle Ball"":3}",Water World Warriors (Dilip Jain),,,,,,,
-Rakhi kothari,9326092425,Female,Member,Carrom | Chess | Dodge Ball,"{""Chess"":3,""Carrom"":3,""Dodge Ball"":3}",Water World Warriors (Dilip Jain),,,,,,,
-Sulochana jain,8087387932,Female,Member,Lemon & Spoon Race | Tug of War,"{""Tug of War"":4,""Lemon & Spoon Race"":5}",Water World Warriors (Dilip Jain),,,,,,,
-Veeniya Jain,8087387945,Female,Member,Dodge Ball,"{""Dodge Ball"":4}",Water World Warriors (Dilip Jain),,,,,,,
-Vruddhi Shah,9960480480,Female,Member,Badminton | Pickle Ball | Dodge Ball | Table Tennis,"{""Badminton"":3,""Dodge Ball"":3,""Pickle Ball"":3,""Table Tennis"":3}",Water World Warriors (Dilip Jain),,,,,,,
-Kavyansh V Jain,9028590888,Male,Kid,Chess | Pickle Ball,"{""Chess"":3,""Pickle Ball"":3}",Water World Warriors (Dilip Jain),,,,,,,
-DHRUVANSH VINOD JAIN,9028590888,Male,Kid,Chess | Pickle Ball,"{""Chess"":3,""Pickle Ball"":3}",Water World Warriors (Dilip Jain),,,,,,,
-Meet Vinod Jain,9272327225,Male,Kid,Pickle Ball | Badminton | Volleyball,"{""Badminton"":4,""Volleyball"":5,""Pickle Ball"":5}",Water World Warriors (Dilip Jain),,,,,,,
-Vihaan kothari,9822193393,Male,Kid,Carrom | Tug of War,"{""Carrom"":3,""Tug of War"":3}",Water World Warriors (Dilip Jain),,,,,,,
-Vihaan salecha,9028988457,Male,Kid,Carrom | Kho Kho | Lemon & Spoon Race | Sack Race,"{""Carrom"":4,""Kho Kho"":4,""Sack Race"":4,""Lemon & Spoon Race"":4}",Water World Warriors (Dilip Jain),,,,,,,
-YUVAAN DILIP JAIN,9822844333,Male,Kid,Chess | Badminton | Tug of War,"{""Chess"":3,""Badminton"":3,""Tug of War"":3}",Water World Warriors (Dilip Jain),,,,,,,
-Amit Dhariwal,9766393033,Male,Member,Pickle Ball | Carrom,"{""Carrom"":2,""Pickle Ball"":2}",Water World Warriors (Dilip Jain),,,,,,,
-Anil kasturchand chhajed,9372448295,Male,Member,Tug of War | Three-Legged Race,"{""Tug of War"":2,""Three-Legged Race"":2}",Water World Warriors (Dilip Jain),,,,,,,
-Arun Rathod,9820369920,Male,Member,Carrom | Badminton | Pickle Ball | Three-Legged Race,"{""Carrom"":4,""Badminton"":2,""Pickle Ball"":2,""Three-Legged Race"":3}",Water World Warriors (Dilip Jain),,,,,,,
-Manoj Jain,7972483559,Male,Member,Badminton | Carrom | Tug of War | Kho Kho,"{""Carrom"":3,""Kho Kho"":3,""Badminton"":3,""Tug of War"":3}",Water World Warriors (Dilip Jain),,,,,,,
-Nikhil,9890732096,Male,Member,Badminton,"{""Badminton"":4}",Water World Warriors (Dilip Jain),,,,,,,
-Nikhil,8956774747,Male,Member,Badminton | Volleyball | Carrom,"{""Carrom"":4,""Badminton"":5,""Volleyball"":4}",Water World Warriors (Dilip Jain),,,,,,,
-Paresh Mutha,9370111101,Male,Member,Table Tennis | Badminton | Pickle Ball | Volleyball,"{""Badminton"":2,""Volleyball"":2,""Pickle Ball"":2,""Table Tennis"":2}",Water World Warriors (Dilip Jain),,,,,,,
-SACHIN MUTHA,9421009818,Male,Member,Carrom | Chess | Tug of War | Badminton,"{""Chess"":4,""Carrom"":4,""Badminton"":4,""Tug of War"":4}",Water World Warriors (Dilip Jain),,,,,,,
-Santosh Ashok Solanki,9372455441,Male,Member,Badminton | Tug of War | Kho Kho | Carrom,"{""Carrom"":4,""Kho Kho"":4,""Badminton"":4,""Tug of War"":5}",Water World Warriors (Dilip Jain),,,,,,,
-Savan jain,7019702095,Male,Member,Carrom | Chess | Badminton,"{""Chess"":4,""Carrom"":3,""Badminton"":3}",Water World Warriors (Dilip Jain),,,,,,,
-Sumit Vasantraj Talesara,9823859453,Male,Member,Table Tennis | Lemon & Spoon Race | Tug of War | Carrom,"{""Carrom"":4,""Tug of War"":5,""Table Tennis"":4,""Lemon & Spoon Race"":5}",Water World Warriors (Dilip Jain),,,,,,,
+Name,Mobile,Gender,Category,Selected Sports,Sport Ratings,Team Name
+Aarti Nikhil Sanghvi,8087816078,Female,Member,Dodge Ball | Badminton | Lemon & Spoon Race | Sack Race,"{""Badminton"":4,""Sack Race"":4,""Dodge Ball"":5,""Lemon & Spoon Race"":5}",Aarohi Enterprises (Rohan Shah)
+Anju Shah,8087600124,Female,Member,Carrom | Badminton | Lemon & Spoon Race | Kho Kho,"{""Carrom"":3,""Kho Kho"":3,""Badminton"":4,""Lemon & Spoon Race"":4}",Aarohi Enterprises (Rohan Shah)
+Anuja Shah,7744947529,Female,Member,Carrom | Table Tennis | Pickle Ball | Three-Legged Race,"{""Carrom"":2,""Pickle Ball"":2,""Table Tennis"":2,""Three-Legged Race"":2}",Aarohi Enterprises (Rohan Shah)
+Ashika Rathod,9819723151,Female,Member,Lemon & Spoon Race | Chess | Dodge Ball | Kho Kho,"{""Chess"":2,""Kho Kho"":2,""Dodge Ball"":2,""Lemon & Spoon Race"":3}",Aarohi Enterprises (Rohan Shah)
+Chetna Yogesh Bafna,9881666663,Female,Member,Carrom | Badminton | Kho Kho | Lemon & Spoon Race,"{""Carrom"":5,""Kho Kho"":4,""Badminton"":4,""Lemon & Spoon Race"":4}",Aarohi Enterprises (Rohan Shah)
+Khushbu patni,9673318915,Female,Member,Badminton | Lemon & Spoon Race | Dodge Ball,"{""Badminton"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Aarohi Enterprises (Rohan Shah)
+Reema Jitendra Jain,9822722277,Female,Member,Carrom | Badminton | Lemon & Spoon Race | Dodge Ball,"{""Carrom"":2,""Badminton"":2,""Dodge Ball"":2,""Lemon & Spoon Race"":2}",Aarohi Enterprises (Rohan Shah)
+Rinkal Shah,9420177141,Female,Member,Three-Legged Race | Badminton | Kho Kho | Sack Race,"{""Kho Kho"":3,""Badminton"":3,""Sack Race"":3,""Three-Legged Race"":3}",Aarohi Enterprises (Rohan Shah)
+Sarika Bora,7020961041,Female,Member,Carrom,"{""Carrom"":1}",Aarohi Enterprises (Rohan Shah)
+Sarika jain,9822450288,Female,Member,Carrom | Lemon & Spoon Race | Tug of War | Sack Race,"{""Carrom"":2,""Sack Race"":3,""Tug of War"":3,""Lemon & Spoon Race"":2}",Aarohi Enterprises (Rohan Shah)
+Shraddha Shah,7709016411,Female,Member,Chess | Badminton | Lemon & Spoon Race,"{""Chess"":3,""Badminton"":3,""Lemon & Spoon Race"":3}",Aarohi Enterprises (Rohan Shah)
+Sonal parmar,9822999220,Female,Member,Badminton,"{""Badminton"":5}",Aarohi Enterprises (Rohan Shah)
+Snehal Patni,9860555821,Female,Member,Carrom | Badminton,"{""Carrom"":3,""Badminton"":4}",Aarohi Enterprises (Rohan Shah)
+Aarohi Shah,9823162182,Female,Kid,,,Aarohi Enterprises (Rohan Shah)
+Naksh Jain,9158090113,Male,Kid,Badminton | Pickle Ball | Tug of War | Kho Kho,"{""Kho Kho"":2,""Badminton"":5,""Tug of War"":2,""Pickle Ball"":2}",Aarohi Enterprises (Rohan Shah)
+Nivaan Jain,9322496634,Male,Kid,Table Tennis | Badminton | Pickle Ball | Tug of War,"{""Badminton"":2,""Tug of War"":2,""Pickle Ball"":2,""Table Tennis"":2}",Aarohi Enterprises (Rohan Shah)
+Sammyak Bora,7057517076,Male,Kid,Carrom | Badminton | Pickle Ball | Volleyball,"{""Carrom"":2,""Badminton"":3,""Volleyball"":3,""Pickle Ball"":2}",Aarohi Enterprises (Rohan Shah)
+Sujal Bora,7875083737,Male,Kid,Badminton | Pickle Ball | Table Tennis | Volleyball,"{""Badminton"":2,""Volleyball"":3,""Pickle Ball"":3,""Table Tennis"":2}",Aarohi Enterprises (Rohan Shah)
+Virag lalit oswal,8698222122,Male,Kid,Carrom,"{""Carrom"":3}",Aarohi Enterprises (Rohan Shah)
+Ganesh Oswal,9822334470,Male,Member,Carrom | Tug of War | Chess | Badminton,"{""Chess"":4,""Carrom"":5,""Badminton"":3,""Tug of War"":3}",Aarohi Enterprises (Rohan Shah)
+Himanshu bafna,9960429494,Male,Member,Kho Kho | Lemon & Spoon Race | Tug of War | Three-Legged Race,"{""Kho Kho"":5,""Tug of War"":5,""Three-Legged Race"":5,""Lemon & Spoon Race"":5}",Aarohi Enterprises (Rohan Shah)
+JINESH GAJRAJ JAIN,9890377803,Male,Member,Carrom | Table Tennis | Badminton,"{""Carrom"":4,""Badminton"":4,""Table Tennis"":4}",Aarohi Enterprises (Rohan Shah)
+Lalit babulal oswal,8698222122,Male,Member,Volleyball,"{""Volleyball"":5}",Aarohi Enterprises (Rohan Shah)
+Paras,9822450288,Male,Member,Kho Kho | Lemon & Spoon Race | Tug of War | Sack Race,"{""Kho Kho"":3,""Sack Race"":3,""Tug of War"":2,""Lemon & Spoon Race"":3}",Aarohi Enterprises (Rohan Shah)
+Pranil Shah,9822251329,Male,Member,Carrom | Chess | Badminton | Pickle Ball,"{""Chess"":3,""Carrom"":3,""Badminton"":4,""Pickle Ball"":1}",Aarohi Enterprises (Rohan Shah)
+Rohan Shah,9823162182,Male,Member,Table Tennis | Pickle Ball | Volleyball | Kho Kho,"{""Kho Kho"":3,""Volleyball"":3,""Pickle Ball"":3,""Table Tennis"":4}",Aarohi Enterprises (Rohan Shah)
+SACHIN BABULAL OSWAL,7276647350,Male,Member,Badminton | Chess | Volleyball,"{""Chess"":5,""Badminton"":5,""Volleyball"":5}",Aarohi Enterprises (Rohan Shah)
+Shreyank rajesh shah,8446444010,Male,Member,Carrom | Badminton | Pickle Ball | Lemon & Spoon Race,"{""Carrom"":2,""Badminton"":3,""Pickle Ball"":3,""Lemon & Spoon Race"":3}",Aarohi Enterprises (Rohan Shah)
+Ashish Shah,7769039941,Male,Member,Badminton | Sack Race | Volleyball,"{"" Sack Race"":3,""Badminton"":3,""Volleyball"":3}",Aarohi Enterprises (Rohan Shah)
+Nikhil Oswal,8956774747,Male,Member,,,Aarohi Enterprises (Rohan Shah)
+TIMMEER SANGHAVI,,Male,Member,,,Aarohi Enterprises (Rohan Shah)
+Vikram oswal,9890124140,Male,Member,Kho Kho | Sack Race | Tug of War | Three-Legged Race,"{""Kho Kho"":5,""Sack Race"":5,""Tug of War"":3,""Three-Legged Race"":5}",Aarohi Enterprises (Rohan Shah)
+Hitvi Sheetal Gundecha,9881387771,Female,Kid,Pickle Ball | Kho Kho | Dodge Ball | Tug of War,"{""Kho Kho"":4,""Dodge Ball"":4,""Tug of War"":4,""Pickle Ball"":3}",Arihant Warlocks (Sunil Patni)
+Jinisha Shah,7709015299,Female,Kid,Chess | Badminton | Kho Kho | Lemon & Spoon Race,"{""Chess"":3,""Kho Kho"":3,""Badminton"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni)
+Moksha Shah,7709015299,Female,Kid,Chess | Dodge Ball | Kho Kho | Lemon & Spoon Race,"{""Chess"":3,""Kho Kho"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni)
+Asmita shah,7709003791,Female,Member,Dodge Ball | Tug of War | Lemon & Spoon Race | Carrom,"{""Carrom"":3,""Dodge Ball"":3,""Tug of War"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni)
+Gunvanti oswal,9420496795,Female,Member,Lemon & Spoon Race | Badminton | Pickle Ball | Tug of War,"{""Badminton"":4,""Tug of War"":4,""Pickle Ball"":4,""Lemon & Spoon Race"":4}",Arihant Warlocks (Sunil Patni)
+Kavita J oswal,9921094100,Female,Member,Carrom | Kho Kho | Lemon & Spoon Race | Dodge Ball,"{""Carrom"":3,""Kho Kho"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni)
+Lalita Oswal,9021178911,Female,Member,Carrom | Chess | Lemon & Spoon Race | Dodge Ball,"{""Chess"":3,""Carrom"":4,""Dodge Ball"":4,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni)
+Laxmi Jain,9370069687,Female,Member,Lemon & Spoon Race | Sack Race | Three-Legged Race,"{""Sack Race"":3,""Three-Legged Race"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni)
+Pallavi Timir Sanghavi,9422313107,Female,Member,Carrom | Badminton,"{""Carrom"":2,""Badminton"":3}",Arihant Warlocks (Sunil Patni)
+Rakhi Arvind Jain,9822046376,Female,Member,Carrom,"{""Carrom"":2}",Arihant Warlocks (Sunil Patni)
+Rashmi Gandhi,9970585889,Female,Member,Badminton | Pickle Ball | Lemon & Spoon Race | Dodge Ball,"{""Badminton"":3,""Dodge Ball"":3,""Pickle Ball"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni)
+Snehal shah,9561457474,Female,Member,Lemon & Spoon Race | Tug of War | Three-Legged Race,"{""Tug of War"":3,""Three-Legged Race"":3,""Lemon & Spoon Race"":3}",Arihant Warlocks (Sunil Patni)
+Soniya Oswal,9370573040,Female,Member,Badminton,"{""Badminton"":5}",Arihant Warlocks (Sunil Patni)
+Vaishali jain,9423571432,Female,Member,Carrom,"{""Carrom"":1}",Arihant Warlocks (Sunil Patni)
+Deepa Yuvraj Shah,,Female,Member,,,Arihant Warlocks (Sunil Patni)
+Kavya Sanghavi,,Female,Kid,,,Arihant Warlocks (Sunil Patni)
+Chirag Vinod Jain,8888822333,Male,Kid,Kho Kho | Chess | Three-Legged Race | Badminton,"{""Chess"":4,""Kho Kho"":4,""Badminton"":4,""Three-Legged Race"":4}",Arihant Warlocks (Sunil Patni)
+Dhruv oswal,9112211123,Male,Kid,Chess | Table Tennis | Pickle Ball | Tug of War,"{""Chess"":2,""Tug of War"":3,""Pickle Ball"":2,""Table Tennis"":3}",Arihant Warlocks (Sunil Patni)
+Mokshit Jayesh Oswal,9423450123,Male,Kid,Table Tennis | Pickle Ball | Volleyball | Badminton,"{""Badminton"":2,""Volleyball"":2,""Pickle Ball"":3,""Table Tennis"":3}",Arihant Warlocks (Sunil Patni)
+SAMYAK HITESH JAIN,9096319394,Male,Kid,Pickle Ball | Kho Kho | Volleyball | Tug of War,"{""Kho Kho"":5,""Tug of War"":5,""Volleyball"":5,""Pickle Ball"":5}",Arihant Warlocks (Sunil Patni)
+Shaurya Sumit Talesara,9823859453,Male,Kid,Carrom | Chess | Lemon & Spoon Race | Tug of War,"{""Chess"":5,""Carrom"":5,""Tug of War"":3,""Lemon & Spoon Race"":4}",Arihant Warlocks (Sunil Patni)
+Vidhan patni,9049057671,Male,Kid,Table Tennis | Kho Kho | Badminton | Sack Race,"{""Kho Kho"":4,""Badminton"":3,""Sack Race"":4,""Table Tennis"":4}",Arihant Warlocks (Sunil Patni)
+Hitesh Medtia,8766422772,Male,Member,Carrom | Chess | Badminton | Volleyball,"{""Chess"":4,""Carrom"":2,""Badminton"":4,""Volleyball"":2}",Arihant Warlocks (Sunil Patni)
+Jitendra Ashok Jain,9822519391,Male,Member,Carrom | Table Tennis | Pickle Ball | Volleyball,"{""Carrom"":3,""Volleyball"":4,""Pickle Ball"":1,""Table Tennis"":3}",Arihant Warlocks (Sunil Patni)
+Nilesh Bora,9326243737,Male,Member,Carrom,"{""Carrom"":1}",Arihant Warlocks (Sunil Patni)
+Paresh lilachand rathod,9657134803,Male,Member,Chess | Badminton | Kho Kho | Volleyball,"{""Chess"":4,""Kho Kho"":4,""Badminton"":3,""Volleyball"":4}",Arihant Warlocks (Sunil Patni)
+Pintukumar shah,8668597785,Male,Member,Kho Kho | Tug of War | Sack Race | Carrom,"{""Carrom"":4,""Kho Kho"":3,""Sack Race"":3,""Tug of War"":4}",Arihant Warlocks (Sunil Patni)
+Rakesh Kumar Jain,8888998928,Male,Member,Table Tennis | Badminton | Carrom | Chess,"{""Chess"":4,""Carrom"":3,""Badminton"":1,""Table Tennis"":2}",Arihant Warlocks (Sunil Patni)
+Sandeep mehta,9921356606,Male,Member,Chess | Volleyball | Tug of War | Kho Kho,"{""Chess"":3,""Kho Kho"":2,""Tug of War"":3,""Volleyball"":3}",Arihant Warlocks (Sunil Patni)
+Sunil patni,9049057671,Male,Member,Carrom | Badminton | Volleyball | Tug of War,"{""Carrom"":3,""Badminton"":3,""Tug of War"":4,""Volleyball"":3}",Arihant Warlocks (Sunil Patni)
+Umesh Porwal,9822541922,Male,Member,Badminton,"{""Badminton"":2}",Arihant Warlocks (Sunil Patni)
+Vidyut jain,9422322202,Male,Member,Badminton,"{""Badminton"":1}",Arihant Warlocks (Sunil Patni)
+Niyati Gundecha,9881387771,Female,Kid,Chess | Badminton | Dodge Ball | Kho Kho,"{""Chess"":4,""Kho Kho"":3,""Badminton"":4,""Dodge Ball"":4}",Katariya Smashers (Mayur Katariya)
+Bhavana Nikhil Jain,8446540424,Female,Member,Lemon & Spoon Race | Sack Race | Tug of War | Three-Legged Race,"{""Sack Race"":4,""Tug of War"":4,""Three-Legged Race"":4,""Lemon & Spoon Race"":4}",Katariya Smashers (Mayur Katariya)
+Deepa Jain,9011042332,Female,Member,Carrom | Chess | Table Tennis,"{""Chess"":3,""Carrom"":3,""Table Tennis"":3}",Katariya Smashers (Mayur Katariya)
+Jinal Shreyank shah,9420094536,Female,Member,Lemon & Spoon Race | Kho Kho | Dodge Ball | Pickle Ball,"{""Kho Kho"":1,""Dodge Ball"":1,""Pickle Ball"":4,""Lemon & Spoon Race"":1}",Katariya Smashers (Mayur Katariya)
+Namita Nehal Shah,7028989249,Female,Member,Tug of War | Lemon & Spoon Race,"{""Tug of War"":3,""Lemon & Spoon Race"":3}",Katariya Smashers (Mayur Katariya)
+Neetu jain,9595343898,Female,Member,Carrom | Badminton | Lemon & Spoon Race | Dodge Ball,"{""Carrom"":4,""Badminton"":4,""Dodge Ball"":4,""Lemon & Spoon Race"":4}",Katariya Smashers (Mayur Katariya)
+Pooja Abhinav Shaha,9637860005,Female,Member,Carrom | Chess | Badminton | Lemon & Spoon Race,"{""Chess"":3,""Carrom"":3,""Badminton"":3,""Lemon & Spoon Race"":5}",Katariya Smashers (Mayur Katariya)
+Pooja Dheeraj Desarda,8087214333,Female,Member,Kho Kho | Lemon & Spoon Race | Tug of War | Dodge Ball,"{""Kho Kho"":3,""Dodge Ball"":3,""Tug of War"":3,""Lemon & Spoon Race"":3}",Katariya Smashers (Mayur Katariya)
+Ruchika Bhandari,9090881008,Female,Member,Carrom | Badminton | Dodge Ball | Kho Kho,"{""Carrom"":5,""Kho Kho"":5,""Badminton"":5,""Dodge Ball"":5}",Katariya Smashers (Mayur Katariya)
+Sarita Setiya,9850854855,Female,Member,Lemon & Spoon Race | Sack Race | Dodge Ball | Three-Legged Race,"{""Sack Race"":4,""Dodge Ball"":4,""Three-Legged Race"":4,""Lemon & Spoon Race"":4}",Katariya Smashers (Mayur Katariya)
+Shilpa satish jain,7620085357,Female,Member,Carrom | Badminton | Three-Legged Race | Lemon & Spoon Race,"{""Carrom"":4,""Badminton"":4,""Three-Legged Race"":3,""Lemon & Spoon Race"":4}",Katariya Smashers (Mayur Katariya)
+Shilpa vinod jain,9881287771,Female,Member,Tug of War | Badminton | Carrom | Lemon & Spoon Race,"{""Carrom"":3,""Badminton"":3,""Tug of War"":3,""Lemon & Spoon Race"":3}",Katariya Smashers (Mayur Katariya)
+Sneha,7276469999,Female,Member,Pickle Ball | Kho Kho | Dodge Ball,"{""Kho Kho"":5,""Dodge Ball"":5,""Pickle Ball"":5}",Katariya Smashers (Mayur Katariya)
+Vima jain,8007499776,Female,Member,Badminton | Dodge Ball | Tug of War | Lemon & Spoon Race,"{""Badminton"":4,""Dodge Ball"":5,""Tug of War"":5,""Lemon & Spoon Race"":5}",Katariya Smashers (Mayur Katariya)
+Yogita paresh rathod,7709739883,Female,Member,Badminton | Lemon & Spoon Race | Carrom | Three-Legged Race,"{""Carrom"":3,""Badminton"":3,""Three-Legged Race"":4,""Lemon & Spoon Race"":3}",Katariya Smashers (Mayur Katariya)
+Dhruvin singhvi,8619210054,Male,Kid,Badminton | Chess | Kho Kho | Three-Legged Race,"{""Chess"":3,""Kho Kho"":5,""Badminton"":5,""Three-Legged Race"":2}",Katariya Smashers (Mayur Katariya)
+Hridhan Rathod,9819723151,Male,Kid,Chess | Badminton | Kho Kho | Tug of War,"{""Chess"":2,""Kho Kho"":2,""Badminton"":2,""Tug of War"":2}",Katariya Smashers (Mayur Katariya)
+Miray,7276469999,Male,Kid,Pickle Ball | Table Tennis | Badminton | Volleyball,"{""Badminton"":5,""Volleyball"":5,""Pickle Ball"":5,""Table Tennis"":5}",Katariya Smashers (Mayur Katariya)
+Pratham Vikram Oswal,9922496794,Male,Kid,Carrom | Tug of War | Badminton | Lemon & Spoon Race,"{""Carrom"":4,""Badminton"":4,""Tug of War"":4,""Lemon & Spoon Race"":4}",Katariya Smashers (Mayur Katariya)
+Amit Gandhi,7276319578,Male,Member,Table Tennis | Chess | Badminton | Pickle Ball,"{""Chess"":3,""Badminton"":3,""Pickle Ball"":3,""Table Tennis"":4}",Katariya Smashers (Mayur Katariya)
+Anup Meher,9011090203,Male,Member,Table Tennis | Badminton | Pickle Ball,"{""Badminton"":3,""Pickle Ball"":2,""Table Tennis"":5}",Katariya Smashers (Mayur Katariya)
+Jeetu k oswal,9822094100,Male,Member,Carrom | Volleyball | Kho Kho | Three-Legged Race,"{""Carrom"":3,""Kho Kho"":3,""Volleyball"":3,""Three-Legged Race"":3}",Katariya Smashers (Mayur Katariya)
+Ketan Setiya,9422083792,Male,Member,Badminton | Pickle Ball | Table Tennis,"{""Badminton"":4,""Pickle Ball"":4,""Table Tennis"":3}",Katariya Smashers (Mayur Katariya)
+MAYUR KATARIYA,8446535244,Male,Member,Pickle Ball | Badminton | Volleyball | Kho Kho,"{""Kho Kho"":3,""Badminton"":3,""Volleyball"":3,""Pickle Ball"":3}",Katariya Smashers (Mayur Katariya)
+Mitesh Shaha,8073005510,Male,Member,Badminton | Pickle Ball | Carrom | Volleyball,"{""Carrom"":3,""Badminton"":3,""Volleyball"":3,""Pickle Ball"":3}",Katariya Smashers (Mayur Katariya)
+Nikhil parmar,9822999220,Male,Member,Chess | Volleyball,"{""Chess"":5,""Volleyball"":5}",Katariya Smashers (Mayur Katariya)
+Nikhil Suresh Jain,8806507775,Male,Member,Carrom | Table Tennis | Kho Kho | Lemon & Spoon Race,"{""Carrom"":4,""Kho Kho"":4,""Table Tennis"":4,""Lemon & Spoon Race"":4}",Katariya Smashers (Mayur Katariya)
+Pritesh K Waghresha,9049233328,Male,Member,Carrom | Chess | Volleyball | Tug of War,"{""Chess"":3,""Carrom"":3,""Tug of War"":3,""Volleyball"":4}",Katariya Smashers (Mayur Katariya)
+Rinesh Parekh,9373002007,Male,Member,Badminton | Pickle Ball | Chess | Carrom,"{""Chess"":3,""Carrom"":3,""Badminton"":3,""Pickle Ball"":3}",Katariya Smashers (Mayur Katariya)
+Ritesh K Oswal,9822207209,Male,Member,Badminton | Kho Kho,"{""Kho Kho"":2,""Badminton"":2}",Katariya Smashers (Mayur Katariya)
+Saket Shah,9970797374,Male,Member,Carrom | Tug of War | Volleyball | Lemon & Spoon Race,"{""Carrom"":3,""Tug of War"":3,""Volleyball"":3,""Lemon & Spoon Race"":3}",Katariya Smashers (Mayur Katariya)
+Vikram Indermal Oswal,9420496794,Male,Member,Carrom | Pickle Ball | Lemon & Spoon Race | Tug of War,"{""Carrom"":3,""Tug of War"":3,""Pickle Ball"":3,""Lemon & Spoon Race"":3}",Katariya Smashers (Mayur Katariya)
+Maitri Dhariwal,9766393033,Female,Kid,Pickle Ball | Badminton | Dodge Ball,"{""Badminton"":3,""Dodge Ball"":3,""Pickle Ball"":2}",Lunkad Lions (Vipul Lunkad)
+Dimple kuwad,9028483433,Female,Member,Lemon & Spoon Race | Dodge Ball | Kho Kho,"{""Kho Kho"":3,""Dodge Ball"":4,""Lemon & Spoon Race"":4}",Lunkad Lions (Vipul Lunkad)
+Jinal shah,8698986355,Female,Member,Badminton | Lemon & Spoon Race | Tug of War,"{""Badminton"":5,""Tug of War"":5,""Lemon & Spoon Race"":5}",Lunkad Lions (Vipul Lunkad)
+Kalpana m oswal,9373667222,Female,Member,Carrom | Badminton | Tug of War,"{""Carrom"":2,""Badminton"":2,""Tug of War"":3}",Lunkad Lions (Vipul Lunkad)
+Kanchan vinod shah,7972880425,Female,Member,Badminton | Kho Kho | Lemon & Spoon Race,"{""Kho Kho"":5,""Badminton"":5,""Lemon & Spoon Race"":5}",Lunkad Lions (Vipul Lunkad)
+Khushi Sanghavi,9850151300,Female,Member,Kho Kho | Lemon & Spoon Race,"{""Kho Kho"":1,""Lemon & Spoon Race"":1}",Lunkad Lions (Vipul Lunkad)
+Mamta pintukumar shah,7276130769,Female,Member,Kho Kho | Badminton | Carrom | Tug of War,"{""Carrom"":3,""Kho Kho"":3,""Badminton"":4,""Tug of War"":4}",Lunkad Lions (Vipul Lunkad)
+Mamta shah,9307091902,Female,Member,Lemon & Spoon Race | Dodge Ball | Carrom,"{""Carrom"":2,""Dodge Ball"":4,""Lemon & Spoon Race"":4}",Lunkad Lions (Vipul Lunkad)
+Mayuri shah,9284904668,Female,Member,Carrom | Lemon & Spoon Race | Dodge Ball | Badminton,"{""Carrom"":3,""Badminton"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Lunkad Lions (Vipul Lunkad)
+Pina kawad,7276766438,Female,Member,Kho Kho | Lemon & Spoon Race | Badminton,"{""Kho Kho"":3,""Badminton"":4,""Lemon & Spoon Race"":4}",Lunkad Lions (Vipul Lunkad)
+Poonam Hitesh Mutha,9422322285,Female,Member,Lemon & Spoon Race | Sack Race | Tug of War | Kho Kho,"{""Kho Kho"":4,""Sack Race"":4,""Tug of War"":4,""Lemon & Spoon Race"":4}",Lunkad Lions (Vipul Lunkad)
+Rekha bafna,9270453888,Female,Member,Chess | Carrom | Kho Kho | Lemon & Spoon Race,"{""Chess"":5,""Carrom"":5,""Kho Kho"":5,""Lemon & Spoon Race"":5}",Lunkad Lions (Vipul Lunkad)
+Rekha Shah,9764273377,Female,Member,Carrom | Dodge Ball | Lemon & Spoon Race | Table Tennis,"{""Carrom"":3,""Dodge Ball"":3,""Table Tennis"":2,""Lemon & Spoon Race"":5}",Lunkad Lions (Vipul Lunkad)
+Ronak Jain,8888870864,Female,Member,Lemon & Spoon Race | Carrom | Chess | Tug of War,"{""Chess"":3,""Carrom"":2,""Tug of War"":4,""Lemon & Spoon Race"":1}",Lunkad Lions (Vipul Lunkad)
+Nittyam Hitesh Mutha,9422322285,Male,Kid,Carrom | Badminton | Three-Legged Race | Kho Kho,"{""Carrom"":4,""Kho Kho"":4,""Badminton"":4,""Three-Legged Race"":4}",Lunkad Lions (Vipul Lunkad)
+Sayyam Oswal,9158529012,Male,Kid,Table Tennis | Badminton | Pickle Ball | Volleyball,"{""Badminton"":3,""Volleyball"":3,""Pickle Ball"":3,""Table Tennis"":3}",Lunkad Lions (Vipul Lunkad)
+Yuvaan mehta,9921356606,Male,Kid,Chess | Pickle Ball | Kho Kho | Tug of War,"{""Chess"":3,""Kho Kho"":4,""Tug of War"":4,""Pickle Ball"":3}",Lunkad Lions (Vipul Lunkad)
+RUSHANK JAIN,9423571432,Male,Kid,Badminton,"{""Badminton"":1}",Lunkad Lions (Vipul Lunkad)
+Abhinva Bharatkunar Shaha,9766367227,Male,Member,Badminton | Tug of War | Volleyball | Three-Legged Race,"{""Badminton"":3,""Tug of War"":3,""Volleyball"":3,""Three-Legged Race"":3}",Lunkad Lions (Vipul Lunkad)
+Ankit pramod shah,9860892404,Male,Member,Chess | Table Tennis,"{""Chess"":4,""Table Tennis"":4}",Lunkad Lions (Vipul Lunkad)
+Dheeraj Desarda,9028883918,Male,Member,Carrom | Badminton | Kho Kho | Volleyball,"{""Carrom"":5,""Kho Kho"":4,""Badminton"":4,""Volleyball"":5}",Lunkad Lions (Vipul Lunkad)
+Hasmukhlal,9881766789,Male,Member,Carrom | Badminton | Volleyball | Table Tennis,"{""Carrom"":3,""Badminton"":3,""Volleyball"":3,""Table Tennis"":2}",Lunkad Lions (Vipul Lunkad)
+Manoj oswal,8087549644,Male,Member,Volleyball | Table Tennis | Badminton | Tug of War,"{""Badminton"":3,""Tug of War"":3,""Volleyball"":5,""Table Tennis"":3}",Lunkad Lions (Vipul Lunkad)
+Nehal Shah,9890990249,Male,Member,Badminton | Volleyball,"{""Badminton"":2,""Volleyball"":2}",Lunkad Lions (Vipul Lunkad)
+Pankaj Jain,7798983029,Male,Member,Badminton | Pickle Ball | Tug of War | Volleyball,"{""Badminton"":3,""Tug of War"":2,""Volleyball"":2,""Pickle Ball"":3}",Lunkad Lions (Vipul Lunkad)
+Rahul kawad,9423205257,Male,Member,Carrom,"{""Carrom"":4}",Lunkad Lions (Vipul Lunkad)
+saumil shah,9094250250,Male,Member,Volleyball | Pickle Ball | Lemon & Spoon Race | Chess,"{""Chess"":4,""Volleyball"":4,""Pickle Ball"":4,""Lemon & Spoon Race"":3}",Lunkad Lions (Vipul Lunkad)
+Vinod Jain,9028847311,Male,Member,Pickle Ball | Volleyball,"{""Volleyball"":5,""Pickle Ball"":5}",Lunkad Lions (Vipul Lunkad)
+Vipul Mahendra Shah,9158095026,Male,Member,Carrom | Chess | Kho Kho | Badminton,"{""Chess"":4,""Carrom"":2,""Kho Kho"":5,""Badminton"":2}",Lunkad Lions (Vipul Lunkad)
+Pakshal Shah,,Male,Member,Badminton,"{""Badminton"":2}",Lunkad Lions (Vipul Lunkad)
+Vipul shah,7020629707,Male,Member,Carrom | Badminton | Lemon & Spoon Race | Kho Kho,"{""Carrom"":4,""Kho Kho"":4,""Badminton"":3,""Lemon & Spoon Race"":4}",Lunkad Lions (Vipul Lunkad)
+Prisha Santosh Solanki,9372455441,Female,Kid,Badminton | Lemon & Spoon Race | Tug of War | Three-Legged Race,"{""Badminton"":3,""Tug of War"":3,""Three-Legged Race"":4,""Lemon & Spoon Race"":4}",Osian Super Kings (Dilip Jain)
+Siyal oswal,8446735443,Female,Kid,Kho Kho | Lemon & Spoon Race | Dodge Ball | Three-Legged Race,"{""Kho Kho"":2,""Dodge Ball"":3,""Three-Legged Race"":3,""Lemon & Spoon Race"":3}",Osian Super Kings (Dilip Jain)
+Bhavana manoj jain,9422354665,Female,Member,Three-Legged Race | Dodge Ball | Kho Kho | Badminton,"{""Kho Kho"":4,""Badminton"":4,""Dodge Ball"":5,""Three-Legged Race"":4}",Osian Super Kings (Dilip Jain)
+Dipika Oswal,7798485444,Female,Member,Badminton | Pickle Ball | Carrom | Table Tennis,"{""Carrom"":3,""Badminton"":5,""Pickle Ball"":3,""Table Tennis"":3}",Osian Super Kings (Dilip Jain)
+Disha sheetal Gundecha,9881387771,Female,Member,Badminton | Chess | Dodge Ball | Kho Kho,"{""Chess"":3,""Kho Kho"":3,""Badminton"":4,""Dodge Ball"":4}",Osian Super Kings (Dilip Jain)
+Divisha,9881766789,Female,Member,Badminton | Lemon & Spoon Race | Dodge Ball | Pickle Ball,"{""Badminton"":3,""Dodge Ball"":2,""Pickle Ball"":2,""Lemon & Spoon Race"":3}",Osian Super Kings (Dilip Jain)
+Geetanjali Shingavi,8600993761,Female,Member,Carrom | Lemon & Spoon Race | Dodge Ball | Kho Kho,"{""Carrom"":3,""Kho Kho"":2,""Dodge Ball"":2,""Lemon & Spoon Race"":3}",Osian Super Kings (Dilip Jain)
+Jaishika v parmar,8975222111,Female,Member,Badminton,"{""Badminton"":3}",Osian Super Kings (Dilip Jain)
+Komal M Jain,7020570519,Female,Member,Lemon & Spoon Race | Dodge Ball | Kho Kho | Badminton,"{""Kho Kho"":3,""Badminton"":2,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Osian Super Kings (Dilip Jain)
+Priya,7058083651,Female,Member,Chess | Lemon & Spoon Race | Tug of War | Dodge Ball,"{""Chess"":3,""Dodge Ball"":3,""Tug of War"":4,""Lemon & Spoon Race"":3}",Osian Super Kings (Dilip Jain)
+Priyanka Shah,9881456031,Female,Member,Carrom | Dodge Ball,"{""Carrom"":4,""Dodge Ball"":3}",Osian Super Kings (Dilip Jain)
+Rupal singhvi,8619210054,Female,Member,Lemon & Spoon Race | Tug of War | Carrom,"{""Carrom"":5,""Tug of War"":5,""Lemon & Spoon Race"":5}",Osian Super Kings (Dilip Jain)
+Mamta Vikram Oswal,,Female,Member,,"""Badminton"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":4}",Osian Super Kings (Dilip Jain)
+Roshni Shah,,Female,Member,,,Osian Super Kings (Dilip Jain)
+Aarav M Jain,9420277778,Male,Kid,Carrom | Chess | Tug of War,"{""Chess"":3,""Carrom"":3,""Tug of War"":3}",Osian Super Kings (Dilip Jain)
+Aksh Rathod,7480097480,Male,Kid,Chess | Badminton | Pickle Ball | Volleyball,"{""Chess"":3,""Badminton"":2,""Volleyball"":2,""Pickle Ball"":2}",Osian Super Kings (Dilip Jain)
+Ajay Jain,9372799099,Male,Member,Carrom | Badminton,"{""Carrom"":4,""Badminton"":3}",Osian Super Kings (Dilip Jain)
+Amit S Chopda,9372471068,Male,Member,Carrom | Badminton | Volleyball | Kho Kho,"{""Carrom"":5,""Kho Kho"":4,""Badminton"":3,""Volleyball"":3}",Osian Super Kings (Dilip Jain)
+Arvind Jain,7776906124,Male,Member,Table Tennis | Badminton,"{""Badminton"":2,""Table Tennis"":2}",Osian Super Kings (Dilip Jain)
+DILIP JAIN,9822566111,Male,Member,Tug of War | Volleyball | Badminton,"{""Badminton"":3,""Tug of War"":3,""Volleyball"":3}",Osian Super Kings (Dilip Jain)
+Hitesh Oswal,8600930308,Male,Member,Chess | Badminton | Volleyball | Tug of War,"{""Chess"":5,""Badminton"":4,""Tug of War"":5,""Volleyball"":4}",Osian Super Kings (Dilip Jain)
+Jayesh Jain,9822093368,Male,Member,Badminton | Tug of War | Volleyball | Pickle Ball,"{""Badminton"":1,""Tug of War"":1,""Volleyball"":1,""Pickle Ball"":1}",Osian Super Kings (Dilip Jain)
+Kalpak Manish Masalia,7276581680,Male,Member,Table Tennis | Badminton | Pickle Ball | Chess,"{""Chess"":3,""Badminton"":3,""Pickle Ball"":1,""Table Tennis"":1}",Osian Super Kings (Dilip Jain)
+Mukesh Jain,9420277778,Male,Member,Carrom | Tug of War | Volleyball | Three-Legged Race,"{""Carrom"":4,""Tug of War"":4,""Volleyball"":4,""Three-Legged Race"":4}",Osian Super Kings (Dilip Jain)
+Mukesh Oswal,9326166622,Male,Member,Badminton | Tug of War | Volleyball,"{""Badminton"":2,""Tug of War"":4,""Volleyball"":4}",Osian Super Kings (Dilip Jain)
+Nishith Sanghavi,9850140222,Male,Member,Carrom | Badminton,"{""Carrom"":1,""Badminton"":1}",Osian Super Kings (Dilip Jain)
+Pankaj Shah,9028774197,Male,Member,Badminton | Pickle Ball | Volleyball | Table Tennis,"{""Badminton"":3,""Volleyball"":3,""Pickle Ball"":3,""Table Tennis"":3}",Osian Super Kings (Dilip Jain)
+Sheetal Gundecha,9822287771,Male,Member,Carrom | Volleyball | Tug of War,"{""Carrom"":5,""Tug of War"":5,""Volleyball"":5}",Osian Super Kings (Dilip Jain)
+Vinod,9028716622,Male,Member,Badminton,"{""Badminton"":4}",Osian Super Kings (Dilip Jain)
+Vinod Parasmal Jain,8888822333,Male,Member,Tug of War | Volleyball | Carrom | Pickle Ball,"{""Carrom"":4,""Tug of War"":4,""Volleyball"":5,""Pickle Ball"":4}",Osian Super Kings (Dilip Jain)
+Viral P Shrishrimal,8087463664,Male,Member,Carrom | Badminton | Pickle Ball,"{""Carrom"":3,""Badminton"":2,""Pickle Ball"":3}",Osian Super Kings (Dilip Jain)
+Aashta Rakhecha,7276764444,Female,Kid,Carrom | Badminton | Dodge Ball | Lemon & Spoon Race,"{""Carrom"":3,""Badminton"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Saiyam Finpro (Piyush Rakhecha)
+Siona vipul shah,9764273377,Female,Kid,Carrom | Chess | Lemon & Spoon Race | Kho Kho,"{""Chess"":3,""Carrom"":3,""Kho Kho"":4,""Lemon & Spoon Race"":5}",Saiyam Finpro (Piyush Rakhecha)
+Harshita Meet Jain,8767743681,Female,Member,Badminton | Pickle Ball | Carrom | Chess,"{""Chess"":2,""Carrom"":3,""Badminton"":3,""Pickle Ball"":1}",Saiyam Finpro (Piyush Rakhecha)
+Heena Santosh Solanki,9503300027,Female,Member,Badminton | Three-Legged Race | Carrom | Lemon & Spoon Race,"{""Carrom"":3,""Badminton"":3,""Three-Legged Race"":3,""Lemon & Spoon Race"":3}",Saiyam Finpro (Piyush Rakhecha)
+Madhuri Punmiya,9766490160,Female,Member,Table Tennis | Badminton | Kho Kho | Lemon & Spoon Race,"{""Kho Kho"":1,""Badminton"":1,""Table Tennis"":1,""Lemon & Spoon Race"":3}",Saiyam Finpro (Piyush Rakhecha)
+Niragi Mehta,7798792634,Female,Member,Badminton | Dodge Ball,"{""Badminton"":2,""Dodge Ball"":2}",Saiyam Finpro (Piyush Rakhecha)
+Pinky Anil Chhajed,9762444488,Female,Member,Dodge Ball | Tug of War | Sack Race,"{""Sack Race"":2,""Dodge Ball"":2,""Tug of War"":2}",Saiyam Finpro (Piyush Rakhecha)
+Priya pokharna,9198220751,Female,Member,Badminton | Lemon & Spoon Race | Tug of War | Carrom,"{""Carrom"":3,""Badminton"":1,""Tug of War"":1,""Lemon & Spoon Race"":4}",Saiyam Finpro (Piyush Rakhecha)
+Puja Piyush Rakhecha,9405656887,Female,Member,Carrom | Badminton | Tug of War | Sack Race,"{""Carrom"":3,""Badminton"":3,""Sack Race"":3,""Tug of War"":3}",Saiyam Finpro (Piyush Rakhecha)
+Saroj jain,7798830424,Female,Member,Lemon & Spoon Race | Dodge Ball | Three-Legged Race | Tug of War,"{""Dodge Ball"":2,""Tug of War"":3,""Three-Legged Race"":3,""Lemon & Spoon Race"":3}",Saiyam Finpro (Piyush Rakhecha)
+Shefali Umesh Porwal,8956450890,Female,Member,Carrom | Badminton | Tug of War | Dodge Ball,"{""Carrom"":4,""Badminton"":5,""Dodge Ball"":4,""Tug of War"":4}",Saiyam Finpro (Piyush Rakhecha)
+Payal Shah,8408931404,Female,Member,Carrom | Lemon & Spoon Race,"{""Carrom"":2,""Lemon & Spoon Race"":2}",Saiyam Finpro (Piyush Rakhecha)
+Aditya rinesh parekh,9373002007,Male,Kid,Badminton | Pickle Ball,"{""Badminton"":4,""Pickle Ball"":4}",Saiyam Finpro (Piyush Rakhecha)
+Jineet m oswal,9326166622,Male,Kid,Carrom | Chess | Badminton | Tug of War,"{""Chess"":2,""Carrom"":2,""Badminton"":2,""Tug of War"":3}",Saiyam Finpro (Piyush Rakhecha)
+Jinendra oswal,9420496794,Male,Kid,Tug of War | Sack Race | Lemon & Spoon Race | Kho Kho,"{""Kho Kho"":4,""Sack Race"":4,""Tug of War"":4,""Lemon & Spoon Race"":4}",Saiyam Finpro (Piyush Rakhecha)
+Saiyam Rakhecha,9421775083,Male,Kid,Badminton | Pickle Ball | Tug of War | Volleyball,"{""Badminton"":5,""Tug of War"":3,""Volleyball"":1,""Pickle Ball"":5}",Saiyam Finpro (Piyush Rakhecha)
+Ankit Subhash Jain,9637898033,Male,Member,Carrom | Table Tennis | Badminton | Pickle Ball,"{""Carrom"":2,""Badminton"":3,""Pickle Ball"":3,""Table Tennis"":2}",Saiyam Finpro (Piyush Rakhecha)
+Chirag Bharat Shah,9561023455,Male,Member,Kho Kho | Tug of War,"{""Kho Kho"":4,""Tug of War"":4}",Saiyam Finpro (Piyush Rakhecha)
+Darshan Raju Mehta,7588554097,Male,Member,Table Tennis | Badminton,"{""Badminton"":3,""Table Tennis"":3}",Saiyam Finpro (Piyush Rakhecha)
+Dhiraj Parasmal Oswal,9921595714,Male,Member,Carrom | Badminton | Pickle Ball | Volleyball,"{""Carrom"":3,""Badminton"":3,""Volleyball"":3,""Pickle Ball"":2}",Saiyam Finpro (Piyush Rakhecha)
+Dipal Dinesh Shah,7709015299,Male,Member,Carrom,"{""Carrom"":3}",Saiyam Finpro (Piyush Rakhecha)
+Hitesh Jain,9096319394,Male,Member,Badminton | Tug of War | Volleyball | Lemon & Spoon Race,"{""Badminton"":5,""Tug of War"":5,""Volleyball"":4,""Lemon & Spoon Race"":5}",Saiyam Finpro (Piyush Rakhecha)
+Jitendra kawad,9890265366,Male,Member,Kho Kho,"{""Kho Kho"":4}",Saiyam Finpro (Piyush Rakhecha)
+Jitendra Shingavi,9423003761,Male,Member,Tug of War | Volleyball | Pickle Ball | Table Tennis,"{""Tug of War"":4,""Volleyball"":3,""Pickle Ball"":4,""Table Tennis"":3}",Saiyam Finpro (Piyush Rakhecha)
+Meet N Jain,9518967701,Male,Member,Badminton | Table Tennis | Pickle Ball | Chess,"{""Chess"":2,""Badminton"":3,""Pickle Ball"":1,""Table Tennis"":3}",Saiyam Finpro (Piyush Rakhecha)
+Navin Shah,9371234228,Male,Member,Chess | Kho Kho | Three-Legged Race | Tug of War,"{""Chess"":3,""Kho Kho"":4,""Tug of War"":3,""Three-Legged Race"":3}",Saiyam Finpro (Piyush Rakhecha)
+Nikhil Devichand Sanghvi,9028968741,Male,Member,Carrom | Badminton | Volleyball | Pickle Ball,"{""Carrom"":3,""Badminton"":3,""Volleyball"":2,""Pickle Ball"":3}",Saiyam Finpro (Piyush Rakhecha)
+Nikhil kothari,9822193393,Male,Member,Badminton,"{""Badminton"":3}",Saiyam Finpro (Piyush Rakhecha)
+Piyush Rakhecha,7276764444,Male,Member,Carrom | Badminton | Tug of War | Sack Race,"{""Carrom"":3,""Badminton"":3,""Sack Race"":3,""Tug of War"":3}",Saiyam Finpro (Piyush Rakhecha)
+Satish Jain,,Male,Member,,,Saiyam Finpro (Piyush Rakhecha)
+Yukit Oswal,9890564634,Male,Member,Carrom | Chess | Kho Kho | Tug of War,"{""Chess"":5,""Carrom"":3,""Kho Kho"":4,""Tug of War"":4}",Saiyam Finpro (Piyush Rakhecha)
+Aarushi Jain,8263925654,Female,Kid,Badminton | Carrom | Lemon & Spoon Race | Tug of War,"{""Carrom"":2,""Badminton"":2,""Tug of War"":2,""Lemon & Spoon Race"":2}",Shanti Warriors (Nikhil Oswal)
+Dhara oswal,8446735443,Female,Kid,Lemon & Spoon Race | Sack Race | Dodge Ball,"{""Sack Race"":1,""Dodge Ball"":1,""Lemon & Spoon Race"":1}",Shanti Warriors (Nikhil Oswal)
+Abhilasha Jain,9538915854,Female,Member,Carrom | Badminton | Dodge Ball | Kho Kho,"{""Carrom"":2,""Kho Kho"":3,""Badminton"":1,""Dodge Ball"":2}",Shanti Warriors (Nikhil Oswal)
+Bhavana Mutha,9764608988,Female,Member,Badminton | Carrom | Lemon & Spoon Race | Dodge Ball,"{""Carrom"":3,""Badminton"":3,""Dodge Ball"":3,""Lemon & Spoon Race"":3}",Shanti Warriors (Nikhil Oswal)
+Harsha Hitesh Medtia,7709966953,Female,Member,Carrom | Chess | Badminton | Lemon & Spoon Race,"{""Chess"":2,""Carrom"":4,""Badminton"":4,""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal)
+Khushbu Nikhil oswal,9970959797,Female,Member,Sack Race | Lemon & Spoon Race | Dodge Ball,"{""Sack Race"":3,""Dodge Ball"":4,""Lemon & Spoon Race"":3}",Shanti Warriors (Nikhil Oswal)
+Kinjal Shah,9970797374,Female,Member,Chess | Badminton | Carrom | Lemon & Spoon Race,"{""Chess"":3,""Carrom"":3,""Badminton"":3,""Lemon & Spoon Race"":3}",Shanti Warriors (Nikhil Oswal)
+Mittali Ritesh Oswal,9356199199,Female,Member,Kho Kho | Lemon & Spoon Race | Tug of War,"{""Kho Kho"":4,""Tug of War"":4,""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal)
+Nikita yukit oswal,9604964097,Female,Member,Lemon & Spoon Race | Sack Race | Tug of War | Dodge Ball,"{""Sack Race"":3,""Dodge Ball"":4,""Tug of War"":4,""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal)
+Preeti lalit oswal,9191675609,Female,Member,Lemon & Spoon Race,"{""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal)
+Sejal akshay oswal,8169382853,Female,Member,Carrom | Badminton | Lemon & Spoon Race | Tug of War,"{""Carrom"":2,""Badminton"":2,""Tug of War"":2,""Lemon & Spoon Race"":2}",Shanti Warriors (Nikhil Oswal)
+Sneha patani,9766306821,Female,Member,Badminton | Lemon & Spoon Race | Sack Race | Tug of War,"{""Badminton"":1,""Sack Race"":3,""Tug of War"":2,""Lemon & Spoon Race"":1}",Shanti Warriors (Nikhil Oswal)
+Sonal Mahesh Oswal,9420277089,Female,Member,Carrom | Lemon & Spoon Race | Sack Race,"{""Carrom"":2,""Sack Race"":2,""Lemon & Spoon Race"":2}",Shanti Warriors (Nikhil Oswal)
+Vijeta Nikhil oswal,9021255258,Female,Member,Kho Kho | Badminton | Lemon & Spoon Race | Dodge Ball,"{""Kho Kho"":3,""Badminton"":3,""Dodge Ball"":4,""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal)
+RACHITA JINESH JAIN,9673748667,Female,Member,Carrom | Badminton | Table Tennis,"{""Badminton"":2,""Carrom"":3,""Table Tennis"":3}",Shanti Warriors (Nikhil Oswal)
+Aksh Jain,9890164120,Male,Kid,Badminton | Pickle Ball | Tug of War | Table Tennis,"{""Badminton"":2,""Tug of War"":3,""Pickle Ball"":3,""Table Tennis"":3}",Shanti Warriors (Nikhil Oswal)
+Vandit patni,9049057671,Male,Kid,Carrom | Pickle Ball | Kho Kho | Tug of War,"{""Carrom"":3,""Kho Kho"":4,""Tug of War"":4,""Pickle Ball"":4}",Shanti Warriors (Nikhil Oswal)
+Vivaan Kalpesh Dhoka,9850204067,Male,Kid,Chess | Sack Race | Kho Kho,"{""Chess"":3,""Kho Kho"":3,""Sack Race"":3}",Shanti Warriors (Nikhil Oswal)
+Akshay kantilal oswal,7020501466,Male,Member,Carrom | Badminton | Tug of War | Lemon & Spoon Race,"{""Carrom"":2,""Badminton"":2,""Tug of War"":2,""Lemon & Spoon Race"":2}",Shanti Warriors (Nikhil Oswal)
+Ankit Punmiya,9168914537,Male,Member,Badminton | Lemon & Spoon Race | Carrom | Table Tennis,"{""Carrom"":2,""Badminton"":2,""Table Tennis"":2,""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal)
+Hitesh Mutha,9422322285,Male,Member,Carrom | Badminton,"{""Carrom"":4,""Badminton"":3}",Shanti Warriors (Nikhil Oswal)
+Jeet Shah,8975774197,Male,Member,Badminton | Pickle Ball | Volleyball | Three-Legged Race,"{""Badminton"":3,""Volleyball"":4,""Pickle Ball"":3,""Three-Legged Race"":1}",Shanti Warriors (Nikhil Oswal)
+Kunal Bhandari,9545075151,Male,Member,Badminton | Kho Kho | Tug of War | Carrom,"{""Carrom"":4,""Kho Kho"":5,""Badminton"":5,""Tug of War"":5}",Shanti Warriors (Nikhil Oswal)
+Mahesh OSWAL,9130128128,Male,Member,Tug of War | Carrom | Kho Kho | Badminton,"{""Carrom"":4,""Kho Kho"":4,""Badminton"":4,""Tug of War"":4}",Shanti Warriors (Nikhil Oswal)
+Manish Jain,9538976945,Male,Member,Table Tennis | Pickle Ball | Carrom | Badminton,"{""Carrom"":3,""Badminton"":2,""Pickle Ball"":1,""Table Tennis"":3}",Shanti Warriors (Nikhil Oswal)
+Nikhil Oswal,9823036132,Male,Member,Volleyball | Lemon & Spoon Race | Pickle Ball | Carrom,"{""Carrom"":3,""Volleyball"":4,""Pickle Ball"":3,""Lemon & Spoon Race"":4}",Shanti Warriors (Nikhil Oswal)
+NIKHIL M OSWAL,8446735443,Male,Member,Badminton | Kho Kho | Volleyball | Three-Legged Race,"{""Kho Kho"":4,""Badminton"":3,""Volleyball"":4,""Three-Legged Race"":4}",Shanti Warriors (Nikhil Oswal)
+Nilesh pokharna,9765130077,Male,Member,Carrom | Chess | Table Tennis | Pickle Ball,"{""Chess"":2,""Carrom"":1,""Pickle Ball"":4,""Table Tennis"":3}",Shanti Warriors (Nikhil Oswal)
+Ritesh singhvi,9595598181,Male,Member,Chess | Tug of War | Volleyball,"{""Chess"":5,""Tug of War"":5,""Volleyball"":4}",Shanti Warriors (Nikhil Oswal)
+Vinod Kumar sukhraj shah,9421011909,Male,Member,Volleyball | Kho Kho | Tug of War | Badminton,"{""Kho Kho"":4,""Badminton"":3,""Tug of War"":5,""Volleyball"":5}",Shanti Warriors (Nikhil Oswal)
+Vishal sohanlal parmar,8308222111,Male,Member,Chess | Volleyball,"{""Chess"":4,""Volleyball"":3}",Shanti Warriors (Nikhil Oswal)
+Yogesh Bafna,9021212125,Male,Member,Badminton | Volleyball,"{""Badminton"":2,""Volleyball"":1}",Shanti Warriors (Nikhil Oswal)
+Yuvraj Shah,,Male,Member,,,Shanti Warriors (Nikhil Oswal)
+Ciya Shah,,Female,Kid,,,Water World Warriors (Dilip Jain)
+Harshita Vinod Jain,8888822333,Female,Kid,Badminton | Dodge Ball | Kho Kho | Three-Legged Race,"{""Kho Kho"":4,""Badminton"":4,""Dodge Ball"":4,""Three-Legged Race"":4}",Water World Warriors (Dilip Jain)
+Bhakti Kalpak Masalia,8380809596,Female,Member,Carrom | Chess,"{""Chess"":1,""Carrom"":4}",Water World Warriors (Dilip Jain)
+Dhara Shah,9940425690,Female,Member,Carrom | Chess | Badminton | Lemon & Spoon Race,"{""Chess"":5,""Carrom"":4,""Badminton"":4,""Lemon & Spoon Race"":5}",Water World Warriors (Dilip Jain)
+Karishma Oswal,7776906778,Female,Member,Carrom | Badminton,"{""Carrom"":5,""Badminton"":5}",Water World Warriors (Dilip Jain)
+Namrata Shrishrimal,8830154890,Female,Member,Kho Kho | Tug of War | Badminton,"{""Kho Kho"":4,""Badminton"":4,""Tug of War"":4}",Water World Warriors (Dilip Jain)
+Neelam Sachin oswal,8999589287,Female,Member,Lemon & Spoon Race,"{""Lemon & Spoon Race"":5}",Water World Warriors (Dilip Jain)
+Poonam Sumit Talesara,9370223446,Female,Member,Carrom | Kho Kho | Lemon & Spoon Race | Tug of War,"{""Carrom"":5,""Kho Kho"":5,""Tug of War"":4,""Lemon & Spoon Race"":5}",Water World Warriors (Dilip Jain)
+Preeti P Waghresha,8796209968,Female,Member,Lemon & Spoon Race | Dodge Ball | Three-Legged Race | Tug of War,"{""Dodge Ball"":2,""Tug of War"":2,""Three-Legged Race"":2,""Lemon & Spoon Race"":2}",Water World Warriors (Dilip Jain)
+Priyanka mehta,8669094479,Female,Member,Pickle Ball | Dodge Ball | Kho Kho | Badminton,"{""Kho Kho"":3,""Badminton"":3,""Dodge Ball"":4,""Pickle Ball"":3}",Water World Warriors (Dilip Jain)
+Rakhi kothari,9326092425,Female,Member,Carrom | Chess | Dodge Ball,"{""Chess"":3,""Carrom"":3,""Dodge Ball"":3}",Water World Warriors (Dilip Jain)
+Sulochana jain,8087387932,Female,Member,Lemon & Spoon Race | Tug of War,"{""Tug of War"":4,""Lemon & Spoon Race"":5}",Water World Warriors (Dilip Jain)
+Veeniya Jain,8087387945,Female,Member,Dodge Ball,"{""Dodge Ball"":4}",Water World Warriors (Dilip Jain)
+Vruddhi Shah,9960480480,Female,Member,Badminton | Pickle Ball | Dodge Ball | Table Tennis,"{""Badminton"":3,""Dodge Ball"":3,""Pickle Ball"":3,""Table Tennis"":3}",Water World Warriors (Dilip Jain)
+Kavyansh V Jain,9028590888,Male,Kid,Chess | Pickle Ball,"{""Chess"":3,""Pickle Ball"":3}",Water World Warriors (Dilip Jain)
+DHRUVANSH VINOD JAIN,9028590888,Male,Kid,Chess | Pickle Ball,"{""Chess"":3,""Pickle Ball"":3}",Water World Warriors (Dilip Jain)
+Meet Vinod Jain,9272327225,Male,Kid,Pickle Ball | Badminton | Volleyball,"{""Badminton"":4,""Volleyball"":5,""Pickle Ball"":5}",Water World Warriors (Dilip Jain)
+Vihaan kothari,9822193393,Male,Kid,Carrom | Tug of War,"{""Carrom"":3,""Tug of War"":3}",Water World Warriors (Dilip Jain)
+Vihaan salecha,9028988457,Male,Kid,Carrom | Kho Kho | Lemon & Spoon Race | Sack Race,"{""Carrom"":4,""Kho Kho"":4,""Sack Race"":4,""Lemon & Spoon Race"":4}",Water World Warriors (Dilip Jain)
+YUVAAN DILIP JAIN,9822844333,Male,Kid,Chess | Badminton | Tug of War,"{""Chess"":3,""Badminton"":3,""Tug of War"":3}",Water World Warriors (Dilip Jain)
+Amit Dhariwal,9766393033,Male,Member,Pickle Ball | Carrom,"{""Carrom"":2,""Pickle Ball"":2}",Water World Warriors (Dilip Jain)
+Anil kasturchand chhajed,9372448295,Male,Member,Tug of War | Three-Legged Race,"{""Tug of War"":2,""Three-Legged Race"":2}",Water World Warriors (Dilip Jain)
+Arun Rathod,9820369920,Male,Member,Carrom | Badminton | Pickle Ball | Three-Legged Race,"{""Carrom"":4,""Badminton"":2,""Pickle Ball"":2,""Three-Legged Race"":3}",Water World Warriors (Dilip Jain)
+Manoj Jain,7972483559,Male,Member,Badminton | Carrom | Tug of War | Kho Kho,"{""Carrom"":3,""Kho Kho"":3,""Badminton"":3,""Tug of War"":3}",Water World Warriors (Dilip Jain)
+Nikhil,9890732096,Male,Member,Badminton,"{""Badminton"":4}",Water World Warriors (Dilip Jain)
+Nikhil,8956774747,Male,Member,Badminton | Volleyball | Carrom,"{""Carrom"":4,""Badminton"":5,""Volleyball"":4}",Water World Warriors (Dilip Jain)
+Paresh Mutha,9370111101,Male,Member,Table Tennis | Badminton | Pickle Ball | Volleyball,"{""Badminton"":2,""Volleyball"":2,""Pickle Ball"":2,""Table Tennis"":2}",Water World Warriors (Dilip Jain)
+SACHIN MUTHA,9421009818,Male,Member,Carrom | Chess | Tug of War | Badminton,"{""Chess"":4,""Carrom"":4,""Badminton"":4,""Tug of War"":4}",Water World Warriors (Dilip Jain)
+Santosh Ashok Solanki,9372455441,Male,Member,Badminton | Tug of War | Kho Kho | Carrom,"{""Carrom"":4,""Kho Kho"":4,""Badminton"":4,""Tug of War"":5}",Water World Warriors (Dilip Jain)
+Savan jain,7019702095,Male,Member,Carrom | Chess | Badminton,"{""Chess"":4,""Carrom"":3,""Badminton"":3}",Water World Warriors (Dilip Jain)
+Sumit Vasantraj Talesara,9823859453,Male,Member,Table Tennis | Lemon & Spoon Race | Tug of War | Carrom,"{""Carrom"":4,""Tug of War"":5,""Table Tennis"":4,""Lemon & Spoon Race"":5}",Water World Warriors (Dilip Jain)

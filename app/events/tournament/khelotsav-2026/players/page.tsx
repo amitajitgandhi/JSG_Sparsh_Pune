@@ -106,7 +106,7 @@ export default function PlayersPage() {
   const [sportFilter, setSportFilter] = useState(ALL)
 
   useEffect(() => {
-    fetch('/files/k26.csv')
+    fetch(`/files/k26.csv?v=${Date.now()}`)
       .then(r => { if (!r.ok) throw new Error('CSV not found'); return r.text() })
       .then(text => { setPlayers(parseCSV(text)); setLoading(false) })
       .catch(e => { setError(e.message); setLoading(false) })
