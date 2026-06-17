@@ -10,6 +10,7 @@ const SPORTS = [
     id: 'carrom',
     icon: '🎯',
     name: 'Carrom',
+    note: 'Every Team gets to play 2 League matches',
     color: 'from-amber-500 to-yellow-500',
     bg: 'bg-amber-50',
     border: 'border-amber-200',
@@ -77,6 +78,7 @@ const SPORTS = [
     id: 'chess',
     icon: '♟️',
     name: 'Chess',
+    note: 'Every Team gets to play 2 League matches',
     color: 'from-slate-600 to-gray-700',
     bg: 'bg-slate-50',
     border: 'border-slate-200',
@@ -134,6 +136,7 @@ const SPORTS = [
     id: 'tabletennis',
     icon: '🏓',
     name: 'Table Tennis',
+    note: 'Every Team gets to play 2 League matches',
     color: 'from-blue-500 to-cyan-500',
     bg: 'bg-blue-50',
     border: 'border-blue-200',
@@ -183,6 +186,7 @@ const SPORTS = [
     id: 'badminton',
     icon: '🏸',
     name: 'Badminton',
+    note: 'Every Team gets to play 2 League matches',
     color: 'from-emerald-500 to-green-500',
     bg: 'bg-emerald-50',
     border: 'border-emerald-200',
@@ -238,6 +242,7 @@ const SPORTS = [
     id: 'pickleball',
     icon: '🎾',
     name: 'Pickleball',
+    note: 'Every Team gets to play 2 League matches',
     color: 'from-lime-500 to-green-500',
     bg: 'bg-lime-50',
     border: 'border-lime-200',
@@ -308,6 +313,7 @@ const SPORTS = [
     id: 'khokho',
     icon: '🏃',
     name: 'Kho Kho',
+    leagueLabel: 'QF',
     color: 'from-orange-500 to-red-500',
     bg: 'bg-orange-50',
     border: 'border-orange-200',
@@ -363,6 +369,7 @@ const SPORTS = [
     id: 'volleyball',
     icon: '🏐',
     name: 'Volleyball',
+    leagueLabel: 'QF',
     color: 'from-sky-500 to-blue-600',
     bg: 'bg-sky-50',
     border: 'border-sky-200',
@@ -414,6 +421,7 @@ const SPORTS = [
     id: 'dodgeball',
     icon: '🥎',
     name: 'Dodgeball',
+    leagueLabel: 'QF',
     color: 'from-pink-500 to-rose-500',
     bg: 'bg-pink-50',
     border: 'border-pink-200',
@@ -574,6 +582,7 @@ const SPORTS = [
     id: 'tugofwar',
     icon: '💪',
     name: 'Tug of War',
+    leagueLabel: 'QF',
     color: 'from-red-500 to-rose-600',
     bg: 'bg-red-50',
     border: 'border-red-200',
@@ -631,6 +640,7 @@ const SPORTS = [
     id: 'threelegged',
     icon: '🏃‍♀️',
     name: 'Three-Legged Race',
+    leagueLabel: 'QF',
     color: 'from-violet-500 to-purple-600',
     bg: 'bg-violet-50',
     border: 'border-violet-200',
@@ -807,7 +817,7 @@ function RuleSection({ title, rules }: { title: string; rules: string[] }) {
   )
 }
 
-function MatchTable({ participants, matches }: { participants: any[]; matches: any[] }) {
+function MatchTable({ participants, matches, leagueLabel = 'League' }: { participants: any[]; matches: any[]; leagueLabel?: string }) {
   return (
     <div className="space-y-3 mb-4">
       {/* Participants */}
@@ -826,15 +836,14 @@ function MatchTable({ participants, matches }: { participants: any[]; matches: a
       <div>
         <p className="text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1.5">Match schedule</p>
         <div className="overflow-x-auto rounded-xl border border-gray-100 dark:border-gray-700">
-          <table className="w-full text-xs min-w-[400px]">
+          <table className="w-full text-xs min-w-[360px]">
             <thead>
               <tr className="bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300">
                 <th className="px-3 py-2 text-left font-semibold">Category</th>
-                <th className="px-3 py-2 text-center font-semibold">League</th>
+                <th className="px-3 py-2 text-center font-semibold">{leagueLabel}</th>
                 <th className="px-3 py-2 text-center font-semibold">Semi</th>
                 <th className="px-3 py-2 text-center font-semibold">Final</th>
                 <th className="px-3 py-2 text-center font-semibold">Total</th>
-                <th className="px-3 py-2 text-center font-semibold">Overall</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
@@ -845,12 +854,21 @@ function MatchTable({ participants, matches }: { participants: any[]; matches: a
                   <td className="px-3 py-2 text-center text-gray-600 dark:text-gray-400">{m.semi}</td>
                   <td className="px-3 py-2 text-center text-gray-600 dark:text-gray-400">{m.final}</td>
                   <td className="px-3 py-2 text-center font-semibold text-gray-800 dark:text-gray-200">{m.total}</td>
-                  <td className="px-3 py-2 text-center font-bold text-emerald-700 dark:text-emerald-400">{m.overall || '—'}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        {/* Overall total — shown as a summary line below the table */}
+        {(() => {
+          const overall = matches.find(m => m.overall !== '')?.overall
+          return overall ? (
+            <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 text-left">
+              Total matches across all categories:{' '}
+              <span className="font-bold text-emerald-700 dark:text-emerald-400">{overall}</span>
+            </p>
+          ) : null
+        })()}
       </div>
     </div>
   )
@@ -948,6 +966,73 @@ export default function RulesPage() {
               ))}
             </div>
 
+            {/* Team composition table */}
+            <div className="mb-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden shadow-sm">
+              <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                <p className="text-sm font-bold text-gray-900 dark:text-white">👥 Team Player Allocation</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                  How many players each sport needs from your team of 30+
+                </p>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs min-w-[320px]">
+                  <thead>
+                    <tr className="bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300">
+                      <th className="px-3 py-2 text-left font-semibold">Sport</th>
+                      <th className="px-3 py-2 text-center font-semibold text-blue-600 dark:text-blue-400">♂ Male</th>
+                      <th className="px-3 py-2 text-center font-semibold text-pink-600 dark:text-pink-400">♀ Female</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
+                    {[
+                      { icon: '🎯', sport: 'Carrom',              male: 8,  female: 6,  note: 'Doubles' },
+                      { icon: '♟️', sport: 'Chess',               male: 4,  female: 2,  note: 'Singles' },
+                      { icon: '🏓', sport: 'Table Tennis',        male: 4,  female: 1,  note: 'Singles' },
+                      { icon: '🏸', sport: 'Badminton',           male: 10, female: 8,  note: 'Doubles' },
+                      { icon: '🎾', sport: 'Pickleball',          male: 6,  female: 2,  note: 'Doubles' },
+                      { icon: '🏃', sport: 'Kho Kho',             male: 6,  female: 6,  note: 'Team' },
+                      { icon: '🏐', sport: 'Volleyball',          male: 7,  female: 0,  note: 'Male only' },
+                      { icon: '🥎', sport: 'Dodgeball',           male: 0,  female: 7,  note: 'Female only' },
+                      { icon: '🍋', sport: 'Lemon & Spoon',       male: 5,  female: 5,  note: 'Mixed 10' },
+                      { icon: '👣', sport: 'Sack Race',           male: 1,  female: 3,  note: '' },
+                      { icon: '💪', sport: 'Tug of War',          male: 9,  female: 7,  note: 'Team' },
+                      { icon: '🏃‍♀️', sport: 'Three-Legged Race',  male: 2,  female: 2,  note: 'Pairs' },
+                      { icon: '🏁', sport: 'Square Escape Relay', male: 4,  female: 4,  note: 'Team' },
+                    ].map((row, i) => (
+                      <tr key={i} className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                        <td className="px-3 py-2 text-gray-800 dark:text-gray-200">
+                          <span className="mr-1.5">{row.icon}</span>
+                          <span className="font-medium">{row.sport}</span>
+                          {row.note ? <span className="ml-1.5 text-[10px] text-gray-400 dark:text-gray-500">({row.note})</span> : null}
+                        </td>
+                        <td className="px-3 py-2 text-center font-semibold text-blue-700 dark:text-blue-400">
+                          {row.male > 0 ? row.male : <span className="text-gray-300 dark:text-gray-600">—</span>}
+                        </td>
+                        <td className="px-3 py-2 text-center font-semibold text-pink-700 dark:text-pink-400">
+                          {row.female > 0 ? row.female : <span className="text-gray-300 dark:text-gray-600">—</span>}
+                        </td>
+                      </tr>
+                    ))}
+                    {/* Totals row */}
+                    <tr className="bg-gray-50 dark:bg-gray-700 font-bold border-t-2 border-gray-200 dark:border-gray-600">
+                      <td className="px-3 py-2.5 text-gray-900 dark:text-white text-xs">Total player slots</td>
+                      <td className="px-3 py-2.5 text-center text-blue-700 dark:text-blue-400">
+                        {8+4+4+10+6+6+7+0+5+1+9+2+4}
+                      </td>
+                      <td className="px-3 py-2.5 text-center text-pink-700 dark:text-pink-400">
+                        {6+2+1+8+2+6+0+7+5+3+7+2+4}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="px-4 py-2.5 border-t border-gray-100 dark:border-gray-700 bg-amber-50 dark:bg-amber-900/20">
+                <p className="text-[11px] text-amber-700 dark:text-amber-400">
+                  ⚠️ Slot count reflects required players per category. A single player can fill slots across multiple sports — rotations ensure everyone plays 3+ sports.
+                </p>
+              </div>
+            </div>
+
             {/* Common rules tile */}
             <button
               onClick={() => selectSport('common')}
@@ -983,7 +1068,16 @@ export default function RulesPage() {
                   </div>
                 </div>
               </div>
-              <MatchTable participants={sport.participants} matches={sport.matches} />
+
+              {/* Per-sport note */}
+              {(sport as any).note && (
+                <div className="flex items-center gap-2 bg-white/70 dark:bg-white/10 border border-white/80 dark:border-white/20 rounded-xl px-3 py-2 mb-4">
+                  <span className="text-base flex-shrink-0">ℹ️</span>
+                  <p className="text-xs font-semibold text-gray-700 dark:text-gray-200">{(sport as any).note}</p>
+                </div>
+              )}
+
+              <MatchTable participants={sport.participants} matches={sport.matches} leagueLabel={(sport as any).leagueLabel} />
             </div>
 
             {/* Rule sections */}
