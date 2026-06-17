@@ -338,7 +338,7 @@ export default function PlayersPage() {
                                 />
                               ))}
                             </div>
-                            <span className="text-[11px] text-gray-400">{rating}</span>
+                            <span className="text-[11px] text-gray-400">{rating}/5</span>
                           </div>
                         ))}
                       </div>
@@ -350,7 +350,6 @@ export default function PlayersPage() {
           )
         })}
         </div>
-
       </div>
     </div>
   )

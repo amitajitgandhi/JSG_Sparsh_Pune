@@ -46,6 +46,12 @@ export default function LeaderboardPage() {
   const [autoActive,   setAutoActive]   = useState(false)
   const [intervalMins, setIntervalMins] = useState(5)
   const intervalMinsRef = useRef(intervalMins)
+  const [audioEnabled, setAudioEnabled] = useState(true)
+  const [audioUrl,     setAudioUrl]     = useState('/files/BELL.mp3')
+  const audioEnabledRef = useRef(audioEnabled)
+  const audioUrlRef     = useRef(audioUrl)
+  audioEnabledRef.current = audioEnabled
+  audioUrlRef.current     = audioUrl
 
   const clearAutoTimer = useCallback(() => {
     if (autoTimerRef.current) { clearInterval(autoTimerRef.current); autoTimerRef.current = null }
@@ -91,6 +97,8 @@ export default function LeaderboardPage() {
     fetch('/api/admin/leaderboard-config', { cache: 'no-store' })
       .then(r => r.json())
       .then(data => {
+        setAudioEnabled(data.audioEnabled !== false)
+        setAudioUrl(data.audioUrl || '/files/BELL.mp3')
         if (data.enabled) {
           setIntervalMins(data.intervalMins ?? 5)
           setAutoActive(true)
@@ -106,6 +114,9 @@ export default function LeaderboardPage() {
     const tick = () => {
       const ts = new Date().toLocaleTimeString('en-IN', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' })
       console.log(`[Leaderboard] Auto-refresh triggered at ${ts} (every ${intervalMinsRef.current}m)`)
+      if (audioEnabledRef.current) {
+        try { new Audio(audioUrlRef.current).play() } catch {}
+      }
       refreshRef.current()
     }
     autoTimerRef.current = setInterval(tick, intervalMinsRef.current * 60 * 1000)
