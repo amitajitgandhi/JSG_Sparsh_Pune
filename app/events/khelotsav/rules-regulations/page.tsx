@@ -979,8 +979,8 @@ export default function RulesPage() {
                   <thead>
                     <tr className="bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300">
                       <th className="px-3 py-2 text-left font-semibold">Sport</th>
-                      <th className="px-3 py-2 text-center font-semibold text-blue-600 dark:text-blue-400">♂ Male</th>
-                      <th className="px-3 py-2 text-center font-semibold text-pink-600 dark:text-pink-400">♀ Female</th>
+                      <th className="px-3 py-2 text-center font-semibold text-blue-600 dark:text-blue-400">Male</th>
+                      <th className="px-3 py-2 text-center font-semibold text-pink-600 dark:text-pink-400">Female</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
@@ -1140,3 +1140,4 @@ export default function RulesPage() {
     </div>
   )
 }
+                                                                 
