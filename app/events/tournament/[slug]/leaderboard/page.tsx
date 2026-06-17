@@ -42,13 +42,14 @@ export default function LeaderboardPage() {
   const [sportFilter,  setSportFilter]  = useState('')
 
   // ── Auto-refresh (config fetched from admin, no UI exposed) ─────────────
-  const autoTimerRef  = useRef<ReturnType<typeof setInterval> | null>(null)
-  const [autoActive,  setAutoActive]  = useState(false)  // true once config loaded & enabled
+  const autoTimerRef   = useRef<ReturnType<typeof setInterval> | null>(null)
+  const [autoActive,   setAutoActive]   = useState(false)
   const [intervalMins, setIntervalMins] = useState(5)
+  const intervalMinsRef = useRef(intervalMins)
 
-  const clearAutoTimer = () => {
+  const clearAutoTimer = useCallback(() => {
     if (autoTimerRef.current) { clearInterval(autoTimerRef.current); autoTimerRef.current = null }
-  }
+  }, [])
 
   // ── Rank-change tracking ─────────────────────────────────────────────────
   const prevRanksRef  = useRef<Map<string, number>>(new Map())
@@ -77,12 +78,16 @@ export default function LeaderboardPage() {
     enabled: !!tournament?.id,
   })
 
-  // Keep a stable ref to refresh so the interval always calls the latest version
+  // Always keep a stable ref to latest refresh
   const refreshRef = useRef(refresh)
-  useEffect(() => { refreshRef.current = refresh }, [refresh])
+  refreshRef.current = refresh  // update synchronously on every render (no useEffect needed)
 
-  // ── Fetch auto-refresh config from admin and start silently ──────────────
+  // Keep intervalMins ref in sync too
+  intervalMinsRef.current = intervalMins
+
+  // ── Fetch auto-refresh config once tournament is known ────────────────────
   useEffect(() => {
+    if (!tournament?.id) return  // wait until tournament is loaded
     fetch('/api/admin/leaderboard-config', { cache: 'no-store' })
       .then(r => r.json())
       .then(data => {
@@ -92,16 +97,20 @@ export default function LeaderboardPage() {
         }
       })
       .catch(() => { /* ignore — no auto-refresh */ })
-  }, [])
+  }, [tournament?.id])  // re-run once tournament id is available
 
+  // ── Start interval only after both config + tournament are ready ──────────
   useEffect(() => {
-    if (!autoActive) { clearAutoTimer(); return }
-    autoTimerRef.current = setInterval(() => {
+    if (!autoActive || !tournament?.id) { clearAutoTimer(); return }
+    // fire once immediately to confirm it works, then on interval
+    const tick = () => {
+      const ts = new Date().toLocaleTimeString('en-IN', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' })
+      console.log(`[Leaderboard] Auto-refresh triggered at ${ts} (every ${intervalMinsRef.current}m)`)
       refreshRef.current()
-    }, intervalMins * 60 * 1000)
+    }
+    autoTimerRef.current = setInterval(tick, intervalMinsRef.current * 60 * 1000)
     return clearAutoTimer
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoActive, intervalMins])
+  }, [autoActive, intervalMins, tournament?.id, clearAutoTimer])
 
   // Detect rank changes and score updates
   useEffect(() => {
@@ -214,10 +223,19 @@ export default function LeaderboardPage() {
               </h1>
               {tournament && <p className='text-sm text-gray-500 mt-0.5'>{tournament.name}</p>}
             </div>
-            <button onClick={refresh} disabled={loading}
-              className='inline-flex items-center justify-center rounded-lg bg-emerald-600 p-2.5 text-white hover:bg-emerald-700 disabled:opacity-50 shrink-0'>
-              <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
-            </button>
+            <div className='flex items-center gap-2 shrink-0'>
+              {autoActive && (
+                <span title={`Auto-refreshing every ${intervalMins}m`}
+                                  className='inline-flex items-center gap-1 text-[20px] font-bold text-red-600 animate-pulse'>
+                  <span className='w-2 h-2 rounded-full bg-blue-500 animate-pulse' />
+                  LIVE       
+                </span>
+              )}
+              <button onClick={refresh} disabled={loading}
+                className='inline-flex items-center justify-center rounded-lg bg-emerald-600 p-2.5 text-white hover:bg-emerald-700 disabled:opacity-50'>
+                <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
+              </button>
+            </div>
           </div>
         </div>
 
