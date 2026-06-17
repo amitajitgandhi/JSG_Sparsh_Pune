@@ -41,6 +41,15 @@ export default function LeaderboardPage() {
   const [search,       setSearch]       = useState('')
   const [sportFilter,  setSportFilter]  = useState('')
 
+  // ── Auto-refresh (config fetched from admin, no UI exposed) ─────────────
+  const autoTimerRef  = useRef<ReturnType<typeof setInterval> | null>(null)
+  const [autoActive,  setAutoActive]  = useState(false)  // true once config loaded & enabled
+  const [intervalMins, setIntervalMins] = useState(5)
+
+  const clearAutoTimer = () => {
+    if (autoTimerRef.current) { clearInterval(autoTimerRef.current); autoTimerRef.current = null }
+  }
+
   // ── Rank-change tracking ─────────────────────────────────────────────────
   const prevRanksRef  = useRef<Map<string, number>>(new Map())
   const prevPointsRef = useRef<Map<string, number>>(new Map())
@@ -67,6 +76,32 @@ export default function LeaderboardPage() {
     tournament_id: tournament?.id ?? '',
     enabled: !!tournament?.id,
   })
+
+  // Keep a stable ref to refresh so the interval always calls the latest version
+  const refreshRef = useRef(refresh)
+  useEffect(() => { refreshRef.current = refresh }, [refresh])
+
+  // ── Fetch auto-refresh config from admin and start silently ──────────────
+  useEffect(() => {
+    fetch('/api/admin/leaderboard-config', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(data => {
+        if (data.enabled) {
+          setIntervalMins(data.intervalMins ?? 5)
+          setAutoActive(true)
+        }
+      })
+      .catch(() => { /* ignore — no auto-refresh */ })
+  }, [])
+
+  useEffect(() => {
+    if (!autoActive) { clearAutoTimer(); return }
+    autoTimerRef.current = setInterval(() => {
+      refreshRef.current()
+    }, intervalMins * 60 * 1000)
+    return clearAutoTimer
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoActive, intervalMins])
 
   // Detect rank changes and score updates
   useEffect(() => {
@@ -369,3 +404,4 @@ export default function LeaderboardPage() {
     </div>
   )
 }
+                  

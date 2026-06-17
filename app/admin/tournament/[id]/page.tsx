@@ -108,6 +108,8 @@ export default function TournamentAdminPage() {
   const [trackResults,     setTrackResults]     = useState<Result[]>([])
   const [trackLoading,     setTrackLoading]     = useState(false)
   const [trackSportFilter, setTrackSportFilter] = useState('')
+  const [resSportFilter,   setResSportFilter]   = useState('')
+  const [resGenderFilter,  setResGenderFilter]  = useState('')
   const [trackSaving,      setTrackSaving]      = useState(false)
   // Edit: which match is being edited inline
   const [trackEditKey,     setTrackEditKey]     = useState<string | null>(null)  // `${catId}__${matchNum}`
@@ -556,11 +558,24 @@ export default function TournamentAdminPage() {
           </button>
         </div>
 
-        {/* Tabs */}
-        <div className='flex gap-1 mb-5 bg-white rounded-xl p-1 shadow-sm border border-gray-200 w-fit'>
-          {TABS.map(t => (
+        {/* Secondary: Teams + Sports (less-used) */}
+        <div className='flex gap-2 mb-3'>
+          {(['teams', 'sports'] as Tab[]).map(key => {
+            const t = TABS.find(x => x.key === key)!
+            return (
+              <button key={key} onClick={() => setTab(key)}
+                className={`flex-shrink-0 flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition ${tab === key ? 'border-emerald-600 bg-emerald-50 text-emerald-700' : 'border-gray-200 bg-white text-gray-500 hover:bg-gray-50'}`}>
+                {t.icon} {t.label}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Primary tabs: Events, Results, Tracking */}
+        <div className='flex gap-1 mb-5 bg-white rounded-xl p-1 shadow-sm border border-gray-200'>
+          {TABS.filter(t => !['teams', 'sports'].includes(t.key)).map(t => (
             <button key={t.key} onClick={() => setTab(t.key)}
-              className={`flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-semibold transition ${tab === t.key ? 'bg-emerald-600 text-white shadow' : 'text-gray-600 hover:bg-gray-100'}`}>
+              className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold transition ${tab === t.key ? 'bg-emerald-600 text-white shadow' : 'text-gray-600 hover:bg-gray-100'}`}>
               {t.icon} {t.label}
             </button>
           ))}
@@ -1078,6 +1093,36 @@ export default function TournamentAdminPage() {
           <div className='space-y-4'>
             <h2 className='font-bold text-gray-800'>Enter Results</h2>
 
+            {/* Sport + Gender filters */}
+            <div className='flex gap-2 flex-wrap'>
+              <div className='flex-1 min-w-[140px]'>
+                <label className='block text-xs font-semibold text-gray-600 mb-1'>Sport</label>
+                <select
+                  value={resSportFilter}
+                  onChange={e => { setResSportFilter(e.target.value); setSelCatId('') }}
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm'
+                >
+                  <option value=''>All sports</option>
+                  {sports.filter(s => s.is_active).map(s => (
+                    <option key={s.id} value={s.id}>{s.icon} {s.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div className='flex-1 min-w-[140px]'>
+                <label className='block text-xs font-semibold text-gray-600 mb-1'>Gender</label>
+                <select
+                  value={resGenderFilter}
+                  onChange={e => { setResGenderFilter(e.target.value); setSelCatId('') }}
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm'
+                >
+                  <option value=''>All genders</option>
+                  {["Open", "Men's", "Women's", "Mixed"].map(g => (
+                    <option key={g} value={g}>{g}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             <div>
               <label className='block text-xs font-semibold text-gray-600 mb-1'>Select Event Category</label>
               <select
@@ -1096,13 +1141,16 @@ export default function TournamentAdminPage() {
                 className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm max-w-md'
               >
                 <option value=''>— Choose event —</option>
-                {categories.map(c => (
-                  <option key={c.id} value={c.id}>
-                    {c.sport?.icon} {c.name}
-                    {c.round_type ? ` · ${roundLabel(c.round_type)}` : ''}
-                    {c.is_completed ? ' ✓' : ''}
-                  </option>
-                ))}
+                {categories
+                  .filter(c => !resSportFilter || c.sport_id === resSportFilter)
+                  .filter(c => !resGenderFilter || c.gender_category === resGenderFilter)
+                  .map(c => (
+                    <option key={c.id} value={c.id}>
+                      {c.sport?.icon} {c.name}
+                      {c.round_type ? ` · ${roundLabel(c.round_type)}` : ''}
+                      {c.is_completed ? ' ✓' : ''}
+                    </option>
+                  ))}
               </select>
             </div>
 

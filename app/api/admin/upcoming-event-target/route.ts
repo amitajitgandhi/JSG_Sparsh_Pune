@@ -3,7 +3,7 @@ import { supabaseServer } from '@/lib/supabase'
 
 export const dynamic = 'force-dynamic'
 
-const DEFAULT_TARGET = '/events/upcoming'
+const DEFAULT_TARGET = '/events/khelotsav'
 const SETTING_KEY = 'upcoming_event_target'
 
 function noStoreJson(body: any, status = 200) {

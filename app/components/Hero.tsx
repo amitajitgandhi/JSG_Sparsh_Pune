@@ -5,7 +5,7 @@ import { ArrowRight, Calendar, Users, Heart } from 'lucide-react'
 
 export default function Hero() {
   const [showUpcoming, setShowUpcoming] = useState(false)
-  const [upcomingTarget, setUpcomingTarget] = useState('/events/upcoming')
+  const [upcomingTarget, setUpcomingTarget] = useState('/events/khelotsav')
 
   useEffect(() => {
     const loadUpcomingTarget = async () => {
@@ -14,7 +14,7 @@ export default function Hero() {
         const data = await res.json()
         if (data?.target) setUpcomingTarget(data.target)
       } catch {
-        setUpcomingTarget('/events/upcoming')
+        // keep whatever was last set (initial state or previously loaded value)
       }
     }
 
