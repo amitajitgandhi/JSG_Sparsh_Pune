@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import KhelotsavHero from '../KhelotsavHero'
 
 const TEAMS = [
   { abbr: 'KS', name: 'Katariya Smashers',    owner: 'Mayur Karariya',  gradient: 'from-orange-500 to-amber-400' },
@@ -34,32 +35,9 @@ const SPORT_WINNERS = [
 
 export default function K26SignOffPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-violet-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+    <div className="kh-root min-h-screen overflow-x-hidden">
 
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-indigo-700 via-violet-600 to-orange-500 px-4 py-14 text-center text-white sm:py-20">
-        {/* Decorative floating emojis */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden select-none" aria-hidden>
-          {['🏆','🥇','🎊','🏅','⭐','🎉','🥈','🥉','🎖️'].map((e, i) => (
-            <span key={i} className="absolute text-2xl opacity-15"
-              style={{ left: `${6 + i * 11}%`, top: `${8 + (i % 4) * 20}%` }}>
-              {e}
-            </span>
-          ))}
-        </div>
-        <div className="relative z-10 text-center">
-          <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.25em] text-white/65">
-            Indoor Sports Festival
-          </p>
-          <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
-            Sparsh Khelotsav
-          </h1>
-          <p className="mt-1 text-sm text-white/65 max-w-xs mx-auto sm:max-w-md leading-relaxed">
-            Celebrating an incredible day of sport, spirit &amp; community
-          </p>
-          <div className="mx-auto mt-5 h-1 w-20 rounded-full bg-gradient-to-r from-yellow-300 via-white to-orange-300 opacity-70" />
-        </div>
-      </div>
+      <KhelotsavHero />
 
       <div className="mx-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-4xl">
 
