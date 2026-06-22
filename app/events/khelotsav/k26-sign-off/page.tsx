@@ -43,17 +43,17 @@ export default function K26SignOffPage() {
 
         {/* ── Thank you ──────────────────────────────────────────────────── */}
         <section className="mt-10 text-center">
-          <h2 className="text-xl font-black text-gray-800 dark:text-gray-100 sm:text-2xl">
+          <h2 className="text-xl font-black text-gray-800 dark:text-gray-50 sm:text-2xl">
             A Heartfelt Thank You 🙏
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
-            Khelotsav 2026 would not have been possible without the incredible support and generosity of our 8 team owners. Your sponsorship, enthusiasm, and team spirit transformed a vision into an unforgettable day of sportsmanship, camaraderie, and joy. On behalf of the entire JSG Sparsh Pune committee — <span className="font-bold text-gray-800 dark:text-gray-100">a big thank you from the bottom of our hearts!</span>
+            Khelotsav 2026 would not have been possible without the incredible support and generosity of our 8 team owners. Your sponsorship, enthusiasm, and team spirit transformed a vision into an unforgettable day of sportsmanship, camaraderie, and joy. On behalf of the entire JSG Sparsh Pune committee — <span className="font-bold text-gray-800 dark:text-gray-50">a big thank you from the bottom of our hearts!</span>
           </p>
         </section>
 
         {/* ── Team Sponsors ──────────────────────────────────────────────── */}
         <section className="mt-10">
-          <h2 className="mb-5 text-center text-sm font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">
+          <h2 className="mb-5 text-center text-sm font-black uppercase tracking-widest text-gray-500 dark:text-gray-300">
             Our Team Sponsors
           </h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -74,10 +74,10 @@ export default function K26SignOffPage() {
 
         {/* ── Overall Champions ──────────────────────────────────────────── */}
         <section className="mt-14">
-          <h2 className="mb-1.5 text-center text-sm font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">
+          <h2 className="mb-1.5 text-center text-sm font-black uppercase tracking-widest text-gray-500 dark:text-gray-300">
             Overall Champions
           </h2>
-          <p className="mb-10 text-center text-xs text-gray-400 dark:text-gray-500">
+          <p className="mb-10 text-center text-xs text-gray-400 dark:text-gray-400">
             Based on final leaderboard points across all sports
           </p>
 
@@ -117,10 +117,10 @@ export default function K26SignOffPage() {
 
         {/* ── Sport Champions ────────────────────────────────────────────── */}
         <section className="mt-14">
-          <h2 className="mb-1.5 text-center text-sm font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">
+          <h2 className="mb-1.5 text-center text-sm font-black uppercase tracking-widest text-gray-500 dark:text-gray-300">
             Sport Champions
           </h2>
-          <p className="mb-8 text-center text-xs text-gray-400 dark:text-gray-500">
+          <p className="mb-8 text-center text-xs text-gray-400 dark:text-gray-400">
             Winners &amp; runners-up by sport
           </p>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -135,14 +135,14 @@ export default function K26SignOffPage() {
                   <div className="flex items-center gap-3">
                     <span className="text-xl flex-shrink-0">🥇</span>
                     <div>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Winner</p>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-400">Winner</p>
                       <p className="text-sm font-extrabold text-gray-900 dark:text-white leading-tight">{s.winner}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-xl flex-shrink-0">🥈</span>
                     <div>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Runner-Up</p>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-400">Runner-Up</p>
                       <p className="text-sm font-bold text-gray-600 dark:text-gray-300 leading-tight">{s.runnerUp}</p>
                     </div>
                   </div>
@@ -153,9 +153,9 @@ export default function K26SignOffPage() {
         </section>
 
         {/* ── Closing note ───────────────────────────────────────────────── */}
-        <div className="mt-14 rounded-2xl border border-violet-100 dark:border-violet-900 bg-gradient-to-br from-indigo-50 to-violet-50 dark:from-gray-800 dark:to-gray-700 px-6 py-7 text-center">
+        <div className="mt-14 rounded-2xl border border-violet-200 dark:border-violet-800 bg-gradient-to-br from-indigo-50 to-violet-50 dark:from-indigo-950 dark:to-violet-950 px-6 py-7 text-center">
           <p className="text-3xl mb-3">🎉</p>
-          <p className="text-base font-bold text-gray-800 dark:text-gray-100 mb-2">
+          <p className="text-base font-bold text-gray-800 dark:text-gray-50 mb-2">
             Until Next Time!
           </p>
           <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
@@ -169,7 +169,7 @@ export default function K26SignOffPage() {
             className="text-sm font-semibold text-gray-400 dark:text-gray-500 transition-colors hover:text-gray-600 dark:hover:text-gray-300">
             ← Back to Khelotsav
           </Link>
-          <span className="text-gray-200 dark:text-gray-700">|</span>
+          <span className="text-gray-300 dark:text-gray-600">|</span>
           <Link href="/events/tournament/khelotsav-2026/leaderboard"
             className="text-sm font-semibold text-violet-500 hover:text-violet-700 dark:hover:text-violet-300 transition-colors">
             View Full Leaderboard →

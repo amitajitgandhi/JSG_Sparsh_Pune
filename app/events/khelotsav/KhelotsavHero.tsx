@@ -76,7 +76,7 @@ export default function KhelotsavHero() {
               background: 'linear-gradient(135deg, rgba(67,56,202,0.82) 0%, rgba(37,99,235,0.72) 35%, rgba(234,88,12,0.60) 75%, rgba(5,150,105,0.55) 100%)',
             }}
           />
-          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#f8faff] to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#f8faff] dark:from-gray-950 to-transparent" />
 
           {/* Floating sport emojis */}
           <div className="kh-floats pointer-events-none absolute inset-0" aria-hidden="true">
@@ -133,6 +133,9 @@ export default function KhelotsavHero() {
         }
         .kh-root {
           background: linear-gradient(160deg, #f0f7ff 0%, #ffffff 40%, #fff8f0 80%, #f0fdf8 100%);
+        }
+        .dark .kh-root {
+          background: linear-gradient(160deg, #0f172a 0%, #111827 40%, #0f172a 80%, #111827 100%);
         }
         .kh-hero-title {
           text-shadow: 0 2px 20px rgba(0,0,0,0.35);
