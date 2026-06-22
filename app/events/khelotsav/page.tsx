@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import {
   CalendarDays, Clock3, MapPinnedIcon,
-  Trophy, Users, ClipboardList, Lock, ArrowRight, Medal, Users2, BookOpen,
+  Trophy, Users, ClipboardList, Lock, ArrowRight, Medal, Users2, BookOpen, Star,
 } from 'lucide-react'
 import {
   REGISTRATION_CLOSED_STATUS,
@@ -76,6 +76,13 @@ const actionLinks = [
     sub: 'Game rules for all sports',
     icon: <BookOpen size={22} />,
     accent: 'from-gray-700 to-red-300',
+  },
+  {
+    href: '/events/khelotsav/k26-sign-off',
+    label: 'K26 Sign-Off',
+    sub: 'Champions & thank you',
+    icon: <Star size={22} />,
+    accent: 'from-yellow-500 to-amber-400',
   },
 ]
 
