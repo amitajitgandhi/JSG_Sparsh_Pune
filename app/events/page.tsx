@@ -97,7 +97,8 @@ export default function Events() {
           description: 'The official grand auction for Sparsh Premier League – Season 02 (SPL 2.0), organized in association with SG Promoters & Real Estate Consultant, featuring Men’s, Women’s, and Kids’ divisions with exciting team selections and big reveals.',
           attendees: '200+',
           highlights: ['Cricket Auction', 'Revealing Ceremony', 'Sparsh App Launch', 'Delicious Dinner'],
-          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122218043144263798&type=3'
+          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122218043144263798&type=3',
+          pageUrl: '/spl02'
       },
       {
           id: '5 - II',
@@ -108,7 +109,8 @@ export default function Events() {
           description: '11 Mens Team, 4 Womens Team, 4 Kids Team, 150+ passionate players battling it out over 2 action-packed days filled with thrilling cricket, team spirit, and nonstop excitement.',
           attendees: '200+',
           highlights: ['Nailbiting Matches', 'Trophies', 'Delicious Food', 'Entertainment'],
-          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122220334856263798&type=3'
+          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122220334856263798&type=3',
+          pageUrl: '/spl02'
       },
       {
           id: 6,
@@ -119,7 +121,8 @@ export default function Events() {
           description: 'A full-day celebration at Yavat24 bringing together 250+ participants for fun-filled activities, great food, lively entertainment, and memorable moments.',
           attendees: '250+',
           highlights: ['Hurda', 'Fun Games', 'Pool', 'Entertainment'],
-          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122224464524263798&type=3'
+          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122224464524263798&type=3',
+          pageUrl: '/events/hurda-party'
       },
       {
           id: 7,
@@ -130,7 +133,8 @@ export default function Events() {
           description: 'Stay at a 4-Star Beach Touch Resort on the pristine Betalbatim Beach, where golden sands meet crystal-blue waters. A perfect blend of fun, relaxation, and unforgettable memories awaits you in paradise!',
           attendees: '100+',
           highlights: ['Beach', 'Party', 'Bonding', 'Refreshment'],
-          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122227766174263798&type=3'
+          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122227766174263798&type=3',
+          pageUrl: '/events/goa-2026'
       },
       {
           id: 8,
@@ -141,7 +145,8 @@ export default function Events() {
           description: 'Celebrate the spirit of Valentine’s Day with the ultimate cricket showdown — India vs Pakistan. An evening of passion, pride, and unforgettable memories.',
           attendees: '200+',
           highlights: ['Live Music', 'IndVsPak Screening', 'Romantic Ambience', 'Gourmet Dinner'],
-          galleryUrl: 'https://www.facebook.com/media/set/?vanity=61557913960543&set=a.122230926764263798'
+          galleryUrl: 'https://www.facebook.com/media/set/?vanity=61557913960543&set=a.122230926764263798',
+          pageUrl: '/events/valentine-2026'
       }
     ,
     {
@@ -153,7 +158,8 @@ export default function Events() {
       description: 'Traitors vs Loyalists - A thrilling game of strategy, deception, and fun! Two teams battle it out in a series of challenges to uncover the traitors among them. Expect suspense, laughter, and unforgettable moments as alliances are formed and broken in this ultimate test of trust and wit.',
       attendees: '300+',
       highlights: ['Suspense', 'Bonding', 'Delicious Food', 'Mind Games'],
-        galleryUrl: 'https://www.facebook.com/media/set/?set=a.122233891274263798&type=3'
+        galleryUrl: 'https://www.facebook.com/media/set/?set=a.122233891274263798&type=3',
+        pageUrl: '/events/double-cross'
     }
   ]
 
@@ -209,13 +215,21 @@ export default function Events() {
                     <div className="flex-1 min-w-0">
                       {isBonusId ? (
                         <div className="leading-tight">
-                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-1 break-words">{event.title}</h3>
+                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-1 break-words">
+                            {'pageUrl' in event && event.pageUrl ? (
+                              <Link href={event.pageUrl} className="hover:underline underline-offset-4 decoration-2 transition-all">{event.title}</Link>
+                            ) : event.title}
+                          </h3>
                           <div className="text-xs sm:text-sm font-semibold opacity-90 mt-0.5">{idText}</div>
                         </div>
                       ) : (
                         <div className="flex items-baseline gap-3">
                           <span className="text-lg sm:text-xl md:text-2xl font-semibold">{idText}.</span>
-                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold break-words m-0">{event.title}</h3>
+                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold break-words m-0">
+                            {'pageUrl' in event && event.pageUrl ? (
+                              <Link href={event.pageUrl} className="hover:underline underline-offset-4 decoration-2 transition-all">{event.title}</Link>
+                            ) : event.title}
+                          </h3>
                         </div>
                       )}
                     </div>
@@ -313,32 +327,6 @@ export default function Events() {
               >
                 Contact Event Team
               </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Recent Events Quick Links */}
-        <div className="mt-6 sm:mt-8 md:mt-10">
-          <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border-2 border-gray-100">
-            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-yellow-600 mb-4 sm:mb-6">
-              Recent Events
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              <Link href="/spl02" className="inline-flex items-center justify-center rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
-                SPL 02
-              </Link>
-              <Link href="/events/hurda-party" className="inline-flex items-center justify-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
-                Hurda Party
-                          </Link>
-                          <Link href="/events/goa-2026" className="inline-flex items-center justify-center rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
-                              Goa 2026
-                          </Link>
-                          <Link href="/events/valentine-2026" className="inline-flex items-center justify-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
-                              Valentine Soiree
-                          </Link>
-                          <Link href="/events/double-cross" className="inline-flex items-center justify-center rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
-                              Double Cross
-                          </Link>
             </div>
           </div>
         </div>

@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Users, Star, Target, Phone, Zap, Heart, Gift, Trophy } from 'lucide-react'
+import Link from "next/link"
+import { Users, Star, Target, Zap, Heart, Gift, Trophy, BookOpen, ArrowRight } from 'lucide-react'
 
 // Title Sponsor Video component (unchanged)
 function TitleSponsorVideo() {
@@ -69,11 +70,6 @@ export default function SPL02() {
     { title: "Entertainment Factor", description: "DJ & Dhol keep the energy high all evening", icon: Zap },
     { title: "Community Impact", description: "Support local talent and contribute to sports development", icon: Gift }
   ]
-  const contactPersons = [
-    { name: "Mukesh G Jain", role: "PRO - Sports", phone: "9420277778" },
-    { name: "Vinod Jain", role: "Treasurer", phone: "9028847311" },
-    { name: "Dhiraj S Shah", role: "Founder President", phone: "8975797500" }
-  ]
   const handleBrochureDownload = () => { const link = document.createElement("a"); link.href = "/files/SPL02_Sponsorship.pdf"; link.download = "SPL02_Sponsorship_Brochure.pdf"; document.body.appendChild(link); link.click(); document.body.removeChild(link) }
 
   return (
@@ -107,6 +103,27 @@ export default function SPL02() {
                 <h3 className="text-xl md:text-2xl font-bold text-gray-500 leading-tight">Season 02</h3>
                 <div className="text-xl md:text-2xl font-bold text-green-600">🥎 15 & 16 November 2025 🥎</div>
               </div>
+            </div>
+          </div>
+
+          {/* Quick Links to SPL02 sub-pages */}
+          <div className="mb-8 sm:mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              <Link href="/spl02/players" className="group flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-4 px-4 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-sm sm:text-base">
+                <Users size={18} />
+                <span>Players</span>
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link href="/spl02/squad" className="group flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-4 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-sm sm:text-base">
+                <Star size={18} />
+                <span>Squad</span>
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link href="/spl02/tournament-rules" className="group flex items-center justify-center gap-2 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 px-4 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-sm sm:text-base">
+                <BookOpen size={18} />
+                <span>Tournament Rules</span>
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
           </div>
 
@@ -293,21 +310,22 @@ export default function SPL02() {
           {/* Contact Section */}
           <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-4 sm:p-8 md:p-12 shadow-large border border-white/50 text-center">
             <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-800 mb-6 sm:mb-8">For Sponsorship Bookings and Inquiries</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
-              {contactPersons.map((person, index) => (
-                <div key={index} className="bg-blue-50/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 hover:bg-blue-100 hover:scale-105 transition-all duration-300 border border-blue-100">
-                  <h4 className="text-lg sm:text-xl font-bold text-blue-800 mb-1 sm:mb-2">{person.name}</h4>
-                  <p className="text-blue-600 font-medium mb-2 sm:mb-3 text-sm sm:text-base">{person.role}</p>
-                  <a href={`tel:${person.phone}`} className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-2xl text-sm sm:text-base shadow-lg">
-                    <Phone size={14} className="sm:w-4 sm:h-4" />
-                    <span>{person.phone}</span>
-                  </a>
-                </div>
-              ))}
-              <div className="mt-6 sm:mt-8 col-span-full flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-base sm:text-lg transition-all duration-300 shadow-large w-full sm:w-auto">Become a Sponsor</button>
-                <button onClick={handleBrochureDownload} className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-base sm:text-lg transition-all duration-300 w-full sm:w-auto">Download Brochure</button>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 max-w-3xl mx-auto">
+              <Link href="/committee" className="group flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 px-4 rounded-2xl font-bold text-base shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                <Users size={18} />
+                <span>Committee</span>
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <button className="group flex items-center justify-center gap-2 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white py-4 px-4 rounded-2xl font-bold text-base shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                <Star size={18} />
+                <span>Become a Sponsor</span>
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+              <button onClick={handleBrochureDownload} className="group flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-4 px-4 rounded-2xl font-bold text-base shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                <Gift size={18} />
+                <span>Download Brochure</span>
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
           </div>
         </div>

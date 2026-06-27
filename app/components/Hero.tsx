@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, Calendar, Users, Heart } from 'lucide-react'
+import { ArrowRight, Calendar, CalendarClock, MapPin, HeartHandshake, PartyPopper, Sparkles } from 'lucide-react'
 
 export default function Hero() {
   const [showUpcoming, setShowUpcoming] = useState(false)
@@ -23,22 +23,26 @@ export default function Hero() {
 
   return (
     <>
-      <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-12 sm:py-16 lg:py-24 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 text-white pt-16 pb-12 sm:pt-24 sm:pb-16 lg:pt-32 lg:pb-24 relative overflow-hidden">
+        {/* Warm yellow glow so the hero isn't a flat wall of blue */}
+        <div className="pointer-events-none absolute -top-24 -right-24 w-72 h-72 sm:w-96 sm:h-96 bg-yellow-400/25 rounded-full blur-3xl"></div>
+        <div className="pointer-events-none absolute -bottom-32 -left-24 w-72 h-72 sm:w-96 sm:h-96 bg-amber-300/15 rounded-full blur-3xl"></div>
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
         </div>
+        {/* Soft fade into the page below */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 sm:h-24 bg-gradient-to-b from-transparent to-white dark:to-gray-950"></div>
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 relative z-10">
           <div className="text-center">
-            <div className="flex flex-col items-center mb-8 sm:mb-12 animate-fade-in">
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 mb-6 sm:mb-8">
-                <img
-                  src="/images/JSG_SPARSH.jpeg"
-                  alt="JSG SPARSH Pune Logo"
-                  className="w-full h-full object-contain rounded-2xl shadow-lg"
-                />
+            <div className="flex flex-col items-center mb-6 sm:mb-8 animate-fade-in">
+              {/* Eyebrow badge */}
+              <div className="mb-7 sm:mb-10 inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 backdrop-blur-md px-3.5 py-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-yellow-200">
+                <MapPin size={13} className="text-yellow-300" />
+                Pune · Est. 2024
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-3 sm:mb-4 tracking-tight text-white leading-tight">
-                JSG PUNE SPARSH
+              <h1 className="hero-title text-[2.75rem] leading-[1.05] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black mb-6 sm:mb-8 tracking-tight">
+                <span className="text-white">JSG PUNE </span>
+                <span className="hero-shimmer text-transparent bg-clip-text">SPARSH</span>
               </h1>
             </div>
             <div className="mb-6 sm:mb-8 animate-slide-up">
@@ -47,81 +51,72 @@ export default function Hero() {
               </p>
               <div className="w-16 sm:w-24 h-1 bg-yellow-400 mx-auto rounded-full"></div>
             </div>
-            <p className="text-base sm:text-lg md:text-xl mb-8 sm:mb-12 max-w-4xl mx-auto text-blue-100 leading-relaxed animate-slide-up px-2">
-              Connecting hearts, preserving traditions, and building a stronger Jain community in Pune through
-              social activities, cultural events, and community service. Walking together towards collective growth
-              and spiritual enlightenment.
+            <p className="text-base sm:text-lg md:text-xl mb-8 sm:mb-12 max-w-3xl mx-auto text-blue-100 leading-relaxed animate-slide-up px-2">
+              Connecting hearts and preserving traditions — bringing the Jain community of Pune together
+              through vibrant social, cultural, and community events all year round.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 sm:mb-16 animate-slide-up px-2">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 justify-center items-center mb-12 sm:mb-16 animate-slide-up px-2" style={{ animationDelay: '0.15s' }}>
               <Link
-                href="/events2027"
-                className="group bg-white text-blue-700 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-yellow-50 transition-all duration-300 flex items-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
+                href={upcomingTarget}
+                className="group relative bg-gradient-to-r from-yellow-400 to-amber-500 text-blue-900 px-6 sm:px-9 lg:px-10 py-3.5 sm:py-4 rounded-2xl font-bold transition-all duration-300 flex items-center gap-2 sm:gap-3 shadow-lg shadow-yellow-500/30 hover:shadow-xl hover:shadow-yellow-500/40 transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
               >
-                <Calendar size={18} className="sm:w-6 sm:h-6" />
-                <span>Past Events</span>
+                <CalendarClock size={18} className="sm:w-5 sm:h-5" />
+                <span>Upcoming Event</span>
                 <ArrowRight size={16} className="sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                href={upcomingTarget}
-                className="group bg-yellow-500 hover:bg-yellow-600 text-blue-800 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 flex items-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
+                href="/events2027"
+                className="group bg-white/10 backdrop-blur-md border border-white/30 text-white px-6 sm:px-9 lg:px-10 py-3.5 sm:py-4 rounded-2xl font-semibold hover:bg-white/20 transition-all duration-300 flex items-center gap-2 sm:gap-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
               >
-                <Calendar size={18} className="sm:w-6 sm:h-6" />
-                <span>Upcoming Event</span>
+                <Calendar size={18} className="sm:w-5 sm:h-5" />
+                <span>Browse Events</span>
                 <ArrowRight size={16} className="sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                          </Link>
-                          <Link
-                              href="/events/adventure-escape-2026"
-                              className="group bg-white text-blue-700 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-yellow-50 transition-all duration-300 flex items-center space-x-2 sm:space-x-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
-                          >
-                              <Calendar size={18} className="sm:w-6 sm:h-6" />
-                              <span>Adventure Escape</span>
-                              <ArrowRight size={16} className="sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                          </Link>
+              </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 max-w-3xl mx-auto animate-slide-up px-2">
-              <div className="text-center bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
-                <div className="flex items-center justify-center mb-2 sm:mb-3">
-                  <div className="p-2 sm:p-3 bg-yellow-400/20 rounded-full">
-                    <Users className="text-yellow-300" size={20} />
+            <div className="grid grid-cols-3 gap-2.5 sm:gap-8 max-w-3xl mx-auto animate-slide-up px-2" style={{ animationDelay: '0.3s' }}>
+              {[
+                { icon: HeartHandshake, value: '350+', label: 'Community Members', chip: 'from-blue-500 to-indigo-600' },
+                { icon: PartyPopper,    value: '20+',  label: 'Events Organized',  chip: 'from-yellow-400 to-amber-500' },
+                { icon: Sparkles,       value: '2024', label: 'Year Established',   chip: 'from-blue-500 to-indigo-600' },
+              ].map(({ icon: Icon, value, label, chip }) => (
+                <div key={label} className="group text-center bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl border-2 border-yellow-400 hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300">
+                  <div className="flex items-center justify-center mb-2 sm:mb-3">
+                    <div className={`bg-gradient-to-br ${chip} rounded-xl sm:rounded-2xl p-2.5 sm:p-3.5 shadow-md group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
+                      <Icon className="text-white w-4 h-4 sm:w-6 sm:h-6" strokeWidth={2.25} />
+                    </div>
                   </div>
+                  <div className="text-xl sm:text-3xl lg:text-4xl font-extrabold mb-0.5 sm:mb-2 text-blue-600">{value}</div>
+                  <div className="text-gray-500 font-semibold text-[11px] leading-tight sm:text-base">{label}</div>
                 </div>
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 text-white">300+</div>
-                <div className="text-yellow-200 font-medium text-sm sm:text-base">Community Members</div>
-              </div>
-              <div className="text-center bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
-                <div className="flex items-center justify-center mb-2 sm:mb-3">
-                  <div className="p-2 sm:p-3 bg-yellow-400/20 rounded-full">
-                    <Calendar className="text-yellow-300" size={20} />
-                  </div>
-                </div>
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 text-white">15+</div>
-                <div className="text-yellow-200 font-medium text-sm sm:text-base">Events Organized</div>
-              </div>
-              <div className="text-center bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
-                <div className="flex items-center justify-center mb-2 sm:mb-3">
-                  <div className="p-2 sm:p-3 bg-yellow-400/20 rounded-full">
-                    <Heart className="text-yellow-300" size={20} />
-                  </div>
-                </div>
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 text-white">2024</div>
-                <div className="text-yellow-200 font-medium text-sm sm:text-base">Year Established</div>
-              </div>
+              ))}
             </div>
-            <div className="mt-12 sm:mt-16 animate-slide-up px-2">
-              <div className="bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto border border-white/20">
-                <p className="text-yellow-300 text-base sm:text-lg font-medium mb-2">Our Guiding Principle</p>
-                <p className="text-white text-lg sm:text-xl md:text-2xl font-semibold italic leading-tight">
-                  "Walk together, talk together, and act with one mind"
+            <div className="mt-12 sm:mt-16 animate-slide-up px-2" style={{ animationDelay: '0.45s' }}>
+              <div className="relative bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-9 max-w-2xl mx-auto border border-white/20 shadow-xl overflow-hidden">
+                <span className="pointer-events-none absolute -top-2 left-4 text-7xl sm:text-8xl font-serif text-yellow-300/30 leading-none select-none">“</span>
+                <p className="text-yellow-300 text-xs sm:text-sm font-bold uppercase tracking-widest mb-2 sm:mb-3">Our Guiding Principle</p>
+                <p className="relative text-white text-lg sm:text-xl md:text-2xl font-semibold italic leading-snug">
+                  Walk together, talk together, and act with one mind
                 </p>
-                <div className="w-12 sm:w-16 h-1 bg-yellow-400 mx-auto mt-3 sm:mt-4 rounded-full"></div>
+                <div className="w-12 sm:w-16 h-1 bg-gradient-to-r from-yellow-400 to-amber-500 mx-auto mt-4 sm:mt-5 rounded-full"></div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-12 h-12 sm:w-20 sm:h-20 bg-white/5 rounded-full animate-bounce"></div>
-        <div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-10 h-10 sm:w-16 sm:h-16 bg-white/5 rounded-full animate-bounce"></div>
+        <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-12 h-12 sm:w-20 sm:h-20 bg-yellow-300/15 rounded-full animate-bounce"></div>
+        <div className="absolute bottom-24 sm:bottom-32 right-5 sm:right-10 w-10 h-10 sm:w-16 sm:h-16 bg-yellow-300/15 rounded-full animate-bounce"></div>
       </section>
+
+      {/* Logo band — the mark sits on its native white background below the hero, so it never looks like a patch */}
+      <div className="bg-white dark:bg-gray-950 pt-8 pb-4 sm:pt-12 sm:pb-6 border-t-4 border-yellow-400">
+        <div className="max-w-7xl mx-auto px-4 flex justify-center animate-fade-in">
+          <img
+            src="/images/JSG_SPARSH.jpeg"
+            alt="JSG SPARSH Pune Logo"
+            className="h-28 sm:h-36 md:h-44 w-auto object-contain drop-shadow-sm hover:scale-[1.02] transition-transform duration-500"
+          />
+        </div>
+      </div>
 
       {showUpcoming && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">

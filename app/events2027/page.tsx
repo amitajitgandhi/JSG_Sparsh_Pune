@@ -14,11 +14,47 @@ export default function Events2027() {
       title: 'Funverse',
       date: '2026-04-26',
       time: '11:00 AM Onwards',
-      venue: 'To be Decided',
+      venue: 'Sneh Resort, Pune',
       description: 'The Installation Ceremony marks the beginning of a new chapter for JSG Pune Sparsh. This grand event brings together our community to witness the installation of the new committee members who will lead us through the year 2026-2027. Expect an evening filled with fun, celebration, and entertainment.',
-      attendees: 'Expected 200+',
+      attendees: '200+',
       highlights: ['Committee Installation', 'Fun Activities', 'Adventure', 'Community Bonding'],
-          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122238040520263798&type=3'
+          galleryUrl: 'https://www.facebook.com/media/set/?set=a.122238040520263798&type=3',
+      pageUrl: '/events/Funverse'
+    },
+    {
+      id: 2,
+      title: 'Sparsh Cricket Championship',
+      date: '2026-06-07',
+      time: '2:00 PM – 11:00 PM',
+      venue: 'Tembekar Ground',
+      description: 'A full pitch cricket tournament held at Tembekar Ground. An action-packed Sunday of competitive cricket bringing together our community for a day of sport, spirit, and camaraderie.',
+      attendees: '5 Teams · 55 Players',
+      highlights: ['Full Pitch', '5 Teams', '55 Players', 'Tembekar Ground'],
+      galleryUrl: 'https://www.facebook.com/media/set/?set=a.122242184882263798&type=3',
+    },
+    {
+      id: 3,
+      title: 'Khelotsav',
+      date: '2026-06-21',
+      time: '8:00 AM – 6:00 PM',
+      venue: 'Downtown Sports Complex',
+      description: 'JSG Pune Sparsh Khelotsav — a multi-sport extravaganza featuring 12+ sports across multiple categories. A celebration of healthy competition, team spirit, medals, and unlimited fun for the whole community.',
+      attendees: '8 Teams · 250+ Players',
+      highlights: ['12+ Sports', '8 Teams', '250+ Players', 'Medals & Glory'],
+      galleryUrl: 'https://www.facebook.com/media/set/?set=a.122243997542263798&type=3',
+      pageUrl: '/events/khelotsav',
+    },
+    {
+      id: 4,
+      title: 'Adventure Escape 2026',
+      date: '2026-07-04',
+      time: '1 Night, 2 Days',
+      venue: 'Kolad, Maharashtra',
+      description: 'A thrilling getaway to Kolad packed with river rafting, kayaking, ziplining, waterfall trekking, raft building, and water volleyball — capped off with a DJ night, great food, and a comfortable stay. The perfect adventure-filled escape for the whole JSG Pune Sparsh family.',
+      attendees: '200+',
+      highlights: ['River Rafting', 'Zipline', 'Waterfall Trek', 'DJ Night'],
+      galleryUrl: '/events/adventure-escape-2026',
+      pageUrl: 'To be updated soon!',
     }
   ]
 
@@ -82,13 +118,21 @@ export default function Events2027() {
                     <div className="flex-1 min-w-0">
                       {isBonusId ? (
                         <div className="leading-tight">
-                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-1 break-words">{event.title}</h3>
+                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-1 break-words">
+                            {'pageUrl' in event && event.pageUrl ? (
+                              <Link href={event.pageUrl} className="hover:underline underline-offset-4 decoration-2 transition-all">{event.title}</Link>
+                            ) : event.title}
+                          </h3>
                           <div className="text-xs sm:text-sm font-semibold opacity-90 mt-0.5">{idText}</div>
                         </div>
                       ) : (
                         <div className="flex items-baseline gap-3">
                           <span className="text-lg sm:text-xl md:text-2xl font-semibold">{idText}.</span>
-                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold break-words m-0">{event.title}</h3>
+                          <h3 className="text-lg sm:text-xl md:text-2xl font-bold break-words m-0">
+                            {'pageUrl' in event && event.pageUrl ? (
+                              <Link href={event.pageUrl} className="hover:underline underline-offset-4 decoration-2 transition-all">{event.title}</Link>
+                            ) : event.title}
+                          </h3>
                         </div>
                       )}
                     </div>
@@ -155,12 +199,19 @@ export default function Events2027() {
                     </div>
                   </div>
 
-                  {/* Single Gallery Button - Full Width */}
+                  {/* Single Action Button - Full Width */}
                   <div className="pt-2">
-                    <button onClick={() => handleGalleryLink(event.galleryUrl)} className={`w-full ${isEvenIndex ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-purple-500 hover:bg-purple-600'} text-white py-3 sm:py-3.5 px-4 sm:px-6 rounded-lg sm:rounded-xl md:rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105`}>
-                      <span>View Event Gallery</span>
-                      <ArrowRight size={16} />
-                    </button>
+                    {'detailsUrl' in event && event.detailsUrl ? (
+                      <Link href={event.detailsUrl} className={`w-full ${isEvenIndex ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-purple-500 hover:bg-purple-600'} text-white py-3 sm:py-3.5 px-4 sm:px-6 rounded-lg sm:rounded-xl md:rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105`}>
+                        <span>View Details</span>
+                        <ArrowRight size={16} />
+                      </Link>
+                    ) : (
+                      <button onClick={() => { if ('galleryUrl' in event && event.galleryUrl) handleGalleryLink(event.galleryUrl) }} className={`w-full ${isEvenIndex ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-purple-500 hover:bg-purple-600'} text-white py-3 sm:py-3.5 px-4 sm:px-6 rounded-lg sm:rounded-xl md:rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 font-bold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105`}>
+                        <span>View Event Gallery</span>
+                        <ArrowRight size={16} />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -185,23 +236,6 @@ export default function Events2027() {
                 className="bg-gradient-to-r from-emerald-500 to-blue-500 hover:brightness-110 text-white px-8 sm:px-10 md:px-12 py-3 sm:py-4 md:py-5 rounded-lg sm:rounded-xl md:rounded-2xl font-bold text-base sm:text-lg md:text-xl transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 inline-block"
               >
                 Contact Event Team
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Links to Specific Events */}
-        <div className="mt-6 sm:mt-8 md:mt-10">
-          <div className="bg-white rounded-xl sm:rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border-2 border-gray-100">
-            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-blue-600 to-purple-600 mb-4 sm:mb-6">
-              Recent Events
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              <Link href="/events/Funverse" className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-emerald-500 to-blue-500 hover:brightness-110 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
-                Funverse
-              </Link>
-              <Link href="/events" className="inline-flex items-center justify-center rounded-lg bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 sm:py-4 px-4 shadow hover:shadow-md text-sm sm:text-base">
-                View Past Events (2025-26)
               </Link>
             </div>
           </div>

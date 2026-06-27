@@ -27,9 +27,9 @@ export default function AboutSection() {
   }
 
   return (
-    <section className="py-12 sm:py-20 bg-white">
+    <section className="pt-4 pb-12 sm:pt-6 sm:pb-20 bg-white">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-        
+
         {/* Learn More About Us Section */}
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-800 mb-4 sm:mb-6">

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Plus, RefreshCw, Pencil, Trophy, CalendarDays, CheckCircle2, XCircle } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import type { Tournament } from '@/lib/tournament/types'
+import LeaderboardConfig from './LeaderboardConfig'
 
 export default function TournamentListPage() {
   const [rows,      setRows]      = useState<Tournament[]>([])
@@ -67,6 +68,16 @@ export default function TournamentListPage() {
         </div>
 
         {error && <div className='mb-4 rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700'>{error}</div>}
+
+        {/* Leaderboard auto-refresh + audio config (relocated from admin-config) */}
+        <details className='mb-6 rounded-2xl border border-gray-200 bg-white shadow-sm'>
+          <summary className='cursor-pointer select-none px-6 py-4 text-sm font-bold text-gray-800'>
+            ⚙️ Leaderboard Settings (auto-refresh &amp; audio)
+          </summary>
+          <div className='px-2 pb-2 sm:px-4 sm:pb-4'>
+            <LeaderboardConfig />
+          </div>
+        </details>
 
         {/* Create form */}
         {showForm && (

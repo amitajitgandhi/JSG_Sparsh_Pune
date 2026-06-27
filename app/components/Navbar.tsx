@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Menu, X, Home, Users, Calendar, Heart, Info, Trophy, Shield } from 'lucide-react'
+import { Menu, X, Home, Users, Calendar, Heart, Info, Shield } from 'lucide-react'
 import JoinUsModal from './JoinUsModal'
 import AdminLoginModal from './AdminLoginModal'
 import ModalPortal from './ModalPortal'
@@ -26,8 +26,8 @@ export default function Navbar() {
     { href: '/', label: 'Home', icon: Home },
     { href: '/about', label: 'About', icon: Info },
       { href: '/committee', label: 'Committee', icon: Users },
-      { href: '/events/khelotsav', label: 'Khelotsav', icon: Trophy },
-    { href: '/events2027', label: 'Events', icon: Calendar },
+    { href: '/events2027', label: 'Events 2026 - 2027', icon: Calendar },
+    { href: '/events', label: 'Events 2025 - 2026', icon: Calendar },
     { href: '/social', label: 'Social', icon: Heart },
   ]
 
