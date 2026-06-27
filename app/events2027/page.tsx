@@ -53,8 +53,8 @@ export default function Events2027() {
       description: 'A thrilling getaway to Kolad packed with river rafting, kayaking, ziplining, waterfall trekking, raft building, and water volleyball — capped off with a DJ night, great food, and a comfortable stay. The perfect adventure-filled escape for the whole JSG Pune Sparsh family.',
       attendees: '200+',
       highlights: ['River Rafting', 'Zipline', 'Waterfall Trek', 'DJ Night'],
-      galleryUrl: '/events/adventure-escape-2026',
-      pageUrl: 'To be updated soon!',
+      galleryUrl: 'To be updated soon!',
+      pageUrl: '/events/adventure-escape-2026',
     }
   ]
 
