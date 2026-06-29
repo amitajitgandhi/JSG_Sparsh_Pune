@@ -105,7 +105,7 @@ export default function AdminConfigPage() {
                 onChange={e => setTarget(e.target.value)}
                 placeholder="/events/my-event"
                 disabled={upLoading || upSaving}
-                className="ml-7 w-full rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+                className="ml-7 w-[calc(100%-1.75rem)] box-border rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-400 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
               />
             )}
           </div>
