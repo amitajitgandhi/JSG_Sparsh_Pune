@@ -110,11 +110,13 @@ export default function Hero() {
       {/* Logo band — the mark sits on its native white background below the hero, so it never looks like a patch */}
       <div className="bg-white dark:bg-gray-950 pt-8 pb-4 sm:pt-12 sm:pb-6 border-t-4 border-yellow-400">
         <div className="max-w-7xl mx-auto px-4 flex justify-center animate-fade-in">
-          <img
-            src="/images/JSG_SPARSH.jpeg"
-            alt="JSG SPARSH Pune Logo"
-            className="h-28 sm:h-36 md:h-44 w-auto object-contain drop-shadow-sm hover:scale-[1.02] transition-transform duration-500"
-          />
+          <div className="bg-white rounded-2xl p-3 sm:p-4 shadow-sm">
+            <img
+              src="/images/JSG_SPARSH.jpeg"
+              alt="JSG SPARSH Pune Logo"
+              className="h-28 sm:h-36 md:h-44 w-auto object-contain hover:scale-[1.02] transition-transform duration-500"
+            />
+          </div>
         </div>
       </div>
 
