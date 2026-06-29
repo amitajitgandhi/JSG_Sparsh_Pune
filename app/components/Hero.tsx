@@ -108,9 +108,9 @@ export default function Hero() {
       </section>
 
       {/* Logo band — the mark sits on its native white background below the hero, so it never looks like a patch */}
-      <div className="bg-white dark:bg-gray-900 pt-8 pb-4 sm:pt-12 sm:pb-6 border-t-4 border-yellow-400">
+      <div className="bg-white pt-8 pb-4 sm:pt-12 sm:pb-6 border-t-4 border-yellow-400">
         <div className="max-w-7xl mx-auto px-4 flex justify-center animate-fade-in">
-          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-lg border border-blue-200 hover:shadow-2xl transition-all duration-300">
+          <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 hover:shadow-2xl transition-all duration-300">
             <img
               src="/images/JSG_SPARSH.jpeg"
               alt="JSG SPARSH Pune Logo"
