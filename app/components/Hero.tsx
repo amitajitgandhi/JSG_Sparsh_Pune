@@ -30,8 +30,6 @@ export default function Hero() {
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
         </div>
-        {/* Soft fade into the page below */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 sm:h-24 bg-gradient-to-b from-transparent to-white dark:to-gray-950"></div>
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 relative z-10">
           <div className="text-center">
             <div className="flex flex-col items-center mb-6 sm:mb-8 animate-fade-in">
@@ -58,7 +56,7 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 justify-center items-center mb-12 sm:mb-16 animate-slide-up px-2" style={{ animationDelay: '0.15s' }}>
               <Link
                 href={upcomingTarget}
-                className="group relative bg-gradient-to-r from-yellow-400 to-amber-500 text-blue-900 px-6 sm:px-9 lg:px-10 py-3.5 sm:py-4 rounded-2xl font-bold transition-all duration-300 flex items-center gap-2 sm:gap-3 shadow-lg shadow-yellow-500/30 hover:shadow-xl hover:shadow-yellow-500/40 transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
+                className="group relative bg-gradient-to-r from-yellow-400 to-amber-500 text-blue-900 px-6 sm:px-9 lg:px-10 py-3.5 sm:py-4 rounded-2xl font-bold transition-all duration-300 flex items-center gap-2 sm:gap-3 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base w-full sm:w-auto justify-center"
               >
                 <CalendarClock size={18} className="sm:w-5 sm:h-5" />
                 <span>Upcoming Event</span>
@@ -75,9 +73,9 @@ export default function Hero() {
             </div>
             <div className="grid grid-cols-3 gap-2.5 sm:gap-8 max-w-3xl mx-auto animate-slide-up px-2" style={{ animationDelay: '0.3s' }}>
               {[
-                { icon: HeartHandshake, value: '350+', label: 'Community Members', chip: 'from-blue-500 to-indigo-600' },
-                { icon: PartyPopper,    value: '20+',  label: 'Events Organized',  chip: 'from-yellow-400 to-amber-500' },
-                { icon: Sparkles,       value: '2024', label: 'Year Established',   chip: 'from-blue-500 to-indigo-600' },
+                { icon: HeartHandshake, value: '180+', label: ' Couples', chip: 'from-blue-500 to-indigo-600' },
+                { icon: PartyPopper,    value: '20+',  label: 'Events',  chip: 'from-yellow-400 to-amber-500' },
+                { icon: Sparkles,       value: '2024', label: 'Year Est.',   chip: 'from-blue-500 to-indigo-600' },
               ].map(({ icon: Icon, value, label, chip }) => (
                 <div key={label} className="group text-center bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl border-2 border-yellow-400 hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300">
                   <div className="flex items-center justify-center mb-2 sm:mb-3">

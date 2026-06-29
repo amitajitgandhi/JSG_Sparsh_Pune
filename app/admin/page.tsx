@@ -34,6 +34,7 @@ function downloadBackup(slug: string, exported: Record<string, any[]>) {
 
 export default function AdminIndex() {
   const [archived, setArchived] = useState<string[]>([])
+  const [archivedLoaded, setArchivedLoaded] = useState(false) // gate tiles until we know what's archived
   const [target, setTarget]     = useState<ArchiveTarget | null>(null) // tile being archived
   const [confirmText, setConfirmText] = useState('')
   const [busy, setBusy]         = useState(false)
@@ -45,6 +46,7 @@ export default function AdminIndex() {
       const data = await res.json()
       setArchived(Array.isArray(data?.archived) ? data.archived : [])
     } catch { /* show everything if the call fails */ }
+    finally { setArchivedLoaded(true) }
   }
 
   useEffect(() => { loadArchived() }, [])
@@ -81,7 +83,9 @@ export default function AdminIndex() {
         </div>
 
         <div className='grid gap-5'>
-          {visible.map(d => {
+          {!archivedLoaded ? (
+            <div className='text-center text-sm text-gray-400 py-10'>Loading dashboards…</div>
+          ) : visible.map(d => {
             const c = COLOR[d.color]
             return (
               <div key={d.slug} className={`group relative rounded-2xl border ${c.border} bg-white p-6 shadow hover:shadow-md transition`}>
@@ -105,7 +109,7 @@ export default function AdminIndex() {
               </div>
             )
           })}
-          {visible.length === 0 && (
+          {archivedLoaded && visible.length === 0 && (
             <div className='text-center text-sm text-gray-400 py-10'>No active dashboards.</div>
           )}
         </div>

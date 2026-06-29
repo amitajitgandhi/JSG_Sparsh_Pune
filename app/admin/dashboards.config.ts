@@ -38,7 +38,7 @@ export const DASHBOARDS: DashboardDef[] = [
     slug: 'tournament',
     href: '/admin/tournament',
     label: 'Tournament Management',
-    description: 'Create tournaments, manage teams, configure events, enter results, leaderboard config, and view live leaderboard.',
+    description: '',
     color: 'orange',
     archivable: false,
     tables: [],
