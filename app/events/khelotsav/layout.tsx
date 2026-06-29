@@ -8,7 +8,9 @@ export const metadata: Metadata = {
     'Indoor sports festival — browse teams, live leaderboard, event results, and registration for SPARSH KHELOTSAV 2026.',
 }
 
-const themeInitScript = `(function(){try{var d=document.documentElement,m=window.matchMedia('(prefers-color-scheme: dark)');d.classList.toggle('dark',m.matches);}catch(e){}})();`
+// Khelotsav pages are light-theme only — strip any `dark` class before paint so
+// the phone's OS dark mode never darkens these pages.
+const themeInitScript = `(function(){try{document.documentElement.classList.remove('dark');}catch(e){}})();`
 
 export default function KhelotsavLayout({ children }: { children: React.ReactNode }) {
   return (

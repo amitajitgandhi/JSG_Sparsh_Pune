@@ -2,18 +2,18 @@
 
 import { useEffect } from 'react'
 
-/** Syncs Tailwind `dark:` variants with the OS color scheme (no app-wide toggle exists). */
+/** Khelotsav pages are light-theme only — keep the `dark` class off regardless of OS scheme. */
 export default function SystemTheme() {
   useEffect(() => {
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    const html = document.documentElement
+    html.classList.remove('dark')
 
-    const apply = () => {
-      document.documentElement.classList.toggle('dark', mq.matches)
-    }
-
-    apply()
-    mq.addEventListener('change', apply)
-    return () => mq.removeEventListener('change', apply)
+    // If anything (e.g. a global DarkModeSync) re-adds `dark`, strip it again.
+    const observer = new MutationObserver(() => {
+      if (html.classList.contains('dark')) html.classList.remove('dark')
+    })
+    observer.observe(html, { attributes: true, attributeFilter: ['class'] })
+    return () => observer.disconnect()
   }, [])
 
   return null
