@@ -104,12 +104,12 @@
   "booking": "Amit Ajitkumar Gandhi"
  },
  {
-  "name": "Naresh Bhavarlal Shah ( Dhoka)",
+  "name": "Naresh Bhavarlal Shah",
   "room": "D-03",
   "category": "Male",
   "mobile": "8087600125",
   "rafting": 0,
-  "booking": "Naresh Bhavarlal Shah ( Dhoka)"
+  "booking": "Naresh Bhavarlal Shah"
  },
  {
   "name": "Anju Naresh Shah",
@@ -117,7 +117,7 @@
   "category": "Female",
   "mobile": "8087600125",
   "rafting": 0,
-  "booking": "Naresh Bhavarlal Shah ( Dhoka)"
+  "booking": "Naresh Bhavarlal Shah"
  },
  {
   "name": "Anup Meher",
@@ -184,7 +184,7 @@
   "booking": "Bharatkumar Prakash Porwal"
  },
  {
-  "name": "Kids 5-8 ( Kinjal Porwal)",
+  "name": "Kids 5-8 - Kinjal Porwal",
   "room": "MH-01",
   "category": "Kid",
   "mobile": "9850059291",
@@ -288,12 +288,12 @@
   "booking": "Dr Manoj Kocheta"
  },
  {
-  "name": "Hasmukh(Ravee) Chhaganlal Oswal",
+  "name": "Hasmukh Chhaganlal Oswal",
   "room": "D-04/05",
   "category": "Male",
   "mobile": "9881766789",
   "rafting": 0,
-  "booking": "Hasmukh(Ravee) Chhaganlal Oswal"
+  "booking": "Hasmukh Chhaganlal Oswal"
  },
  {
   "name": "Sonal H Oswal",
@@ -301,7 +301,7 @@
   "category": "Female",
   "mobile": "9881766789",
   "rafting": 0,
-  "booking": "Hasmukh(Ravee) Chhaganlal Oswal"
+  "booking": "Hasmukh Chhaganlal Oswal"
  },
  {
   "name": "Yovika Oswal",
@@ -309,7 +309,7 @@
   "category": "Kid",
   "mobile": "9881766789",
   "rafting": 0,
-  "booking": "Hasmukh(Ravee) Chhaganlal Oswal"
+  "booking": "Hasmukh Chhaganlal Oswal"
  },
  {
   "name": "Sonu Oswal",
@@ -317,7 +317,7 @@
   "category": "Kid",
   "mobile": "9881766789",
   "rafting": 0,
-  "booking": "Hasmukh(Ravee) Chhaganlal Oswal"
+  "booking": "Hasmukh Chhaganlal Oswal"
  },
  {
   "name": "Himanshu Vijay Bafna",
@@ -424,12 +424,12 @@
   "booking": "Jaikesh Uttanchand Salecha"
  },
  {
-  "name": "Jayesh Mohanlalji Oswal ( Gundesha )",
+  "name": "Jayesh Mohanlalji Oswal",
   "room": "D-01",
   "category": "Male",
   "mobile": "9822211123",
   "rafting": 0,
-  "booking": "Jayesh Mohanlalji Oswal ( Gundesha )"
+  "booking": "Jayesh Mohanlalji Oswal"
  },
  {
   "name": "Vaishali Jayesh Oswal",
@@ -437,7 +437,7 @@
   "category": "Female",
   "mobile": "9822211123",
   "rafting": 0,
-  "booking": "Jayesh Mohanlalji Oswal ( Gundesha )"
+  "booking": "Jayesh Mohanlalji Oswal"
  },
  {
   "name": "Jinesh Gajraj Jain",
@@ -584,20 +584,20 @@
   "booking": "Ketan Popatlal Jain"
  },
  {
-  "name": "Khush Shantilal Oswal ( Jain)",
+  "name": "Khush Shantilal Oswal",
   "room": "TENT -1",
   "category": "Male",
   "mobile": "9028661666",
   "rafting": 0,
-  "booking": "Khush Shantilal Oswal ( Jain)"
+  "booking": "Khush Shantilal Oswal"
  },
  {
-  "name": "Prisha Khush Oswal ( Jain)",
+  "name": "Prisha Khush Oswal",
   "room": "SD",
   "category": "Female",
   "mobile": "9028661666",
   "rafting": 0,
-  "booking": "Khush Shantilal Oswal ( Jain)"
+  "booking": "Khush Shantilal Oswal"
  },
  {
   "name": "Kumod Ramesh Kawediya",
@@ -1672,20 +1672,20 @@
   "booking": "Vinodkumar Sukhraj Shah"
  },
  {
-  "name": "Vipul Sumermal Lunkad (Shah)",
+  "name": "Vipul Sumermal Lunkad",
   "room": "D-02",
   "category": "Male",
   "mobile": "7020629707",
   "rafting": 4,
-  "booking": "Vipul Sumermal Lunkad (Shah)"
+  "booking": "Vipul Sumermal Lunkad"
  },
  {
-  "name": "Mamta Vipul Lunkad (Shah)",
+  "name": "Mamta Vipul Lunkad",
   "room": "NX-03",
   "category": "Female",
   "mobile": "7020629707",
   "rafting": 4,
-  "booking": "Vipul Sumermal Lunkad (Shah)"
+  "booking": "Vipul Sumermal Lunkad"
  },
  {
   "name": "Dhyan",
@@ -1693,7 +1693,7 @@
   "category": "Kid",
   "mobile": "7020629707",
   "rafting": 4,
-  "booking": "Vipul Sumermal Lunkad (Shah)"
+  "booking": "Vipul Sumermal Lunkad"
  },
  {
   "name": "Navya",
@@ -1701,7 +1701,7 @@
   "category": "Kid",
   "mobile": "7020629707",
   "rafting": 4,
-  "booking": "Vipul Sumermal Lunkad (Shah)"
+  "booking": "Vipul Sumermal Lunkad"
  },
  {
   "name": "Asmi",
@@ -1709,7 +1709,7 @@
   "category": "Kid",
   "mobile": "7020629707",
   "rafting": 4,
-  "booking": "Vipul Sumermal Lunkad (Shah)"
+  "booking": "Vipul Sumermal Lunkad"
  },
  {
   "name": "Nitya",
@@ -1717,7 +1717,7 @@
   "category": "Kid",
   "mobile": "7020629707",
   "rafting": 4,
-  "booking": "Vipul Sumermal Lunkad (Shah)"
+  "booking": "Vipul Sumermal Lunkad"
  },
  {
   "name": "Yogesh Nenmal Bafna",

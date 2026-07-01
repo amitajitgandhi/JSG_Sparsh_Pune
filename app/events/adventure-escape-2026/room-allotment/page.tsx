@@ -16,6 +16,17 @@ const ROOM_LEGEND: { code: string; name: string }[] = [
   { code: 'SD', name: 'Semi Deluxe' },
 ]
 
+// Shorten a full name to keep it on one line: middle name(s) become an initial.
+// "Aarushi Pankaj Jain" -> "Aarushi P. Jain"; single/double names unchanged.
+const shortName = (full: string): string => {
+  const parts = full.trim().split(/\s+/)
+  if (parts.length <= 2) return full.trim()
+  const first = parts[0]
+  const last = parts[parts.length - 1]
+  const middles = parts.slice(1, -1).map(m => `${m.charAt(0).toUpperCase()}.`).join(' ')
+  return `${first} ${middles} ${last}`
+}
+
 const CATEGORY_STYLES: Record<string, string> = {
   Male: 'bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300',
   Female: 'bg-pink-100 text-pink-700 dark:bg-pink-950 dark:text-pink-300',
@@ -122,8 +133,11 @@ export default function RoomAllotmentPage() {
         </div>
 
         {/* Table */}
-        <div className='overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800'>
-          <table className='w-full min-w-[760px] border-collapse text-sm'>
+        <div className='relative'>
+          {/* right-edge fade — hints that the table scrolls to reveal more columns */}
+          <div className='pointer-events-none absolute inset-y-0 right-0 z-10 w-10 rounded-r-2xl bg-gradient-to-l from-white to-transparent dark:from-gray-800 sm:hidden' />
+          <div className='overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800'>
+          <table className='w-auto min-w-full border-collapse text-sm'>
             <thead>
               <tr className='border-b border-slate-200 bg-slate-50 dark:border-gray-700 dark:bg-gray-900'>
                 {headers.map(h => (
@@ -148,9 +162,9 @@ export default function RoomAllotmentPage() {
               ) : (
                 rows.map((p, i) => (
                   <tr key={i} className='border-b border-slate-100 last:border-0 hover:bg-sky-50/60 dark:border-gray-700/60 dark:hover:bg-gray-700/40'>
-                    <td className='px-3 py-3 font-semibold text-slate-800 dark:text-gray-100'>{p.name}</td>
+                    <td className='whitespace-nowrap px-3 py-3 font-semibold text-slate-800 dark:text-gray-100'>{shortName(p.name)}</td>
                     <td className='px-3 py-3'>
-                      <span className='inline-flex rounded-lg bg-emerald-100 px-2.5 py-1 text-xs font-extrabold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'>{p.room}</span>
+                      <span className='inline-flex whitespace-nowrap rounded-lg bg-emerald-100 px-2.5 py-1 text-xs font-extrabold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'>{p.room}</span>
                     </td>
                     <td className='px-3 py-3'>
                       <span className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-bold ${CATEGORY_STYLES[p.category] || 'bg-slate-100 text-slate-700 dark:bg-gray-700 dark:text-gray-200'}`}>{p.category}</span>
@@ -163,13 +177,18 @@ export default function RoomAllotmentPage() {
                         ? <span className='inline-flex rounded-lg bg-sky-100 px-2.5 py-1 text-xs font-bold text-sky-700 dark:bg-sky-950 dark:text-sky-300'>{p.rafting}</span>
                         : <span className='text-slate-400 dark:text-gray-500'>—</span>}
                     </td>
-                    <td className='px-3 py-3 text-slate-600 dark:text-gray-300'>{p.booking}</td>
+                    <td className='whitespace-nowrap px-3 py-3 text-slate-600 dark:text-gray-300'>{shortName(p.booking)}</td>
                   </tr>
                 ))
               )}
             </tbody>
           </table>
+          </div>
         </div>
+        {/* swipe hint — only on mobile where columns are clipped */}
+        <p className='mt-2 text-center text-[11px] font-medium text-slate-400 dark:text-gray-500 sm:hidden'>
+          Swipe the table sideways to see mobile, rafting &amp; booking →
+        </p>
 
         {/* Room legend */}
         <div className='mt-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800'>
