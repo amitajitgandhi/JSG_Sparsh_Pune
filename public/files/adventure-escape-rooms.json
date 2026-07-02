@@ -684,7 +684,7 @@
   "room": "D-03",
   "category": "Male",
   "mobile": "9028483439",
-  "rafting": 3,
+  "rafting": 2,
   "booking": "Pintukumar Gulabchand Shah"
  },
  {
@@ -696,12 +696,12 @@
   "booking": "Pintukumar Gulabchand Shah"
  },
  {
-  "name": "Trupti",
+  "name": "Rashi Hitesh Oswal",
   "room": "S.Hall",
   "category": "Kid",
-  "mobile": "9028483439",
-  "rafting": 3,
-  "booking": "Pintukumar Gulabchand Shah"
+  "mobile": "8668533098",
+  "rafting": 0,
+  "booking": "Hitesh Bhabutmal Oswal"
  },
  {
   "name": "Manik Kesarimal Oswal",
@@ -916,7 +916,7 @@
   "room": "D-06",
   "category": "Male",
   "mobile": "8446735443",
-  "rafting": 0,
+  "rafting": 2,
   "booking": "Nikhil Oswal"
  },
  {
