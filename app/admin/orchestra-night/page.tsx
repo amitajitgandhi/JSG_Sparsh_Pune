@@ -8,6 +8,7 @@ type Reg = {
   id: number
   name: string
   mobile: string
+  membership_type: string
   passes: number
   created_at: string
 }
@@ -23,7 +24,7 @@ export default function AdminOrchestraNightDashboard() {
     setError(null)
     const { data, error } = await supabase
       .from('orchestra_night_registrations')
-      .select('id, name, mobile, passes, created_at')
+      .select('id, name, mobile, membership_type, passes, created_at')
       .order('id', { ascending: false })
     if (error) setError(error.message)
     setRows((data as any) || [])
@@ -41,15 +42,18 @@ export default function AdminOrchestraNightDashboard() {
   const stats = useMemo(() => {
     const registrations = rows.length
     const totalPasses = rows.reduce((s, r) => s + (r.passes || 0), 0)
-    return { registrations, totalPasses }
+    const sparshMembers = rows.filter(r => r.membership_type === 'JSG PUNE SPARSH').length
+    const otherMembers = rows.filter(r => r.membership_type === 'OTHER').length
+    return { registrations, totalPasses, sparshMembers, otherMembers }
   }, [rows])
 
   const exportCsv = () => {
-    const header = ['id', 'name', 'mobile', 'passes', 'created_at']
+    const header = ['id', 'name', 'mobile', 'membership_type', 'passes', 'created_at']
     const csvRows = rows.map(r => ({
       id: r.id,
       name: r.name,
       mobile: r.mobile,
+      membership_type: r.membership_type,
       passes: r.passes,
       created_at: new Date(r.created_at).toLocaleString(),
     }))
@@ -97,9 +101,11 @@ export default function AdminOrchestraNightDashboard() {
           </div>
         </div>
 
-        <div className='grid grid-cols-2 sm:grid-cols-2 gap-3 mb-6'>
+        <div className='grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6'>
           <Card title='Registrations' value={stats.registrations} color='bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100' />
           <Card title='Total Passes' value={stats.totalPasses} color='bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-200' />
+          <Card title='JSG Pune Sparsh' value={stats.sparshMembers} color='bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-950 dark:text-fuchsia-200' />
+          <Card title='Other' value={stats.otherMembers} color='bg-violet-100 text-violet-800 dark:bg-violet-950 dark:text-violet-200' />
         </div>
 
         {rows.length === 0 ? (
@@ -117,6 +123,7 @@ export default function AdminOrchestraNightDashboard() {
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>#</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Name</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Mobile</th>
+                    <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Membership</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Passes</th>
                     <th className='px-4 py-2 text-left text-xs font-semibold text-gray-600 dark:text-gray-300'>Submitted At</th>
                   </tr>
@@ -127,6 +134,7 @@ export default function AdminOrchestraNightDashboard() {
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{idx + 1}</td>
                       <td className='px-4 py-2 text-sm font-medium text-gray-900 dark:text-gray-100'>{r.name}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.mobile}</td>
+                      <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.membership_type}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300'>{r.passes}</td>
                       <td className='px-4 py-2 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap'>{new Date(r.created_at).toLocaleString()}</td>
                     </tr>

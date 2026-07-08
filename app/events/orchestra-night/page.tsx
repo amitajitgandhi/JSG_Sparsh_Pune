@@ -18,6 +18,7 @@ import {
 export default function OrchestraNightPage() {
   const [name, setName] = useState('')
   const [mobile, setMobile] = useState('')
+  const [membershipType, setMembershipType] = useState<'JSG PUNE SPARSH' | 'OTHER'>('JSG PUNE SPARSH')
   const [passes, setPasses] = useState<number>(1)
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -37,13 +38,14 @@ export default function OrchestraNightPage() {
       const res = await fetch('/api/events/orchestra-night/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name.trim(), mobile, passes }),
+        body: JSON.stringify({ name: name.trim(), mobile, membershipType, passes }),
       })
       const data = await res.json()
       if (!res.ok || !data?.success) throw new Error(data?.error || 'Submission failed')
       setSuccess(true)
       setName('')
       setMobile('')
+      setMembershipType('JSG PUNE SPARSH')
       setPasses(1)
     } catch (e: any) {
       setError(e?.message || 'Unexpected error. Please try again.')
@@ -211,6 +213,36 @@ export default function OrchestraNightPage() {
                     className="w-full rounded-lg border border-gray-300 bg-white text-gray-900 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:ring-rose-500"
                     placeholder="10-digit mobile number"
                   />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 mb-1">
+                    Membership Type *
+                  </label>
+                  <div className="flex flex-wrap gap-4 sm:gap-6 text-gray-800 dark:text-gray-100">
+                    <label className="inline-flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="membershipType"
+                        value="JSG PUNE SPARSH"
+                        checked={membershipType === 'JSG PUNE SPARSH'}
+                        onChange={() => setMembershipType('JSG PUNE SPARSH')}
+                        className="h-4 w-4 text-rose-600 focus:ring-rose-400 dark:bg-gray-800 dark:border-gray-600"
+                      />
+                      <span className="text-sm">JSG Pune Sparsh</span>
+                    </label>
+                    <label className="inline-flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="membershipType"
+                        value="OTHER"
+                        checked={membershipType === 'OTHER'}
+                        onChange={() => setMembershipType('OTHER')}
+                        className="h-4 w-4 text-rose-600 focus:ring-rose-400 dark:bg-gray-800 dark:border-gray-600"
+                      />
+                      <span className="text-sm">Other</span>
+                    </label>
+                  </div>
                 </div>
 
                 <div>
