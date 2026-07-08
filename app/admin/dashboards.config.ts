@@ -106,6 +106,15 @@ export const DASHBOARDS: DashboardDef[] = [
     archivable: true,
     tables: ['sparsh_cricket_registrations'],
   },
+  {
+    slug: 'orchestra-night',
+    href: '/admin/orchestra-night',
+    label: 'Orchestra Night Dashboard',
+    description: 'View Healing Harmony 2026 - Orchestra Night registrations and passes, and export participant data.',
+    color: 'rose',
+    archivable: true,
+    tables: ['orchestra_night_registrations'],
+  },
 ]
 
 /** Slug → table allow-list, used server-side to guard data deletion. */

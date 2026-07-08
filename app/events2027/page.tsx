@@ -55,6 +55,18 @@ export default function Events2027() {
       highlights: ['River Rafting', 'Zipline', 'Waterfall Trek', 'DJ Night'],
       galleryUrl: 'To be updated soon!',
       pageUrl: '/events/adventure-escape-2026',
+    },
+    {
+      id: '[BONUS]',
+      title: 'Orchestra Night · Healing Harmony 2026',
+      date: '2026-07-16',
+      time: '5:00 PM – 8:00 PM',
+      venue: 'Annabhau Sathe Auditorium, Pune',
+      description: 'JSG Pune Sparsh, in association with Umeed Cancer Support Forum, JSG Pune Main, Aastha Breast Care and Kalangan, invites you to a heart-touching musical evening where doctors and cancer survivors come together to celebrate life, resilience, and the power of hope through music.',
+      attendees: 'Free Entry · All Welcome',
+      highlights: ['Live Orchestra', 'Doctors & Survivors', 'Hope & Courage', 'Free Entry'],
+      galleryUrl: 'To be updated soon!',
+      detailsUrl: '/events/orchestra-night',
     }
   ]
 

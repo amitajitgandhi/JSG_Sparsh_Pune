@@ -150,6 +150,16 @@ export default function Hero() {
                     View &rarr;
                   </span>
                 </Link>
+                <Link
+                  href="/events/orchestra-night"
+                  onClick={() => setShowUpcoming(false)}
+                  className="group rounded-xl border border-violet-300 bg-violet-50 px-4 py-3 font-semibold text-violet-700 flex items-center justify-between hover:bg-violet-100 transition"
+                >
+                  <span>Orchestra Night · Healing Harmony 2026</span>
+                  <span className="text-[11px] font-bold uppercase tracking-wide group-hover:translate-x-1 transition">
+                    View &rarr;
+                  </span>
+                </Link>
               </div>
               <button
                 onClick={() => setShowUpcoming(false)}
