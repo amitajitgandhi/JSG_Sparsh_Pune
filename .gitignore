@@ -54,3 +54,6 @@ Thumbs.db
 *.dll
 bin/
 obj/
+
+# Claude Code local settings (machine-specific; project hooks/settings.json stay tracked)
+.claude/settings.local.json
