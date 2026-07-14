@@ -5,81 +5,117 @@ description: Use whenever the user asks to "commit and push", "save my changes t
 
 # Commit and Push Workflow
 
-Goal: take whatever is currently changed in the working tree and get it committed and pushed to
-`origin` in one request, the way a careful developer would do it by hand - not by blindly running
-`git add -A && git commit && git push`.
+Goal: show the user exactly what changed, get a single yes/no go-ahead, then finish the whole
+commit + push in one uninterrupted pass - no follow-up questions once the user says yes.
+
+## Project-specific commit identity
+
+For this project, every commit must be authored as:
+
+- Name: `amitajitgandhi`
+- Email: `ag241290@gmail.com`
+
+Do not use `git config --global` to set this. Pass it per-command instead, so it never leaks into
+other repos:
+
+```bash
+git -c user.name="amitajitgandhi" -c user.email="ag241290@gmail.com" commit -m "..."
+```
+
+If commit-tree is used directly (see lock-file workaround below), set it via environment variables
+instead:
+
+```bash
+GIT_AUTHOR_NAME="amitajitgandhi" GIT_AUTHOR_EMAIL="ag241290@gmail.com" \
+GIT_COMMITTER_NAME="amitajitgandhi" GIT_COMMITTER_EMAIL="ag241290@gmail.com" \
+git commit-tree <tree> -p HEAD -m "..."
+```
+
+## Step 0 (mandatory, before trusting anything): refresh the stat cache
+
+This working copy is a mounted/synced folder, and it has a confirmed caching bug: git can report
+`nothing to commit, working tree clean` even when a file was genuinely edited, because git skips
+re-reading a file's content when its cached mtime/size still matches the index (a normal
+performance shortcut) - and this mount can serve a stale mtime for a file that was actually changed.
+That makes a bare `git status` untrustworthy here.
+
+Before every `git status`/`git diff` check, force a fresh mtime on all tracked files so git is
+forced to actually compare content instead of trusting stale stat data:
+
+```bash
+git ls-files -z | xargs -0 touch
+```
+
+Only after this should `git status` be treated as ground truth.
 
 ## Steps
 
-1. **Look before touching anything.** Run `git status` and `git diff` (and `git diff --stat` for a
-   quick overview) to see exactly what changed. Run `git log --oneline -5` to match this repo's
-   existing commit message style.
+1. **Show git status first, unconditionally** (after Step 0's refresh). Run `git status` and paste
+   its output back to the user verbatim (or near-verbatim) before doing anything else. Also run
+   `git diff --stat` so the size of the change is visible.
 
-2. **Filter out noise, don't stage it blindly.** This repo (and this kind of Windows/sandbox checkout
-   generally) is prone to line-ending drift - a file can show as "modified" with hundreds of
-   changed lines when nothing meaningful actually changed, just CRLF vs LF. Before staging a file:
-   - If `git diff --stat <file>` shows a huge change but `git diff <file>` shows every line flipping
-     with no real content difference, normalize it to LF first (`sed -i 's/\r$//' <file>` or
-     equivalent) and re-check the diff so only genuine changes remain.
-   - Never run `git add -A` or `git add .` in this repo without first reviewing `git status` - it is
-     easy to accidentally sweep in dozens of unrelated pre-existing "modified" files that have nothing
-     to do with the current task.
-   - Only stage the files that are actually part of what the user asked for in this session. If
-     `git status` shows unrelated modified files you did not touch and don't recognize, leave them
-     unstaged and mention them rather than silently including them.
+2. **Filter out noise before it ever reaches the user.** This repo now has a `.gitattributes` that
+   normalizes line endings to LF, so CRLF/LF drift should no longer appear. If a file nonetheless
+   shows as modified with every line flipped and no real content difference, check with
+   `git diff --ignore-space-at-eol --stat <file>` - if that's empty, it's noise, not a real change.
+   Leave noise files out of the status summary shown to the user and out of anything staged.
 
-3. **Stage exactly the intended files** with `git add <specific paths>`, never a blanket flag, unless
-   the user explicitly confirms they want everything included.
+3. **Ask exactly one yes/no question**, after showing status: something like "Commit and push
+   these changes? (yes/no)". Do not ask anything else at this stage (no commit message bikeshedding,
+   no per-file confirmation) - the whole point is one gate, then full automation.
 
-4. **Write a real commit message.** Summarize the *why*, not just the *what*, in 1-2 sentences,
-   matching the tone of recent commits (`git log`). Use a heredoc so multi-line messages format
-   correctly:
+4. **If the answer is no:** stop. Don't stage or touch anything.
 
+5. **If the answer is yes, do the rest with no further prompts:**
+   - Stage exactly the genuinely-changed files (never a blanket `git add -A`/`git add .` without
+     having already reviewed status in step 1).
+   - Write a commit message summarizing the *why* in 1-2 sentences, matching the tone of
+     `git log --oneline -5`. Use a heredoc for multi-line messages.
+   - Commit using the project identity above.
+   - Push with a plain `git push` (`git push -u origin <branch>` if there's no upstream yet). Never
+     use `--force`/`--force-with-lease` unless the user explicitly asked for a force-push in this
+     conversation.
+   - Report back concisely: files committed, one-line message, and push result.
+
+## Handling `.git/index.lock` / `.git/HEAD.lock` / `.git/refs/heads/<branch>.lock`
+
+This mount also has a confirmed caching bug on lock-file paths: git reports
+`Unable to create '.git/index.lock': File exists` (or `HEAD.lock`, or a ref lock) even when there
+is no other process and the file does not actually exist on the user's real filesystem. Do **not**
+ask the user to close other git tools or manually delete the lock file for this project - that's
+already been ruled out. Instead, go straight to the workaround:
+
+1. **For staging (`git add`):**
    ```bash
-   git commit -m "$(cat <<'EOF'
-   <summary line>
-
-   <optional body>
-   EOF
-   )"
+   cp .git/index /tmp/gitindex
+   GIT_INDEX_FILE=/tmp/gitindex git add <files>
+   # renormalize instead of add, if relevant:
+   GIT_INDEX_FILE=/tmp/gitindex git add --renormalize .
+   cp /tmp/gitindex .git/index
    ```
 
-5. **Push normally.** `git push` (or `git push -u origin <branch>` if the branch has no upstream yet).
-   Never use `--force` or `--force-with-lease` unless the user explicitly asks for it - if a normal
-   push is rejected (non-fast-forward), stop and tell the user rather than forcing.
+2. **For committing (`git commit`):** if a plain `-c user.name=... commit` still hits the lock bug,
+   build the commit manually and skip ref-locking entirely:
+   ```bash
+   TREE=$(GIT_INDEX_FILE=/tmp/gitindex git write-tree)
+   COMMIT=$(GIT_AUTHOR_NAME="amitajitgandhi" GIT_AUTHOR_EMAIL="ag241290@gmail.com" \
+            GIT_COMMITTER_NAME="amitajitgandhi" GIT_COMMITTER_EMAIL="ag241290@gmail.com" \
+            git commit-tree "$TREE" -p HEAD -m "<message>")
+   ```
+   Then update the branch ref directly by editing `.git/refs/heads/<branch>` (e.g. with a file
+   edit tool) to replace the old commit hash with `$COMMIT` - this bypasses the cached lock path
+   entirely. Finally `cp /tmp/gitindex .git/index` so the working index matches.
 
-6. **Report back concisely.** State what was committed (file list + one-line message) and confirm the
-   push succeeded, or explain clearly if it didn't (e.g. auth prompt needed, no upstream, merge
-   conflict, or a stuck `.git/index.lock`).
+3. **Push as normal** once the ref points at the new commit - `git push` doesn't touch
+   `index.lock`/`HEAD.lock` so it's usually unaffected by this bug.
 
-## Handling a stuck `.git/index.lock`
+4. Warnings like `unable to unlink '.git/objects/xx/tmp_obj_XXXXXX': Operation not permitted` during
+   `add`/`commit`/`commit-tree` are the same mount quirk and are harmless as long as the surrounding
+   command still reports success (or you verify the resulting object/commit exists with
+   `git cat-file -t <hash>`) - don't treat those warnings alone as failures.
 
-`git add`/`git commit` failing with `Unable to create '.../.git/index.lock': File exists` means a
-previous git process didn't clean up after itself. Don't just repeat "delete the lock file" forever
-if the first attempt didn't fix it - dig one level deeper:
+## Credentials
 
-1. First attempt: ask the user to close any other git tool (VS Code Source Control, GitHub Desktop,
-   another terminal) and delete the lock file themselves from their own OS (not from inside this
-   session, which may not have permission to touch it).
-2. **If they report the file doesn't exist on their end at all** (e.g. `del` / `rm` says "path not
-   found") while it still reliably reproduces from inside this session - that's an important signal,
-   not a dead end. It means this session's working copy of the repo and the user's local working copy
-   have diverged (they aren't necessarily the same live filesystem), and the lock is specific to
-   *this session's* checkout, which the user has no way to reach or delete since it isn't a file on
-   their machine.
-   - Don't keep asking them to delete a file that isn't theirs to delete.
-   - Instead, pivot immediately: give the user the exact `git add` / `git commit -m "..."` / `git push`
-     commands for the files in question, and ask them to run those directly in their own terminal,
-     since their local copy has no lock problem. Confirm afterwards (e.g. `git log --oneline -3`) that
-     the commit shows up.
-   - Mention this plainly rather than re-explaining the same "close other tools and delete it" advice
-     a second time - if it didn't work once, repeating it isn't going to help.
-
-## Guardrails
-
-- Follow this project's `CLAUDE.md`: confirm before "heavy usage of tokens" or destructive changes.
-  A normal commit + push of reviewed, intentional changes is routine and does not need extra
-  confirmation; force-pushing, rewriting history, or deleting branches does.
-- If `git status` is unexpectedly enormous (e.g. nearly every file in the repo shows as modified),
-  that is almost always line-ending drift, not real work - do not commit that wholesale. Investigate
-  and narrow down to real changes first.
+A repo-local credential helper is already configured (`credential.helper = store --file
+.git/.git-credentials`) so `git push` should not need interactive auth. If push ever fails with a
+403 or auth error, stop and tell the user rather than trying to silently reconfigure credentials.
