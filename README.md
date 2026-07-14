@@ -252,3 +252,5 @@ JSG-Portal/
 ---
 
 **JSG SPARSH Pune** - Connecting Jain families through community, culture, and compassion. :pray:
+
+_Last updated: 2026-07-14_
