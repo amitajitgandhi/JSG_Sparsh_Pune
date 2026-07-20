@@ -14,7 +14,6 @@ import {
   EVENT_SLUG,
   EVENT_SPONSOR_LINE,
   FEE_AMOUNT,
-  SLOT_CAP,
   TILE_THEME,
   faqItems,
   inclusions,
@@ -558,8 +557,8 @@ export default function SparshBoxCricketMiniTournament2026Page() {
                         </p>
                       ) : null}
                       {previewUrl ? (
-                        <div className="mt-3 rounded-xl border border-gray-200 bg-white p-2">
-                          <Image src={previewUrl} alt="Uploaded screenshot preview" width={320} height={320} className="h-auto w-full rounded-lg object-cover" unoptimized />
+                        <div className="mt-3 h-24 w-24 overflow-hidden rounded-full border border-gray-200 bg-white">
+                          <Image src={previewUrl} alt="Uploaded screenshot preview" width={96} height={96} className="h-full w-full object-cover" unoptimized />
                         </div>
                       ) : null}
                       {errors.payment_screenshot_url ? <p className="mt-1 text-xs text-red-500">{errors.payment_screenshot_url}</p> : null}

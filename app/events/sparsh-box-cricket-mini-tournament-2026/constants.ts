@@ -10,10 +10,9 @@ export const EVENT_NAME_LINE1 = 'Sparsh Box Cricket'
 export const EVENT_NAME_LINE2 = 'Mini Tournament'
 export const EVENT_SEASON = 'Season 03'
 export const EVENT_SPONSOR_LINE = 'DIPAM – हवा हर कोने में.....'
-// SLOT_CAP is the real enforced capacity used for FAQ copy and the admin dashboard's
-// "slots remaining" count. The Format tile below intentionally displays the looser
-// "40+ Players" marketing figure (matching the events2027 listing) rather than this exact number.
-export const SLOT_CAP = 42
+// There's intentionally no hard slot cap enforced anywhere (form, API, or DB) - the number of
+// players may be increased depending on response. The Format tile shows "40+ Players" as a
+// marketing figure only.
 export const TEAM_COUNT = 6
 export const FEE_AMOUNT = 400
 
@@ -81,6 +80,6 @@ export const faqItems = [
   },
   {
     question: 'Are slots limited?',
-    answer: `Yes — only ${SLOT_CAP} player slots are available, on a first come, first served basis. Once all slots are filled, registration will be closed.`
+    answer: 'Slots are on a first come, first served basis. If registration closes, you\'ll see a notice on this page — the exact number of slots may be adjusted depending on response.'
   }
 ]

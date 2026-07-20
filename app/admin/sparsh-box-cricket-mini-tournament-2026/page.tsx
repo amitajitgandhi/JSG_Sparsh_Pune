@@ -25,7 +25,12 @@ type Reg = {
 }
 
 const TABLE = 'sparsh_box_cricket_mini_tournament_registrations'
-const SLOT_CAP = 42
+const CASH_RECIPIENTS = [
+  { key: 'Amit Gandhi', label: 'Amit' },
+  { key: 'Mukesh Jain (MA Hardware)', label: 'Mukesh' },
+  { key: 'Satish Jain (Jaliwala)', label: 'Satish' },
+  { key: 'Jitendra Jain (Unique Ladder)', label: 'Jitendra' }
+]
 
 export default function SparshBoxCricketMiniTournament2026Dashboard() {
   const [rows, setRows] = useState<Reg[]>([])
@@ -114,9 +119,12 @@ export default function SparshBoxCricketMiniTournament2026Dashboard() {
     const cash = rows.filter((r) => r.payment_method === 'cash').length
     const online = rows.filter((r) => r.payment_method === 'online').length
     const totalRevenue = rows.reduce((sum, r) => sum + (r.fee_amount || 0), 0)
-    const slotsRemaining = Math.max(0, SLOT_CAP - total)
+    const cashByRecipient = CASH_RECIPIENTS.map((recipient) => ({
+      label: recipient.label,
+      count: rows.filter((r) => r.payment_method === 'cash' && r.cash_paid_to === recipient.key).length
+    }))
 
-    return { total, members, kids, cash, online, totalRevenue, slotsRemaining }
+    return { total, members, kids, cash, online, totalRevenue, cashByRecipient }
   }, [rows])
 
   const handleSort = (field: keyof Reg) => {
@@ -281,9 +289,8 @@ export default function SparshBoxCricketMiniTournament2026Dashboard() {
           ) : null}
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
           <Card title="Total Registrations" value={stats.total} color="bg-blue-100 text-blue-800" />
-          <Card title="Slots Remaining" value={`${stats.slotsRemaining} / ${SLOT_CAP}`} color="bg-sky-100 text-sky-800" />
           <Card title="Members" value={stats.members} color="bg-violet-100 text-violet-800" />
           <Card title="Kids" value={stats.kids} color="bg-purple-100 text-purple-800" />
         </div>
@@ -292,6 +299,15 @@ export default function SparshBoxCricketMiniTournament2026Dashboard() {
           <Card title="Cash Payments" value={stats.cash} color="bg-amber-100 text-amber-800" />
           <Card title="Online Payments" value={stats.online} color="bg-teal-100 text-teal-800" />
           <Card title="Total Revenue (₹)" value={`₹${stats.totalRevenue.toLocaleString()}`} color="bg-green-100 text-green-800" />
+        </div>
+
+        <div className="mb-6">
+          <p className="mb-2 text-xs font-bold uppercase tracking-widest text-gray-500">Cash Paid To</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {stats.cashByRecipient.map((r) => (
+              <Card key={r.label} title={r.label} value={r.count} color="bg-orange-100 text-orange-800" />
+            ))}
+          </div>
         </div>
 
         {loading ? (

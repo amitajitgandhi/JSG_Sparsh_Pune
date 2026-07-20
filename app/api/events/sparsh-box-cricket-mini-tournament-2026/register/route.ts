@@ -54,10 +54,34 @@ export async function POST(req: NextRequest) {
     }
 
     const isCash = body.payment_method === 'cash'
+    const trimmedName = String(body.name).trim()
+    const trimmedMobile = String(body.mobile_number).trim()
+
+    // Duplicate check: same name (case-insensitive) + same mobile number should only be allowed
+    // once. `.ilike` with no wildcards is a case-insensitive exact match. A unique index on
+    // (LOWER(TRIM(name)), mobile_number) backs this up at the DB level for race conditions - see
+    // supabase/box_cricket_mini_tournament_fixes.sql.
+    const { data: existingRows, error: dupError } = await supabase
+      .from(TABLE)
+      .select('id')
+      .ilike('name', trimmedName)
+      .eq('mobile_number', trimmedMobile)
+      .limit(1)
+
+    if (dupError) {
+      console.error('Duplicate check error', dupError)
+      return NextResponse.json({ error: dupError.message }, { status: 500 })
+    }
+    if (existingRows && existingRows.length > 0) {
+      return NextResponse.json(
+        { error: 'This name and mobile number is already registered for this tournament.' },
+        { status: 409 }
+      )
+    }
 
     const insertPayload = {
-      name: String(body.name).trim(),
-      mobile_number: String(body.mobile_number).trim(),
+      name: trimmedName,
+      mobile_number: trimmedMobile,
       age: Number(body.age),
       category: body.category,
       skillset: body.skillset,
@@ -77,7 +101,7 @@ export async function POST(req: NextRequest) {
       const code = (error as any).code
       let message = error.message
       if (code === '23505') {
-        message = 'This mobile number is already registered'
+        message = 'This name and mobile number is already registered for this tournament.'
         return NextResponse.json({ error: message, code }, { status: 409 })
       }
       console.error('Supabase insert error', { message: error.message, details: error.details, hint: error.hint, code, payload: insertPayload })
