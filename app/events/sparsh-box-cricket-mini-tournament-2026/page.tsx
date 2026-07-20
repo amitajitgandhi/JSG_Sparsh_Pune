@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { AlertCircle, CheckCircle2, ChevronDown, Loader2, Upload, UserPlus, UserCircle2, Wallet } from 'lucide-react'
-import { uploadPhoto, uploadRegistrationTransactionScreenshot } from '@/lib/supabase'
+import { uploadPhoto } from '@/lib/supabase'
 import RegistrationStatusModal from '@/app/components/RegistrationStatusModal'
 import type { RegistrationStatus } from '@/app/api/events/registration-status/route'
 import {
@@ -21,7 +21,7 @@ import {
 } from './constants'
 import { BoxCricketRegistrationFormValues, FormErrors } from './types'
 import { boxCricketRegistrationSchema } from './schema'
-import { detectTransactionReferenceFromImage } from './utils'
+import { detectTransactionReferenceFromImage, uploadTransactionScreenshot } from './utils'
 import SuccessModal from './components/SuccessModal'
 
 const initialFormValues: BoxCricketRegistrationFormValues = {
@@ -151,7 +151,7 @@ export default function SparshBoxCricketMiniTournament2026Page() {
     setUploadingScreenshot(true)
     try {
       const uploadId = `box-cricket-mini-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
-      const uploadedUrl = await uploadRegistrationTransactionScreenshot(file, uploadId)
+      const uploadedUrl = await uploadTransactionScreenshot(file, uploadId)
       if (!uploadedUrl) {
         setErrors((prev) => ({ ...prev, payment_screenshot_url: 'Failed to upload screenshot. Please try again.' }))
         return

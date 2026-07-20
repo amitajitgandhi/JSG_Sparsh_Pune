@@ -42,36 +42,7 @@ BEGIN
   END IF;
 END $$;
 
--- ─────────────────────────────────────────────────────────────────────────────
--- 3. The transaction-screenshot upload for online payments uses a
---    `membership-fees-ss` bucket (lib/supabase.ts: uploadRegistrationTransactionScreenshot)
---    which doesn't exist yet in this project (only donation-transaction-ss,
---    registration-transaction-ss, and registration-photos currently exist) - create it now,
---    public from the start, so online-payment registrations don't hit the same error.
--- ─────────────────────────────────────────────────────────────────────────────
-INSERT INTO storage.buckets (id, name, owner, created_at, updated_at, public, avif_autodetection, file_size_limit, allowed_mime_types, owner_id)
-VALUES ('membership-fees-ss', 'membership-fees-ss', NULL, NOW(), NOW(), true, false, 10485760, '{"image/jpeg","image/jpg","image/png"}', NULL)
-ON CONFLICT (id) DO UPDATE SET
-  public = true,
-  file_size_limit = 10485760,
-  allowed_mime_types = EXCLUDED.allowed_mime_types;
-
-DO $$
-BEGIN
-  IF NOT EXISTS (
-    SELECT 1 FROM pg_policies
-    WHERE schemaname = 'storage' AND tablename = 'objects'
-      AND policyname = 'Anyone can upload to membership-fees-ss'
-  ) THEN
-    CREATE POLICY "Anyone can upload to membership-fees-ss" ON storage.objects
-      FOR INSERT WITH CHECK (bucket_id = 'membership-fees-ss');
-  END IF;
-  IF NOT EXISTS (
-    SELECT 1 FROM pg_policies
-    WHERE schemaname = 'storage' AND tablename = 'objects'
-      AND policyname = 'Anyone can view membership-fees-ss'
-  ) THEN
-    CREATE POLICY "Anyone can view membership-fees-ss" ON storage.objects
-      FOR SELECT USING (bucket_id = 'membership-fees-ss');
-  END IF;
-END $$;
+-- Note: the transaction-screenshot upload for this event now targets the existing
+-- `registration-transaction-ss` bucket (already Public, already has its own policies) instead of
+-- creating a new `membership-fees-ss` bucket - see app/events/sparsh-box-cricket-mini-tournament-2026/
+-- utils.ts (uploadTransactionScreenshot). No bucket changes needed for that one.
