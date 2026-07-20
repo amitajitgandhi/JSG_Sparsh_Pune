@@ -311,8 +311,10 @@ has been configured yet, so events behave normally if the admin never touches th
   - `no-store` cache headers, mirroring `upcoming-event-target/route.ts`.
 - Shared modal component `app/components/RegistrationStatusModal.tsx` (create once, reuse after):
   props `{ status: 'not_open' | 'closed'; eventName: string }`, renders a centered overlay card
-  with the matching headline copy above — light mode only, no dismiss-and-see-the-form-anyway
-  escape hatch (the form itself should stay unmounted/hidden while status isn't `open`).
+  with the matching headline copy above — light mode only. The only way out is an "Okay" button
+  that navigates to the home page (`router.push('/')`) — no backdrop-click/X dismiss that would
+  reveal the page underneath, since the form itself should stay unmounted/hidden while status
+  isn't `open`.
 
 **Per-event wiring:**
 - On the public page, fetch `/api/events/registration-status?slug=<slug>` on mount (alongside any

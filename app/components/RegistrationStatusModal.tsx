@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { Clock3, Lock } from 'lucide-react'
 import ModalPortal from '@/app/components/ModalPortal'
 
@@ -8,9 +9,11 @@ interface RegistrationStatusModalProps {
   eventName: string
 }
 
-// Shared, non-dismissable pop-up for the two "registration isn't open" states every event page
-// can be in. Reused across events rather than duplicated per event folder - see the
-// event-creator skill's "Registration-status gating" step for the full design.
+// Shared pop-up for the two "registration isn't open" states every event page can be in. The
+// only way out is the "Okay" button, which sends the visitor back to the home page - there's no
+// backdrop-click/X dismiss, since the form underneath intentionally isn't rendered while this is
+// showing. Reused across events rather than duplicated per event folder - see the event-creator
+// skill's "Registration-status gating" step for the full design.
 const COPY: Record<'not_open' | 'closed', { icon: typeof Clock3; title: string; body: string; accent: string }> = {
   not_open: {
     icon: Clock3,
@@ -27,6 +30,7 @@ const COPY: Record<'not_open' | 'closed', { icon: typeof Clock3; title: string; 
 }
 
 export default function RegistrationStatusModal({ status, eventName }: RegistrationStatusModalProps) {
+  const router = useRouter()
   const { icon: Icon, title, body, accent } = COPY[status]
 
   return (
@@ -39,6 +43,13 @@ export default function RegistrationStatusModal({ status, eventName }: Registrat
           <h3 className="text-xl font-black text-gray-900 sm:text-2xl">{title}</h3>
           <p className="mt-3 text-sm leading-relaxed text-gray-600">{body}</p>
           <p className="mt-4 text-xs font-bold uppercase tracking-widest text-gray-400">{eventName}</p>
+          <button
+            type="button"
+            onClick={() => router.push('/')}
+            className="mt-6 w-full rounded-xl bg-gradient-to-r from-blue-600 to-emerald-600 px-4 py-3 text-sm font-semibold text-white transition hover:from-blue-700 hover:to-emerald-700"
+          >
+            Okay
+          </button>
         </div>
       </div>
     </ModalPortal>
