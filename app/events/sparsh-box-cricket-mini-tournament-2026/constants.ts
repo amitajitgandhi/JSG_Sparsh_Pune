@@ -1,6 +1,9 @@
 import { CalendarDays, Clock3, Trophy, Drumstick, Coffee, Droplets, Sparkles, Gavel } from 'lucide-react'
 
 export const EVENT_NAME = 'Sparsh Box Cricket Mini Tournament'
+// Slug used for the registrations table, the register API route, and the shared
+// registration-status key (`registration_status_<slug>` in app_navigation_settings).
+export const EVENT_SLUG = 'sparsh-box-cricket-mini-tournament-2026'
 // Hero title is rendered as two lines with different emphasis: the event's core name (bigger)
 // and "Mini Tournament" (kept at the smaller size it already read well at).
 export const EVENT_NAME_LINE1 = 'Sparsh Box Cricket'
@@ -14,8 +17,9 @@ export const SLOT_CAP = 42
 export const TEAM_COUNT = 6
 export const FEE_AMOUNT = 400
 
-/** Manual admin override — set to 'YES' to force-close registration regardless of slot count. */
-export const REGISTRATION_CLOSED_STATUS: 'YES' | 'NO' = 'NO'
+// Registration open/closed state now lives in the database (see the shared
+// /api/events/registration-status route + the "Registration Status" card on this event's admin
+// dashboard) instead of a hardcoded constant here - it can be flipped live with no redeploy.
 
 // Vibrant per-tile color themes — each tile picks one of these instead of a single uniform
 // blue/emerald wash, so the page reads as lively and dynamic rather than flat.

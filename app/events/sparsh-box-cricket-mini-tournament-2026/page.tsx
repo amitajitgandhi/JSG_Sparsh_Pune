@@ -1,16 +1,19 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { AlertCircle, CheckCircle2, ChevronDown, Loader2, Upload, UserPlus, UserCircle2, Wallet } from 'lucide-react'
 import { uploadPhoto, uploadRegistrationTransactionScreenshot } from '@/lib/supabase'
+import RegistrationStatusModal from '@/app/components/RegistrationStatusModal'
+import type { RegistrationStatus } from '@/app/api/events/registration-status/route'
 import {
+  EVENT_NAME,
   EVENT_NAME_LINE1,
   EVENT_NAME_LINE2,
   EVENT_SEASON,
+  EVENT_SLUG,
   EVENT_SPONSOR_LINE,
   FEE_AMOUNT,
-  REGISTRATION_CLOSED_STATUS,
   SLOT_CAP,
   TILE_THEME,
   faqItems,
@@ -58,8 +61,20 @@ export default function SparshBoxCricketMiniTournament2026Page() {
   const [successModalOpen, setSuccessModalOpen] = useState(false)
   const [toast, setToast] = useState<ToastState>({ open: false, type: 'info', msg: '' })
   const [expandedFaqIndex, setExpandedFaqIndex] = useState<number | null>(0)
+  const [registrationStatus, setRegistrationStatus] = useState<RegistrationStatus>('open')
 
-  const registrationClosed = REGISTRATION_CLOSED_STATUS === 'YES'
+  useEffect(() => {
+    let cancelled = false
+    fetch(`/api/events/registration-status?slug=${EVENT_SLUG}`, { cache: 'no-store' })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!cancelled && data?.status) setRegistrationStatus(data.status)
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const showToast = (type: ToastState['type'], msg: string) => {
     setToast({ open: true, type, msg })
@@ -189,8 +204,8 @@ export default function SparshBoxCricketMiniTournament2026Page() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (registrationClosed) {
-      showToast('error', 'Registration is closed.')
+    if (registrationStatus !== 'open') {
+      showToast('error', 'Registration is not currently open.')
       return
     }
     if (!validateForm()) {
@@ -333,10 +348,16 @@ export default function SparshBoxCricketMiniTournament2026Page() {
             </h2>
           </div>
 
-          {registrationClosed ? (
+          {registrationStatus !== 'open' ? (
             <div className="rounded-2xl border border-gray-300 bg-gray-50 p-6 text-center">
-              <p className="text-sm font-bold uppercase tracking-widest text-gray-700">Registration Closed</p>
-              <p className="mt-2 text-sm text-gray-600">Registration for this tournament is currently closed.</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-gray-700">
+                {registrationStatus === 'not_open' ? 'Registration Not Open Yet' : 'Registration Closed'}
+              </p>
+              <p className="mt-2 text-sm text-gray-600">
+                {registrationStatus === 'not_open'
+                  ? 'Registration for this tournament will open shortly.'
+                  : 'Registration for this tournament is currently closed.'}
+              </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -612,6 +633,10 @@ export default function SparshBoxCricketMiniTournament2026Page() {
       ) : null}
 
       <SuccessModal isOpen={successModalOpen} onClose={() => setSuccessModalOpen(false)} />
+
+      {registrationStatus !== 'open' ? (
+        <RegistrationStatusModal status={registrationStatus} eventName={EVENT_NAME} />
+      ) : null}
     </div>
   )
 }
