@@ -115,6 +115,15 @@ export const DASHBOARDS: DashboardDef[] = [
     archivable: true,
     tables: ['orchestra_night_registrations'],
   },
+  {
+    slug: 'sparsh-box-cricket-mini-tournament-2026',
+    href: '/admin/sparsh-box-cricket-mini-tournament-2026',
+    label: 'Box Cricket Mini Tournament Dashboard',
+    description: 'View SPARSH Box Cricket Mini Tournament (Season 03) registrations, payment method, and export participant data.',
+    color: 'blue',
+    archivable: true,
+    tables: ['sparsh_box_cricket_mini_tournament_registrations'],
+  },
 ]
 
 /** Slug → table allow-list, used server-side to guard data deletion. */

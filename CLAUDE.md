@@ -14,27 +14,20 @@ before destructive changes - please confirm
 - Text: minimum `text-sm` for body copy; `text-xs` only for labels/captions.
 - Always test mentally: "would a thumb reach this? Does it wrap cleanly at 390px?"
 
-### 2. Dark Mode — mandatory on every page
-The app uses `darkMode: 'class'` (Tailwind). The `dark` class is toggled on `<html>` by `DarkModeSync.tsx`.
+### 2. Light Mode Only — mandatory on every page (supersedes the old dark-mode rule)
+As of 2026-07-14, every page must render in light/white mode only, regardless of the device's or
+OS's dark-mode setting. Do not add `dark:` Tailwind variants, `.dark .foo {}` CSS overrides, or any
+other dark-theme branching to new or edited pages/components.
 
-**Every element that has a light background/text must have a `dark:` counterpart.**
-
-| Light | Dark equivalent |
-|---|---|
-| `bg-white` | `dark:bg-gray-800` or `dark:bg-gray-900` |
-| `bg-gray-50` | `dark:bg-gray-900` |
-| `bg-indigo-50` | `dark:bg-indigo-950` |
-| `text-gray-800` | `dark:text-gray-100` or `dark:text-gray-50` |
-| `text-gray-600` | `dark:text-gray-300` |
-| `text-gray-500` | `dark:text-gray-400` |
-| `text-gray-400` (labels) | `dark:text-gray-500` |
-| `border-gray-200` | `dark:border-gray-700` |
-| `border-violet-100` | `dark:border-violet-900` |
-
-- **Page backgrounds**: never use bare `bg-white` or a hardcoded light CSS gradient as the root background without a dark counterpart. Use `dark:bg-gray-950` or a `.dark .class-name { }` CSS override.
-- **CSS-in-JS gradients** (e.g. `kh-root`): add a `.dark .kh-root { background: ... }` selector since Tailwind `dark:` won't reach inside `style jsx` blocks.
-- **Hero bottom fades**: if fading into the page background, always add `dark:from-gray-950` (or matching dark colour) alongside the light `from-[#f8faff]`.
-- **Gradient tiles** (coloured with `from-X-500 to-Y-400`): these are self-contained and don't need dark variants.
+- Use plain light-mode classes only: `bg-white`, `bg-gray-50`, `text-gray-800`, `border-gray-200`,
+  etc. — with no `dark:` counterpart.
+- If a component previously read the app's dark-mode state (e.g. via `DarkModeSync.tsx` or a
+  `dark` class on `<html>`), new/edited code should not depend on that state to change appearance.
+- **Existing pages that already have full `dark:` styling are not required to be stripped
+  immediately** — that cleanup is deferred and can happen incrementally later. This rule governs
+  new pages and any page you are already substantially editing for another reason.
+- If you are touching a page that currently has dark-mode classes as part of unrelated work, leave
+  them as-is unless the task at hand is specifically to migrate that page to light-only.
 
 ### 3. Null Bytes
 After writing or editing any `.tsx` file, strip null bytes before committing:
@@ -59,4 +52,4 @@ Null bytes cause Vercel TypeScript build errors (`Invalid character`).
 ### 6. Cards & surfaces
 - Rounded corners: `rounded-2xl` for cards; `rounded-xl` for inner elements.
 - Shadow: `shadow-sm` default; `shadow-md` on hover or emphasis.
-- Avoid pure white card on pure white background — use a subtle border (`border border-gray-200 dark:border-gray-700`) or shadow.
+- Avoid pure white card on pure white background — use a subtle border (`border border-gray-200`) or shadow.

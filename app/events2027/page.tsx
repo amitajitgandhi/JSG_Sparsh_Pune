@@ -67,6 +67,19 @@ export default function Events2027() {
       highlights: ['Live Orchestra', 'Doctors & Survivors', 'Hope & Courage', 'Free Entry'],
       galleryUrl: 'To be updated soon!',
       detailsUrl: '/events/orchestra-night',
+    },
+    {
+      id: '[BONUS 2]',
+      title: 'Sparsh Box Cricket Mini Tournament - Season 03',
+      date: '2026-08-15',
+      time: '2:00 PM onwards',
+      venue: 'Pushpa Sports Arena',
+      description: 'Powered by DIPAM — an action-packed afternoon of box cricket, fun, and team spirit! 6 teams, 40+ players, squads formed through an exciting player auction. Includes league matches, high tea, dinner, hydration, and trophies & awards.',
+      attendees: '6 Teams · 40+ Players',
+      highlights: ['6 Teams', '40+ Players', 'Player Auction', 'High Tea & Dinner'],
+      category: 'Sports',
+      galleryUrl: 'To be updated soon!',
+      pageUrl: '/events/sparsh-box-cricket-mini-tournament-2026',
     }
   ]
 

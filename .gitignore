@@ -57,3 +57,6 @@ obj/
 
 # Claude Code local settings (machine-specific; project hooks/settings.json stay tracked)
 .claude/settings.local.json
+
+# event-creator skill: per-event in-progress state, not meant to be committed
+.claude/skills/event-creator/state/
