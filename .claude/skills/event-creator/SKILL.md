@@ -101,7 +101,10 @@ from the event name (adding a year suffix if the name doesn't already include on
     "slotCap": 42,
     "highlightsStyle": "pill-chip"
   },
-  "steps": { "page": false, "migration": false, "api": false, "listing": false, "dashboard": false }
+  "steps": {
+    "page": false, "migration": false, "api": false, "registrationStatusGating": false,
+    "listing": false, "dashboard": false, "upcomingButtonOffered": false
+  }
 }
 ```
 Update the relevant `steps.<x>` to `true` immediately after finishing that step, not all at the end -
@@ -282,6 +285,44 @@ this is new (unlike the table migration, it's a one-time manual step too).
   close a race with any client-side display) and reject with 409 once the cap is hit.
 - Mark `steps.api = true`.
 
+## Step 4.5: Registration-status gating — two configurable pop-ups on every event page
+
+Every event page must be able to show one of two blocking pop-ups depending on where the event is
+in its lifecycle, controlled live from that event's own admin dashboard — **no code change or
+redeploy needed** to open/close registration. This supersedes the older hardcoded
+`REGISTRATION_CLOSED_STATUS: 'YES' | 'NO'` constant pattern (still present in earlier events like
+Box Cricket) — don't add that constant to new events; wire up this DB-driven version instead.
+
+**States:** `not_open` → "Registration will be opened shortly", `closed` → "Registration for this
+event is now closed", `open` → no pop-up, form renders normally (this is the default when nothing
+has been configured yet, so events behave normally if the admin never touches the control).
+
+**Shared infrastructure — check whether it already exists before creating anything:**
+- Reuses the existing `app_navigation_settings` table (`setting_key TEXT PRIMARY KEY,
+  setting_value TEXT NOT NULL`, already live — same table the "Upcoming Event" button target uses)
+  with a per-event key: `registration_status_<slug>`. No new migration needed for this table itself.
+- Shared API route `app/api/events/registration-status/route.ts` (create once, on the first event
+  that needs it — check `git ls-tree HEAD --name-only app/api/events/` first):
+  - `GET  ?slug=<slug>` → reads `registration_status_<slug>`, returns `{ status }`, **defaulting to
+    `'open'`** if no row exists yet.
+  - `POST { slug, status }` → upserts the row (same select-then-update-or-insert pattern as
+    `app/api/admin/upcoming-event-target/route.ts`). Validate `status` is one of the three allowed
+    values.
+  - `no-store` cache headers, mirroring `upcoming-event-target/route.ts`.
+- Shared modal component `app/components/RegistrationStatusModal.tsx` (create once, reuse after):
+  props `{ status: 'not_open' | 'closed'; eventName: string }`, renders a centered overlay card
+  with the matching headline copy above — light mode only, no dismiss-and-see-the-form-anyway
+  escape hatch (the form itself should stay unmounted/hidden while status isn't `open`).
+
+**Per-event wiring:**
+- On the public page, fetch `/api/events/registration-status?slug=<slug>` on mount (alongside any
+  other initial load) and render `<RegistrationStatusModal>` instead of the form when status is
+  `not_open` or `closed`; render the form normally when `open`.
+- On that event's admin dashboard (Step 6), add a small "Registration Status" card: three
+  options (Not Open Yet / Open / Closed), GET the current value on load, POST on change — modeled
+  directly on the "Upcoming Button Navigation" card in `app/admin/admin-config/page.tsx`.
+- Mark `steps.registrationStatusGating = true`.
+
 ## Step 5: Add the entry to the events2027 listing — `app/events2027/page.tsx`
 
 Append a new object to the hardcoded `events` array (do not touch the page's overall structure or
@@ -313,10 +354,35 @@ what they've told you. Mark `steps.listing = true`.
    a sortable `<table>` of all fields (include a thumbnail/link for the photo column if applicable),
    and a client-side CSV export. **Light mode only** — do not carry over the reference dashboard's
    `dark:` classes.
-2. Register it in `app/admin/dashboards.config.ts`: add a `DashboardDef` entry —
+2. Add the "Registration Status" control card described in Step 4.5 to this same dashboard page
+   (Not Open Yet / Open / Closed, GET on load, POST on change against
+   `/api/events/registration-status` with this event's `slug`).
+3. Register it in `app/admin/dashboards.config.ts`: add a `DashboardDef` entry —
    `slug`, `href: '/admin/<slug>'`, `label`, `description`, an unused-recently `color` from the
    existing enum, `archivable: true`, `tables: ['sparsh_<slug>_registrations']`.
-3. Mark `steps.dashboard = true`.
+4. Mark `steps.dashboard = true`.
+
+## Step 6.5: Offer to point the home page "Upcoming Event" button at this event
+
+The Hero section's "Upcoming Event" button target is **not hardcoded** — it's read live from the
+same `app_navigation_settings` table (key `upcoming_event_target`), defaulting to `/events/khelotsav`
+if unset, and editable via the "Upcoming Button Navigation" card on `/admin/admin-config`
+(`app/admin/admin-config/page.tsx` → `app/api/admin/upcoming-event-target/route.ts`).
+
+This skill has no way to call the live production API/DB directly (same limitation as the migration
+step — no deployed environment to reach from here), so **ask** whether this new event should become
+the current "upcoming" target rather than silently changing it (it would be premature for an event
+that isn't ready to accept registrations yet). If yes, give the user both options and let them pick:
+- **UI**: go to `/admin/admin-config` → "Upcoming Button Navigation" → Custom URL → `/events/<slug>`
+  → Save.
+- **SQL** (Supabase SQL editor), if they'd rather not use the UI:
+  ```sql
+  INSERT INTO app_navigation_settings (setting_key, setting_value)
+  VALUES ('upcoming_event_target', '/events/<slug>')
+  ON CONFLICT (setting_key) DO UPDATE SET setting_value = EXCLUDED.setting_value, updated_at = NOW();
+  ```
+Mark `steps.upcomingButtonOffered = true` once asked, regardless of their answer (this step tracks
+that the question was asked, not that the button was necessarily changed).
 
 ## Step 7: Verify — don't just eyeball it
 
@@ -333,13 +399,18 @@ what they've told you. Mark `steps.listing = true`.
    leftover references across *all* touched files (page, types, schema, migration, API route,
    dashboard) — it's easy to remove a form field but forget the matching migration column or API
    validation line.
+4. Confirm the registration-status gating actually gates: the page must not render the form (not
+   just visually hide it) while status is `not_open`/`closed`, and the admin dashboard's status
+   control must round-trip (GET reflects what was just POSTed).
 
 ## Step 8: Wrap up
 
 - Confirm every step in the state file is `true`. Summarize what was created: the page path, the
   migration file (remind them it still needs to be applied to Supabase — present the `.sql` file so
   they can copy it), whether any storage bucket needs new setup (usually not — see Step 3.5), the
-  API route, the events2027 entry, and the admin dashboard path.
+  API route, the registration-status gating (and that it defaults to `open` until touched), the
+  events2027 entry, the admin dashboard path (including its Registration Status control), and
+  whether they want the home page "Upcoming Event" button pointed at it (Step 6.5).
 - Do not run `npm run build`, start a dev server, or apply the migration yourself unless asked.
 - Ask if they'd like to run the `commit-and-push` skill now to commit everything — don't duplicate
   that skill's logic here, just hand off to it.
