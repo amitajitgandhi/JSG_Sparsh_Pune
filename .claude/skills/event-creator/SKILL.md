@@ -71,11 +71,13 @@ into multiple-choice):
   - **Player/participant photo**: does registration need a photo upload (common for auction-style
     or ID-badge events)? If yes, it reuses the shared `registration-photos` bucket (see Step 3.5) —
     no new bucket needed.
-  - **Slot cap**: is there a maximum number of registrations? If yes, ask whether they want a
-    *live* remaining-count display (extra DB query on page load) or to just state the cap in copy
-    and close registration manually later via a flag once it fills — **default to the manual/no-
-    query approach** unless they explicitly want live tracking; it's simpler and was preferred last
-    time specifically to avoid an "unnecessary" extra query.
+  - **Slot cap: never a validation, only ever copy.** No event should count registrations to
+    decide whether to accept more — no remaining-count display, no capacity-check query, no
+    "registration will auto-close once full" wording anywhere (form, API, DB constraint, or FAQ
+    text). If a number is mentioned at all, it's soft marketing copy only (e.g. "40+ players"), and
+    it may not match reality since the actual number can grow based on response. If registrations
+    need to stop, that's a manual decision made via the Registration-status control (Step 4.5) —
+    never a count-based rule baked into the page or API.
   - **Highlights/inclusions style**: a grid of colored icon tiles, or a pill-chip list inside a
     single gradient card (like `app/events/hurda-party/page.tsx`'s "Event Highlights" section)? The
     pill-chip style has proven more popular — lean toward it as the default unless told otherwise.
@@ -191,10 +193,12 @@ Key decisions, settled from experience:
   provisioned — see Step 3.5). Add a FAQ item telling users to upload a recent, HD photo.
 - **FAQ section**: always include one (accordion with `expandedFaqIndex` state, `ChevronDown` icon
   toggle). Cover: eligibility, how teams are decided (if auction-based), payment proof requirement,
-  photo requirement (if applicable), OCR-correction note (if online + OCR), cancellation/refund
-  policy, and slot-limit note (if capped). Once the FAQ exists, don't *also* keep separate standalone
-  notice boxes repeating the same eligibility/cancellation text above the form — that's redundant;
-  fold it into the FAQ instead.
+  photo requirement (if applicable), OCR-correction note (if online + OCR), and cancellation/refund
+  policy. If a slot number comes up at all, phrase it softly ("registration may close depending on
+  response") — never a hard count or "closes automatically once full" claim, since nothing enforces
+  that (see Step 1). Once the FAQ exists, don't *also* keep separate standalone notice boxes
+  repeating the same eligibility/cancellation text above the form — that's redundant; fold it into
+  the FAQ instead.
 - **Optional page-load flourish** (only if asked for, e.g. "add some animation"): keep it subtle and
   one-time, not a permanent distraction. A decorative element flying across/through the page should
   live in a `fixed inset-0 z-40 pointer-events-none overflow-hidden` wrapper (not nested inside a
@@ -238,6 +242,12 @@ Key decisions, settled from experience:
      `fee_amount INTEGER NOT NULL DEFAULT <fee> CHECK (fee_amount = <fee>)`, plus required
      `transaction_id`/`payment_screenshot_url`.
    - Two indexes: one on `created_at`, one on the mobile column.
+   - **Duplicate-prevention unique index** (standard on every event, not optional): same name
+     (case-insensitive) + same mobile number should only be registerable once —
+     `CREATE UNIQUE INDEX IF NOT EXISTS idx_<slug>_name_mobile_unique ON
+     sparsh_<slug>_registrations (LOWER(TRIM(name)), mobile_number);`. This is a data-integrity
+     backstop for the API route's own pre-check (Step 4) — not to be confused with a slot-cap
+     check, which should never exist (see Step 1).
    - `ALTER TABLE ... ENABLE ROW LEVEL SECURITY;` followed by the idempotent policy blocks used
      everywhere else in this repo:
      ```sql
@@ -277,12 +287,17 @@ this is new (unlike the table migration, it's a one-time manual step too).
 - Use a fresh `createClient(SUPABASE_URL, SERVICE_ROLE_KEY)` (service role), mirroring
   `app/api/goa-interest/route.ts`: a `validate(body)` function checking every required field
   (including conditional payment-method fields), then `insert(...)`. Return 400 with a `details`
-  array on validation failure, 409 on duplicate-mobile (`code === '23505'`), 500 with the Supabase
-  error otherwise, 200/201 with the inserted row on success.
-- If there's a slot cap and the user opted for *manual* closing (the default — see Step 1), don't
-  add a capacity-check query here; that's exactly the "unnecessary db query" this approach avoids.
-  If they explicitly asked for live tracking, add a `SELECT count(*)` re-check at submit time (to
-  close a race with any client-side display) and reject with 409 once the cap is hit.
+  array on validation failure, 500 with the Supabase error otherwise, 200/201 with the inserted row
+  on success.
+- **Duplicate registration check**: same name (case-insensitive) + same mobile number should only
+  be allowed once. Before inserting, pre-check with an `.ilike('name', trimmedName).eq
+  ('mobile_number', trimmedMobile)` query and return 409 with a friendly message if a row already
+  matches. Back this with a DB-level unique index in the migration (Step 3) as a safety net for
+  concurrent submissions, and also catch `code === '23505'` on the insert itself with the same
+  friendly message (belt-and-suspenders, since the pre-check has a race window).
+- **Never add a capacity/slot-count check here, under any circumstances** — no `SELECT count(*)`
+  re-check, no rejecting once some number is reached. See Step 1's "Slot cap" note: closing
+  registration is always a manual admin action (Step 4.5), never a validation rule.
 - Mark `steps.api = true`.
 
 ## Step 4.5: Registration-status gating — two configurable pop-ups on every event page
@@ -352,10 +367,13 @@ what they've told you. Mark `steps.listing = true`.
 1. `app/admin/<slug>/page.tsx` — base this closely on `app/admin/khelotsav-2026/page.tsx`:
    fetch all rows from `sparsh_<slug>_registrations` ordered by `created_at desc`, compute summary
    stats via `useMemo` (total registrations, revenue if there's a fee, payment-method breakdown if
-   multiple methods, category breakdowns relevant to this event, slots-remaining if there's a cap),
-   a sortable `<table>` of all fields (include a thumbnail/link for the photo column if applicable),
-   and a client-side CSV export. **Light mode only** — do not carry over the reference dashboard's
-   `dark:` classes.
+   multiple methods, category breakdowns relevant to this event, one tile per named cash recipient
+   if cash payment has a fixed "paid to" list — **never a "slots remaining" tile**, since there's no
+   enforced cap to count against, see Step 1), a sortable `<table>` of all fields, and a client-side
+   CSV export. For any image field (photo, payment screenshot), show a plain "View" link (`LinkIcon`
+   + text, opens in a new tab) rather than an inline thumbnail — rendering thumbnails for every row
+   costs bandwidth for images nobody's looking at yet. **Light mode only** — do not carry over the
+   reference dashboard's `dark:` classes.
 2. Add the "Registration Status" control card described in Step 4.5 to this same dashboard page
    (Not Open Yet / Open / Closed, GET on load, POST on change against
    `/api/events/registration-status` with this event's `slug`).

@@ -370,8 +370,8 @@ export default function SparshBoxCricketMiniTournament2026Dashboard() {
                       </td>
                       <td className="px-4 py-2 text-sm text-gray-700">
                         {r.photo_url ? (
-                          <a href={r.photo_url} target="_blank" rel="noreferrer">
-                            <img src={r.photo_url} alt={`${r.name} photo`} className="h-10 w-10 rounded-full object-cover border border-gray-200" />
+                          <a href={r.photo_url} target="_blank" rel="noreferrer" className="inline-flex items-center text-blue-600 hover:underline">
+                            <LinkIcon size={14} className="mr-1" /> View
                           </a>
                         ) : (
                           <span className="text-gray-400">—</span>
