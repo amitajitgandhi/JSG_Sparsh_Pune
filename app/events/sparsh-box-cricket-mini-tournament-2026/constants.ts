@@ -1,4 +1,4 @@
-import { CalendarDays, Clock3, Trophy, Drumstick, Coffee, Droplets, Sparkles, Gavel, MapPin } from 'lucide-react'
+import { CalendarDays, Clock3, Trophy, Drumstick, Coffee, Droplets, Sparkles, Gavel } from 'lucide-react'
 
 export const EVENT_NAME = 'Sparsh Box Cricket Mini Tournament'
 // Hero title is rendered as two lines with different emphasis: the event's core name (bigger)
@@ -7,7 +7,6 @@ export const EVENT_NAME_LINE1 = 'Sparsh Box Cricket'
 export const EVENT_NAME_LINE2 = 'Mini Tournament'
 export const EVENT_SEASON = 'Season 03'
 export const EVENT_SPONSOR_LINE = 'DIPAM – हवा हर कोने में.....'
-export const EVENT_VENUE = 'Pushpa Sports Arena'
 // SLOT_CAP is the real enforced capacity used for FAQ copy and the admin dashboard's
 // "slots remaining" count. The Format tile below intentionally displays the looser
 // "40+ Players" marketing figure (matching the events2027 listing) rather than this exact number.
@@ -39,8 +38,7 @@ export const tournamentDetails: { label: string; value: string; icon: any; color
   { label: 'Date', value: '15th August', icon: CalendarDays, color: 'orange' },
   { label: 'Time', value: '2:00 PM onwards', icon: Clock3, color: 'purple' },
   { label: 'Format', value: `${TEAM_COUNT} Teams · 40+ Players`, icon: Trophy, color: 'pink' },
-  { label: 'Fees', value: `₹${FEE_AMOUNT} per player`, icon: Sparkles, color: 'teal' },
-  { label: 'Venue', value: EVENT_VENUE, icon: MapPin, color: 'indigo' }
+  { label: 'Fees', value: `₹${FEE_AMOUNT} per player`, icon: Sparkles, color: 'teal' }
 ]
 
 export const inclusions: { label: string; icon: any; color: TileColor }[] = [
