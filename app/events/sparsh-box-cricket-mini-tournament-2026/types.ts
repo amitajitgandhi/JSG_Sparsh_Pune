@@ -5,6 +5,9 @@ export type PaymentMethod = 'cash' | 'online'
 export type CashPaidTo =
   | 'Amit Gandhi'
   | 'Mukesh Jain (M. A. Hardware)'
+export type OnlinePaidTo =
+  | 'Amit Gandhi'
+  | 'Rashmi Gugale'
 
 export interface BoxCricketRegistrationFormValues {
   name: string
@@ -16,6 +19,7 @@ export interface BoxCricketRegistrationFormValues {
   cricheroes_link: string
   payment_method: PaymentMethod | ''
   cash_paid_to: CashPaidTo | ''
+  online_paid_to: OnlinePaidTo | ''
   transaction_reference_number: string
 }
 
@@ -31,6 +35,7 @@ export interface BoxCricketRegistrationPayload {
   fee_amount: number
   payment_method: PaymentMethod
   cash_paid_to: CashPaidTo | null
+  online_paid_to: OnlinePaidTo | null
   transaction_reference_number: string | null
   payment_screenshot_url: string | null
 }

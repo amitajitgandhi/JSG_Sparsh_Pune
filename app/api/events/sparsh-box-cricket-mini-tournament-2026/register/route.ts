@@ -20,6 +20,7 @@ const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
 
 const indianMobileRegex = /^[6-9]\d{9}$/
 const cashPaidToOptions = ['Amit Gandhi', 'Mukesh Jain (M. A. Hardware)']
+const onlinePaidToOptions = ['Amit Gandhi', 'Rashmi Gugale']
 
 function validate(body: any) {
   const errors: string[] = []
@@ -37,6 +38,7 @@ function validate(body: any) {
   } else if (body.payment_method === 'cash') {
     if (!cashPaidToOptions.includes(body.cash_paid_to)) errors.push('Please select who the cash was paid to')
   } else if (body.payment_method === 'online') {
+    if (!onlinePaidToOptions.includes(body.online_paid_to)) errors.push('Please select who the online payment was made to')
     if (!body.transaction_reference_number || String(body.transaction_reference_number).trim().length < 6) errors.push('Transaction reference number is required')
     if (!body.payment_screenshot_url) errors.push('Payment screenshot is required for online payment')
   }
@@ -59,8 +61,8 @@ export async function POST(req: NextRequest) {
 
     // Duplicate check: same name (case-insensitive) + same mobile number should only be allowed
     // once. `.ilike` with no wildcards is a case-insensitive exact match. A unique index on
-    // (LOWER(TRIM(name)), mobile_number) backs this up at the DB level for race conditions - see
-    // supabase/box_cricket_mini_tournament_fixes.sql.
+    // (LOWER(TRIM(name)), mobile_number) backs this up at the DB level for race conditions
+    // (already applied to the live table).
     const { data: existingRows, error: dupError } = await supabase
       .from(TABLE)
       .select('id')
@@ -91,6 +93,7 @@ export async function POST(req: NextRequest) {
       fee_amount: FEE_AMOUNT,
       payment_method: body.payment_method,
       cash_paid_to: isCash ? body.cash_paid_to : null,
+      online_paid_to: isCash ? null : body.online_paid_to,
       transaction_reference_number: isCash ? null : String(body.transaction_reference_number).trim(),
       payment_screenshot_url: isCash ? null : body.payment_screenshot_url
     }

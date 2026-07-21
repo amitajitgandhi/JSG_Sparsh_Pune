@@ -19,6 +19,7 @@ type Reg = {
   fee_amount: number
   payment_method: 'cash' | 'online'
   cash_paid_to: string | null
+  online_paid_to: string | null
   transaction_reference_number: string | null
   payment_screenshot_url: string | null
   created_at: string
@@ -28,6 +29,10 @@ const TABLE = 'sparsh_box_cricket_mini_tournament_registrations'
 const CASH_RECIPIENTS = [
   { key: 'Amit Gandhi', label: 'Amit' },
   { key: 'Mukesh Jain (M. A. Hardware)', label: 'Mukesh' }
+]
+const ONLINE_RECIPIENTS = [
+  { key: 'Amit Gandhi', label: 'Amit' },
+  { key: 'Rashmi Gugale', label: 'Rashmi' }
 ]
 
 export default function SparshBoxCricketMiniTournament2026Dashboard() {
@@ -121,8 +126,12 @@ export default function SparshBoxCricketMiniTournament2026Dashboard() {
       label: recipient.label,
       count: rows.filter((r) => r.payment_method === 'cash' && r.cash_paid_to === recipient.key).length
     }))
+    const onlineByRecipient = ONLINE_RECIPIENTS.map((recipient) => ({
+      label: recipient.label,
+      count: rows.filter((r) => r.payment_method === 'online' && r.online_paid_to === recipient.key).length
+    }))
 
-    return { total, members, kids, cash, online, totalRevenue, cashByRecipient }
+    return { total, members, kids, cash, online, totalRevenue, cashByRecipient, onlineByRecipient }
   }, [rows])
 
   const handleSort = (field: keyof Reg) => {
@@ -170,6 +179,7 @@ export default function SparshBoxCricketMiniTournament2026Dashboard() {
       'Fee Amount',
       'Payment Method',
       'Cash Paid To',
+      'Online Paid To',
       'Transaction Reference',
       'Payment Screenshot URL',
       'Submitted At'
@@ -191,6 +201,7 @@ export default function SparshBoxCricketMiniTournament2026Dashboard() {
         r.fee_amount ?? '',
         `"${r.payment_method || ''}"`,
         `"${r.cash_paid_to || ''}"`,
+        `"${r.online_paid_to || ''}"`,
         `"${r.transaction_reference_number || ''}"`,
         `"${r.payment_screenshot_url || ''}"`,
         `"${new Date(r.created_at).toLocaleString()}"`
@@ -308,6 +319,15 @@ export default function SparshBoxCricketMiniTournament2026Dashboard() {
           </div>
         </div>
 
+        <div className="mb-6">
+          <p className="mb-2 text-xs font-bold uppercase tracking-widest text-gray-500">Online Paid To</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {stats.onlineByRecipient.map((r) => (
+              <Card key={r.label} title={r.label} value={r.count} color="bg-cyan-100 text-cyan-800" />
+            ))}
+          </div>
+        </div>
+
         {loading ? (
           <div className="text-center py-16 bg-white rounded-lg shadow">
             <RefreshCw className="mx-auto h-10 w-10 text-gray-400 animate-spin mb-3" />
@@ -340,7 +360,7 @@ export default function SparshBoxCricketMiniTournament2026Dashboard() {
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600">Photo</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600">Fee (₹)</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600">Payment</th>
-                    <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600">Cash Paid To / Txn Ref</th>
+                    <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600">Paid To / Txn Ref</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600">Screenshot</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-600 cursor-pointer hover:bg-gray-100" onClick={() => handleSort('created_at')}>
                       Submitted At {sortField === 'created_at' && (sortDirection === 'asc' ? '↑' : '↓')}
@@ -382,7 +402,7 @@ export default function SparshBoxCricketMiniTournament2026Dashboard() {
                         </span>
                       </td>
                       <td className="px-4 py-2 text-sm text-gray-700 break-all">
-                        {r.payment_method === 'cash' ? r.cash_paid_to : r.transaction_reference_number}
+                        {r.payment_method === 'cash' ? r.cash_paid_to : `${r.online_paid_to ?? ''} · ${r.transaction_reference_number ?? ''}`}
                       </td>
                       <td className="px-4 py-2 text-sm text-gray-700">
                         {r.payment_screenshot_url ? (

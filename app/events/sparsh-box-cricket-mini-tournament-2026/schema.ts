@@ -36,6 +36,9 @@ export const boxCricketRegistrationSchema = z
     cash_paid_to: z
       .enum(['Amit Gandhi', 'Mukesh Jain (M. A. Hardware)'])
       .optional(),
+    online_paid_to: z
+      .enum(['Amit Gandhi', 'Rashmi Gugale'])
+      .optional(),
     transaction_reference_number: z.string().trim().optional()
   })
   .superRefine((data, ctx) => {
@@ -43,6 +46,9 @@ export const boxCricketRegistrationSchema = z
       ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['cash_paid_to'], message: 'Please select who you paid cash to' })
     }
     if (data.payment_method === 'online') {
+      if (!data.online_paid_to) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['online_paid_to'], message: 'Please select who you paid online' })
+      }
       if (!data.transaction_reference_number || data.transaction_reference_number.length < 6) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,

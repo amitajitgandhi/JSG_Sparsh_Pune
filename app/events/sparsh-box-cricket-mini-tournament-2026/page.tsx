@@ -34,7 +34,13 @@ const initialFormValues: BoxCricketRegistrationFormValues = {
   cricheroes_link: '',
   payment_method: '',
   cash_paid_to: '',
+  online_paid_to: '',
   transaction_reference_number: ''
+}
+
+const ONLINE_QR_IMAGES: Record<string, string> = {
+  'Amit Gandhi': '/images/AG_QR_Code.jpg',
+  'Rashmi Gugale': '/images/Rashmi_QR.jpg'
 }
 
 type ToastState = { open: boolean; type: 'success' | 'error' | 'info'; msg: string }
@@ -178,6 +184,7 @@ export default function SparshBoxCricketMiniTournament2026Page() {
       ...formValues,
       age: formValues.age === '' ? NaN : Number(formValues.age),
       cash_paid_to: formValues.cash_paid_to || undefined,
+      online_paid_to: formValues.online_paid_to || undefined,
       cricheroes_link: formValues.cricheroes_link || undefined
     })
 
@@ -225,6 +232,7 @@ export default function SparshBoxCricketMiniTournament2026Page() {
         photo_url: photoUrl,
         payment_method: formValues.payment_method,
         cash_paid_to: formValues.payment_method === 'cash' ? formValues.cash_paid_to : null,
+        online_paid_to: formValues.payment_method === 'online' ? formValues.online_paid_to : null,
         transaction_reference_number: formValues.payment_method === 'online' ? formValues.transaction_reference_number.trim() : null,
         payment_screenshot_url: formValues.payment_method === 'online' ? paymentScreenshotUrl : null
       }
@@ -524,16 +532,44 @@ export default function SparshBoxCricketMiniTournament2026Page() {
 
                 {formValues.payment_method === 'online' ? (
                   <>
-                    <div className="mt-4 rounded-xl bg-white p-3">
-                      <Image
-                        src="/images/AG_QR_Code.jpg"
-                        alt="Payment QR"
-                        width={380}
-                        height={380}
-                        className="mx-auto h-auto w-full max-w-[260px] rounded-lg"
-                        priority
-                      />
+                    <div className="mt-4 grid grid-cols-2 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => updateField('online_paid_to', 'Amit Gandhi')}
+                        className={`h-11 rounded-xl border text-sm font-semibold transition ${
+                          formValues.online_paid_to === 'Amit Gandhi'
+                            ? 'border-blue-600 bg-blue-600 text-white'
+                            : 'border-gray-300 bg-white text-gray-700'
+                        }`}
+                      >
+                        Amit Gandhi
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => updateField('online_paid_to', 'Rashmi Gugale')}
+                        className={`h-11 rounded-xl border text-sm font-semibold transition ${
+                          formValues.online_paid_to === 'Rashmi Gugale'
+                            ? 'border-blue-600 bg-blue-600 text-white'
+                            : 'border-gray-300 bg-white text-gray-700'
+                        }`}
+                      >
+                        Rashmi Gugale
+                      </button>
                     </div>
+                    {errors.online_paid_to ? <p className="mt-1 text-xs text-red-500">{errors.online_paid_to}</p> : null}
+
+                    {formValues.online_paid_to ? (
+                      <div className="mt-4 rounded-xl bg-white p-3">
+                        <Image
+                          src={ONLINE_QR_IMAGES[formValues.online_paid_to]}
+                          alt={`Payment QR - ${formValues.online_paid_to}`}
+                          width={380}
+                          height={380}
+                          className="mx-auto h-auto w-full max-w-[260px] rounded-lg"
+                          priority
+                        />
+                      </div>
+                    ) : null}
                     <div className="mt-4">
                       <input
                         ref={fileInputRef}
