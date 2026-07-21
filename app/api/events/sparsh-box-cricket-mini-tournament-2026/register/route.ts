@@ -19,7 +19,7 @@ const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
 })
 
 const indianMobileRegex = /^[6-9]\d{9}$/
-const cashPaidToOptions = ['Amit Gandhi', 'Mukesh Jain (MA Hardware)', 'Satish Jain (Jaliwala)', 'Jitendra Jain (Unique Ladder)']
+const cashPaidToOptions = ['Amit Gandhi', 'Mukesh Jain (M. A. Hardware)']
 
 function validate(body: any) {
   const errors: string[] = []

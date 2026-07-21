@@ -516,9 +516,7 @@ export default function SparshBoxCricketMiniTournament2026Page() {
                     >
                       <option value="">Paid To *</option>
                       <option value="Amit Gandhi">Amit Gandhi</option>
-                      <option value="Mukesh Jain (MA Hardware)">Mukesh Jain (MA Hardware)</option>
-                      <option value="Satish Jain (Jaliwala)">Satish Jain (Jaliwala)</option>
-                      <option value="Jitendra Jain (Unique Ladder)">Jitendra Jain (Unique Ladder)</option>
+                      <option value="Mukesh Jain (M. A. Hardware)">Mukesh Jain (M. A. Hardware)</option>
                     </select>
                     {errors.cash_paid_to ? <p className="mt-1 text-xs text-red-500">{errors.cash_paid_to}</p> : null}
                   </div>

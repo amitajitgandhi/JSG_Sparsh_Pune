@@ -34,7 +34,7 @@ export const boxCricketRegistrationSchema = z
       ),
     payment_method: z.enum(['cash', 'online'], { required_error: 'Please select a payment method' }),
     cash_paid_to: z
-      .enum(['Amit Gandhi', 'Mukesh Jain (MA Hardware)', 'Satish Jain (Jaliwala)', 'Jitendra Jain (Unique Ladder)'])
+      .enum(['Amit Gandhi', 'Mukesh Jain (M. A. Hardware)'])
       .optional(),
     transaction_reference_number: z.string().trim().optional()
   })

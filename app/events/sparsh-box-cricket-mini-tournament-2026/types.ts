@@ -4,9 +4,7 @@ export type CricketingSkill = 'Beginner' | 'Intermediate' | 'Advance' | 'Pro'
 export type PaymentMethod = 'cash' | 'online'
 export type CashPaidTo =
   | 'Amit Gandhi'
-  | 'Mukesh Jain (MA Hardware)'
-  | 'Satish Jain (Jaliwala)'
-  | 'Jitendra Jain (Unique Ladder)'
+  | 'Mukesh Jain (M. A. Hardware)'
 
 export interface BoxCricketRegistrationFormValues {
   name: string

@@ -27,9 +27,7 @@ type Reg = {
 const TABLE = 'sparsh_box_cricket_mini_tournament_registrations'
 const CASH_RECIPIENTS = [
   { key: 'Amit Gandhi', label: 'Amit' },
-  { key: 'Mukesh Jain (MA Hardware)', label: 'Mukesh' },
-  { key: 'Satish Jain (Jaliwala)', label: 'Satish' },
-  { key: 'Jitendra Jain (Unique Ladder)', label: 'Jitendra' }
+  { key: 'Mukesh Jain (M. A. Hardware)', label: 'Mukesh' }
 ]
 
 export default function SparshBoxCricketMiniTournament2026Dashboard() {
