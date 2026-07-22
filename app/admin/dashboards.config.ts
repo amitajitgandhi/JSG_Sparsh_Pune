@@ -124,6 +124,15 @@ export const DASHBOARDS: DashboardDef[] = [
     archivable: true,
     tables: ['sparsh_box_cricket_mini_tournament_registrations'],
   },
+  {
+    slug: 'hampi-heritage-adoni-tirth-2026',
+    href: '/admin/hampi-heritage-adoni-tirth-2026',
+    label: 'Hampi Heritage & Adoni Tirth Expedition Dashboard',
+    description: 'View family/group registrations, age-tier headcounts, travel mode, and export participant data.',
+    color: 'amber',
+    archivable: true,
+    tables: ['sparsh_hampi_heritage_adoni_tirth_2026_registrations'],
+  },
 ]
 
 /** Slug → table allow-list, used server-side to guard data deletion. */

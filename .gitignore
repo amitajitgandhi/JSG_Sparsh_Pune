@@ -68,3 +68,12 @@ tsconfig.tsbuildinfo
 /SCC_Player_List.docx
 supabase/add_amount_column.sql
 supabase/fix-bucket-policies.sql
+
+# One-off Supabase fix/patch scripts already executed against the live project - kept as empty
+# stubs only because this sandbox can't unlink files on this mount; safe to delete by hand locally.
+supabase/box_cricket_mini_tournament_fixes.sql
+supabase/set_box_cricket_as_upcoming_and_registration_open.sql
+supabase/box_cricket_mini_tournament_fix_cash_paid_to_constraint.sql
+supabase/box_cricket_mini_tournament_add_online_paid_to.sql
+supabase/hampi_heritage_add_below5_seat_column.sql
+supabase/__test_delete_me.sql

@@ -80,6 +80,19 @@ export default function Events2027() {
       category: 'Sports',
       galleryUrl: 'To be updated soon!',
       pageUrl: '/events/sparsh-box-cricket-mini-tournament-2026',
+    },
+    {
+      id: 5,
+      title: 'Hampi Heritage & Adoni Tirth Expedition',
+      date: '2026-10-01',
+      time: '4 Days, 3 Nights',
+      venue: 'Hampi, Karnataka',
+      description: 'A memorable journey blending history, heritage, spirituality, and togetherness — explore the timeless UNESCO World Heritage Site of Hampi and seek divine blessings at Shri Parshwamani Jain Adoni Tirth.',
+      attendees: 'Details coming soon',
+      highlights: ['Hampi Heritage', 'Adoni Jain Tirth', '3-Star Stay', 'Group Travel'],
+      category: 'Outing',
+      galleryUrl: 'To be updated soon!',
+      pageUrl: '/events/hampi-heritage-adoni-tirth-2026',
     }
   ]
 

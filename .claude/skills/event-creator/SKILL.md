@@ -266,6 +266,23 @@ Key decisions, settled from experience:
    editor before the new page/API route will actually work end-to-end.
 4. Mark `steps.migration = true`.
 
+**Gotcha — auto-named constraints silently truncate at 63 characters.** Postgres identifiers
+(including auto-generated constraint names like `<table>_<column>_check`) are silently truncated
+to 63 bytes. If you ever need to `DROP CONSTRAINT` on an auto-named constraint later (e.g. to widen
+an allowed-values list), a `DROP CONSTRAINT IF EXISTS <full untruncated name>` will silently no-op
+if the real name got truncated — the old constraint stays in effect and new rows get rejected with
+a confusing error. Always read the *actual* constraint name from the Postgres error message (or
+`\d <table>` / `information_schema.check_constraints`) rather than assuming it matches what you
+typed, and prefer giving mutable/likely-to-change constraints (payment recipient lists, enum-like
+columns) a short, explicit name (`CONSTRAINT chk_<slug>_<column>`) up front so this can't happen.
+
+**Gotcha — backfill existing rows before tightening a CHECK constraint.** When adding a new column
+that becomes part of a stricter CHECK (e.g. a second payment-recipient option added to an existing
+mutual-exclusivity constraint), rows inserted before that column existed will violate the new
+constraint. Always backfill the new column for existing rows first (e.g.
+`UPDATE <table> SET new_col = '<default>' WHERE <predicate> AND new_col IS NULL;`) in the same
+script, before the `ALTER TABLE ... ADD CONSTRAINT`.
+
 ## Step 3.5: Storage buckets — check before assuming new setup is needed
 
 Uploads (photo, payment screenshot) almost always reuse **existing shared buckets** rather than
