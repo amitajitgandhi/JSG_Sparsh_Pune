@@ -22,7 +22,7 @@ export const AGE_TIERS = [
 
 export const TRAVEL_OPTIONS: { value: 'Own Transportation' | 'Bus' | 'AC Train' | 'Sleeper Train'; note: string | null }[] = [
   { value: 'Own Transportation', note: null },
-  { value: 'Bus', note: 'Approx. ₹1,600' },
+  { value: 'Bus', note: 'Approx. ₹2,000' },
   { value: 'AC Train', note: 'Approx. ₹2,300' },
   { value: 'Sleeper Train', note: 'Approx. ₹1,000' }
 ]
