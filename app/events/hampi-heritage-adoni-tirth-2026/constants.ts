@@ -14,9 +14,9 @@ export const EVENT_SPONSOR_LINE = 'JSG Pune Sparsh'
 // after registration, communicated separately. Prices are tentative; the form only shows an
 // estimate. There's intentionally no slot-cap validation anywhere (see event-creator skill).
 export const AGE_TIERS = [
-  { key: 'adult_count' as const, label: 'Adult', rate: 12000 },
-  { key: 'child_above8_count' as const, label: 'Child (Above 8 yrs)', rate: 8000 },
-  { key: 'child_5_to_8_count' as const, label: 'Child (5-8 yrs)', rate: 5500 },
+  { key: 'adult_count' as const, label: 'Adult', rate: 11000 },
+  { key: 'child_above8_count' as const, label: 'Child (Above 8 yrs)', rate: 7000 },
+  { key: 'child_5_to_8_count' as const, label: 'Child (5-8 yrs)', rate: 4500 },
   { key: 'child_below5_count' as const, label: 'Below 5 yrs', rate: 0 }
 ]
 
